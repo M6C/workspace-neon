@@ -47,18 +47,11 @@ public class SrvBrowserRename extends SrvGenerique
                 newNameFormated = UtilPath.formatPath(context, dom, application, newName);
                 (new File(oldNameFormated)).renameTo(new File(newNameFormated));
             }
-            break MISSING_BLOCK_LABEL_279;
         }
         catch(Exception ex)
         {
             Trace.ERROR(this, ex);
         }
-        Trace.DEBUG(this, (new StringBuilder("SrvBrowserRename application:")).append(application).append(" oldName:").append(oldName).append(" oldNameFormated:").append(oldNameFormated).append(" newName:").append(newName).append(" newNameFormated:").append(newNameFormated).toString());
-        break MISSING_BLOCK_LABEL_340;
-        Exception exception;
-        exception;
-        Trace.DEBUG(this, (new StringBuilder("SrvBrowserRename application:")).append(application).append(" oldName:").append(oldName).append(" oldNameFormated:").append(oldNameFormated).append(" newName:").append(newName).append(" newNameFormated:").append(newNameFormated).toString());
-        throw exception;
         Trace.DEBUG(this, (new StringBuilder("SrvBrowserRename application:")).append(application).append(" oldName:").append(oldName).append(" oldNameFormated:").append(oldNameFormated).append(" newName:").append(newName).append(" newNameFormated:").append(newNameFormated).toString());
     }
 }

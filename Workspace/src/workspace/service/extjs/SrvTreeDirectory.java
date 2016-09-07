@@ -137,24 +137,11 @@ public class SrvTreeDirectory extends SrvGenerique
                         os.close();
                     }
             }
-            break MISSING_BLOCK_LABEL_1197;
         }
         catch(Exception ex)
         {
             Trace.ERROR(this, ex);
         }
-        Trace.DEBUG(this, (new StringBuilder("execute application:")).append(application).append(" path:").append(path).append(" pathFormated:").append(pathFormated).toString());
-        Trace.DEBUG(this, (new StringBuilder("execute pathMain:")).append(pathMain).append(" pathSrc:").append(pathSrc).toString());
-        Trace.DEBUG(this, (new StringBuilder("execute withContentType:")).append(withContentType).append(" noContentType:").append(noContentType).toString());
-        Trace.DEBUG(this, (new StringBuilder("execute jsonData:")).append(jsonData).toString());
-        break MISSING_BLOCK_LABEL_1328;
-        Exception exception;
-        exception;
-        Trace.DEBUG(this, (new StringBuilder("execute application:")).append(application).append(" path:").append(path).append(" pathFormated:").append(pathFormated).toString());
-        Trace.DEBUG(this, (new StringBuilder("execute pathMain:")).append(pathMain).append(" pathSrc:").append(pathSrc).toString());
-        Trace.DEBUG(this, (new StringBuilder("execute withContentType:")).append(withContentType).append(" noContentType:").append(noContentType).toString());
-        Trace.DEBUG(this, (new StringBuilder("execute jsonData:")).append(jsonData).toString());
-        throw exception;
         Trace.DEBUG(this, (new StringBuilder("execute application:")).append(application).append(" path:").append(path).append(" pathFormated:").append(pathFormated).toString());
         Trace.DEBUG(this, (new StringBuilder("execute pathMain:")).append(pathMain).append(" pathSrc:").append(pathSrc).toString());
         Trace.DEBUG(this, (new StringBuilder("execute withContentType:")).append(withContentType).append(" noContentType:").append(noContentType).toString());

@@ -58,18 +58,11 @@ public class SrvEditSaveFile extends SrvGenerique
             {
                 Trace.DEBUG(this, "content is Empty and filename is Empty");
             }
-            break MISSING_BLOCK_LABEL_323;
         }
         catch(Exception ex)
         {
             Trace.ERROR(this, ex);
         }
-        Trace.DEBUG(this, (new StringBuilder("filename:")).append(filename).append(" filenameFormated:").append(filenameFormated).append(" navIndex:").append(navIndex).append(" navNbRow:").append(navNbRow).toString());
-        break MISSING_BLOCK_LABEL_374;
-        Exception exception;
-        exception;
-        Trace.DEBUG(this, (new StringBuilder("filename:")).append(filename).append(" filenameFormated:").append(filenameFormated).append(" navIndex:").append(navIndex).append(" navNbRow:").append(navNbRow).toString());
-        throw exception;
         Trace.DEBUG(this, (new StringBuilder("filename:")).append(filename).append(" filenameFormated:").append(filenameFormated).append(" navIndex:").append(navIndex).append(" navNbRow:").append(navNbRow).toString());
     }
 
@@ -126,18 +119,11 @@ public class SrvEditSaveFile extends SrvGenerique
             for(int i = 1; i <= nbRow && (line = in.readLine()) != null; i++);
             while((line = in.readLine()) != null) 
                 ret.append(line).append("\r\n");
-            break MISSING_BLOCK_LABEL_228;
         }
         catch(Exception ex)
         {
             Trace.ERROR(this, ex);
         }
-        in.close();
-        break MISSING_BLOCK_LABEL_233;
-        Exception exception;
-        exception;
-        in.close();
-        throw exception;
         in.close();
         return ret.toString();
     }

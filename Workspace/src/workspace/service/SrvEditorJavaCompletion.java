@@ -260,16 +260,7 @@ public class SrvEditorJavaCompletion extends SrvGenerique
                         {
                             return UtilFile.isExtFile(string, ".class");
                         }
-
-                        final SrvEditorJavaCompletion this$0;
-
-            
-            {
-                this$0 = SrvEditorJavaCompletion.this;
-                super();
-            }
-                    }
-);
+                    });
                     int sizeListFile = UtilSafe.safeListSize(listFile);
                     if(sizeListFile > 0)
                     {

@@ -64,36 +64,11 @@ public class SrvEditLoadFile extends SrvGenerique
                     }
                 }
             }
-            break MISSING_BLOCK_LABEL_576;
         }
         catch(Exception ex)
         {
             Trace.ERROR(this, ex);
         }
-        if(jsonData != null)
-            jsonData = (new StringBuilder(String.valueOf(jsonData))).append("]}").toString();
-        else
-            jsonData = (new StringBuilder(String.valueOf(jsonData))).append("{results:0,data:[]}").toString();
-        Trace.DEBUG(this, (new StringBuilder("SrvEditLoadFile execute filename:")).append(filename).append(" filenameFormated:").append(filenameFormated).toString());
-        Trace.DEBUG(this, (new StringBuilder("SrvEditLoadFile execute jsonData:")).append(jsonData).toString());
-        OutputStream os = response.getOutputStream();
-        response.setContentType("text/json");
-        os.write(jsonData.getBytes());
-        os.close();
-        break MISSING_BLOCK_LABEL_711;
-        Exception exception;
-        exception;
-        if(jsonData != null)
-            jsonData = (new StringBuilder(String.valueOf(jsonData))).append("]}").toString();
-        else
-            jsonData = (new StringBuilder(String.valueOf(jsonData))).append("{results:0,data:[]}").toString();
-        Trace.DEBUG(this, (new StringBuilder("SrvEditLoadFile execute filename:")).append(filename).append(" filenameFormated:").append(filenameFormated).toString());
-        Trace.DEBUG(this, (new StringBuilder("SrvEditLoadFile execute jsonData:")).append(jsonData).toString());
-        OutputStream os = response.getOutputStream();
-        response.setContentType("text/json");
-        os.write(jsonData.getBytes());
-        os.close();
-        throw exception;
         if(jsonData != null)
             jsonData = (new StringBuilder(String.valueOf(jsonData))).append("]}").toString();
         else

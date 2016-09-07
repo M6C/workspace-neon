@@ -1,7 +1,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <!-- /Xsl/User/Application/Util/ -->
-<xsl:import href="UtilFormatPath.xsl"/>
+<xsl:import href="../../Util/UtilFormatPath.xsl"/>
 
 <xsl:output method="text" encoding="ISO-8859-1" indent="no"/>
 <!-- 

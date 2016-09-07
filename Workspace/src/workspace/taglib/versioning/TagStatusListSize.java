@@ -1,45 +1,71 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   TagStatusListSize.java
-
 package workspace.taglib.versioning;
 
-import TagSupport;
+import framework.ressource.util.UtilString;
+import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.tagext.Tag;
+import javax.servlet.jsp.tagext.TagSupport;
 
-public class TagStatusListSize extends TagSupport
-{
+/**
+ * @author  HP_Administrateur
+ */
+public class TagStatusListSize extends TagSupport {
+  private String scope;
+  private String name;
 
-    public TagStatusListSize()
-    {
-        throw new Error("Unresolved compilation problems: \n\tThe import javax.servlet.jsp cannot be resolved\n\tThe import javax.servlet.jsp cannot be resolved\n\tThe import javax.servlet.jsp cannot be resolved\n\tTagSupport cannot be resolved to a type\n\tJspWriter cannot be resolved to a type\n\tpageContext cannot be resolved\n\tTag cannot be resolved to a type\n\tThe method getParent() is undefined for the type TagStatusListSize\n\tpageContext cannot be resolved\n\tpageContext cannot be resolved\n\tEVAL_PAGE cannot be resolved\n");
+  public TagStatusListSize() {
+  }
+
+  public int doStartTag() {
+    JspWriter out = pageContext.getOut();
+    TagStatusList tagParent = null;
+    Tag parent = getParent();
+    while (parent!=null) {
+      if (parent instanceof TagStatusList) {
+        tagParent = (TagStatusList)parent;
+      }
+      parent = parent.getParent();
     }
-
-    public int doStartTag()
-    {
-        throw new Error("Unresolved compilation problems: \n\tJspWriter cannot be resolved to a type\n\tpageContext cannot be resolved\n\tTag cannot be resolved to a type\n\tThe method getParent() is undefined for the type TagStatusListSize\n\tpageContext cannot be resolved\n\tpageContext cannot be resolved\n\tEVAL_PAGE cannot be resolved\n");
+    if (tagParent != null) {
+      if (UtilString.isNotEmpty(getName())) {
+        String szSize = (tagParent.getStatusList()==null) ? "0" : String.valueOf(tagParent.getStatusList().size());
+        if ("session".equalsIgnoreCase(getScope()))
+          pageContext.getSession().setAttribute(getName(), szSize);
+        else
+          pageContext.getRequest().setAttribute(getName(), szSize);
+      }
     }
+    return EVAL_PAGE;
+  }
 
-    public void setName(String name)
-    {
-        throw new Error("Unresolved compilation problem: \n");
-    }
+  /**
+ * @param name  the name to set
+ * @uml.property  name="name"
+ */
+public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setScope(String scope)
-    {
-        throw new Error("Unresolved compilation problem: \n");
-    }
+  /**
+ * @param scope  the scope to set
+ * @uml.property  name="scope"
+ */
+public void setScope(String scope) {
+    this.scope = scope;
+  }
 
-    public String getName()
-    {
-        throw new Error("Unresolved compilation problem: \n");
-    }
+  /**
+ * @return  the name
+ * @uml.property  name="name"
+ */
+public String getName() {
+    return name;
+  }
 
-    public String getScope()
-    {
-        throw new Error("Unresolved compilation problem: \n");
-    }
-
-    private String scope;
-    private String name;
+  /**
+ * @return  the scope
+ * @uml.property  name="scope"
+ */
+public String getScope() {
+    return scope;
+  }
 }

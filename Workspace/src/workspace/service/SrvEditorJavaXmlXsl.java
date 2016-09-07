@@ -66,18 +66,7 @@ public class SrvEditorJavaXmlXsl extends SrvGenerique
                         Source src = new StreamSource(ctx.getResourceAsStream(href));
                         return src;
                     }
-
-                    final SrvEditorJavaXmlXsl this$0;
-                    private final ServletContext val$ctx;
-
-            
-            {
-                this$0 = SrvEditorJavaXmlXsl.this;
-                ctx = servletcontext;
-                super();
-            }
-                }
-;
+                };
                 tFactory.setURIResolver(uriResolver);
                 String szXsl = UtilRequest.replaceParamByRequestValue(pathXsl, request, session, "");
                 if(UtilString.isNotEmpty(szXsl))

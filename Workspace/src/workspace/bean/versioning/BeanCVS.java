@@ -205,7 +205,7 @@ public class BeanCVS extends SrvGenerique
             });
         } else
         {
-            Vector vFile = UtilFile.dirFile(file.getCanonicalPath(), isRecursive, null, false, false, withFileContent);
+            Vector vFile = UtilFile.dirFile(file.getCanonicalPath(), isRecursive, (FilenameFilter)null, false, false, withFileContent);
             ArrayList aFile = excludeCVSDirectory(vFile.iterator());
             lFile = new File[aFile.size()];
             aFile.toArray(lFile);

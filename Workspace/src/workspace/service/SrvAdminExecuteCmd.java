@@ -42,7 +42,6 @@ public class SrvAdminExecuteCmd extends SrvGenerique
                 request.setAttribute("resultCommandLine", stb.toString());
                 p.destroy();
             }
-            break MISSING_BLOCK_LABEL_238;
         }
         catch(Exception ex)
         {
@@ -52,12 +51,6 @@ public class SrvAdminExecuteCmd extends SrvGenerique
             request.setAttribute("resultCommandLine", streamLog.toString());
             Trace.ERROR(this, ex);
         }
-        Trace.DEBUG(this, (new StringBuilder("execute commandLine:'")).append(commandLine).append("'").toString());
-        break MISSING_BLOCK_LABEL_264;
-        Exception exception;
-        exception;
-        Trace.DEBUG(this, (new StringBuilder("execute commandLine:'")).append(commandLine).append("'").toString());
-        throw exception;
         Trace.DEBUG(this, (new StringBuilder("execute commandLine:'")).append(commandLine).append("'").toString());
     }
 }

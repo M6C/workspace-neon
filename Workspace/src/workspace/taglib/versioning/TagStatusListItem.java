@@ -1,67 +1,142 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   TagStatusListItem.java
-
 package workspace.taglib.versioning;
 
-import TagSupport;
+import framework.ressource.util.UtilReflect;
+import framework.ressource.util.UtilString;
+import framework.trace.Trace;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.tagext.Tag;
+import javax.servlet.jsp.tagext.TagSupport;
+import org.netbeans.lib.cvsclient.command.status.StatusInformation;
 
-public class TagStatusListItem extends TagSupport
-{
+/**
+ * @author  HP_Administrateur
+ */
+public class TagStatusListItem extends TagSupport {
+  private String methode;
+  private String methodeArgument;
+  private String scope;
+  private String name;
 
-    public TagStatusListItem()
-    {
-        throw new Error("Unresolved compilation problems: \n\tThe import javax.servlet.jsp cannot be resolved\n\tThe import javax.servlet.jsp cannot be resolved\n\tThe import javax.servlet.jsp cannot be resolved\n\tTagSupport cannot be resolved to a type\n\tJspWriter cannot be resolved to a type\n\tpageContext cannot be resolved\n\tTag cannot be resolved to a type\n\tThe method getParent() is undefined for the type TagStatusListItem\n\tpageContext cannot be resolved\n\tpageContext cannot be resolved\n\tEVAL_PAGE cannot be resolved\n");
+  public TagStatusListItem() {
+  }
+
+  public int doStartTag() {
+    JspWriter out = pageContext.getOut();
+    TagStatusList tagParent = null;
+    Tag parent = getParent();
+    while (parent!=null) {
+      if (parent instanceof TagStatusList) {
+        tagParent = (TagStatusList)parent;
+      }
+      parent = parent.getParent();
     }
-
-    public int doStartTag()
-    {
-        throw new Error("Unresolved compilation problems: \n\tJspWriter cannot be resolved to a type\n\tpageContext cannot be resolved\n\tTag cannot be resolved to a type\n\tThe method getParent() is undefined for the type TagStatusListItem\n\tpageContext cannot be resolved\n\tpageContext cannot be resolved\n\tEVAL_PAGE cannot be resolved\n");
+    if (tagParent != null) {
+      if (UtilString.isNotEmpty(getMethode())) {
+        try {
+          StatusInformation status = tagParent.getCurrentStatus();
+          Class[] type = null;
+          Object[] value = null;
+          if (UtilString.isNotEmpty(getMethodeArgument())) {
+            String[] arg = UtilString.split(getMethodeArgument(), ';');
+            int iArg = arg.length;
+            type = new Class[iArg];
+            value = new Object[iArg];
+            for (int i = 0; i < iArg; i++) {
+              type[i] = arg[i].getClass();
+              value[i] = arg[i];
+            }
+          }
+          out.print(UtilReflect.invokeMethod(status, getMethode(), type, value));
+        }
+        catch (NoSuchMethodException ex) {
+          Trace.ERROR(ex);
+        }
+        catch (InvocationTargetException ex) {
+          Trace.ERROR(ex);
+        }
+        catch (IllegalAccessException ex) {
+          Trace.ERROR(ex);
+        }
+        catch (IllegalArgumentException ex) {
+          Trace.ERROR(ex);
+        }
+        catch (IOException ex) {
+          Trace.ERROR(ex);
+        }
+      }
+      if (UtilString.isNotEmpty(getName())) {
+        if ("session".equalsIgnoreCase(getScope()))
+          pageContext.getSession().setAttribute(getName(), tagParent.getCurrentBean());
+        else
+          pageContext.getRequest().setAttribute(getName(), tagParent.getCurrentBean());
+      }
     }
+    return EVAL_PAGE;
+  }
 
-    public void setMethode(String methode)
-    {
-        throw new Error("Unresolved compilation problem: \n");
-    }
+  /**
+ * @param methode  the methode to set
+ * @uml.property  name="methode"
+ */
+public void setMethode(String methode) {
+    this.methode = methode;
+  }
 
-    public void setName(String name)
-    {
-        throw new Error("Unresolved compilation problem: \n");
-    }
+  /**
+ * @param name  the name to set
+ * @uml.property  name="name"
+ */
+public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setScope(String scope)
-    {
-        throw new Error("Unresolved compilation problem: \n");
-    }
+  /**
+ * @param scope  the scope to set
+ * @uml.property  name="scope"
+ */
+public void setScope(String scope) {
+    this.scope = scope;
+  }
 
-    public void setMethodeArgument(String methodeArgument)
-    {
-        throw new Error("Unresolved compilation problem: \n");
-    }
+  /**
+ * @param methodeArgument  the methodeArgument to set
+ * @uml.property  name="methodeArgument"
+ */
+public void setMethodeArgument(String methodeArgument) {
+    this.methodeArgument = methodeArgument;
+  }
 
-    public String getMethode()
-    {
-        throw new Error("Unresolved compilation problem: \n");
-    }
+  /**
+ * @return  the methode
+ * @uml.property  name="methode"
+ */
+public String getMethode() {
+    return methode;
+  }
 
-    public String getName()
-    {
-        throw new Error("Unresolved compilation problem: \n");
-    }
+  /**
+ * @return  the name
+ * @uml.property  name="name"
+ */
+public String getName() {
+    return name;
+  }
 
-    public String getScope()
-    {
-        throw new Error("Unresolved compilation problem: \n");
-    }
+  /**
+ * @return  the scope
+ * @uml.property  name="scope"
+ */
+public String getScope() {
+    return scope;
+  }
 
-    public String getMethodeArgument()
-    {
-        throw new Error("Unresolved compilation problem: \n");
-    }
-
-    private String methode;
-    private String methodeArgument;
-    private String scope;
-    private String name;
+  /**
+ * @return  the methodeArgument
+ * @uml.property  name="methodeArgument"
+ */
+public String getMethodeArgument() {
+    return methodeArgument;
+  }
 }

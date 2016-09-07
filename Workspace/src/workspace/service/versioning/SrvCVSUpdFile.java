@@ -1,55 +1,58 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   SrvCVSUpdFile.java
-
 package workspace.service.versioning;
 
-import framework.beandata.BeanGenerique;
-import framework.ressource.util.UtilString;
+/**
+ *           OK
+ */
+
 import java.io.File;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.netbeans.lib.cvsclient.Client;
 import org.netbeans.lib.cvsclient.command.GlobalOptions;
 import org.netbeans.lib.cvsclient.command.update.UpdateCommand;
 
-// Referenced classes of package workspace.service.versioning:
-//            SrvCVS
+import framework.beandata.BeanGenerique;
+import framework.ressource.util.UtilString;
 
-public class SrvCVSUpdFile extends SrvCVS
-{
+/**
+ * @author rocada
+ *
+ * Pour changer le modèle de ce commentaire de type gamp;eacute;namp;eacute;ramp;eacute;, allez à :
+ * Fenêtre&gt;Pramp;eacute;famp;eacute;rences&gt;Java&gt;Gamp;eacute;namp;eacute;ration de code&gt;Code et commentaires
+ */
+public class SrvCVSUpdFile extends SrvCVS {
 
-    public SrvCVSUpdFile()
-    {
+  /**
+   * (non-Javadoc)
+   * @see framework.service.SrvDatabase#execute(framework.beandata.BeanDatabase)
+   */
+  public void execute(HttpServletRequest req, HttpServletResponse res, BeanGenerique bean) throws Exception {
+    try {
+      String fileName = (String) bean.get("fileName"); //"aMessage";
+
+      init(req, bean);
+
+      Client client = newClient();
+
+      UpdateCommand command = new UpdateCommand();
+      command.setBuilder(null);
+
+      File file = null;
+      if (UtilString.isNotEmpty(fileName))
+        file = new File(new File(getLocalDirectory(), getRepository()), fileName);
+      else
+        file = new File(getLocalDirectory(), getRepository());
+      File[] files = new File[]{file};
+      command.setFiles(files);
+
+      GlobalOptions globalOptions = new GlobalOptions();
+      globalOptions.setCVSRoot(getRootDirectory() + "/" + getRepository());
+      client.executeCommand(command, globalOptions);
     }
-
-    public void execute(HttpServletRequest req, HttpServletResponse res, BeanGenerique bean)
-        throws Exception
-    {
-        String fileName = (String)bean.get("fileName");
-        init(req, bean);
-        Client client = newClient();
-        UpdateCommand command = new UpdateCommand();
-        command.setBuilder(null);
-        File file = null;
-        if(UtilString.isNotEmpty(fileName))
-            file = new File(new File(getLocalDirectory(), getRepository()), fileName);
-        else
-            file = new File(getLocalDirectory(), getRepository());
-        File files[] = {
-            file
-        };
-        command.setFiles(files);
-        GlobalOptions globalOptions = new GlobalOptions();
-        globalOptions.setCVSRoot((new StringBuilder(String.valueOf(getRootDirectory()))).append("/").append(getRepository()).toString());
-        client.executeCommand(command, globalOptions);
-        break MISSING_BLOCK_LABEL_179;
-        Exception exception;
-        exception;
-        traceBuffer(req);
-        throw exception;
-        traceBuffer(req);
-        return;
+    finally {
+      traceBuffer(req);
     }
+  }
 }

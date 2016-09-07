@@ -1,54 +1,58 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   SrvVersionPage.java
-
+/*
+ * Créé le 23 juil. 2004
+ *
+ * Pour changer le modèle de ce fichier généré, allez à :
+ * Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
+ */
 package workspace.service.versioning;
 
+import java.io.File;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.w3c.dom.Document;
+
+import workspace.adaptateur.application.AdpXmlApplication;
 import framework.beandata.BeanGenerique;
 import framework.ressource.util.UtilString;
 import framework.service.SrvGenerique;
 import framework.trace.Trace;
-import java.io.File;
-import java.net.URI;
-import javax.servlet.ServletContext;
-import javax.servlet.http.*;
-import org.w3c.dom.Document;
-import workspace.adaptateur.application.AdpXmlApplication;
 
-public class SrvVersionPage extends SrvGenerique
-{
+/**
+ * @author rocada
+ *
+ * Pour changer le modèle de ce commentaire de type généré, allez à :
+ * Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
+ */
+public class SrvVersionPage extends SrvGenerique {
 
-    public SrvVersionPage()
-    {
-    }
-
-    public void execute(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean)
-        throws Exception
-    {
-        HttpSession session = request.getSession();
-        ServletContext context = session.getServletContext();
-        String application = (String)bean.getParameterDataByName("application");
-        try
-        {
-            if(UtilString.isNotEmpty(application))
-            {
-                Document dom = (Document)request.getSession().getAttribute("resultDom");
-                String filePathMain = AdpXmlApplication.getFormatedPathMain(context, dom, application);
-                if(filePathMain != null && !filePathMain.equals(""))
-                    if(filePathMain.toUpperCase().startsWith("FTP://"))
-                    {
-                        request.setAttribute("path", filePathMain);
-                    } else
-                    {
-                        File fileMain = new File(filePathMain);
-                        request.setAttribute("path", fileMain.toURI().getPath());
+	/* (non-Javadoc)
+	 * @see framework.service.SrvDatabase#execute(framework.beandata.BeanDatabase)
+	 */
+	public void execute(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean) throws Exception{
+		String application = (String)bean.getParameterDataByName("application");
+                try {
+                  if (UtilString.isNotEmpty(application)) {
+                    Document dom = (Document) request.getSession().getAttribute("resultDom");
+                    String filePathMain = AdpXmlApplication.getPathMain(dom, application);
+                    if (filePathMain!=null && !filePathMain.equals("")) {
+                    	if (filePathMain.toUpperCase().startsWith("FTP://")) {
+        		            // Initialise les paramètres de la requète
+        		            request.setAttribute("path", filePathMain);
+                    	}
+                    	else {
+	                    	File fileMain = new File(filePathMain);
+		                    // Initialise les paramètres de la requète
+		                    request.setAttribute("path", fileMain.toURI().getPath());
+                    	}
                     }
-            }
-        }
-        catch(Exception ex)
-        {
-            Trace.ERROR(this, ex);
-        }
-    }
+                  }
+                }
+                // If an Exception occurs, write the error to the page.
+                catch (Exception ex) {
+                  Trace.ERROR(this, ex);
+                }
+	}
+
 }

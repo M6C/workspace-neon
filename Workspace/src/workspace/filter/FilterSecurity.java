@@ -1,74 +1,82 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   FilterSecurity.java
-
+/*
+ * Cramp;eacute;amp;eacute; le 1 damp;eacute;c. 2004
+ *
+ * Pour changer le modèle de ce fichier gamp;eacute;namp;eacute;ramp;eacute;, allez à :
+ * Fenêtre&gt;Pramp;eacute;famp;eacute;rences&gt;Java&gt;Gamp;eacute;namp;eacute;ration de code&gt;Code et commentaires
+ */
 package workspace.filter;
 
-import framework.beandata.BeanGenerique;
 import java.io.IOException;
-import javax.servlet.*;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
-public class FilterSecurity
-    implements Filter
-{
+import framework.beandata.BeanGenerique;
 
-    public FilterSecurity()
-    {
-        filterConfig = null;
+/**
+ * @author rocada
+ *
+ * Pour changer le modèle de ce commentaire de type gamp;eacute;namp;eacute;ramp;eacute;, allez à :
+ * Fenêtre&gt;Pramp;eacute;famp;eacute;rences&gt;Java&gt;Gamp;eacute;namp;eacute;ration de code&gt;Code et commentaires
+ */
+public class FilterSecurity implements Filter {
+
+  private final static String URL_LOGOUT = "?event=Index";
+
+  private FilterConfig filterConfig = null;
+
+  /* (non-Javadoc)
+   * @see javax.servlet.Filter#init(javax.servlet.FilterConfig)
+   */
+  public void init(FilterConfig arg0) throws ServletException {
+    filterConfig = arg0;
+  }
+
+  /* (non-Javadoc)
+   * @see javax.servlet.Filter#destroy()
+   */
+  public void destroy() {
+  }
+
+  /* (non-Javadoc)
+   * @see javax.servlet.Filter#doFilter(javax.servlet.ServletRequest, javax.servlet.ServletResponse, javax.servlet.FilterChain)
+   */
+  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    BeanGenerique bean = null;
+    HttpServletRequest req = (HttpServletRequest) request;
+    // Lecture du nom du paramètre qui indique si l'evenement à besoin d'une authentification
+    String szInputName = filterConfig.getInitParameter("InputName");
+    String szEventAuthentification = (String)filterConfig.getServletContext().getAttribute(szInputName);
+    // Verifi si il y a besoin d'une authentification
+    if (Boolean.FALSE.toString().equals(szEventAuthentification)) {
+      // Continue si il n'y a pas besoin d'authentification
+      chain.doFilter(request, response);
     }
-
-    public void init(FilterConfig arg0)
-        throws ServletException
-    {
-        filterConfig = arg0;
-    }
-
-    public void destroy()
-    {
-    }
-
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-        throws IOException, ServletException
-    {
-        BeanGenerique bean;
-        HttpServletRequest req;
-        bean = null;
-        req = (HttpServletRequest)request;
-        String szInputName = filterConfig.getInitParameter("InputName");
-        String szEventAuthentification = (String)filterConfig.getServletContext().getAttribute(szInputName);
-        if(Boolean.FALSE.toString().equals(szEventAuthentification))
-        {
-            chain.doFilter(request, response);
-            break MISSING_BLOCK_LABEL_224;
-        }
+    else {
+      try {
         String event = request.getParameter("event");
-        if(event != null && !event.equals(""))
-            bean = (BeanGenerique)req.getSession().getAttribute("BeanAuthentification");
-        break MISSING_BLOCK_LABEL_172;
-        Exception exception;
-        exception;
-        if(bean == null)
-        {
-            String szDefaultUrl = filterConfig.getInitParameter("DefaultUrl");
-            filterConfig.getServletContext().getRequestDispatcher(szDefaultUrl).forward(request, response);
-        } else
-        {
-            chain.doFilter(request, response);
+        /****** Check event ******/
+        if ( (event != null) && (!event.equals(""))) {
+          /****** Looking for Authentification ******/
+          bean = (BeanGenerique) req.getSession().getAttribute("BeanAuthentification");
         }
-        throw exception;
-        if(bean == null)
-        {
-            String szDefaultUrl = filterConfig.getInitParameter("DefaultUrl");
-            filterConfig.getServletContext().getRequestDispatcher(szDefaultUrl).forward(request, response);
-        } else
-        {
-            chain.doFilter(request, response);
+      }
+      finally {
+        if (bean == null) {
+          // Lecture de l'url par defaut si le bean d'authentification n'a pas été trouvé
+          String szDefaultUrl = filterConfig.getInitParameter("DefaultUrl");
+          filterConfig.getServletContext().getRequestDispatcher(szDefaultUrl).forward(request, response); ;
         }
+        else {
+          /****** Authentified Redirection ******/
+          chain.doFilter(request, response);
+        }
+      }
     }
-
-    private static final String URL_LOGOUT = "?event=Index";
-    private FilterConfig filterConfig;
+  }
 }

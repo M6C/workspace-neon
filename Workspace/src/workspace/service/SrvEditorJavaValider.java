@@ -85,11 +85,6 @@ public class SrvEditorJavaValider extends SrvGenerique
         for(int i = 1; i <= nbRow && (line = in.readLine()) != null; i++);
         while((line = in.readLine()) != null) 
             ret.append(line).append("\r\n");
-        break MISSING_BLOCK_LABEL_164;
-        Exception exception;
-        exception;
-        in.close();
-        throw exception;
         in.close();
         return ret.toString();
     }

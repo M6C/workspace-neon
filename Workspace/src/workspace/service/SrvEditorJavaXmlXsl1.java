@@ -120,18 +120,7 @@ public class SrvEditorJavaXmlXsl1 extends SrvGenerique
                                 Source src = new StreamSource(ctx.getResourceAsStream(href));
                                 return src;
                             }
-
-                            final SrvEditorJavaXmlXsl1 this$0;
-                            private final ServletContext val$ctx;
-
-            
-            {
-                this$0 = SrvEditorJavaXmlXsl1.this;
-                ctx = servletcontext;
-                super();
-            }
-                        }
-;
+                        };
                         transformer.setURIResolver(uriResolver);
                         transformer.transform(xmlSource, new StreamResult(strWriter));
                         String xmlResult = strWriter.toString();

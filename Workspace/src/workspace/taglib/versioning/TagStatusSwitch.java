@@ -1,95 +1,165 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   TagStatusSwitch.java
-
 package workspace.taglib.versioning;
 
-import BodyTagSupport;
+import framework.ressource.util.UtilRequest;
+import framework.ressource.util.UtilString;
+import javax.servlet.jsp.tagext.BodyTagSupport;
 import org.netbeans.lib.cvsclient.command.status.StatusInformation;
+import org.w3c.dom.Document;
+import workspace.bean.versioning.BeanCVS;
 
-public class TagStatusSwitch extends BodyTagSupport
-{
+/**
+ * @author  HP_Administrateur
+ */
+public class TagStatusSwitch extends BodyTagSupport {
 
-    public TagStatusSwitch()
-    {
-        throw new Error("Unresolved compilation problems: \n\tThe import javax.servlet.jsp cannot be resolved\n\tBodyTagSupport cannot be resolved to a type\n\tpageContext cannot be resolved\n\tpageContext cannot be resolved\n\tpageContext cannot be resolved\n\tpageContext cannot be resolved\n\tpageContext cannot be resolved\n\tpageContext cannot be resolved\n\tpageContext cannot be resolved\n\tpageContext cannot be resolved\n\tpageContext cannot be resolved\n\tEVAL_BODY_INCLUDE cannot be resolved\n\tEVAL_PAGE cannot be resolved\n");
+  private String path =null;
+  private String application = null;
+  private String name = null;
+  private String scope = null;
+
+  private StatusInformation statusInformation = null;
+  private boolean caseFound = false;
+
+  public TagStatusSwitch() {
+  }
+
+  public int doStartTag() {
+    boolean isShow=false;
+    try {
+      if(UtilString.isNotEmpty(getApplication())&&(UtilString.isNotEmpty(getPath()))) {
+        String szApplication = UtilRequest.replaceParamByRequestValue(getApplication(), pageContext.getRequest(), pageContext.getSession(), "");
+        Document dom = (Document)pageContext.getSession().getAttribute("resultDom");
+        if (UtilString.isNotEmpty(szApplication) && (dom!=null)) {
+          BeanCVS beanCvs = new BeanCVS(dom, szApplication);
+          String szPath = UtilRequest.replaceParamByRequestValue(getPath(), pageContext.getRequest(), pageContext.getSession(), "");
+          if (UtilString.isNotEmpty(szPath)) {
+            StatusInformation[] listStatus = beanCvs.executeStatusInformation(szPath, false, false);
+            if ( (listStatus != null) && (listStatus.length > 0))
+              setStatusInformation(listStatus[0]);
+          }
+        }
+      }
+      else if (UtilString.isNotEmpty(getName())) {
+        String szName = UtilRequest.replaceParamByRequestValue(getName(), pageContext.getRequest(), pageContext.getSession(), "");
+        if (UtilString.isNotEmpty(szName)) {
+          Object status = null;
+          if ("session".equalsIgnoreCase(getScope()))
+            status = pageContext.getSession().getAttribute(szName);
+          else
+            status = pageContext.getRequest().getAttribute(szName);
+          if (status!=null) {
+            if (status instanceof TagStatusList.BeanStatus)
+              setStatusInformation(((TagStatusList.BeanStatus)status).getStatus());
+            else
+            setStatusInformation((StatusInformation)status);
+          }
+        }
+      }
     }
-
-    public int doStartTag()
-    {
-        throw new Error("Unresolved compilation problems: \n\tpageContext cannot be resolved\n\tpageContext cannot be resolved\n\tpageContext cannot be resolved\n\tpageContext cannot be resolved\n\tpageContext cannot be resolved\n\tpageContext cannot be resolved\n\tpageContext cannot be resolved\n\tpageContext cannot be resolved\n\tpageContext cannot be resolved\n\tEVAL_BODY_INCLUDE cannot be resolved\n");
+    catch (Exception ex) {
     }
+    return EVAL_BODY_INCLUDE;
+  }
 
-    public int doEndTag()
-    {
-        throw new Error("Unresolved compilation problem: \n\tEVAL_PAGE cannot be resolved\n");
-    }
+  public int doEndTag() {
+    caseFound = false;
+    return EVAL_PAGE;
+  }
 
-    public void setPath(String path)
-    {
-        throw new Error("Unresolved compilation problem: \n");
-    }
+  /**
+ * @param path  the path to set
+ * @uml.property  name="path"
+ */
+public void setPath(String path) {
+    this.path = path;
+  }
 
-    public void setStatusInformation(StatusInformation statusInformation)
-    {
-        throw new Error("Unresolved compilation problem: \n");
-    }
+  /**
+ * @param statusInformation  the statusInformation to set
+ * @uml.property  name="statusInformation"
+ */
+public void setStatusInformation(StatusInformation statusInformation) {
+    this.statusInformation = statusInformation;
+  }
 
-    public void setApplication(String application)
-    {
-        throw new Error("Unresolved compilation problem: \n");
-    }
+  /**
+ * @param application  the application to set
+ * @uml.property  name="application"
+ */
+public void setApplication(String application) {
+    this.application = application;
+  }
 
-    public void setCaseFound(boolean caseFound)
-    {
-        throw new Error("Unresolved compilation problem: \n");
-    }
+  /**
+ * @param caseFound  the caseFound to set
+ * @uml.property  name="caseFound"
+ */
+public void setCaseFound(boolean caseFound) {
+    this.caseFound = caseFound;
+  }
 
-    public void setName(String name)
-    {
-        throw new Error("Unresolved compilation problem: \n");
-    }
+  /**
+ * @param name  the name to set
+ * @uml.property  name="name"
+ */
+public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setScope(String scope)
-    {
-        throw new Error("Unresolved compilation problem: \n");
-    }
+  /**
+ * @param scope  the scope to set
+ * @uml.property  name="scope"
+ */
+public void setScope(String scope) {
+    this.scope = scope;
+  }
 
-    public String getPath()
-    {
-        throw new Error("Unresolved compilation problem: \n");
-    }
+  /**
+ * @return  the path
+ * @uml.property  name="path"
+ */
+public String getPath() {
+    return path;
+  }
 
-    public StatusInformation getStatusInformation()
-    {
-        throw new Error("Unresolved compilation problem: \n");
-    }
+  /**
+ * @return  the statusInformation
+ * @uml.property  name="statusInformation"
+ */
+public StatusInformation getStatusInformation() {
+    return statusInformation;
+  }
 
-    public String getApplication()
-    {
-        throw new Error("Unresolved compilation problem: \n");
-    }
+  /**
+ * @return  the application
+ * @uml.property  name="application"
+ */
+public String getApplication() {
+    return application;
+  }
 
-    public boolean isCaseFound()
-    {
-        throw new Error("Unresolved compilation problem: \n");
-    }
+  /**
+ * @return  the caseFound
+ * @uml.property  name="caseFound"
+ */
+public boolean isCaseFound() {
+    return caseFound;
+  }
 
-    public String getName()
-    {
-        throw new Error("Unresolved compilation problem: \n");
-    }
+  /**
+ * @return  the name
+ * @uml.property  name="name"
+ */
+public String getName() {
+    return name;
+  }
 
-    public String getScope()
-    {
-        throw new Error("Unresolved compilation problem: \n");
-    }
+  /**
+ * @return  the scope
+ * @uml.property  name="scope"
+ */
+public String getScope() {
+    return scope;
+  }
 
-    private String path;
-    private String application;
-    private String name;
-    private String scope;
-    private StatusInformation statusInformation;
-    private boolean caseFound;
 }

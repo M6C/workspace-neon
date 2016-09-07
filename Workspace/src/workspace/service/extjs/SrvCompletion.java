@@ -60,28 +60,11 @@ public class SrvCompletion extends SrvEditorJavaCompletion
                 }
 
             }
-            break MISSING_BLOCK_LABEL_584;
         }
         catch(Exception ex)
         {
             Trace.ERROR(this, ex);
         }
-        jsonData = (new StringBuilder(String.valueOf(jsonData))).append("]}]").toString();
-        Trace.DEBUG(this, (new StringBuilder("SrvCompletion execute jsonData:")).append(jsonData).toString());
-        OutputStream os = response.getOutputStream();
-        response.setContentType("text/json");
-        os.write(jsonData.getBytes());
-        os.close();
-        break MISSING_BLOCK_LABEL_658;
-        Exception exception;
-        exception;
-        jsonData = (new StringBuilder(String.valueOf(jsonData))).append("]}]").toString();
-        Trace.DEBUG(this, (new StringBuilder("SrvCompletion execute jsonData:")).append(jsonData).toString());
-        OutputStream os = response.getOutputStream();
-        response.setContentType("text/json");
-        os.write(jsonData.getBytes());
-        os.close();
-        throw exception;
         jsonData = (new StringBuilder(String.valueOf(jsonData))).append("]}]").toString();
         Trace.DEBUG(this, (new StringBuilder("SrvCompletion execute jsonData:")).append(jsonData).toString());
         OutputStream os = response.getOutputStream();

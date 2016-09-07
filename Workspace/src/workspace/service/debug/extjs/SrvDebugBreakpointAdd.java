@@ -39,14 +39,6 @@ public class SrvDebugBreakpointAdd extends workspace.service.debug.SrvDebugBreak
             jsonData = (new StringBuilder("{status:'failure',data:[{classname:'',response:'")).append(szText).append("',").append("text:'").append(szText).append("'").append("}]}").toString();
             throw ex;
         }
-        break MISSING_BLOCK_LABEL_249;
-        Exception exception;
-        exception;
-        OutputStream os = response.getOutputStream();
-        response.setContentType("text/json");
-        os.write(jsonData.getBytes());
-        os.close();
-        throw exception;
         OutputStream os = response.getOutputStream();
         response.setContentType("text/json");
         os.write(jsonData.getBytes());

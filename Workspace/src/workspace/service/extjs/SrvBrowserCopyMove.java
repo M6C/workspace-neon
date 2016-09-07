@@ -51,18 +51,11 @@ public class SrvBrowserCopyMove extends SrvGenerique
                 else
                     copy(pathSrcFormated, pathDstFormated);
             }
-            break MISSING_BLOCK_LABEL_278;
         }
         catch(Exception ex)
         {
             Trace.ERROR(this, ex);
         }
-        Trace.DEBUG(this, (new StringBuilder("SrvBrowserCopyMove pathSrc:")).append(pathSrc).append(" pathSrcFormated:").append(pathSrcFormated).append(" pathDst:").append(pathDst).append(" pathDstFormated:").append(pathDstFormated).append(" operation:").append(operation).toString());
-        break MISSING_BLOCK_LABEL_339;
-        Exception exception;
-        exception;
-        Trace.DEBUG(this, (new StringBuilder("SrvBrowserCopyMove pathSrc:")).append(pathSrc).append(" pathSrcFormated:").append(pathSrcFormated).append(" pathDst:").append(pathDst).append(" pathDstFormated:").append(pathDstFormated).append(" operation:").append(operation).toString());
-        throw exception;
         Trace.DEBUG(this, (new StringBuilder("SrvBrowserCopyMove pathSrc:")).append(pathSrc).append(" pathSrcFormated:").append(pathSrcFormated).append(" pathDst:").append(pathDst).append(" pathDstFormated:").append(pathDstFormated).append(" operation:").append(operation).toString());
     }
 

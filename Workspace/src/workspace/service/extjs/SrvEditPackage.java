@@ -27,50 +27,11 @@ public class SrvEditPackage extends SrvEditorJavaPackage
         {
             success = false;
             super.execute(request, response, bean);
-            break MISSING_BLOCK_LABEL_353;
         }
         catch(Exception ex)
         {
             Trace.ERROR(this, ex);
         }
-        String jsonData = null;
-        if(success)
-        {
-            jsonData = "{status:'success',data:[";
-            jsonData = (new StringBuilder(String.valueOf(jsonData))).append("{message:'Package creation successful'}").toString();
-            jsonData = (new StringBuilder(String.valueOf(jsonData))).append("]}").toString();
-        } else
-        {
-            jsonData = "{status:'failure',data:[";
-            jsonData = (new StringBuilder(String.valueOf(jsonData))).append("{message:'Package creation failed'}").toString();
-            jsonData = (new StringBuilder(String.valueOf(jsonData))).append("]}").toString();
-        }
-        Trace.DEBUG(this, (new StringBuilder("execute jsonData:")).append(jsonData).toString());
-        OutputStream os = response.getOutputStream();
-        response.setContentType("text/json");
-        os.write(jsonData.getBytes());
-        os.close();
-        break MISSING_BLOCK_LABEL_514;
-        Exception exception;
-        exception;
-        String jsonData = null;
-        if(success)
-        {
-            jsonData = "{status:'success',data:[";
-            jsonData = (new StringBuilder(String.valueOf(jsonData))).append("{message:'Package creation successful'}").toString();
-            jsonData = (new StringBuilder(String.valueOf(jsonData))).append("]}").toString();
-        } else
-        {
-            jsonData = "{status:'failure',data:[";
-            jsonData = (new StringBuilder(String.valueOf(jsonData))).append("{message:'Package creation failed'}").toString();
-            jsonData = (new StringBuilder(String.valueOf(jsonData))).append("]}").toString();
-        }
-        Trace.DEBUG(this, (new StringBuilder("execute jsonData:")).append(jsonData).toString());
-        OutputStream os = response.getOutputStream();
-        response.setContentType("text/json");
-        os.write(jsonData.getBytes());
-        os.close();
-        throw exception;
         String jsonData = null;
         if(success)
         {

@@ -31,21 +31,6 @@ public class SrvServerCommand extends workspace.service.server.web.SrvServerComm
             success = false;
             throw ex;
         }
-        break MISSING_BLOCK_LABEL_149;
-        Exception exception;
-        exception;
-        String jsonData = null;
-        if(success)
-            jsonData = "{status:'success',data:[";
-        else
-            jsonData = "{status:'failure',data:[";
-        jsonData = (new StringBuilder(String.valueOf(jsonData))).append("{message:'").append(request.getAttribute("msgText")).append("'}").toString();
-        jsonData = (new StringBuilder(String.valueOf(jsonData))).append("]}").toString();
-        OutputStream os = response.getOutputStream();
-        response.setContentType("text/json");
-        os.write(jsonData.getBytes());
-        os.close();
-        throw exception;
         String jsonData = null;
         if(success)
             jsonData = "{status:'success',data:[";

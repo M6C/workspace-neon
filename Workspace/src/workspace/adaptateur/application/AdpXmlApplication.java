@@ -164,16 +164,7 @@ public class AdpXmlApplication extends AdpXml
                     Source src = new StreamSource(ctx.getResourceAsStream(href));
                     return src;
                 }
-
-                private final ServletContext val$ctx;
-
-            
-            {
-                ctx = servletcontext;
-                super();
-            }
-            }
-;
+            };
             UtilXML.tranformeXmlWithXsl(dom, context.getResourceAsStream(szXsl), strWriter, dictionary, uriResolver);
             ret = strWriter.toString();
         }
@@ -242,16 +233,7 @@ public class AdpXmlApplication extends AdpXml
                     Source src = new StreamSource(ctx.getResourceAsStream(href));
                     return src;
                 }
-
-                private final ServletContext val$ctx;
-
-            
-            {
-                ctx = servletcontext;
-                super();
-            }
-            }
-;
+            };
             ret = UtilXML.tranformeXmlWithXslToDom(dom, context.getResourceAsStream(szXsl), dictionary, uriResolver);
         }
         catch(IllegalArgumentException e)
@@ -293,16 +275,7 @@ public class AdpXmlApplication extends AdpXml
                     Source src = new StreamSource(ctx.getResourceAsStream(href));
                     return src;
                 }
-
-                private final ServletContext val$ctx;
-
-            
-            {
-                ctx = servletcontext;
-                super();
-            }
-            }
-;
+            };
             StringWriter strWriter = new StringWriter();
             UtilXML.tranformeXmlWithXsl(dom, context.getResourceAsStream(szXsl), strWriter, dictionary, uriResolver);
             ret = strWriter.toString();
@@ -333,16 +306,7 @@ public class AdpXmlApplication extends AdpXml
                     Source src = new StreamSource(ctx.getResourceAsStream(href));
                     return src;
                 }
-
-                private final ServletContext val$ctx;
-
-            
-            {
-                ctx = servletcontext;
-                super();
-            }
-            }
-;
+            };
             StringWriter strWriter = new StringWriter();
             UtilXML.tranformeXmlWithXsl(dom, context.getResourceAsStream(szXsl), strWriter, dictionary, uriResolver);
             ret = strWriter.toString();
@@ -374,16 +338,7 @@ public class AdpXmlApplication extends AdpXml
                     Source src = new StreamSource(ctx.getResourceAsStream(href));
                     return src;
                 }
-
-                private final ServletContext val$ctx;
-
-            
-            {
-                ctx = servletcontext;
-                super();
-            }
-            }
-;
+            };
             StringWriter strWriter = new StringWriter();
             UtilXML.tranformeXmlWithXsl(dom, context.getResourceAsStream(szXsl), strWriter, dictionary, uriResolver);
             ret = strWriter.toString();
@@ -415,16 +370,7 @@ public class AdpXmlApplication extends AdpXml
                     Source src = new StreamSource(ctx.getResourceAsStream(href));
                     return src;
                 }
-
-                private final ServletContext val$ctx;
-
-            
-            {
-                ctx = servletcontext;
-                super();
-            }
-            }
-;
+            };
             StringWriter strWriter = new StringWriter();
             UtilXML.tranformeXmlWithXsl(dom, context.getResourceAsStream(szXsl), strWriter, dictionary, uriResolver);
             ret = strWriter.toString();

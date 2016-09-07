@@ -1,98 +1,98 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   SrvCVSIgnoreAdd.java
-
 package workspace.service.versioning;
 
-import framework.beandata.BeanGenerique;
-import framework.ressource.util.UtilString;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.Iterator;
 import java.util.LinkedList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-// Referenced classes of package workspace.service.versioning:
-//            SrvCVS
+import framework.beandata.BeanGenerique;
+import framework.ressource.util.UtilString;
 
-public class SrvCVSIgnoreAdd extends SrvCVS
-{
+/**
+ * @author rocada
+ *
+ * Pour changer le modèle de ce commentaire de type gamp;eacute;namp;eacute;ramp;eacute;, allez à :
+ * Fenêtre&gt;Pramp;eacute;famp;eacute;rences&gt;Java&gt;Gamp;eacute;namp;eacute;ration de code&gt;Code et commentaires
+ */
+public class SrvCVSIgnoreAdd extends SrvCVS {
 
-    public SrvCVSIgnoreAdd()
-    {
-    }
+  /**
+   * (non-Javadoc)
+   * @see framework.service.SrvDatabase#execute(framework.beandata.BeanDatabase)
+   */
+  public void execute(HttpServletRequest req, HttpServletResponse res, BeanGenerique bean) throws Exception {
+    try {
+      String fileName = (String) bean.get("fileName"); //"aMessage";
 
-    public void execute(HttpServletRequest req, HttpServletResponse res, BeanGenerique bean)
-        throws Exception
-    {
-        File file;
-        File fileIgnore;
-        LinkedList list;
-        FileReader fr;
-        BufferedReader br;
-        String fileName = (String)bean.get("fileName");
-        init(req, bean);
-        if(!UtilString.isNotEmpty(fileName))
-            break MISSING_BLOCK_LABEL_360;
-        file = new File(new File(getLocalDirectory(), getRepository()), fileName);
+      init(req, bean);
+
+      if (UtilString.isNotEmpty(fileName)) {
+        File file = new File(new File(getLocalDirectory(), getRepository()), fileName);
         File fileParent = file.getParentFile();
-        fileIgnore = new File(fileParent, ".cvsignore");
-        list = new LinkedList();
-        if(!fileIgnore.exists())
-        {
-            fileIgnore.createNewFile();
-            break MISSING_BLOCK_LABEL_203;
+        File fileIgnore = new File(fileParent, ".cvsignore");
+        LinkedList list = new LinkedList();
+        if (!fileIgnore.exists()) {
+          /**
+           * Create a new ignored file
+           */
+          fileIgnore.createNewFile();
         }
-        fr = null;
-        br = null;
-        fr = new FileReader(fileIgnore);
-        br = new BufferedReader(fr);
-        for(String line = br.readLine(); line != null; line = br.readLine())
-            list.add(line);
-
-        break MISSING_BLOCK_LABEL_183;
-        Exception exception;
-        exception;
-        if(br != null)
-            br.close();
-        if(fr != null)
-            fr.close();
-        throw exception;
-        if(br != null)
-            br.close();
-        if(fr != null)
-            fr.close();
-        FileWriter fw;
-        BufferedWriter bw;
-        if(list.contains(file.getName()))
-            break MISSING_BLOCK_LABEL_360;
-        fw = null;
-        bw = null;
-        fw = new FileWriter(fileIgnore);
-        bw = new BufferedWriter(fw);
-        for(Iterator it = list.iterator(); it.hasNext(); bw.newLine())
-            bw.write(it.next().toString());
-
-        bw.write(file.getName());
-        bw.newLine();
-        break MISSING_BLOCK_LABEL_327;
-        exception;
-        if(bw != null)
-            bw.close();
-        if(fw != null)
-            fw.close();
-        throw exception;
-        if(bw != null)
-            bw.close();
-        if(fw != null)
-            fw.close();
-        break MISSING_BLOCK_LABEL_360;
-        Exception exception1;
-        exception1;
-        traceBuffer(req);
-        throw exception1;
-        traceBuffer(req);
-        return;
+        else {
+          /**
+           * Read ingored filename from ignored file
+           */
+          FileReader fr = null;
+          BufferedReader br = null;
+          try {
+            fr = new FileReader(fileIgnore);
+            br = new BufferedReader(fr);
+            String line = br.readLine();
+            while (line != null) {
+              list.add(line);
+              line = br.readLine();
+            }
+          }
+          finally {
+            if (br!=null)
+              br.close();
+            if (fr!=null)
+              fr.close();
+          }
+        }
+        /**
+         * Write ingored filename in ignored file
+         */
+        if (!list.contains(file.getName())) {
+          FileWriter fw = null;
+          BufferedWriter bw = null;
+          try {
+            fw = new FileWriter(fileIgnore);
+            bw = new BufferedWriter(fw);
+            Iterator it = list.iterator();
+            while(it.hasNext()) {
+              bw.write(it.next().toString());
+              bw.newLine();
+            }
+            bw.write(file.getName());
+            bw.newLine();
+          }
+          finally {
+            if (bw != null)
+              bw.close();
+            if (fw != null)
+              fw.close();
+          }
+        }
+      }
     }
+    finally {
+      traceBuffer(req);
+    }
+  }
 }

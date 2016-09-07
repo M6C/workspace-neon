@@ -50,16 +50,7 @@ public class AdpXmlHibernate
                     Source src = new StreamSource(ctx.getResourceAsStream(href));
                     return src;
                 }
-
-                private final ServletContext val$ctx;
-
-            
-            {
-                ctx = servletcontext;
-                super();
-            }
-            }
-;
+            };
             UtilXML.tranformeXmlWithXsl(dom, context.getResourceAsStream(szXsl), strWriter, dictionary, uriResolver);
             ret = strWriter.toString();
         }
@@ -89,16 +80,7 @@ public class AdpXmlHibernate
                     Source src = new StreamSource(ctx.getResourceAsStream(href));
                     return src;
                 }
-
-                private final ServletContext val$ctx;
-
-            
-            {
-                ctx = servletcontext;
-                super();
-            }
-            }
-;
+            };
             UtilXML.tranformeXmlWithXsl(dom, context.getResourceAsStream(szXsl), strWriter, dictionary, uriResolver);
             ret = strWriter.toString();
         }
@@ -128,16 +110,7 @@ public class AdpXmlHibernate
                     Source src = new StreamSource(ctx.getResourceAsStream(href));
                     return src;
                 }
-
-                private final ServletContext val$ctx;
-
-            
-            {
-                ctx = servletcontext;
-                super();
-            }
-            }
-;
+            };
             UtilXML.tranformeXmlWithXsl(dom, context.getResourceAsStream(szXsl), strWriter, dictionary, uriResolver);
             ret = strWriter.toString();
         }

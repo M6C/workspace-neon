@@ -1,292 +1,158 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   SrvEditorJavaSplitFile.java
-
+/*
+ * Cramp;eacute;amp;eacute; le 23 juil. 2004
+ *
+ * Pour changer le modèle de ce fichier gamp;eacute;namp;eacute;ramp;eacute;, allez à :
+ * Fenêtre&gt;Pramp;eacute;famp;eacute;rences&gt;Java&gt;Gamp;eacute;namp;eacute;ration de code&gt;Code et commentaires
+ */
 package workspace.service;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Vector;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.URIResolver;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+
+import org.w3c.dom.Document;
+
+import workspace.adaptateur.application.AdpXmlApplication;
+import workspace.util.UtilPath;
 import framework.beandata.BeanGenerique;
+import framework.ressource.util.UtilBuildJar;
+import framework.ressource.util.UtilFile;
+import framework.ressource.util.UtilRequest;
+import framework.ressource.util.UtilSafe;
 import framework.ressource.util.UtilString;
+import framework.ressource.util.UtilVector;
+import framework.ressource.util.UtilXML;
 import framework.service.SrvGenerique;
 import framework.trace.Trace;
-import java.io.*;
-import java.text.DecimalFormat;
-import java.util.Vector;
-import javax.servlet.ServletContext;
-import javax.servlet.http.*;
-import org.w3c.dom.Document;
-import workspace.util.UtilPath;
 
-public class SrvEditorJavaSplitFile extends SrvGenerique
-{
+/**
+ * @author rocada
+ *
+ * Pour changer le modèle de ce commentaire de type gamp;eacute;namp;eacute;ramp;eacute;, allez à :
+ * Fenêtre&gt;Pramp;eacute;famp;eacute;rences&gt;Java&gt;Gamp;eacute;namp;eacute;ration de code&gt;Code et commentaires
+ */
+public class SrvEditorJavaSplitFile extends SrvGenerique {
 
-    public SrvEditorJavaSplitFile()
-    {
+   final static private int ARRAY_SIZE = 10240;
+
+   /* (non-Javadoc)
+   * @see framework.service.SrvGenerique#execute(framework.beandata.BeanDatabase)
+   */
+  public void execute(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean) throws Exception {
+    HttpSession session = request.getSession();
+    ServletContext context = session.getServletContext();
+    String application = (String)bean.getParameterDataByName("application");
+    String pathFile = (String)bean.getParameterDataByName("pathFile");
+    String pathDestination = (String)bean.getParameterDataByName("pathDestination");
+    String lineNumber = (String)bean.getParameterDataByName("lineNumber");
+    if (UtilString.isNotEmpty(application) &&
+        UtilString.isNotEmpty(pathFile) &&
+        UtilString.isNotEmpty(lineNumber)
+       ) {
+      try {
+          Document dom = (Document)session.getAttribute("resultDom");
+    	  pathFile = UtilPath.formatPath(dom, pathFile, ';');
+    	  Vector fileList = new Vector();
+          File fLst = new File(pathFile);
+          try {
+            if (fLst.exists() && fLst.isFile()) {
+              File fIn = null;
+              File fOut = null;
+              FileInputStream fInLst = new FileInputStream(fLst);
+              DataInputStream dInLst = new DataInputStream(fInLst);
+              FileOutputStream fOutStream = null;
+              DataOutputStream dOutStream = null;
+              try {
+                fOutStream = null;
+                dOutStream = null;
+                String text = null;
+                int iLineNumber = Integer.parseInt(lineNumber);
+                int line = 0, fileCount = 0;
+                while ((text=dInLst.readLine())!=null) {
+                	line += 1;
+                    if (fOut==null || line>=iLineNumber) {
+                    	if (dOutStream != null)
+                    		try {dOutStream.close();} catch (IOException ex) {Trace.ERROR(this, ex);}
+                    	if (fOutStream != null)
+                    		try {fOutStream.close();} catch (IOException ex) {Trace.ERROR(this, ex);}
+                    	String fileNameOut;
+                		int idx1 = pathFile.lastIndexOf("\\");
+                		int idx2 = pathFile.lastIndexOf("/");
+                		int idx = (idx1>idx2) ? idx1 : idx2;
+                		String sep = String.valueOf((idx1>idx2) ? '\\' : '/');
+                    	if (UtilString.isNotEmpty(pathDestination)) {
+                    		fileNameOut = pathDestination;
+                    		if (!pathDestination.endsWith(sep))
+                    			fileNameOut += sep;
+                    	}
+                    	else {
+                    		if (idx>0)
+                    			fileNameOut = pathFile.substring(0, idx+1);
+                    		else
+                    			fileNameOut = sep;
+                    	}
+                    	fileNameOut += new DecimalFormat("000000").format(fileCount);
+                    	fileNameOut += pathFile.substring(pathFile.lastIndexOf(sep)+1, pathFile.length());
+                    	fOut = new File(fileNameOut);
+						fOutStream = new FileOutputStream(fOut);
+						dOutStream = new DataOutputStream(fOutStream);
+						fileList.add(fOut);
+						fileCount += 1;
+						line = 0;
+                    }
+                    text += "\r\n";
+                    dOutStream.write(text.getBytes());
+                    // flush buffer
+                    dOutStream.flush();
+                }
+              }
+              catch (FileNotFoundException ex) {
+                Trace.ERROR(this, ex);
+              }
+              catch (IOException ex) {
+                Trace.ERROR(this, ex);
+              }
+              finally {
+                if (dOutStream != null)
+                  try {dOutStream.close();} catch (IOException ex) {Trace.ERROR(this, ex);}
+                if (fOutStream != null)
+                  try {fOutStream.close();} catch (IOException ex) {Trace.ERROR(this, ex);}
+                if (dInLst != null)
+                  try {dInLst.close();} catch (IOException ex) {Trace.ERROR(this, ex);}
+                if (fInLst != null)
+                  try {fInLst.close();} catch (IOException ex) {Trace.ERROR(this, ex);}
+                request.setAttribute("fileList", fileList);
+              }
+            }
+          }
+          catch (Exception ex) {
+            Trace.ERROR(this, ex);
+          }
+      }
+      catch(Exception ex){
+        Trace.ERROR(this, ex);//new PrintWriter(out));
+      }
     }
-
-    public void execute(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean)
-        throws Exception
-    {
-        HttpSession session;
-        String application;
-        String pathFile;
-        String pathDestination;
-        String lineNumber;
-        session = request.getSession();
-        ServletContext context = session.getServletContext();
-        application = (String)bean.getParameterDataByName("application");
-        pathFile = (String)bean.getParameterDataByName("pathFile");
-        pathDestination = (String)bean.getParameterDataByName("pathDestination");
-        lineNumber = (String)bean.getParameterDataByName("lineNumber");
-        if(!UtilString.isNotEmpty(application) || !UtilString.isNotEmpty(pathFile) || !UtilString.isNotEmpty(lineNumber))
-            break MISSING_BLOCK_LABEL_1052;
-        Vector fileList;
-        File fLst;
-        Document dom = (Document)session.getAttribute("resultDom");
-        pathFile = (new StringBuilder("[")).append(application).append("]").append(pathFile).toString();
-        pathFile = UtilPath.formatPath(dom, pathFile, ';');
-        pathDestination = (new StringBuilder("[")).append(application).append("]").append(pathDestination).toString();
-        pathDestination = UtilPath.formatPath(dom, pathDestination, ';');
-        fileList = new Vector();
-        fLst = new File(pathFile);
-        File fOut;
-        FileInputStream fInLst;
-        DataInputStream dInLst;
-        FileOutputStream fOutStream;
-        DataOutputStream dOutStream;
-        if(!fLst.exists() || !fLst.isFile())
-            break MISSING_BLOCK_LABEL_1052;
-        File fIn = null;
-        fOut = null;
-        fInLst = new FileInputStream(fLst);
-        dInLst = new DataInputStream(fInLst);
-        fOutStream = null;
-        dOutStream = null;
-        fOutStream = null;
-        dOutStream = null;
-        String text = null;
-        int iLineNumber = Integer.parseInt(lineNumber);
-        int line = 0;
-        int fileCount = 0;
-        while((text = dInLst.readLine()) != null) 
-        {
-            line++;
-            if(fOut == null || line >= iLineNumber)
-            {
-                if(dOutStream != null)
-                    try
-                    {
-                        dOutStream.close();
-                    }
-                    catch(IOException ex)
-                    {
-                        Trace.ERROR(this, ex);
-                    }
-                if(fOutStream != null)
-                    try
-                    {
-                        fOutStream.close();
-                    }
-                    catch(IOException ex)
-                    {
-                        Trace.ERROR(this, ex);
-                    }
-                int idx1 = pathFile.lastIndexOf("\\");
-                int idx2 = pathFile.lastIndexOf("/");
-                int idx = idx1 <= idx2 ? idx2 : idx1;
-                String sep = String.valueOf(idx1 <= idx2 ? '/' : '\\');
-                String fileNameOut;
-                if(UtilString.isNotEmpty(pathDestination))
-                {
-                    fileNameOut = pathDestination;
-                    if(!pathDestination.endsWith(sep))
-                        fileNameOut = (new StringBuilder(String.valueOf(fileNameOut))).append(sep).toString();
-                } else
-                if(idx > 0)
-                    fileNameOut = pathFile.substring(0, idx + 1);
-                else
-                    fileNameOut = sep;
-                fileNameOut = (new StringBuilder(String.valueOf(fileNameOut))).append((new DecimalFormat("000000")).format(fileCount)).toString();
-                fileNameOut = (new StringBuilder(String.valueOf(fileNameOut))).append(pathFile.substring(pathFile.lastIndexOf(sep) + 1, pathFile.length())).toString();
-                fOut = new File(fileNameOut);
-                fOutStream = new FileOutputStream(fOut);
-                dOutStream = new DataOutputStream(fOutStream);
-                fileList.add(fOut);
-                fileCount++;
-                line = 0;
-            }
-            text = (new StringBuilder(String.valueOf(text))).append("\r\n").toString();
-            dOutStream.write(text.getBytes());
-            dOutStream.flush();
-        }
-        break MISSING_BLOCK_LABEL_936;
-        FileNotFoundException ex;
-        ex;
-        Trace.ERROR(this, ex);
-        if(dOutStream != null)
-            try
-            {
-                dOutStream.close();
-            }
-            catch(IOException ex)
-            {
-                Trace.ERROR(this, ex);
-            }
-        if(fOutStream != null)
-            try
-            {
-                fOutStream.close();
-            }
-            catch(IOException ex)
-            {
-                Trace.ERROR(this, ex);
-            }
-        if(dInLst != null)
-            try
-            {
-                dInLst.close();
-            }
-            catch(IOException ex)
-            {
-                Trace.ERROR(this, ex);
-            }
-        if(fInLst != null)
-            try
-            {
-                fInLst.close();
-            }
-            catch(IOException ex)
-            {
-                Trace.ERROR(this, ex);
-            }
-        request.setAttribute("fileList", fileList);
-        break MISSING_BLOCK_LABEL_1052;
-        ex;
-        Trace.ERROR(this, ex);
-        if(dOutStream != null)
-            try
-            {
-                dOutStream.close();
-            }
-            catch(IOException ex)
-            {
-                Trace.ERROR(this, ex);
-            }
-        if(fOutStream != null)
-            try
-            {
-                fOutStream.close();
-            }
-            catch(IOException ex)
-            {
-                Trace.ERROR(this, ex);
-            }
-        if(dInLst != null)
-            try
-            {
-                dInLst.close();
-            }
-            catch(IOException ex)
-            {
-                Trace.ERROR(this, ex);
-            }
-        if(fInLst != null)
-            try
-            {
-                fInLst.close();
-            }
-            catch(IOException ex)
-            {
-                Trace.ERROR(this, ex);
-            }
-        request.setAttribute("fileList", fileList);
-        break MISSING_BLOCK_LABEL_1052;
-        Exception exception;
-        exception;
-        if(dOutStream != null)
-            try
-            {
-                dOutStream.close();
-            }
-            catch(IOException ex)
-            {
-                Trace.ERROR(this, ex);
-            }
-        if(fOutStream != null)
-            try
-            {
-                fOutStream.close();
-            }
-            catch(IOException ex)
-            {
-                Trace.ERROR(this, ex);
-            }
-        if(dInLst != null)
-            try
-            {
-                dInLst.close();
-            }
-            catch(IOException ex)
-            {
-                Trace.ERROR(this, ex);
-            }
-        if(fInLst != null)
-            try
-            {
-                fInLst.close();
-            }
-            catch(IOException ex)
-            {
-                Trace.ERROR(this, ex);
-            }
-        request.setAttribute("fileList", fileList);
-        throw exception;
-        if(dOutStream != null)
-            try
-            {
-                dOutStream.close();
-            }
-            catch(IOException ex)
-            {
-                Trace.ERROR(this, ex);
-            }
-        if(fOutStream != null)
-            try
-            {
-                fOutStream.close();
-            }
-            catch(IOException ex)
-            {
-                Trace.ERROR(this, ex);
-            }
-        if(dInLst != null)
-            try
-            {
-                dInLst.close();
-            }
-            catch(IOException ex)
-            {
-                Trace.ERROR(this, ex);
-            }
-        if(fInLst != null)
-            try
-            {
-                fInLst.close();
-            }
-            catch(IOException ex)
-            {
-                Trace.ERROR(this, ex);
-            }
-        request.setAttribute("fileList", fileList);
-        break MISSING_BLOCK_LABEL_1052;
-        Exception ex;
-        ex;
-        Trace.ERROR(this, ex);
-        break MISSING_BLOCK_LABEL_1052;
-        Exception ex;
-        ex;
-        Trace.ERROR(this, ex);
-    }
-
-    private static final int ARRAY_SIZE = 10240;
+  }
 }

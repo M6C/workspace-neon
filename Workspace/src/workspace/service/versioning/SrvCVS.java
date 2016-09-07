@@ -1,14 +1,16 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   SrvCVS.java
-
+/*
+ * Cramp;eacute;amp;eacute; le 23 juil. 2004
+ *
+ * Pour changer le modèle de ce fichier gamp;eacute;namp;eacute;ramp;eacute;, allez à :
+ * Fenêtre&gt;Pramp;eacute;famp;eacute;rences&gt;Java&gt;Gamp;eacute;namp;eacute;ration de code&gt;Code et commentaires
+ */
 package workspace.service.versioning;
 
 import framework.beandata.BeanGenerique;
 import framework.ressource.util.UtilEncoder;
 import framework.service.SrvGenerique;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.naming.NoInitialContextException;
@@ -19,162 +21,160 @@ import org.netbeans.lib.cvsclient.connection.AuthenticationException;
 import org.netbeans.lib.cvsclient.connection.PServerConnection;
 import workspace.bean.versioning.BeanCVS;
 
-public class SrvCVS extends SrvGenerique
-{
+/**
+ * @author  rocada  Pour changer le modèle de ce commentaire de type gamp;eacute;namp;eacute;ramp;eacute;, allez à :  Fenêtre&gt;Pramp;eacute;famp;eacute;rences&gt;Java&gt;Gamp;eacute;namp;eacute;ration de code&gt;Code et commentaires
+ */
+public class SrvCVS extends SrvGenerique {
 
-    public SrvCVS()
-    {
-        beanCVS = null;
-        traceBuffer = new StringBuffer();
+  protected BeanCVS beanCVS = null;
+
+  protected StringBuffer traceBuffer = new StringBuffer();
+
+  public SrvCVS() {
+  }
+
+  protected void init(HttpServletRequest request, BeanGenerique bean) throws IOException, IllegalArgumentException, NoInitialContextException {
+    beanCVS = new BeanCVS(request, bean);
+  }
+
+  protected ArrayList excludeCVSDirectory(Iterator vFile) {
+    return beanCVS.excludeCVSDirectory(vFile);
+  }
+
+  protected ArrayList excludeFile(Iterator vFile) {
+    return beanCVS.excludeFile(vFile);
+  }
+
+  /**
+   * Initialisation dans la requette de l'utilisateur la trace de l'exception, par le paramètre 'jcvsErrorMessage'.
+   * @param request Requette de l'utilisateur
+   * @param ex Exception qui contient la trace
+   */
+  protected void traceBuffer(HttpServletRequest request) {
+    try {
+      request.setAttribute("jcvsErrorMessage", UtilEncoder.encodeHTML(traceBuffer.toString()));
     }
-
-    protected void init(HttpServletRequest request, BeanGenerique bean)
-        throws IOException, IllegalArgumentException, NoInitialContextException
-    {
-        beanCVS = new BeanCVS(request, bean);
+    catch (Exception ex) {
+      traceException(request, ex);
     }
+  }
 
-    protected ArrayList excludeCVSDirectory(Iterator vFile)
-    {
-        return beanCVS.excludeCVSDirectory(vFile);
+  /**
+   * Initialisation dans la requette de l'utilisateur la trace de l'exception, par le paramètre 'jcvsErrorMessage'.
+   * @param request Requette de l'utilisateur
+   * @param trace Trace de l'utilisateur
+   * @param ex Exception qui contient la trace
+   */
+  protected void traceBuffer(HttpServletRequest request, String trace) {
+    try {
+      request.setAttribute("jcvsErrorMessage", UtilEncoder.encodeHTML(trace));
     }
-
-    protected ArrayList excludeFile(Iterator vFile)
-    {
-        return beanCVS.excludeFile(vFile);
+    catch (Exception ex) {
+      traceException(request, ex);
     }
+  }
 
-    protected void traceBuffer(HttpServletRequest request)
-    {
-        try
-        {
-            request.setAttribute("jcvsErrorMessage", UtilEncoder.encodeHTML(traceBuffer.toString()));
-        }
-        catch(Exception ex)
-        {
-            traceException(request, ex);
-        }
+  /**
+   * Initialisation dans la requette de l'utilisateur la trace de l'exception, par le paramètre 'jcvsErrorMessage'.
+   * @param request Requette de l'utilisateur
+   * @param ex Exception qui contient la trace
+   */
+  protected void traceException(HttpServletRequest request, Exception ex) {
+    try {
+      traceExceptionInBuffer(request, ex);
+      request.setAttribute("jcvsErrorMessage", "ERROR:" + UtilEncoder.encodeHTML(traceBuffer.toString()));
     }
+    catch (Exception ex1) {}
+  }
 
-    protected void traceBuffer(HttpServletRequest request, String trace)
-    {
-        try
-        {
-            request.setAttribute("jcvsErrorMessage", UtilEncoder.encodeHTML(trace));
-        }
-        catch(Exception ex)
-        {
-            traceException(request, ex);
-        }
+  /**
+   * Initialisation dans l'attribut 'traceBuffer' la trace de l'exception, par le paramètre 'jcvsErrorMessage'.
+   * @param request Requette de l'utilisateur
+   * @param ex Exception qui contient la trace
+   */
+  protected void traceExceptionInBuffer(HttpServletRequest request, Exception ex) {
+    try {
+      java.io.StringWriter strW = new java.io.StringWriter();
+      ex.printStackTrace(new java.io.PrintWriter(strW));
+      traceBuffer.append("\r\n").append("ERROR:").append(strW.toString()).append("\r\n");
     }
+    catch (Exception ex1) {}
+  }
 
-    protected void traceException(HttpServletRequest request, Exception ex)
-    {
-        try
-        {
-            traceExceptionInBuffer(request, ex);
-            request.setAttribute("jcvsErrorMessage", (new StringBuilder("ERROR:")).append(UtilEncoder.encodeHTML(traceBuffer.toString())).toString());
-        }
-        catch(Exception exception) { }
+  /**
+   * Log la trace de l'exception.
+   * @param file Fichier dans lequel la trace va être inscrite
+   * @param ex Exception qui contient la trace
+   */
+  protected void traceException(File file, Exception ex) {
+    try {
+      java.io.StringWriter strW = new java.io.StringWriter();
+      java.io.FileWriter fileW = new java.io.FileWriter(file);
+      ex.printStackTrace(new java.io.PrintWriter(strW));
+      fileW.write(strW.toString());
+      fileW.flush();
+      fileW.close();
     }
+    catch (Exception ex1) {}
+  }
 
-    protected void traceExceptionInBuffer(HttpServletRequest request, Exception ex)
-    {
-        try
-        {
-            StringWriter strW = new StringWriter();
-            ex.printStackTrace(new PrintWriter(strW));
-            traceBuffer.append("\r\n").append("ERROR:").append(strW.toString()).append("\r\n");
-        }
-        catch(Exception exception) { }
-    }
+  protected PServerConnection newPServerConnection() throws CommandAbortedException, AuthenticationException {
+    return beanCVS.newPServerConnection();
+  }
 
-    protected void traceException(File file, Exception ex)
-    {
-        try
-        {
-            StringWriter strW = new StringWriter();
-            FileWriter fileW = new FileWriter(file);
-            ex.printStackTrace(new PrintWriter(strW));
-            fileW.write(strW.toString());
-            fileW.flush();
-            fileW.close();
-        }
-        catch(Exception exception) { }
-    }
+  protected Client newClient() throws AuthenticationException, CommandAbortedException {
+    return beanCVS.newClient();
+  }
 
-    protected PServerConnection newPServerConnection()
-        throws CommandAbortedException, AuthenticationException
-    {
-        return beanCVS.newPServerConnection();
-    }
+  protected Client newClient(PServerConnection c) {
+    return beanCVS.newClient(c);
+  }
 
-    protected Client newClient()
-        throws AuthenticationException, CommandAbortedException
-    {
-        return beanCVS.newClient();
-    }
+  public String getApplication() {
+    return beanCVS.getApplication();
+  }
 
-    protected Client newClient(PServerConnection c)
-    {
-        return beanCVS.newClient(c);
-    }
+  public String getEncodedPassword() {
+    return beanCVS.getEncodedPassword();
+  }
 
-    public String getApplication()
-    {
-        return beanCVS.getApplication();
-    }
+  public String getPort() {
+    return beanCVS.getPort();
+  }
 
-    public String getEncodedPassword()
-    {
-        return beanCVS.getEncodedPassword();
-    }
+  public String getRepository() {
+    return beanCVS.getRepository();
+  }
 
-    public String getPort()
-    {
-        return beanCVS.getPort();
-    }
+  /**
+ * @return  the traceBuffer
+ * @uml.property  name="traceBuffer"
+ */
+public StringBuffer getTraceBuffer() {
+    return beanCVS.getTraceBuffer();
+  }
 
-    public String getRepository()
-    {
-        return beanCVS.getRepository();
-    }
+  public String getHostname() {
+    return beanCVS.getHostname();
+  }
 
-    public StringBuffer getTraceBuffer()
-    {
-        return beanCVS.getTraceBuffer();
-    }
+  public String getLocalDirectory() {
+    return beanCVS.getLocalDirectory();
+  }
 
-    public String getHostname()
-    {
-        return beanCVS.getHostname();
-    }
+  public String getRootDirectory() {
+    return beanCVS.getRootDirectory();
+  }
 
-    public String getLocalDirectory()
-    {
-        return beanCVS.getLocalDirectory();
-    }
+  public File getFilePathMain() {
+    return beanCVS.getFilePathMain();
+  }
 
-    public String getRootDirectory()
-    {
-        return beanCVS.getRootDirectory();
-    }
+  public String getUserName() {
+    return beanCVS.getUserName();
+  }
 
-    public File getFilePathMain()
-    {
-        return beanCVS.getFilePathMain();
-    }
-
-    public String getUserName()
-    {
-        return beanCVS.getUserName();
-    }
-
-    public String getPassword()
-    {
-        return beanCVS.getPassword();
-    }
-
-    protected BeanCVS beanCVS;
-    protected StringBuffer traceBuffer;
+  public String getPassword() {
+    return beanCVS.getPassword();
+  }
 }

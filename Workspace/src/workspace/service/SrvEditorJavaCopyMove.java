@@ -43,134 +43,75 @@ public class SrvEditorJavaCopyMove extends SrvGenerique
         }
     }
 
-    protected static boolean copy(File fileSrc, File fileDst)
-    {
-        return copy(fileSrc, fileDst, null);
-    }
+	/** copie le fichier source dans le fichier resultat
+	 * retourne vrai si cela ramp;eacute;ussit
+	 */
+	protected static boolean copy(File fileSrc, File fileDst) {
+		return copy(fileSrc, fileDst, null);
+	}
 
-    protected static boolean copy(File fileSrc, File fileDst, String nameDst)
-    {
-        boolean resultat;
-        FileInputStream sourceFile;
-        FileOutputStream destinationFile;
-        resultat = false;
-        sourceFile = null;
-        destinationFile = null;
-        if(!fileSrc.exists())
-            break MISSING_BLOCK_LABEL_291;
-        if(!fileSrc.isFile())
-            break MISSING_BLOCK_LABEL_254;
-        try
-        {
-            if(fileDst.isDirectory() && (fileDst.exists() || fileDst.mkdirs()))
-            {
-                String fileName = nameDst == null ? UtilFile.fileName(fileSrc.getCanonicalPath()) : nameDst;
-                fileDst = new File(UtilFile.formatPath(fileDst.getCanonicalPath(), fileName));
-            }
-            fileDst.createNewFile();
-            sourceFile = new FileInputStream(fileSrc);
-            destinationFile = new FileOutputStream(fileDst);
-            byte buffer[] = new byte[0x80000];
-            int nbLecture;
-            while((nbLecture = sourceFile.read(buffer)) != -1) 
-                destinationFile.write(buffer, 0, nbLecture);
-            resultat = true;
-        }
-        catch(FileNotFoundException filenotfoundexception)
-        {
-            try
-            {
-                sourceFile.close();
-            }
-            catch(Exception e)
-            {
-                resultat = false;
-            }
-            try
-            {
-                destinationFile.close();
-            }
-            catch(Exception e)
-            {
-                resultat = false;
-            }
-            break MISSING_BLOCK_LABEL_291;
-        }
-        catch(IOException ioexception)
-        {
-            try
-            {
-                sourceFile.close();
-            }
-            catch(Exception e)
-            {
-                resultat = false;
-            }
-            try
-            {
-                destinationFile.close();
-            }
-            catch(Exception e)
-            {
-                resultat = false;
-            }
-            break MISSING_BLOCK_LABEL_291;
-        }
-        break MISSING_BLOCK_LABEL_227;
-        Exception exception;
-        exception;
-        try
-        {
-            sourceFile.close();
-        }
-        catch(Exception e)
-        {
-            resultat = false;
-        }
-        try
-        {
-            destinationFile.close();
-        }
-        catch(Exception e)
-        {
-            resultat = false;
-        }
-        throw exception;
-        try
-        {
-            sourceFile.close();
-        }
-        catch(Exception e)
-        {
-            resultat = false;
-        }
-        try
-        {
-            destinationFile.close();
-        }
-        catch(Exception e)
-        {
-            resultat = false;
-        }
-        break MISSING_BLOCK_LABEL_291;
-        File files[] = fileSrc.listFiles();
-        resultat = true;
-        for(int i = 0; i < files.length; i++)
-            resultat &= copy(files[i], fileDst);
+	/** copie le fichier source dans le fichier resultat
+	 * retourne vrai si cela ramp;eacute;ussit
+	 */
+	protected static boolean copy(File fileSrc, File fileDst, String nameDst) {
+		boolean resultat = false;
 
-        return resultat;
-    }
+		// Declaration des flux
+		FileInputStream sourceFile = null;
+		FileOutputStream destinationFile = null;
+		if (fileSrc.exists()) {
+			if (fileSrc.isFile()) {
+				try {
+					if (fileDst.isDirectory() && (fileDst.exists() || fileDst.mkdirs())) {
+                                          String fileName = (nameDst!=null) ? nameDst : UtilFile.fileName(fileSrc.getCanonicalPath());
+                                          fileDst = new File(UtilFile.formatPath(fileDst.getCanonicalPath(), fileName));
+                                        }
 
-    protected static boolean move(File source, File destination)
-    {
-        return move(source, destination, null);
-    }
+                                        // Cramp;eacute;ation du fichier :
+                                        fileDst.createNewFile();
 
-    protected static boolean move(File source, File destination, String nameDst)
-    {
-        boolean result = copy(source, destination, nameDst);
-        if(result)
-            result &= source.delete();
-        return result;
-    }
+                                        // Ouverture des flux
+                                        sourceFile = new FileInputStream(fileSrc);
+                                        destinationFile = new FileOutputStream(fileDst);
+
+                                        // Lecture par segment de 0.5Mo
+                                        byte buffer[] = new byte[512 * 1024];
+                                        int nbLecture;
+
+                                        while ((nbLecture = sourceFile.read(buffer)) != -1) {
+                                                destinationFile.write(buffer, 0, nbLecture);
+                                        }
+					// Copie ramp;eacute;ussie
+					resultat = true;
+				} catch (java.io.FileNotFoundException f) {
+				} catch (java.io.IOException e) {
+				} finally {
+					// Quoi qu'il arrive, on ferme les flux
+					try {sourceFile.close();}
+					catch (Exception e) {resultat = false;}
+					try {destinationFile.close();}
+					catch (Exception e) {resultat = false;}
+				}
+			} else {
+				File[] files = fileSrc.listFiles();
+				resultat  = true;
+				for (int i = 0; i < files.length; i++) {
+					resultat &= copy(files[i], fileDst);
+				}
+			}
+		}
+		return (resultat);
+	}
+
+	protected static boolean move(File source, File destination) {
+		return move(source, destination, null);
+	}
+
+	protected static boolean move(File source, File destination, String nameDst) {
+		// On essaye de copier
+		boolean result = copy(source, destination, nameDst);
+		if (result)
+			result &= source.delete();
+		return result;
+	}
 }

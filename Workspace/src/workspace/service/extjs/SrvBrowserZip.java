@@ -62,7 +62,6 @@ public class SrvBrowserZip extends SrvGenerique
                     UtilBuildJar.build(listPathSrc, listPathTo, pathDstFormated);
                 }
             }
-            break MISSING_BLOCK_LABEL_453;
         }
         catch(Exception ex)
         {
@@ -74,12 +73,6 @@ public class SrvBrowserZip extends SrvGenerique
             os.close();
             Trace.ERROR(this, ex);
         }
-        Trace.DEBUG(this, (new StringBuilder("SrvBrowserZip pathSrc:")).append(pathSrc).append(" pathSrcFormated:").append(pathSrcFormated).append(" pathDst:").append(pathDst).append(" pathDstFormated:").append(pathDstFormated).append(" fileName:").append(fileName).toString());
-        break MISSING_BLOCK_LABEL_514;
-        Exception exception;
-        exception;
-        Trace.DEBUG(this, (new StringBuilder("SrvBrowserZip pathSrc:")).append(pathSrc).append(" pathSrcFormated:").append(pathSrcFormated).append(" pathDst:").append(pathDst).append(" pathDstFormated:").append(pathDstFormated).append(" fileName:").append(fileName).toString());
-        throw exception;
         Trace.DEBUG(this, (new StringBuilder("SrvBrowserZip pathSrc:")).append(pathSrc).append(" pathSrcFormated:").append(pathSrcFormated).append(" pathDst:").append(pathDst).append(" pathDstFormated:").append(pathDstFormated).append(" fileName:").append(fileName).toString());
     }
 }

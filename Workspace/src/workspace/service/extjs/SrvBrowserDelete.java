@@ -59,18 +59,11 @@ public class SrvBrowserDelete extends SrvGenerique
                         UtilFile.delete(file);
                     }
             }
-            break MISSING_BLOCK_LABEL_322;
         }
         catch(Exception ex)
         {
             Trace.ERROR(this, ex);
         }
-        Trace.DEBUG(this, (new StringBuilder("SrvBrowserDelete application:")).append(application).append(" fileName:").append(fileName).append(" fileNameFormated:").append(fileNameFormated).append(" pathToExpand:").append(pathToExpand).toString());
-        break MISSING_BLOCK_LABEL_373;
-        Exception exception;
-        exception;
-        Trace.DEBUG(this, (new StringBuilder("SrvBrowserDelete application:")).append(application).append(" fileName:").append(fileName).append(" fileNameFormated:").append(fileNameFormated).append(" pathToExpand:").append(pathToExpand).toString());
-        throw exception;
         Trace.DEBUG(this, (new StringBuilder("SrvBrowserDelete application:")).append(application).append(" fileName:").append(fileName).append(" fileNameFormated:").append(fileNameFormated).append(" pathToExpand:").append(pathToExpand).toString());
     }
 }

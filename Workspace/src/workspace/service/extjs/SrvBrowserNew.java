@@ -68,18 +68,11 @@ public class SrvBrowserNew extends SrvGenerique
                             (new FileWriter(file)).close();
                 }
             }
-            break MISSING_BLOCK_LABEL_425;
         }
         catch(Exception ex)
         {
             Trace.ERROR(this, ex);
         }
-        Trace.DEBUG(this, (new StringBuilder("SrvBrowserNew application:")).append(application).append(" name:").append(name).append(" nameFormated:").append(nameFormated).append(" pathDst:").append(pathDst).append(" pathDstFormated:").append(pathDstFormated).append(" type:").append(type).toString());
-        break MISSING_BLOCK_LABEL_496;
-        Exception exception;
-        exception;
-        Trace.DEBUG(this, (new StringBuilder("SrvBrowserNew application:")).append(application).append(" name:").append(name).append(" nameFormated:").append(nameFormated).append(" pathDst:").append(pathDst).append(" pathDstFormated:").append(pathDstFormated).append(" type:").append(type).toString());
-        throw exception;
         Trace.DEBUG(this, (new StringBuilder("SrvBrowserNew application:")).append(application).append(" name:").append(name).append(" nameFormated:").append(nameFormated).append(" pathDst:").append(pathDst).append(" pathDstFormated:").append(pathDstFormated).append(" type:").append(type).toString());
     }
 }
