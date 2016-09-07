@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<%@ taglib uri="Framework_Taglib_Html.tld" prefix="html" %>
+<%@ taglib uri="Framework_Taglib_Request.tld" prefix="request" %>
+<%@ taglib uri="Framework_Taglib_Xml.tld" prefix="Xml" %>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Combo Boxes</title>
+    <link rel="stylesheet" type="text/css" href="/WorkSpace/essai/jsFramework/extjs/resources/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="/WorkSpace/essai/jsFramework/extjs/resources/css/xtheme-gray.css" />
+
+    <!-- GC -->
+ 	<!-- LIBS -->
+ 	<script type="text/javascript" src="/WorkSpace/essai/jsFramework/extjs/adapter/ext/ext-base.js"></script>
+ 	<!-- ENDLIBS -->
+
+    <script type="text/javascript" src="/WorkSpace/essai/jsFramework/extjs/ext-all.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="testcombos.css" />
+
+    <script type="text/javascript" src="states.js"></script>
+
+	<script type="text/javascript">
+	Ext.onReady(function(){
+	    Ext.QuickTips.init();
+
+	    Ext.namespace('Ext.exampledata');
+
+		// simple array store
+	    var store = new Ext.data.ArrayStore({
+	        fields: ['abbr', 'state', 'nick'],
+	        data : Ext.exampledata.states // from states.js
+	    });
+	    var combo = new Ext.form.ComboBox({
+	        store: store,
+	        displayField:'project',
+	        typeAhead: true,
+	        mode: 'local',
+	        forceSelection: true,
+	        triggerAction: 'all',
+	        emptyText:'Select a state...',
+	        selectOnFocus:true,
+	        applyTo: 'local-states'
+	    });
+
+	});
+	</script>
+
+    <!--script type="text/javascript" src="combos.js"></script-->
+</head>
+<body>
+<h1>Combo Boxes</h1>
+<div>
+    <input type="text" id="local-states" size="20"/>
+</div>
+</body>
+</html>
