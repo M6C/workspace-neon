@@ -117,18 +117,19 @@ public class SrvDebugBreakpointAdd extends SrvGenerique {
 
               BeanDebug beanDebug = (BeanDebug)session.getAttribute("beanDebug");
               if (beanDebug==null) {
-                  virtualMachine = UtilJDI.createVirtualMachine(hostName, port);
-                  beanDebug = new BeanDebug(virtualMachine);
-
-                  ThrdDebugEventQueue thread = new ThrdDebugEventQueue(beanDebug, virtualMachine.eventQueue());
-                  thread.setOut(System.out);
-                  thread.setErr(System.err);
-                  thread.setErrTrace(System.err);
-                  thread.start();
-                  
-                  beanDebug.setThrdDebugEventQueue(thread);
-
-                  session.setAttribute("beanDebug", beanDebug);
+//TODO The method createVirtualMachine(String, Integer) from the type UtilJDI refers to the missing type VirtualMachine
+//                  virtualMachine = UtilJDI.createVirtualMachine(hostName, port);
+//                  beanDebug = new BeanDebug(virtualMachine);
+//
+//                  ThrdDebugEventQueue thread = new ThrdDebugEventQueue(beanDebug, virtualMachine.eventQueue());
+//                  thread.setOut(System.out);
+//                  thread.setErr(System.err);
+//                  thread.setErrTrace(System.err);
+//                  thread.start();
+//                  
+//                  beanDebug.setThrdDebugEventQueue(thread);
+//
+//                  session.setAttribute("beanDebug", beanDebug);
               }
               else {
                   virtualMachine = beanDebug.getVirtualMachine();
@@ -155,24 +156,25 @@ public class SrvDebugBreakpointAdd extends SrvGenerique {
                   }
               }
               if (brkR==null) {
-                  brkR = UtilJDI.createBreakpointRequest(virtualMachine, className, rowNum);
-                  if (brkR!=null) {
-                      // Stock le nom de l'application dans le point d'arret
-                      brkR.putProperty("application", application);
-                      // Stock le chemin des sources de la class dans le point d'arret
-                      brkR.putProperty("path", path);
-                      // Stock le nom de la class dans le point d'arret
-                      brkR.putProperty("className", className);
-                      // Stock le nom du fichier dans le point d'arret
-                      brkR.putProperty("fileName", file.getName());
-                      
-                      tableBreakpoint.put(className+":"+szLigne, brkR);
-                      
-                      text = "added";
-                  }
-                  else {
-                      text = URLEncoder.encode("Can't create breakpoint", "UTF-8");
-                  }
+//TODO The method createVirtualMachine(String, Integer) from the type UtilJDI refers to the missing type VirtualMachine
+//                  brkR = UtilJDI.createBreakpointRequest(virtualMachine, className, rowNum);
+//                  if (brkR!=null) {
+//                      // Stock le nom de l'application dans le point d'arret
+//                      brkR.putProperty("application", application);
+//                      // Stock le chemin des sources de la class dans le point d'arret
+//                      brkR.putProperty("path", path);
+//                      // Stock le nom de la class dans le point d'arret
+//                      brkR.putProperty("className", className);
+//                      // Stock le nom du fichier dans le point d'arret
+//                      brkR.putProperty("fileName", file.getName());
+//                      
+//                      tableBreakpoint.put(className+":"+szLigne, brkR);
+//                      
+//                      text = "added";
+//                  }
+//                  else {
+//                      text = URLEncoder.encode("Can't create breakpoint", "UTF-8");
+//                  }
               } else {
                   eventRequestManager.deleteEventRequest(brkR);
                   tableBreakpoint.remove(className+":"+szLigne);

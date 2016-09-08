@@ -1,13 +1,11 @@
-<SCRIPT>
-<!--
 var ns4 = (document.layers)? true:false;   //NS 4
 var ie4 = (document.all)? true:false;   //IE 4
 var dom = (document.getElementById)? true:false;   //DOM
 
-//Fonction permettant de positionner un DIV à une position occupée par une ancre
+//Fonction permettant de positionner un DIV ï¿½ une position occupï¿½e par une ancre
 function setToAnchor(ID_Anchor,Name_Anchor,ID_Div)
 {
-  var DivLeft = 0;   //Position du Div par rapport au côté gauche de la page
+  var DivLeft = 0;   //Position du Div par rapport au cï¿½tï¿½ gauche de la page
   var DivTop = 0;   //Position du Div par rapport au haut de la page
 
   if (dom)
@@ -35,5 +33,3 @@ function setToAnchor(ID_Anchor,Name_Anchor,ID_Div)
     document.layers[ID_Div].pageY = DivTop;
   }
 }
-//-->
-</SCRIPT>

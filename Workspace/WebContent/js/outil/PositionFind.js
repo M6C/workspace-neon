@@ -1,5 +1,3 @@
-<SCRIPT>
-<!--
 var JDWMinNS4   = (navigator.appName.indexOf("Netscape") >= 0 && parseFloat(navigator.appVersion) >= 4) ? 1 : 0;
 var JDWMinNS6   = (navigator.appName.indexOf("Netscape") >= 0 && parseFloat(navigator.appVersion) == 6) ? 1 : 0;
 var JDWMinIE4   = (document.all) ? 1 : 0;
@@ -160,9 +158,9 @@ function setzIndex(layer, z) {
 		layer.style.zIndex = z;
 }
 
-//Fonction permettant de connaître la position d'un objet
+//Fonction permettant de connaï¿½tre la position d'un objet
 //par rapport au bord gauche de la page.
-//Cet objet peut être à l'intérieur d'un autre objet.
+//Cet objet peut ï¿½tre ï¿½ l'intï¿½rieur d'un autre objet.
 function getLeft(MyObject)
 {
   if (MyObject.offsetParent)
@@ -171,9 +169,9 @@ function getLeft(MyObject)
     return (MyObject.offsetLeft);
 }
 
-//Fonction permettant de connaître la position d'un objet
+//Fonction permettant de connaï¿½tre la position d'un objet
 //par rapport au bord haut de la page.
-//Cet objet peut être à l'intérieur d'un autre objet.
+//Cet objet peut ï¿½tre ï¿½ l'intï¿½rieur d'un autre objet.
 function getTop(MyObject)
 {
   if (MyObject.offsetParent)
@@ -181,6 +179,3 @@ function getTop(MyObject)
   else
     return (MyObject.offsetTop);
 }
-
-//-->
-</SCRIPT>

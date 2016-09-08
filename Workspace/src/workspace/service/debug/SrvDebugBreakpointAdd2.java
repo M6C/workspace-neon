@@ -75,23 +75,24 @@ public class SrvDebugBreakpointAdd2 extends SrvGenerique {
               session.setAttribute("tableBreakpoint", tableBreakpoint);
           }
 */
-          VirtualMachine vm = UtilJDI.createVirtualMachine(hostName, port);
-          BeanDebug beanDebug = (BeanDebug)session.getAttribute("beanDebug");
-          if (beanDebug==null) {
-              beanDebug = new BeanDebug(vm);
-              session.setAttribute("beanDebug", beanDebug);
-          }
-          else
-              beanDebug.setVirtualMachine(vm);
-          Hashtable tableBreakpoint = beanDebug.getTableBreakpoint();
-
-          ThrdDebugBreakpointAdd thread = new ThrdDebugBreakpointAdd(beanDebug, className, rowNum);
-          thread.setOut(System.out);
-          thread.setErr(System.err);
-          thread.setErrTrace(System.err);
-          thread.start();
-
-          tableBreakpoint.put(szClass+":"+szLigne, thread);
+//TODO The method createVirtualMachine(String, Integer) from the type UtilJDI refers to the missing type VirtualMachine
+//          VirtualMachine vm = UtilJDI.createVirtualMachine(hostName, port);
+//          BeanDebug beanDebug = (BeanDebug)session.getAttribute("beanDebug");
+//          if (beanDebug==null) {
+//              beanDebug = new BeanDebug(vm);
+//              session.setAttribute("beanDebug", beanDebug);
+//          }
+//          else
+//              beanDebug.setVirtualMachine(vm);
+//          Hashtable tableBreakpoint = beanDebug.getTableBreakpoint();
+//
+//          ThrdDebugBreakpointAdd thread = new ThrdDebugBreakpointAdd(beanDebug, className, rowNum);
+//          thread.setOut(System.out);
+//          thread.setErr(System.err);
+//          thread.setErrTrace(System.err);
+//          thread.start();
+//
+//          tableBreakpoint.put(szClass+":"+szLigne, thread);
 /*
           // get the initial context, refer to your app server docs for this
           Context ctx = new InitialContext();
