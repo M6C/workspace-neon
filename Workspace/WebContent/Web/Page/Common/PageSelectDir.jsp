@@ -21,6 +21,7 @@ Paramètres à definir pour utiliser ce composant
     paramOther+="&formNameToSubmit="+request.getParameter("formNameToSubmit");
 //  paramOther = java.net.URLEncoder.encode(paramOther);
 %>
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
     <head>
         <title>
@@ -36,7 +37,7 @@ Paramètres à definir pour utiliser ce composant
                 </logic:TagIfDefine>
             </logic:TagIfNotDefine>
         </title>
-        <!--link href="/WorkSpace/css/page/common/pageselectdir.css" rel="stylesheet" type="text/css"/-->
+        <!--link href="<%=DOMAIN_NAME_ROOT%>/css/page/common/pageselectdir.css" rel="stylesheet" type="text/css"/-->
        	<jsp:include page="/css/page/common/pageselectdir.jsp" flush="true"/>
         <SCRIPT language="JavaScript">
         <!--

@@ -10,12 +10,13 @@ Paramètres à definir pour utiliser ce composant
 --%>
 <%@ taglib uri="Framework_Taglib_Eval.tld" prefix="eval" %>
 <%@ taglib uri="Framework_Taglib_Logic.tld" prefix="logic" %>
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
     <head>
         <title>
             Projet Browser
         </title>
-        <!--link href="/WorkSpace/css/page/common/pageselectprojetdir.css" rel="stylesheet" type="text/css"/-->
+        <!--link href="<%=DOMAIN_NAME_ROOT%>/css/page/common/pageselectprojetdir.css" rel="stylesheet" type="text/css"/-->
        	<jsp:include page="/css/page/common/pageselectprojetdir.jsp" flush="true"/>
         <SCRIPT language="JavaScript">
         <!--

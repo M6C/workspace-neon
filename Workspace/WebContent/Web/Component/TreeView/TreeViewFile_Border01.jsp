@@ -23,7 +23,7 @@
 
 <table class="treeview">
     <tr>
-        <td class="treeviewTopLeft"><IMG class="BorderTopRight" src="/WorkSpace/img/TreeView/b.gif"></td>
+        <td class="treeviewTopLeft"><IMG class="BorderTopRight" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
         <td class="treeviewTop"></td>
         <td class="treeviewTopRight"></td>
     </tr>
@@ -58,7 +58,7 @@
                         <%if (((framework.taglib.file.bean.BeanFile)request.getAttribute("myFile")).isFile()) {%>
                             <tr><td class="treeviewMain">
                             <html:TagA attrName="anchor#R$cnt##R$myFile.Index#" attrClass="treeviewMain" attrHref="action.servlet?event=#R$eventDst#&application=#R$application<encoding=UTF-8>#&FileName=#R$myFile.getPathUriRelative<encoding=UTF-8>#&pathToExpand=#R$pathToExpand<encoding=UTF-8>##R$paramOther#\#anchor#R$cnt##R$myFile.Index#">
-                                <img src="/WorkSpace/img/TreeView/ot0.gif" border="0" align="top"/>
+                                <img src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/ot0.gif" border="0" align="top"/>
                             </html:TagA>
                             <html:TagA attrName="anchor#R$cnt##R$myFile.Index#" attrClass="treeviewHeader" attrHref="javascript:onClickTvFile('eventDst=#R$eventDst#&application=#R$application<encoding=UTF-8>#&FileName=#R$myFile.getPathUriRelative<encoding=UTF-8>#&pathToExpand=#R$pathToExpand<encoding=UTF-8>#&navIndex=1&navNbRow=50#R$paramOther#', '#R$myFile.getName<encoding=UTF-8>#')">
                                 <file:TagFileListItem methode="getName"/>
@@ -79,6 +79,6 @@
     <tr>
         <td class="treeviewBottomLeft"></td>
         <td class="treeviewBottom"></td>
-        <td class="treeviewBottomRight"><IMG class="BorderBottomRight" src="/WorkSpace/img/TreeView/b.gif"></td>
+        <td class="treeviewBottomRight"><IMG class="BorderBottomRight" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
     </tr>
 </table>

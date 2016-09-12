@@ -5,6 +5,7 @@
 <%@ taglib uri="Framework_Taglib_Request.tld" prefix="request" %>
 <%@ taglib uri="Framework_Taglib_List.tld" prefix="list" %>
 <%@ taglib uri="Workspace_Taglib_Versionning.tld" prefix="versionning" %>
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
     <head>
         <title>
@@ -15,25 +16,25 @@
             </logic:TagIfDefine>
             - User:<request:TagPrintAttribut name="BeanAuthentification:login" scope="session"/>
         </title>
-	    <!--link href="/WorkSpace/css/page/debugger/page.css" rel="stylesheet" type="text/css"-->
+	    <!--link href="<%=DOMAIN_NAME_ROOT%>/css/page/debugger/page.css" rel="stylesheet" type="text/css"-->
         <jsp:include page="/css/page/debugger/page.jsp" flush="true"/>
-	    <script language="javascript" src="/WorkSpace/js/page/common/iframe_completion03.js" type="text/javascript"></script>
-	    <script language="javascript" src="/WorkSpace/js/page/common/HSplit.js" type="text/javascript"></script>
-	    <script language="javascript" src="/WorkSpace/js/Popup.js" type="text/javascript"></script>
-	    <script language="javascript" src="/WorkSpace/js/EncodingUTF8.js" type="text/javascript"></script>
-	    <script language="javascript" src="/WorkSpace/js/EncodingHTML.js" type="text/javascript"></script>
-	    <script language="javascript" src="/WorkSpace/js/FunctionText.js" type="text/javascript"></script>
-	    <script language="javascript" src="/WorkSpace/js/HTTPObject.js" type="text/javascript"></script>
-	    <script language="javascript" src="/WorkSpace/js/page/debugger/page.js" type="text/javascript"></script>
-	    <script language="javascript" src="/WorkSpace/js/page/debugger/Breakpoint.js" type="text/javascript"></script>
-	    <script language="javascript" src="/WorkSpace/js/page/debugger/BreakpointAdd.js" type="text/javascript"></script>
-	    <script language="javascript" src="/WorkSpace/js/page/debugger/BreakpointCheck.js" type="text/javascript"></script>
-	    <script language="javascript" src="/WorkSpace/js/page/debugger/BreakpointStep.js" type="text/javascript"></script>
-	    <script language="javascript" src="/WorkSpace/js/page/debugger/BreakpointResume.js" type="text/javascript"></script>
-	    <script language="javascript" src="/WorkSpace/js/page/editorjava/ReloadMenu.js" type="text/javascript"></script>
-	    <script language="javascript" src="/WorkSpace/js/page/editorjava/ReloadDir.js" type="text/javascript"></script>
-	    <script language="javascript" src="/WorkSpace/js/page/editorjava/ReloadFile.js" type="text/javascript"></script>
-	    <script language="javascript" src="/WorkSpace/js/page/editorjava/ReloadDebug.js" type="text/javascript"></script>
+	    <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/common/iframe_completion03.js" type="text/javascript"></script>
+	    <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/common/HSplit.js" type="text/javascript"></script>
+	    <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/Popup.js" type="text/javascript"></script>
+	    <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/EncodingUTF8.js" type="text/javascript"></script>
+	    <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/EncodingHTML.js" type="text/javascript"></script>
+	    <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/FunctionText.js" type="text/javascript"></script>
+	    <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/HTTPObject.js" type="text/javascript"></script>
+	    <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/debugger/page.js" type="text/javascript"></script>
+	    <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/debugger/Breakpoint.js" type="text/javascript"></script>
+	    <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/debugger/BreakpointAdd.js" type="text/javascript"></script>
+	    <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/debugger/BreakpointCheck.js" type="text/javascript"></script>
+	    <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/debugger/BreakpointStep.js" type="text/javascript"></script>
+	    <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/debugger/BreakpointResume.js" type="text/javascript"></script>
+	    <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/editorjava/ReloadMenu.js" type="text/javascript"></script>
+	    <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/editorjava/ReloadDir.js" type="text/javascript"></script>
+	    <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/editorjava/ReloadFile.js" type="text/javascript"></script>
+	    <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/editorjava/ReloadDebug.js" type="text/javascript"></script>
     </head>
     <body>
         <table cellspacing="0" cellpadding="0" width="100%" height="100%">
@@ -77,7 +78,7 @@
             <td class="MainRight">
                 <table class="treeview">
                             <tr>
-                                <td class="treeviewTopLeft"><IMG class="BorderTopLeft" src="/WorkSpace/img/TreeView/b.gif"></td>
+                                <td class="treeviewTopLeft"><IMG class="BorderTopLeft" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
                                 <td class="treeviewTop"></td>
                                 <td class="treeviewTopRight"></td>
                             </tr>
@@ -104,7 +105,7 @@
                             <tr>
                                 <td class="treeviewBottomLeft"></td>
                                 <td class="treeviewBottom"></td>
-                                <td class="treeviewBottomRight"><IMG class="BorderBottomRight" src="/WorkSpace/img/TreeView/b.gif"></td>
+                                <td class="treeviewBottomRight"><IMG class="BorderBottomRight" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
                             </tr>
                 </table>
            </td>

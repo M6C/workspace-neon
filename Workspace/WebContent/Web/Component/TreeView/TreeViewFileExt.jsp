@@ -26,16 +26,16 @@
 			<file:TagFileListItem name="myFile" scope="request"/>
 			<%--logic:TagIf expression="#R$myFile.File.isFile#"--%>
 			<%if (((framework.taglib.file.bean.BeanFile)request.getAttribute("myFile")).isFile()) {%>
-				<img src="/WorkSpace/img/TreeView/ot0.gif" width="18" height="18" border="0" align="top"/>&nbsp;
+				<img src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/ot0.gif" width="18" height="18" border="0" align="top"/>&nbsp;
 				</td><td>
 				<html:TagA attrHref="actionfilereader?file=#R$myFile.File.toURI.getPath#&contentType=application/x-download">
 					<file:TagFileListItem methode="getName"/>
 				</html:TagA>
 				</td><td>
-				<html:TagA attrHref="javascript:openPopup('action.servlet?event=PageFileEditor&FileName=#R$myFile.File.toURI.getPath#', 'PageFileEditor', 750, 630)"><img unselectable="on" width="15" height="15" class="memoOut" align="absmiddle" src="/WorkSpace/img/Common/file_editor.gif" onmouseover="this.className='memoOver';" onmouseout="this.className='memoOut';" title="File editor"/></html:TagA>
-				<html:TagA attrHref="javascript:openPopup('action.servlet?event=EditorJavaPageDelete&fileName=#R$myFile.File.toURI.getPath#', 'EditorJavaPageDelete', 320, 120)"><img unselectable="on" width="15" height="15" class="memoOut" align="absmiddle" src="/WorkSpace/img/Editor/ed_del_file.gif" onmouseover="this.className='memoOver';" onmouseout="this.className='memoOut';" title="Delete File"/></html:TagA>
-				<html:TagA attrHref="javascript:openPopup('action.servlet?event=EditorJavaPageRename&oldName=#R$myFile.File.toURI.getPath#&newName=#R$myFile.File.toURI.getPath#', 'EditorJavaPageRename', 320, 120)"><img unselectable="on" width="15" height="15" class="memoOut" align="absmiddle" src="/WorkSpace/img/Editor/ed_rename_file.gif" onmouseover="this.className='memoOver';" onmouseout="this.className='memoOut';" title="Rename File"/></html:TagA>
-				<html:TagA attrHref="javascript:openPopup('action.servlet?event=EditorJavaPageCopyMove&pathSrc=#R$myFile.File.toURI.getPath#&pathDst=#R$myFile.File.toURI.getPath#&path=#R$path#&type=file', 'EditorJavaPageCopyMove', 390, 150)"><img unselectable="on" width="15" height="15" class="memoOut" align="absmiddle" src="/WorkSpace/img/Editor/ed_copy_move_dir.gif" onmouseover="this.className='memoOver';" onmouseout="this.className='memoOut';" title="Copy/Move Directory"/></html:TagA>
+				<html:TagA attrHref="javascript:openPopup('action.servlet?event=PageFileEditor&FileName=#R$myFile.File.toURI.getPath#', 'PageFileEditor', 750, 630)"><img unselectable="on" width="15" height="15" class="memoOut" align="absmiddle" src="<%=DOMAIN_NAME_ROOT%>/img/Common/file_editor.gif" onmouseover="this.className='memoOver';" onmouseout="this.className='memoOut';" title="File editor"/></html:TagA>
+				<html:TagA attrHref="javascript:openPopup('action.servlet?event=EditorJavaPageDelete&fileName=#R$myFile.File.toURI.getPath#', 'EditorJavaPageDelete', 320, 120)"><img unselectable="on" width="15" height="15" class="memoOut" align="absmiddle" src="<%=DOMAIN_NAME_ROOT%>/img/Editor/ed_del_file.gif" onmouseover="this.className='memoOver';" onmouseout="this.className='memoOut';" title="Delete File"/></html:TagA>
+				<html:TagA attrHref="javascript:openPopup('action.servlet?event=EditorJavaPageRename&oldName=#R$myFile.File.toURI.getPath#&newName=#R$myFile.File.toURI.getPath#', 'EditorJavaPageRename', 320, 120)"><img unselectable="on" width="15" height="15" class="memoOut" align="absmiddle" src="<%=DOMAIN_NAME_ROOT%>/img/Editor/ed_rename_file.gif" onmouseover="this.className='memoOver';" onmouseout="this.className='memoOut';" title="Rename File"/></html:TagA>
+				<html:TagA attrHref="javascript:openPopup('action.servlet?event=EditorJavaPageCopyMove&pathSrc=#R$myFile.File.toURI.getPath#&pathDst=#R$myFile.File.toURI.getPath#&path=#R$path#&type=file', 'EditorJavaPageCopyMove', 390, 150)"><img unselectable="on" width="15" height="15" class="memoOut" align="absmiddle" src="<%=DOMAIN_NAME_ROOT%>/img/Editor/ed_copy_move_dir.gif" onmouseover="this.className='memoOver';" onmouseout="this.className='memoOut';" title="Copy/Move Directory"/></html:TagA>
 				</td><td>
 				<font class="normal" size="2"><date:TagDateFormat time="#R$myFile.File.lastModified#" pattern="dd/MM/yyyy HH:mm:ss"/></font>
 				</td><td align="right">

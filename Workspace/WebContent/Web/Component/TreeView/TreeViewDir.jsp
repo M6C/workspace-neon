@@ -22,7 +22,7 @@
 			&nbsp;
 		</logic:TagFor>
 		<html:TagA attrHref="action.servlet?event=#R$eventDst#&path=#R$path#&pathToExpand=#R$myFile.File.toURI.getPath#&pathBuildJava=#R$pathBuildJava#&pathBuildJar=#R$pathBuildJar##R$paramOther#">
-			<img src="/WorkSpace/img/TreeView/ot1.gif" border="0" align="top"/>
+			<img src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/ot1.gif" border="0" align="top"/>
 			<file:TagFileListItem methode="getName"/>
 		</html:TagA>
 		<br>

@@ -20,7 +20,7 @@
 </logic:TagIfNotDefine>
 <table class="treeview">
     <tr class="treeview">
-        <td class="treeviewTopLeft"><IMG class="BorderTopRight" src="/WorkSpace/img/TreeView/b.gif"></td>
+        <td class="treeviewTopLeft"><IMG class="BorderTopRight" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
         <td class="treeviewTop"></td>
         <td class="treeviewTopRight"></td>
     </tr>
@@ -55,7 +55,7 @@
                                 <tr class="treeviewFileList<%if ((Integer.parseInt((String)request.getAttribute("count"))%2)==0) {%>Colored<%}%>">
                                     <td class="treeviewFileList">
                                             <html:TagInput attrType="hidden" attrName="chk#R$myFile.Index#"/>
-                                            <img src="/WorkSpace/img/TreeView/ot0.gif" width="18" height="18" border="0" align="top"/>
+                                            <img src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/ot0.gif" width="18" height="18" border="0" align="top"/>
                                     </td>
                                     <td class="treeviewFileList">
                                         <html:TagA attrClass="treeviewMain" attrHref="actionfilereader?application=#R$application<encoding=UTF-8>#&path=#R$pathToExpand<encoding=UTF-8>#&file=#R$myFile.File.Name<encoding=UTF-8>#&contentType=application/x-download">
@@ -63,11 +63,11 @@
                                         </html:TagA>
                                     </td>
                                     <td class="treeviewFileList">
-                                        <html:TagA attrHref="javascript:openPopup('action.servlet?event=PageFileEditor&application=#R$application#&pathToExpand=#R$pathToExpand#&FileName=#R$myFile.getPathUriRelative<encoding=UTF-8>#', 'PageFileEditor', 750, 630)"><img unselectable="on" width="15" height="15" class="buttonOut" align="absmiddle" src="/WorkSpace/img/Common/file_editor.gif" onmouseover="this.className='buttonOver';" onmouseout="this.className='buttonOut';" title="File editor"/></html:TagA>
-                                        <html:TagA attrHref="javascript:openPopup('action.servlet?event=EditorJavaPageDelete&application=#R$application#&fileName=#R$pathToExpand##R$myFile.getPathUriRelative<encoding=UTF-8>#', 'EditorJavaPageDelete', 320, 120)"><img unselectable="on" width="15" height="15" class="buttonOut" align="absmiddle" src="/WorkSpace/img/Editor/ed_del_file.gif" onmouseover="this.className='buttonOver';" onmouseout="this.className='buttonOut';" title="Delete File"/></html:TagA>
-                                        <html:TagA attrHref="javascript:openPopup('action.servlet?event=EditorJavaPageRename&application=#R$application#&oldName=#R$pathToExpand##R$myFile.getPathUriRelative<encoding=UTF-8>#&newName=#R$pathToExpand##R$myFile.getPathUriRelative<encoding=UTF-8>#', 'EditorJavaPageRename', 320, 120)"><img unselectable="on" width="15" height="15" class="buttonOut" align="absmiddle" src="/WorkSpace/img/Editor/ed_rename_file.gif" onmouseover="this.className='buttonOver';" onmouseout="this.className='buttonOut';" title="Rename File"/></html:TagA>
-                                        <html:TagA attrHref="javascript:openPopup('action.servlet?event=EditorJavaPageCopyMove&application=#R$application#&pathSrc=#R$pathToExpand##R$myFile.getPathUriRelative<encoding=UTF-8>#&pathDst=#R$pathToExpand##R$myFile.getPathUriRelative<encoding=UTF-8>#&path=&type=file', 'EditorJavaPageCopyMove', 390, 150)"><img unselectable="on" width="15" height="15" class="buttonOut" align="absmiddle" src="/WorkSpace/img/Editor/ed_copy_move_dir.gif" onmouseover="this.className='buttonOver';" onmouseout="this.className='buttonOut';" title="Copy/Move Directory"/></html:TagA>
-                                        <html:TagA attrHref="javascript:openPopup('action.servlet?event=AdminStreaming&application=#R$application#&path=#R$pathToExpand#&filename=#R$myFile.getPathUriRelative<encoding=UTF-8>#', 'AdminStreaming', 390, 150)"><img unselectable="on" width="15" height="15" class="buttonOut" align="absmiddle" src="/WorkSpace/img/Editor/ed_copy_move_dir.gif" onmouseover="this.className='buttonOver';" onmouseout="this.className='buttonOut';" title="Streaming"/></html:TagA>
+                                        <html:TagA attrHref="javascript:openPopup('action.servlet?event=PageFileEditor&application=#R$application#&pathToExpand=#R$pathToExpand#&FileName=#R$myFile.getPathUriRelative<encoding=UTF-8>#', 'PageFileEditor', 750, 630)"><img unselectable="on" width="15" height="15" class="buttonOut" align="absmiddle" src="<%=DOMAIN_NAME_ROOT%>/img/Common/file_editor.gif" onmouseover="this.className='buttonOver';" onmouseout="this.className='buttonOut';" title="File editor"/></html:TagA>
+                                        <html:TagA attrHref="javascript:openPopup('action.servlet?event=EditorJavaPageDelete&application=#R$application#&fileName=#R$pathToExpand##R$myFile.getPathUriRelative<encoding=UTF-8>#', 'EditorJavaPageDelete', 320, 120)"><img unselectable="on" width="15" height="15" class="buttonOut" align="absmiddle" src="<%=DOMAIN_NAME_ROOT%>/img/Editor/ed_del_file.gif" onmouseover="this.className='buttonOver';" onmouseout="this.className='buttonOut';" title="Delete File"/></html:TagA>
+                                        <html:TagA attrHref="javascript:openPopup('action.servlet?event=EditorJavaPageRename&application=#R$application#&oldName=#R$pathToExpand##R$myFile.getPathUriRelative<encoding=UTF-8>#&newName=#R$pathToExpand##R$myFile.getPathUriRelative<encoding=UTF-8>#', 'EditorJavaPageRename', 320, 120)"><img unselectable="on" width="15" height="15" class="buttonOut" align="absmiddle" src="<%=DOMAIN_NAME_ROOT%>/img/Editor/ed_rename_file.gif" onmouseover="this.className='buttonOver';" onmouseout="this.className='buttonOut';" title="Rename File"/></html:TagA>
+                                        <html:TagA attrHref="javascript:openPopup('action.servlet?event=EditorJavaPageCopyMove&application=#R$application#&pathSrc=#R$pathToExpand##R$myFile.getPathUriRelative<encoding=UTF-8>#&pathDst=#R$pathToExpand##R$myFile.getPathUriRelative<encoding=UTF-8>#&path=&type=file', 'EditorJavaPageCopyMove', 390, 150)"><img unselectable="on" width="15" height="15" class="buttonOut" align="absmiddle" src="<%=DOMAIN_NAME_ROOT%>/img/Editor/ed_copy_move_dir.gif" onmouseover="this.className='buttonOver';" onmouseout="this.className='buttonOut';" title="Copy/Move Directory"/></html:TagA>
+                                        <html:TagA attrHref="javascript:openPopup('action.servlet?event=AdminStreaming&application=#R$application#&path=#R$pathToExpand#&filename=#R$myFile.getPathUriRelative<encoding=UTF-8>#', 'AdminStreaming', 390, 150)"><img unselectable="on" width="15" height="15" class="buttonOut" align="absmiddle" src="<%=DOMAIN_NAME_ROOT%>/img/Editor/ed_copy_move_dir.gif" onmouseover="this.className='buttonOver';" onmouseout="this.className='buttonOut';" title="Streaming"/></html:TagA>
                                     </td>
 
                                     <td class="treeviewFileList">
@@ -98,6 +98,6 @@
     <tr>
         <td class="treeviewBottomLeft"></td>
         <td class="treeviewBottom"></td>
-        <td class="treeviewBottomRight"><IMG class="BorderBottomRight" src="/WorkSpace/img/TreeView/b.gif"></td>
+        <td class="treeviewBottomRight"><IMG class="BorderBottomRight" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
     </tr>
 </table>

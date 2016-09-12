@@ -7,6 +7,7 @@
 <%@ taglib uri="Workspace_Taglib_Versionning.tld" prefix="versionning" %>
 
 
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
     <head>
         <title>
@@ -16,20 +17,20 @@
             </logic:TagIfDefine>
             - User:<request:TagPrintAttribut name="BeanAuthentification:login" scope="session"/>
         </title>
-      <link href="/WorkSpace/css/page/debugger/page.css" rel="stylesheet" type="text/css">
-      <link href="/WorkSpace/css/page/debugger/styles.css" rel="stylesheet" type="text/css">
-        <script language="javascript" src="/WorkSpace/js/page/common/iframe_completion03.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/Popup.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/EncodingUTF8.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/EncodingHTML.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/FunctionText.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/HTTPObject.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/page/debugger/page.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/page/debugger/Breakpoint.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/page/debugger/BreakpointAdd.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/page/debugger/BreakpointCheck.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/page/debugger/BreakpointStep.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/page/debugger/BreakpointResume.js" type="text/javascript"></script>
+      <link href="<%=DOMAIN_NAME_ROOT%>/css/page/debugger/page.css" rel="stylesheet" type="text/css">
+      <link href="<%=DOMAIN_NAME_ROOT%>/css/page/debugger/styles.css" rel="stylesheet" type="text/css">
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/common/iframe_completion03.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/Popup.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/EncodingUTF8.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/EncodingHTML.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/FunctionText.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/HTTPObject.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/debugger/page.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/debugger/Breakpoint.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/debugger/BreakpointAdd.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/debugger/BreakpointCheck.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/debugger/BreakpointStep.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/debugger/BreakpointResume.js" type="text/javascript"></script>
     </head>
     <body>
         <table class="main">
@@ -38,7 +39,7 @@
                     <table class="toolBar">
                         <tr>
                             <td>
-                                <A href="action.servlet?event=Home"><img unselectable="on" class="buttonOut" align="absmiddle" src="/WorkSpace/img/Editor/ed_home.gif" onmouseover="this.className='buttonOver';" onmouseout="this.className='buttonOut';" title="Home"/></A>
+                                <A href="action.servlet?event=Home"><img unselectable="on" class="buttonOut" align="absmiddle" src="<%=DOMAIN_NAME_ROOT%>/img/Editor/ed_home.gif" onmouseover="this.className='buttonOver';" onmouseout="this.className='buttonOut';" title="Home"/></A>
                                 &nbsp;
                                 <A href="javascript:openPopup('action.servlet?event=DebuggerBreakpointVariable', 320, 640)">DebugBreakpointVariable</A>
                                 <A href="javascript:BreakpointCheck()">BreakpointCheck</A>

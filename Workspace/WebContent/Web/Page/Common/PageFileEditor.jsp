@@ -16,23 +16,24 @@
 	<request:TagDefineAttribute name="navNbRow" scope="request" expression="50"/>
 </logic:TagIfNotDefine>
 
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
 	<head>
 		<title>
 			<%--File Editor - <eval:TagEval expression='new java.io.File("#R$FileName#").getName()'/--%>
 			File Editor - <file:TagFileName path="#R$FileName#"/>
 		</title>
-	    <!--ink href="/WorkSpace/css/page/common/pagefileeditor.css" rel="stylesheet" type="text/css"-->
+	    <!--ink href="<%=DOMAIN_NAME_ROOT%>/css/page/common/pagefileeditor.css" rel="stylesheet" type="text/css"-->
         <jsp:include page="/css/page/common/pagefileeditor.jsp" flush="true"/>
 <%--
-		<script language="javascript" src="/WorkSpace/js/page/common/iframe_completion02.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/common/iframe_completion02.js" type="text/javascript"></script>
 --%>
-        <script language="javascript" src="/WorkSpace/js/page/common/iframe_completion03.js" type="text/javascript"></script>
-		<script language="javascript" src="/WorkSpace/js/page/common/pagefileeditor.js" type="text/javascript"></script>
-		<script language="javascript" src="/WorkSpace/js/Popup.js" type="text/javascript"></script>
-		<script language="javascript" src="/WorkSpace/js/EncodingUTF8.js" type="text/javascript"></script>
-		<script language="javascript" src="/WorkSpace/js/EncodingHTML.js" type="text/javascript"></script>
-		<script language="javascript" src="/WorkSpace/js/FunctionText.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/common/iframe_completion03.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/common/pagefileeditor.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/Popup.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/EncodingUTF8.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/EncodingHTML.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/FunctionText.js" type="text/javascript"></script>
 	</head>
 	<body bgcolor="buttonface" onload="javascript:init()">
 		<table class="memo" align="center">

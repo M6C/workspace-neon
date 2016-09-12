@@ -6,7 +6,7 @@
 
 <table class="treeview">
     <tr>
-        <td class="treeviewTopLeft"><IMG class="BorderTopLeft" src="/WorkSpace/img/TreeView/b.gif"></td>
+        <td class="treeviewTopLeft"><IMG class="BorderTopLeft" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
         <td class="treeviewTop"></td>
         <td class="treeviewTopRight"></td>
     </tr>
@@ -16,7 +16,7 @@
                     <jsp:include page="/Web/Component/ComboBox/ComboBoxProjetXml.jsp" flush="true"/>
                     &nbsp;
                     <html:TagA attrHref="javascript:openPopup('action.servlet?event=EditorJavaPageSelectDir&formNameToSubmit=#R$formNameToSubmit#&formName=#R$formName#&fieldName=pathToExpand&application=#R$application#&pathToExpand=#R$pathToExpand#', 'EditorJavaPageSelectDir', 340, 350)">
-                      <img src="/WorkSpace/img/Style/Classic/Header/Header_01_down.gif" height="14px">
+                      <img src="<%=DOMAIN_NAME_ROOT%>/img/Style/Classic/Header/Header_01_down.gif" height="14px">
                     </html:TagA>
             </th>
             <td class="treeviewRight"></td>
@@ -40,7 +40,7 @@
                         <%--logic:TagIf expression="#R$myFile.File.isDirectory#"--%>
                         <%if (((framework.taglib.file.bean.BeanFile)request.getAttribute("myFile")).isDirectory()) {%>
                             <html:TagA attrName="anchor#R$cnt##R$myFile.Index#" attrClass="treeviewMain" attrHref="action.servlet?event=#R$eventDst#&application=#R$application<encoding=UTF-8>#&pathToExpand=#R$myFile.getPathUriRelative<encoding=UTF-8>##R$paramOther#\#anchor#R$cnt##R$myFile.Index#">
-                                <img src="/WorkSpace/img/TreeView/ot1.gif" border="0" align="top"/>
+                                <img src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/ot1.gif" border="0" align="top"/>
                                 <file:TagFileListItem methode="getName"/>
                             </html:TagA>
                         <%}%>
@@ -48,7 +48,7 @@
                         <%--logic:TagIf expression="#R$myFile.File.isFile#"--%>
                         <%if (((framework.taglib.file.bean.BeanFile)request.getAttribute("myFile")).isFile()) {%>
                             <html:TagA attrName="anchor#R$cnt##R$myFile.Index#" attrClass="treeviewMain" attrHref="action.servlet?event=#R$eventDst#&application=#R$application<encoding=UTF-8>#&fileName=#R$myFile.getPathUriRelative<encoding=UTF-8>#&pathToExpand=#R$pathToExpand<encoding=UTF-8>##R$paramOther#\#anchor#R$cnt##R$myFile.Index#">
-                                <img src="/WorkSpace/img/TreeView/ot0.gif" border="0" align="top"/>
+                                <img src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/ot0.gif" border="0" align="top"/>
                                 <file:TagFileListItem methode="getName"/>
                             </html:TagA>
                         <%}%>
@@ -63,6 +63,6 @@
     <tr>
         <td class="treeviewBottomLeft"></td>
         <td class="treeviewBottom"></td>
-        <td class="treeviewBottomRight"><IMG class="BorderBottomRight" src="/WorkSpace/img/TreeView/b.gif"></td>
+        <td class="treeviewBottomRight"><IMG class="BorderBottomRight" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
     </tr>
 </table>

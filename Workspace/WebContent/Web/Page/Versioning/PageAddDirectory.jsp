@@ -2,14 +2,15 @@
 <%@ taglib uri="Framework_Taglib_Logic.tld" prefix="logic" %>
 <%@ taglib uri="Framework_Taglib_Request.tld" prefix="request" %>
 <%@ taglib uri="Framework_Taglib_Xml.tld" prefix="Xml" %>
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
 	<head>
 		<title>
 			Add Entry
 		</title>
-	        <!--  -->link href="/WorkSpace/css/page/versioning/pageadddirectory.css" rel="stylesheet" type="text/css"-->
+	        <!--  -->link href="<%=DOMAIN_NAME_ROOT%>/css/page/versioning/pageadddirectory.css" rel="stylesheet" type="text/css"-->
         <jsp:include page="/css/page/versioning/pageadddirectory.jsp" flush="true"/>
-		<script language="javascript" src="/WorkSpace/js/page/versioning/pageadddirectory.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/versioning/pageadddirectory.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<form action="action.servlet">

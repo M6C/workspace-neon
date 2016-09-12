@@ -8,6 +8,7 @@
 <%@ taglib uri="Framework_Taglib_Eval.tld" prefix="eval" %>
 <%@ taglib uri="Framework_Taglib_Request.tld" prefix="request" %>
 <%@ taglib uri="Workspace_Taglib_Versionning.tld" prefix="versionning" %>
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
     <head>
 <%--
@@ -21,22 +22,22 @@
             </logic:TagIfDefine>
             - User:<request:TagPrintAttribut name="BeanAuthentification:login" scope="session"/>
         </title>
-      <%--link href="/WorkSpace/css/page/editorjava/page.css" rel="stylesheet" type="text/css"--%>
+      <%--link href="<%=DOMAIN_NAME_ROOT%>/css/page/editorjava/page.css" rel="stylesheet" type="text/css"--%>
         <jsp:include page="/css/page/editorjava/page.jsp" flush="true"/>
-        <script language="javascript" src="/WorkSpace/js/page/common/function.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/page/common/iframe_completion03.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/Popup.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/EncodingUTF8.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/EncodingHTML.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/FunctionText.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/page/editorjava/page.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/page/editorjava/ReloadMenu.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/page/editorjava/ReloadDir.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/page/editorjava/ReloadFile.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/page/editorjava/ReloadEditor.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/page/editorjava/ReloadEditorAppend.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/page/editorjava/ReloadEditorFilename.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/page/editorjava/ReloadEditorNavBar.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/common/function.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/common/iframe_completion03.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/Popup.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/EncodingUTF8.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/EncodingHTML.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/FunctionText.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/editorjava/page.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/editorjava/ReloadMenu.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/editorjava/ReloadDir.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/editorjava/ReloadFile.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/editorjava/ReloadEditor.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/editorjava/ReloadEditorAppend.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/editorjava/ReloadEditorFilename.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/editorjava/ReloadEditorNavBar.js" type="text/javascript"></script>
     </head>
     <%--logic:TagIf expression='"#R$FileName#".toLowerCase().endsWith(".java")'--%>
     
@@ -72,7 +73,7 @@
                                 <div id="reloaddir">
 <%--
               <a href="http://latest.workspacecloud.appspot.com/WorkSpace/action.servlet?event=EditorJavaPage&application=WorkSpace_Dev">
-                 <img width="15px" height="14px" src="/WorkSpace/img/Common/home_small.gif"/>
+                 <img width="15px" height="14px" src="<%=DOMAIN_NAME_ROOT%>/img/Common/home_small.gif"/>
               </a>
 --%>
                                     <jsp:include page="/Web/Component/TreeView/TreeViewDir_Border01.jsp" flush="true">
@@ -103,7 +104,7 @@
                             <input type="hidden" name="event" value="EditorJavaPageSave"/>
                             <input type="hidden" name="len" id="len"/>
                                 <tr>
-                                    <td class="treeviewTopLeft"><IMG class="BorderTopLeft" src="/WorkSpace/img/TreeView/b.gif"></td>
+                                    <td class="treeviewTopLeft"><IMG class="BorderTopLeft" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
                                     <td class="treeviewTop"></td>
                                     <td class="treeviewTopRight"></td>
                                 </tr>
@@ -120,7 +121,7 @@
 													   <%--logic:TagIf expression='"#R$FileName#".toLowerCase().endsWith(".java")'--%>
 													   <%if ((request.getAttribute("FileName")!=null)&&((String)request.getAttribute("FileName")).toLowerCase().endsWith(".java")) { %>
                                                             <html:TagA attrHref="javascript:updateIframe(true)">
-                                                                <img unselectable="on" width="15px" height="18px" class="buttonOut" align="absmiddle" src="/WorkSpace/img/Editor/ed_colorize.gif" onmouseover="this.className='buttonOver';" onmouseout="this.className='buttonOut';" title="Colorize"/>
+                                                                <img unselectable="on" width="15px" height="18px" class="buttonOut" align="absmiddle" src="<%=DOMAIN_NAME_ROOT%>/img/Editor/ed_colorize.gif" onmouseover="this.className='buttonOver';" onmouseout="this.className='buttonOut';" title="Colorize"/>
                                                             </html:TagA>
                                                        <%} %>
 													   <%--/logic:TagIf--%>
@@ -135,7 +136,7 @@
                                                 </th>
                                                 <th class="treeviewHeader" width="10%" align="right">
                                                     <html:TagA attrHref="javascript:save()">
-                                                        <img unselectable="on" width="38px" height="15px" class="buttonOut" align="absmiddle" src="/WorkSpace/img/Style/Classic/Button/Button_Save.gif" title="Save"/>
+                                                        <img unselectable="on" width="38px" height="15px" class="buttonOut" align="absmiddle" src="<%=DOMAIN_NAME_ROOT%>/img/Style/Classic/Button/Button_Save.gif" title="Save"/>
                                                     </html:TagA>
                                                 </th>
                                             </tr>
@@ -157,7 +158,7 @@
                                 <tr>
                                     <td class="treeviewBottomLeft"></td>
                                     <td class="treeviewBottom"></td>
-                                    <td class="treeviewBottomRight"><IMG class="BorderBottomRight" src="/WorkSpace/img/TreeView/b.gif"></td>
+                                    <td class="treeviewBottomRight"><IMG class="BorderBottomRight" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
                                 </tr>
                         </form>
                     </table>

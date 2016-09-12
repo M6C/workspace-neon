@@ -2,14 +2,15 @@
 <%@ taglib uri="Framework_Taglib_List.tld" prefix="list" %>
 <%@ taglib uri="Framework_Taglib_Request.tld" prefix="request" %>
 
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
 	<head>
 		<title>
 			Compile a Java Project
 		</title>
-	    <!--link href="/WorkSpace/css/page/common/pagecompile.css" rel="stylesheet" type="text/css"/-->
+	    <!--link href="<%=DOMAIN_NAME_ROOT%>/css/page/common/pagecompile.css" rel="stylesheet" type="text/css"/-->
         <jsp:include page="/css/page/common/pagecompile.jsp" flush="true"/>
-		<script language="javascript" src="/WorkSpace/js/page/common/pagecompile.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/common/pagecompile.js" type="text/javascript"></script>
 	</head>
 	<body bgcolor="buttonface" onUnLoad="javascript:form_unload()">
 <%--

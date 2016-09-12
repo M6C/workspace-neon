@@ -4,6 +4,7 @@
 <%@ taglib uri="Framework_Taglib_Eval.tld" prefix="eval" %>
 <%@ taglib uri="Framework_Taglib_Request.tld" prefix="request" %>
 <%@ taglib uri="Workspace_Taglib_Versionning.tld" prefix="versionning" %>
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
 	<head>
 		<title>
@@ -14,17 +15,17 @@
 			</logic:TagIfDefine>
 			- User:<request:TagPrintAttribut name="BeanAuthentification:login" scope="session"/>
 		</title>
-    	<!--link href="/WorkSpace/css/page/filebrowser/page.css" rel="stylesheet" type="text/css"-->
+    	<!--link href="<%=DOMAIN_NAME_ROOT%>/css/page/filebrowser/page.css" rel="stylesheet" type="text/css"-->
         <jsp:include page="/css/page/filebrowser/page.jsp" flush="true"/>
-        <script language="javascript" src="/WorkSpace/js/page/common/function.js" type="text/javascript"></script>
-		<script language="javascript" src="/WorkSpace/js/page/filebrowser/page.js" type="text/javascript"></script>
-		<script language="javascript" src="/WorkSpace/js/Popup.js" type="text/javascript"></script>
-		<script language="javascript" src="/WorkSpace/js/EncodingUTF8.js" type="text/javascript"></script>
-		<script language="javascript" src="/WorkSpace/js/EncodingHTML.js" type="text/javascript"></script>
-		<script language="javascript" src="/WorkSpace/js/FunctionText.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/page/editorjava/ReloadMenu.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/page/editorjava/ReloadDir.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/page/editorjava/ReloadFile.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/common/function.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/filebrowser/page.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/Popup.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/EncodingUTF8.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/EncodingHTML.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/FunctionText.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/editorjava/ReloadMenu.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/editorjava/ReloadDir.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/editorjava/ReloadFile.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<table cellspacing="0" cellpadding="0" width="100%" height="100%">

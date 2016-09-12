@@ -1,11 +1,12 @@
 <%@ taglib uri="Framework_Taglib_Html.tld" prefix="html" %>
 <%@ taglib uri="Framework_Taglib_Eval.tld" prefix="eval" %>
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
 	<head>
 		<title>
 			Execute a command line
 		</title>
-		<link href="/WorkSpace/css/ExecCmd.css" rel="stylesheet" type="text/css">
+		<link href="<%=DOMAIN_NAME_ROOT%>/css/ExecCmd.css" rel="stylesheet" type="text/css">
 	</head>
 	<body bgcolor="buttonface">
 		<form action="action.servlet">

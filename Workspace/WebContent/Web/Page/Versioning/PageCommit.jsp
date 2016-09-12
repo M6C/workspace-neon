@@ -1,14 +1,15 @@
 <%@ taglib uri="Framework_Taglib_Html.tld" prefix="html" %>
 <%@ taglib uri="Framework_Taglib_Logic.tld" prefix="logic" %>
 <%@ taglib uri="Framework_Taglib_Request.tld" prefix="request" %>
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
     <head>
         <title>
             Commit project
         </title>
-	        <!--link href="/WorkSpace/css/page/versioning/pagecommit.css" rel="stylesheet" type="text/css"-->
+	        <!--link href="<%=DOMAIN_NAME_ROOT%>/css/page/versioning/pagecommit.css" rel="stylesheet" type="text/css"-->
         <jsp:include page="/css/page/versioning/pagecommit.jsp" flush="true"/>
-		<script language="javascript" src="/WorkSpace/js/page/versioning/pagecommit.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/versioning/pagecommit.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<form action="action.servlet"repository>

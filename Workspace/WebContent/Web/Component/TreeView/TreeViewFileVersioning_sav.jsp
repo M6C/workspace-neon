@@ -21,7 +21,7 @@ Table of possible CVS status information : D:\Dev\Travaux\Java\JBuilder8\WorkSpa
 <table class="treeview">
 <tbody>
 	<tr>
-		<td class="treeviewTopLeft"><IMG height="8px" width="8px" src="/WorkSpace/img/TreeView/b.gif"></td>
+		<td class="treeviewTopLeft"><IMG height="8px" width="8px" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
 		<td class="treeviewTop"></td>
 		<td class="treeviewTopRight"></td>
 	</tr>
@@ -132,7 +132,7 @@ Table of possible CVS status information : D:\Dev\Travaux\Java\JBuilder8\WorkSpa
 	<tr>
 		<td class="treeviewBottomLeft"></td>
 		<td class="treeviewBottom"></td>
-		<td class="treeviewBottomRight"><IMG height="8px" width="8px" src="/WorkSpace/img/TreeView/b.gif"></td>
+		<td class="treeviewBottomRight"><IMG height="8px" width="8px" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
 	</tr>
 <tbody>
 </table>

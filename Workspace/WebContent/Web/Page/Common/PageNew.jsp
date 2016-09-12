@@ -1,12 +1,13 @@
 <%@ taglib uri="Framework_Taglib_Html.tld" prefix="html" %>
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
 	<head>
 		<title>
 			New
 		</title>
-	    <!--link href="/WorkSpace/css/page/common/pagenew.css" rel="stylesheet" type="text/css"/-->
+	    <!--link href="<%=DOMAIN_NAME_ROOT%>/css/page/common/pagenew.css" rel="stylesheet" type="text/css"/-->
         <jsp:include page="/css/page/common/pagenew.jsp" flush="true"/>
-		<script language="javascript" src="/WorkSpace/js/page/common/pagenew.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/common/pagenew.js" type="text/javascript"></script>
 	</head>
 	<body bgcolor="buttonface" onUnLoad="javascript:form_unload()">
 		<form name="EditorJavaNew" action="action.servlet" onSubmit="javaScript:form_submit(this);">

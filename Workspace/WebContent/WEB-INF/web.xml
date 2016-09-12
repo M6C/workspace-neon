@@ -19,7 +19,7 @@
     </init-param>
     <init-param>
       <param-name>servlet_file</param-name>
-      <param-value>/Xml/FrmWrk_Servlet.xml</param-value>
+      <param-value>/Xml/ExtJs/FrmWrk_Servlet.xml</param-value>
     </init-param>
   </filter>
   <filter>

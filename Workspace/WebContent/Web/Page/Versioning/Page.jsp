@@ -4,6 +4,7 @@
 <%@ taglib uri="Framework_Taglib_Eval.tld" prefix="eval" %>
 <%@ taglib uri="Framework_Taglib_Request.tld" prefix="request" %>
 <%@ taglib uri="Workspace_Taglib_Versionning.tld" prefix="versionning" %>
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
 	<head>
 		<title>
@@ -14,24 +15,24 @@
 			</logic:TagIfDefine>
 			- User:<request:TagPrintAttribut name="BeanAuthentification:login" scope="session"/>
 		</title>
-	    <!--link href="/WorkSpace/css/page/versioning/page.css" rel="stylesheet" type="text/css"-->
+	    <!--link href="<%=DOMAIN_NAME_ROOT%>/css/page/versioning/page.css" rel="stylesheet" type="text/css"-->
         <jsp:include page="/css/page/versioning/page.jsp" flush="true"/>
-        <script language="javascript" src="/WorkSpace/js/page/common/function.js" type="text/javascript"></script>
-		<script language="javascript" src="/WorkSpace/js/page/versioning/page.js" type="text/javascript"></script>
-		<script language="javascript" src="/WorkSpace/js/Popup.js" type="text/javascript"></script>
-		<script language="javascript" src="/WorkSpace/js/EncodingUTF8.js" type="text/javascript"></script>
-		<script language="javascript" src="/WorkSpace/js/EncodingHTML.js" type="text/javascript"></script>
-		<script language="javascript" src="/WorkSpace/js/FunctionText.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/page/editorjava/ReloadMenu.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/page/editorjava/ReloadDir.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/page/editorjava/ReloadFile.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/common/function.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/versioning/page.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/Popup.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/EncodingUTF8.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/EncodingHTML.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/FunctionText.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/editorjava/ReloadMenu.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/editorjava/ReloadDir.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/editorjava/ReloadFile.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<table cellspacing="0" cellpadding="0" width="100%" height="100%">
 	      <tr height="10%" valign="top" align="center">
 		    <td colspan="2" valign="top">
 <%--
-				<img class="buttonOut" src="/WorkSpace/img/Versionning/cvs_logo.gif" alt="CVS"/>
+				<img class="buttonOut" src="<%=DOMAIN_NAME_ROOT%>/img/Versionning/cvs_logo.gif" alt="CVS"/>
 --%>
             <div id="reloadmenu">
 				<jsp:include page="/Web/Component/Menu/Versioning/MenuHeader.jsp" flush="true"/>
@@ -84,21 +85,22 @@
 <%@ taglib uri="Framework_Taglib_Eval.tld" prefix="eval" %>
 <%@ taglib uri="Workspace_Taglib_Versionning.tld" prefix="versionning" %>
 
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
     <head>
         <title>
             Versionning
         </title>
-	    <link href="/WorkSpace/css/page/versioning/page.css" rel="stylesheet" type="text/css">
-		<script language="javascript" src="/WorkSpace/js/page/versioning/page.js" type="text/javascript"></script>
-		<script language="javascript" src="/WorkSpace/js/Popup.js" type="text/javascript"></script>
+	    <link href="<%=DOMAIN_NAME_ROOT%>/css/page/versioning/page.css" rel="stylesheet" type="text/css">
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/versioning/page.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/Popup.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<table class="memo">
 			<tr valign="top">
 <%--
 			  <td>
-			    <A href="action.servlet?event=Home"><img unselectable="on" class="buttonOut" align="absmiddle" src="/WorkSpace/img/Editor/ed_home.gif" onmouseover="this.className='buttonOver';" onmouseout="this.className='buttonOut';" title="Home"/></A>
+			    <A href="action.servlet?event=Home"><img unselectable="on" class="buttonOut" align="absmiddle" src="<%=DOMAIN_NAME_ROOT%>/img/Editor/ed_home.gif" onmouseover="this.className='buttonOver';" onmouseout="this.className='buttonOut';" title="Home"/></A>
 			  </td>
 --%!>
 			  <logic:TagIfDefine name="application" scope="request">

@@ -9,7 +9,7 @@
   <%--logic:TagIf expression="#R$myFile.File.isFile#"--%>
   <%if (((framework.taglib.file.bean.BeanFile)request.getAttribute("myFile")).isFile()) {%>
     <html:TagA attrHref="#R$myFile.File.toURL#">
-      <img src="/WorkSpace/img/TreeView/ot0.gif" border="0" align="top"/>
+      <img src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/ot0.gif" border="0" align="top"/>
       <file:TagFileListItem methode="getName"/>
     </html:TagA>
   <%}%>
@@ -17,7 +17,7 @@
   <%--logic:TagIf expression="#R$myFile.File.isDirectory#"--%>
   <%if (((framework.taglib.file.bean.BeanFile)request.getAttribute("myFile")).isDirectory()) {%>
     <html:TagA attrHref="/action.servlet?event=index&pathToExpand=#R$myFile.File.toString#">
-      <img src="/WorkSpace/img/TreeView/ot1.gif" border="0" align="top"/>
+      <img src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/ot1.gif" border="0" align="top"/>
       <file:TagFileListItem methode="getName"/>
     </html:TagA>
   <%}%>

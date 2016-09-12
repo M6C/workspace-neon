@@ -1,7 +1,7 @@
 <%@ taglib uri="Framework_Taglib_Html.tld" prefix="html" %>
 <%@ taglib uri="Workspace_Taglib_Versionning.tld" prefix="versionning" %>
 
-<script language="javascript" src="/WorkSpace/js/Popup.js" type="text/javascript"></script>
+<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/Popup.js" type="text/javascript"></script>
 
 <script language="javascript">
 function showMenuLevel(tableId, trId) {

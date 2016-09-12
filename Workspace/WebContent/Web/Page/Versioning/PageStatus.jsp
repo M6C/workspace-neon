@@ -1,13 +1,14 @@
 <%@ taglib uri="Framework_Taglib_Request.tld" prefix="request" %>
 <%@ taglib uri="Workspace_Taglib_Versionning.tld" prefix="versionning" %>
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
     <head>
         <title>
             Status Information
         </title>
-	        <!--link href="/WorkSpace/css/page/versioning/pagestatus.css" rel="stylesheet" type="text/css"-->
+	        <!--link href="<%=DOMAIN_NAME_ROOT%>/css/page/versioning/pagestatus.css" rel="stylesheet" type="text/css"-->
         <jsp:include page="/css/page/versioning/pagestatus.jsp" flush="true"/>
-		<script language="javascript" src="/WorkSpace/js/page/versioning/pagestatus.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/versioning/pagestatus.js" type="text/javascript"></script>
 	</head>
 	<body>
                         <versionning:TagStatus application="#R$application#" path="#R$path#" name="statusInformation" scope="request"/>

@@ -15,7 +15,7 @@
         <tr>
             <td width="5%" align="center">
               <html:TagA attrClass="treeviewHeader" attrHref="action.servlet?event=#R$eventDst#&application=#R$application<encoding=UTF-8>#">
-                 <img width="15px" height="14px" src="/WorkSpace/img/Common/home_small.gif"/>
+                 <img width="15px" height="14px" src="<%=DOMAIN_NAME_ROOT%>/img/Common/home_small.gif"/>
               </html:TagA>
             </td>
             <td width="90%" align="center">
@@ -23,7 +23,7 @@
             </td>
             <td width="5%" align="center">
               <html:TagA attrHref="javascript:openPopup('action.servlet?event=EditorJavaPageSelectDir&formNameToSubmit=#R$formNameToSubmit#&formName=#R$formName#&fieldName=pathToExpand&fieldNameApplication=application&application=#R$application#&pathToExpand=#R$pathToExpand#', 'EditorJavaPageSelectDir', 340, 350)">
-                 <img src="/WorkSpace/img/Style/Classic/Header/Header_01_down.gif" height="14px">
+                 <img src="<%=DOMAIN_NAME_ROOT%>/img/Style/Classic/Header/Header_01_down.gif" height="14px">
               </html:TagA>
             </td>
         </tr>

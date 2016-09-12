@@ -4,18 +4,19 @@
 <%@ taglib uri="Framework_Taglib_Eval.tld" prefix="eval" %>
 <%@ taglib uri="Framework_Taglib_Date.tld" prefix="date" %>
 <%@ taglib uri="Framework_Taglib_Request.tld" prefix="request" %>
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
     <head>
         <title>
             Diaporama
         </title>
-	        <link href="/WorkSpace/css/TreeView.css" rel="stylesheet" type="text/css">
-	        <link href="/WorkSpace/css/Leonie.css" rel="stylesheet" type="text/css">
-		<script language="javascript" src="/WorkSpace/js/page/editorjava/page.js" type="text/javascript"></script>
-		<script language="javascript" src="/WorkSpace/js/Popup.js" type="text/javascript"></script>
-		<script language="javascript" src="/WorkSpace/js/EncodingUTF8.js" type="text/javascript"></script>
-		<script language="javascript" src="/WorkSpace/js/EncodingHTML.js" type="text/javascript"></script>
-		<script language="javascript" src="/WorkSpace/js/FunctionText.js" type="text/javascript"></script>
+	        <link href="<%=DOMAIN_NAME_ROOT%>/css/TreeView.css" rel="stylesheet" type="text/css">
+	        <link href="<%=DOMAIN_NAME_ROOT%>/css/Leonie.css" rel="stylesheet" type="text/css">
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/editorjava/page.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/Popup.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/EncodingUTF8.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/EncodingHTML.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/FunctionText.js" type="text/javascript"></script>
 		<SCRIPT type="text/javascript">
 		<!--
 		function openWindow(url) {
@@ -23,8 +24,8 @@
 		}
                 -->
 		</SCRIPT>
-	        <link href="/WorkSpace/css/page/pagephoto.css" rel="stylesheet" type="text/css">
-		<script language="javascript" src="/WorkSpace/js/page/pagephoto.js" type="text/javascript"></script>
+	        <link href="<%=DOMAIN_NAME_ROOT%>/css/page/pagephoto.css" rel="stylesheet" type="text/css">
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/pagephoto.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<table>

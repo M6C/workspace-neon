@@ -6,7 +6,7 @@
 <table class="box1">
 <tbody>
 	<tr>
-		<td class="box1TopLeft"><IMG height="1px" width="5px" src="/WorkSpace/img/TreeView/b.gif"></td>
+		<td class="box1TopLeft"><IMG height="1px" width="5px" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
 		<td class="box1Top"></td>
 		<td class="box1TopRight"></td>
 	</tr>
@@ -35,7 +35,7 @@
 							&nbsp;
 						</logic:TagFor>
 						<html:TagA attrHref="action.servlet?event=#R$eventDst#&path=#R$path#&pathToExpand=#R$myFile.File.toURI.getPath#&pathBuildJava=#R$pathBuildJava#&pathBuildJar=#R$pathBuildJar##R$paramOther#">
-							<img src="/WorkSpace/img/TreeView/ot1.gif" border="0" align="top"/>
+							<img src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/ot1.gif" border="0" align="top"/>
 							<file:TagFileListItem methode="getName"/>
 						</html:TagA>
 						<br>
@@ -49,7 +49,7 @@
 	<tr>
 		<td class="box1BottomLeft"></td>
 		<td class="box1Bottom"></td>
-		<td class="box1BottomRight"><IMG height="10px" width="10px" src="/WorkSpace/img/TreeView/b.gif"></td>
+		<td class="box1BottomRight"><IMG height="10px" width="10px" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
 	</tr>
 </tbody>
 </table>

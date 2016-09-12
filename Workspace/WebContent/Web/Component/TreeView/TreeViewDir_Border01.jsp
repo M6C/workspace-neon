@@ -14,7 +14,7 @@
 
 <table class="treeview">
     <tr>
-        <td class="treeviewTopLeft"><IMG class="BorderTopLeft" src="/WorkSpace/img/TreeView/b.gif"></td>
+        <td class="treeviewTopLeft"><IMG class="BorderTopLeft" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
         <td class="treeviewTop"></td>
         <td class="treeviewTopRight"></td>
     </tr>
@@ -32,13 +32,13 @@
             </script>
 --%>
               <html:TagA attrClass="treeviewHeader" attrHref="action.servlet?event=#R$eventDst#&application=#R$application<encoding=UTF-8>#">
-                 <img width="15px" height="14px" src="/WorkSpace/img/Common/home_small.gif"/>
+                 <img width="15px" height="14px" src="<%=DOMAIN_NAME_ROOT%>/img/Common/home_small.gif"/>
               </html:TagA>
               &nbsp;
               <jsp:include page="/Web/Component/ComboBox/ComboBoxProjetXml.jsp" flush="true"/>
               &nbsp;
               <html:TagA attrHref="javascript:openPopup('action.servlet?event=EditorJavaPageSelectDir&formNameToSubmit=#R$formNameToSubmit#&formName=#R$formName#&fieldName=pathToExpand&fieldNameApplication=application&application=#R$application#&pathToExpand=#R$pathToExpand#', 'EditorJavaPageSelectDir', 340, 350)">
-                 <img src="/WorkSpace/img/Style/Classic/Header/Header_01_down.gif" height="14px">
+                 <img src="<%=DOMAIN_NAME_ROOT%>/img/Style/Classic/Header/Header_01_down.gif" height="14px">
               </html:TagA>
             </th>
             <td class="treeviewRight"></td>
@@ -62,7 +62,7 @@
                             &nbsp;
                         </logic:TagFor>
                         <html:TagA attrName="anchor#R$cnt##R$myFile.Index#" attrClass="treeviewMain" attrHref="action.servlet?event=#R$eventDst#&application=#R$application<encoding=UTF-8>#&pathToExpand=#R$myFile.getPathUriRelative<encoding=ISO-8859-1>##R$paramOther#\#anchor#R$cnt##R$myFile.Index#">
-                            <img src="/WorkSpace/img/TreeView/ot1.gif" border="0" align="top"/>
+                            <img src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/ot1.gif" border="0" align="top"/>
                         </html:TagA>
                         <html:TagA attrName="anchor#R$cnt##R$myFile.Index#" attrClass="treeviewHeader" attrHref="javascript:onClickTvDir('eventDst=#R$eventDst#&application=#R$application<encoding=UTF-8>#&pathToExpand=#R$myFile.getPathUriRelative<encoding=ISO-8859-1>##R$paramOther#', 'anchor#R$cnt##R$myFile.Index#')">
                             <file:TagFileListItem methode="getName"/>
@@ -79,7 +79,7 @@
     <tr>
         <td class="treeviewBottomLeft"></td>
         <td class="treeviewBottom"></td>
-        <td class="treeviewBottomRight"><IMG class="BorderBottomRight" src="/WorkSpace/img/TreeView/b.gif"></td>
+        <td class="treeviewBottomRight"><IMG class="BorderBottomRight" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
     </tr>
 </table>
 <%--

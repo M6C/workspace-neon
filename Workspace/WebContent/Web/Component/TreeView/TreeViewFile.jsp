@@ -21,7 +21,7 @@
 	<%--logic:TagIf expression="#R$myFile.File.isFile#"--%>
 	<%if (((framework.taglib.file.bean.BeanFile)request.getAttribute("myFile")).isFile()) {%>
 		<html:TagA attrHref="action.servlet?event=#R$eventDst#&FileName=#R$myFile.File.toURI.getPath#&path=#R$path#&pathToExpand=#R$pathToExpand#&pathBuildJava=#R$pathBuildJava#&pathBuildJar=#R$pathBuildJar#">
-			<img src="/WorkSpace/img/TreeView/ot0.gif" border="0" align="top"/>
+			<img src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/ot0.gif" border="0" align="top"/>
 			<file:TagFileListItem methode="getName"/>
 		</html:TagA>
 		</td><td>

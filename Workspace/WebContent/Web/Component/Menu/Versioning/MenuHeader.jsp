@@ -20,7 +20,7 @@ function showMenuLevel(tableId, trId) {
 <%--
 	<tr class="level01">
 		<td rowspan="3" class="menuLevel01">
-		  <img class="buttonOut" src="/WorkSpace/img/Versionning/cvs_logo.gif" alt="CVS"/>
+		  <img class="buttonOut" src="<%=DOMAIN_NAME_ROOT%>/img/Versionning/cvs_logo.gif" alt="CVS"/>
 		</td>
 	</tr>
 --%>

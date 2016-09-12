@@ -5,15 +5,16 @@
     <xml:TagXslParameter name="myPWD" value="#S$BeanAuthentification:password#"/>
     <xml:TagXslResultDom name="resultDom" scope="session"/>
 </xml:TagXsl>
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
     <head>
         <title>
             Workspace - User:<request:TagPrintAttribut name="BeanAuthentification:login" scope="session"/>
         </title>
-        <%--link href="/WorkSpace/css/page/home.css" rel="stylesheet" type="text/css"--%>
-        <jsp:include page="/css/page/home.jsp" flush="true"/>
-        <script language="javascript" src="/WorkSpace/js/page/home.js" type="text/javascript"></script>
-                <script language="javascript" src="/WorkSpace/js/Popup.js" type="text/javascript"></script>
+        <%--link href="<%=DOMAIN_NAME_ROOT%>/css/page/home.css" rel="stylesheet" type="text/css"--%>
+        <jsp:include page="/css/page/home.jsp" />
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/home.js" type="text/javascript"></script>
+                <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/Popup.js" type="text/javascript"></script>
     </head>
     <body bgcolor="#ffffff">
         <table width="100%">
@@ -21,7 +22,7 @@
                 <td>
                     <table class="treeview" id="theTableToDo">
                         <tr>
-                            <td class="treeviewTopLeft"><IMG height="8px" width="8px" src="/WorkSpace/img/TreeView/b.gif"></td>
+                            <td class="treeviewTopLeft"><IMG height="8px" width="8px" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
                             <td class="treeviewTop"></td>
                             <td class="treeviewTopRight"></td>
                         </tr>
@@ -77,7 +78,7 @@
                         <tr>
                             <td class="treeviewBottomLeft"></td>
                             <td class="treeviewBottom"></td>
-                            <td class="treeviewBottomRight"><IMG height="8px" width="8px" src="/WorkSpace/img/TreeView/b.gif"></td>
+                            <td class="treeviewBottomRight"><IMG height="8px" width="8px" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
                         </tr>
                     </table>
                 </td>
@@ -86,7 +87,7 @@
                 <td>
                     <table class="treeview" id="theTableToDo">
                         <tr>
-                            <td class="treeviewTopLeft"><IMG height="8px" width="8px" src="/WorkSpace/img/TreeView/b.gif"></td>
+                            <td class="treeviewTopLeft"><IMG height="8px" width="8px" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
                             <td class="treeviewTop"></td>
                             <td class="treeviewTopRight"></td>
                         </tr>
@@ -142,7 +143,7 @@
                         <tr>
                             <td class="treeviewBottomLeft"></td>
                             <td class="treeviewBottom"></td>
-                            <td class="treeviewBottomRight"><IMG height="8px" width="8px" src="/WorkSpace/img/TreeView/b.gif"></td>
+                            <td class="treeviewBottomRight"><IMG height="8px" width="8px" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
                         </tr>
                     </table>
                 </td>

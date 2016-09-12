@@ -7,6 +7,7 @@
 <%@ taglib uri="Framework_Taglib_Eval.tld" prefix="eval" %>
 <%@ taglib uri="Framework_Taglib_Request.tld" prefix="request" %>
 
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
     <head>
 <%--
@@ -19,10 +20,10 @@
             </logic:TagIfDefine>
             - User:<request:TagPrintAttribut name="BeanAuthentification:login" scope="session"/>
         </title>
-      <link href="/WorkSpace/css/page/hibernate/page.css" rel="stylesheet" type="text/css">
-        <script language="javascript" src="/WorkSpace/js/page/common/function.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/page/hibernate/page.js" type="text/javascript"></script>
-		<script language="javascript" src="/WorkSpace/js/Popup.js" type="text/javascript"></script>
+      <link href="<%=DOMAIN_NAME_ROOT%>/css/page/hibernate/page.css" rel="stylesheet" type="text/css">
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/common/function.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/hibernate/page.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/Popup.js" type="text/javascript"></script>
     </head>
     <body>
         <table cellspacing="0" cellpadding="0" width="100%" height="100%">
@@ -40,7 +41,7 @@
 						<html:TagInput attrType="hidden" attrName="schema" attrValue="#R$schema#"/>
 	                    <table class="treeview">
                              <tr>
-                                 <td class="treeviewTopLeft"><IMG class="BorderTopLeft" src="/WorkSpace/img/TreeView/b.gif"></td>
+                                 <td class="treeviewTopLeft"><IMG class="BorderTopLeft" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
                                  <td class="treeviewTop"></td>
                                  <td class="treeviewTopRight"></td>
                              </tr>
@@ -80,7 +81,7 @@
                              <tr>
                                  <td class="treeviewBottomLeft"></td>
                                  <td class="treeviewBottom"></td>
-                                 <td class="treeviewBottomRight"><IMG class="BorderBottomRight" src="/WorkSpace/img/TreeView/b.gif"></td>
+                                 <td class="treeviewBottomRight"><IMG class="BorderBottomRight" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
                              </tr>
 	                    </table>
 					</form>

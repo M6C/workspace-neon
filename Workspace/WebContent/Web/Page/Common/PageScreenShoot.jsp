@@ -1,17 +1,18 @@
 <%@ taglib uri="Framework_Taglib_Request.tld" prefix="request" %>
 
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
     <head>
         <title>
             <request:TagPrintAttribut name="msgTitle" scope="request"/>
         </title>
-            <!--link href="/WorkSpace/css/page/common/pagescreenshoot.css" rel="stylesheet" type="text/css"></link-->
+            <!--link href="<%=DOMAIN_NAME_ROOT%>/css/page/common/pagescreenshoot.css" rel="stylesheet" type="text/css"></link-->
         	<jsp:include page="/css/page/common/pagescreenshoot.jsp" flush="true"/>
-            <script language="javascript" src="/WorkSpace/js/page/common/function.js" type="text/javascript"></script>
-            <script language="javascript" src="/WorkSpace/js/page/common/pagescreenshoot.js" type="text/javascript"></script>
-            <script language="javascript" src="/WorkSpace/js/page/common/pagescreenshoot_refresh.js" type="text/javascript"></script>
-            <script language="javascript" src="/WorkSpace/js/page/common/pagescreenshoot_mouse.js" type="text/javascript"></script>
-            <script language="javascript" src="/WorkSpace/js/page/common/pagescreenshoot_click.js" type="text/javascript"></script>
+            <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/common/function.js" type="text/javascript"></script>
+            <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/common/pagescreenshoot.js" type="text/javascript"></script>
+            <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/common/pagescreenshoot_refresh.js" type="text/javascript"></script>
+            <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/common/pagescreenshoot_mouse.js" type="text/javascript"></script>
+            <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/common/pagescreenshoot_click.js" type="text/javascript"></script>
     </head>
     <noscript>
       <!--

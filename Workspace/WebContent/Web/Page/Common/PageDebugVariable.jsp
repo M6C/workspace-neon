@@ -3,14 +3,15 @@
 <%@ taglib uri="Framework_Taglib_Logic.tld" prefix="logic" %>
 <%@ taglib uri="Framework_Taglib_Request.tld" prefix="request" %>
 
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
 	<head>
 		<title>
 			Debug Variable
 		</title>
-	    <!--link href="/WorkSpace/css/page/common/pagedebugvariable.css" rel="stylesheet" type="text/css"/-->
+	    <!--link href="<%=DOMAIN_NAME_ROOT%>/css/page/common/pagedebugvariable.css" rel="stylesheet" type="text/css"/-->
         <jsp:include page="/css/page/common/pagedebugvariable.jsp" flush="true"/>
-		<script language="javascript" src="/WorkSpace/js/page/common/pagedebugvariable.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/common/pagedebugvariable.js" type="text/javascript"></script>
 	</head>
 	<body bgcolor="buttonface" onUnLoad="javascript:form_unload()">
     <table class="global">

@@ -21,7 +21,7 @@ Table of possible CVS status information : D:\Dev\Travaux\Java\JBuilder8\WorkSpa
 </logic:TagIfNotDefine>
 <table class="treeview">
 	<tr class="treeview">
-		<td class="treeviewTopLeft"><IMG class="BorderTopRight" src="/WorkSpace/img/TreeView/b.gif"></td>
+		<td class="treeviewTopLeft"><IMG class="BorderTopRight" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
 		<td class="treeviewTop"></td>
 		<td class="treeviewTopRight"></td>
 	</tr>
@@ -35,7 +35,7 @@ Table of possible CVS status information : D:\Dev\Travaux\Java\JBuilder8\WorkSpa
 					<input type="submit" value="Save"/>
 --%>
                     <html:TagA attrHref="javascript:onsumbitform();javascript:document.forms['ValiderVersionning'].submit()">
-                        <img unselectable="on" width="38px" height="15px" class="buttonOut" align="absmiddle" src="/WorkSpace/img/Style/Classic/Button/Button_Save.gif" title="Save"/>
+                        <img unselectable="on" width="38px" height="15px" class="buttonOut" align="absmiddle" src="<%=DOMAIN_NAME_ROOT%>/img/Style/Classic/Button/Button_Save.gif" title="Save"/>
                     </html:TagA>
 					</th>
 					<th class="treeviewFile" width="*"  >File&nbsp;Name</th>
@@ -142,6 +142,6 @@ Table of possible CVS status information : D:\Dev\Travaux\Java\JBuilder8\WorkSpa
 	<tr>
 		<td class="treeviewBottomLeft"></td>
 		<td class="treeviewBottom"></td>
-		<td class="treeviewBottomRight"><IMG class="BorderBottomRight" src="/WorkSpace/img/TreeView/b.gif"></td>
+		<td class="treeviewBottomRight"><IMG class="BorderBottomRight" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
 	</tr>
 </table>

@@ -2,6 +2,7 @@
 <%@ taglib uri="Framework_Taglib_Logic.tld" prefix="logic" %>
 <%@ taglib uri="Framework_Taglib_Eval.tld" prefix="eval" %>
 <%@ taglib uri="Framework_Taglib_Request.tld" prefix="request" %>
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
     <head>
         <title>

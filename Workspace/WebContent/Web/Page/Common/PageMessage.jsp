@@ -7,12 +7,13 @@ Paramètres à definir pour utiliser ce composant
 <%@ taglib uri="Framework_Taglib_Html.tld" prefix="html" %>
 <%@ taglib uri="Framework_Taglib_Request.tld" prefix="request" %>
 
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
     <head>
         <title>
             <request:TagPrintAttribut name="msgTitle" scope="request"/>
         </title>
-        <!--link href="/WorkSpace/css/page/common/pagemessage.css" rel="stylesheet" type="text/css"/-->
+        <!--link href="<%=DOMAIN_NAME_ROOT%>/css/page/common/pagemessage.css" rel="stylesheet" type="text/css"/-->
         <jsp:include page="/css/page/common/pagemessage.jsp" flush="true"/>
     </head>
     <body bgcolor="buttonface">

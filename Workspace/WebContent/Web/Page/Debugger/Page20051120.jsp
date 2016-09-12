@@ -4,6 +4,7 @@
 <%@ taglib uri="Framework_Taglib_Eval.tld" prefix="eval" %>
 <%@ taglib uri="Framework_Taglib_Request.tld" prefix="request" %>
 <%@ taglib uri="Workspace_Taglib_Versionning.tld" prefix="versionning" %>
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
     <head>
         <title>
@@ -13,13 +14,13 @@
             </logic:TagIfDefine>
             - User:<request:TagPrintAttribut name="BeanAuthentification:login" scope="session"/>
         </title>
-      <link href="/WorkSpace/css/page/debugger/page.css" rel="stylesheet" type="text/css">
-        <script language="javascript" src="/WorkSpace/js/page/common/iframe_completion03.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/Popup.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/EncodingUTF8.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/EncodingHTML.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/FunctionText.js" type="text/javascript"></script>
-        <script language="javascript" src="/WorkSpace/js/page/debugger/page.js" type="text/javascript"></script>
+      <link href="<%=DOMAIN_NAME_ROOT%>/css/page/debugger/page.css" rel="stylesheet" type="text/css">
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/common/iframe_completion03.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/Popup.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/EncodingUTF8.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/EncodingHTML.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/FunctionText.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/debugger/page.js" type="text/javascript"></script>
     </head>
     <body onload="javascript:init();">
         <table cellspacing="0" cellpadding="0">
@@ -28,7 +29,7 @@
                     <table class="toolBar">
                         <tr>
                             <td>
-                                <A href="action.servlet?event=Home"><img unselectable="on" class="buttonOut" align="absmiddle" src="/WorkSpace/img/Editor/ed_home.gif" onmouseover="this.className='buttonOver';" onmouseout="this.className='buttonOut';" title="Home"/></A>
+                                <A href="action.servlet?event=Home"><img unselectable="on" class="buttonOut" align="absmiddle" src="<%=DOMAIN_NAME_ROOT%>/img/Editor/ed_home.gif" onmouseover="this.className='buttonOver';" onmouseout="this.className='buttonOut';" title="Home"/></A>
                                 &nbsp;
                                 <A href="javascript:openPopup('action.servlet?event=DebuggerBreakpointAdd&class=workspace.service.SrvDebuggerNew&ligne=35', 320, 120)">DebugBreakpointAdd</A>
                             </td>
@@ -70,7 +71,7 @@
                             </jsp:include>
                         </td>
                     </tr>
-                    <tr><td><IMG height="5px" width="1px" src="/WorkSpace/img/TreeView/b.gif"></td></tr>
+                    <tr><td><IMG height="5px" width="1px" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td></tr>
                     <tr valign="top">
                         <td>
                       <jsp:include page="/Web/Component/TreeView/TreeViewFile_Border01.jsp" flush="true">
@@ -89,7 +90,7 @@
                          <html:TagInput attrType="hidden" attrName="pathToExpand" attrValue="#R$pathToExpand#"/>
                       <tbody>
                       <tr>
-                          <td class="treeviewTopLeft"><IMG height="8px" width="8px" src="/WorkSpace/img/TreeView/b.gif"></td>
+                          <td class="treeviewTopLeft"><IMG height="8px" width="8px" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
                           <td class="treeviewTop"></td>
                           <td class="treeviewTopRight"></td>
                       </tr>
@@ -119,7 +120,8 @@
 <script language="javascript">
 var i=0;
   frames['htmle'].document.open("text/html","replace");
-  frames['htmle'].document.write('<html><head>');
+  frames['htmle'].document.write('<%String DOMAIN_NAME_ROOT = "/Workspace";%>
+<html><head>');
   frames['htmle'].document.write('</head>');
   frames['htmle'].document.write('<body>');
   frames['htmle'].document.write('<div>');
@@ -138,7 +140,7 @@ var i=0;
                       <tr>
                           <td class="treeviewBottomLeft"></td>
                           <td class="treeviewBottom"></td>
-                          <td class="treeviewBottomRight"><IMG height="8px" width="8px" src="/WorkSpace/img/TreeView/b.gif"></td>
+                          <td class="treeviewBottomRight"><IMG height="8px" width="8px" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
                             </tr>
                          </tbody>
                   </form>

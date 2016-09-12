@@ -1,14 +1,15 @@
 <%@ taglib uri="Framework_Taglib_Html.tld" prefix="html" %>
 <%@ taglib uri="Framework_Taglib_Logic.tld" prefix="logic" %>
 <%String paramOther = java.net.URLEncoder.encode("&pathSrc="+request.getParameter("pathSrc"));%>
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
 	<head>
 		<title>
 			Make Zip
 		</title>
-    	<!--link href="/WorkSpace/css/page/common/pagezip.css" rel="stylesheet" type="text/css"/-->
+    	<!--link href="<%=DOMAIN_NAME_ROOT%>/css/page/common/pagezip.css" rel="stylesheet" type="text/css"/-->
         <jsp:include page="/css/page/common/pagezip.jsp" flush="true"/>
-		<script language="javascript" src="/WorkSpace/js/page/common/pagezip.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/common/pagezip.js" type="text/javascript"></script>
 	</head>
 	<body bgcolor="buttonface" onUnLoad="javascript:form_unload()">
 	        <form name="EditorJavaZip" action="action.servlet" onSubmit="javaScript:form_submit(this);">

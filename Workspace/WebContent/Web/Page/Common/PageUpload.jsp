@@ -1,13 +1,14 @@
 <%@ taglib uri="Framework_Taglib_Html.tld" prefix="html" %>
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
         <title>
             File Upload Test Page
         </title>
-        <!--link href="/WorkSpace/css/page/common/pageupload.css" rel="stylesheet" type="text/css"/-->
+        <!--link href="<%=DOMAIN_NAME_ROOT%>/css/page/common/pageupload.css" rel="stylesheet" type="text/css"/-->
         <jsp:include page="/css/page/common/pageupload.jsp" flush="true"/>
-        <script language="javascript" src="/WorkSpace/js/page/common/pageupload.js" type="text/javascript"></script>
+        <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/common/pageupload.js" type="text/javascript"></script>
     </head>
     <body onUnLoad="javascript:form_unload()">
         Select the file to upload.

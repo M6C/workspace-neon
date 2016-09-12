@@ -1,14 +1,15 @@
-<link rel="stylesheet" type="text/css" href="/WorkSpace/css/toolbar/ToolBar_Classic02.css"/>
-<link rel="stylesheet" type="text/css" href="/WorkSpace/css/component/menu/MenuHeader_Classic02.css"/>
-<link rel="stylesheet" type="text/css" href="/WorkSpace/css/component/treeview/TreeView_Classic02.css"/>
-<link rel="stylesheet" type="text/css" href="/WorkSpace/css/component/treeview/TreeViewFile_Classic02.css"/>
-<link rel="stylesheet" type="text/css" href="/WorkSpace/css/component/treeview/TreeViewImage_Classic02.css"/>
-<link rel="stylesheet" type="text/css" href="/WorkSpace/css/component/combo/Completion_Classic02.css"/>
-<link rel="stylesheet" type="text/css" href="/WorkSpace/css/component/navbar/NavBar_Classic02.css"/>
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
+<link rel="stylesheet" type="text/css" href="<%=DOMAIN_NAME_ROOT%>/css/toolbar/ToolBar_Classic02.css"/>
+<link rel="stylesheet" type="text/css" href="<%=DOMAIN_NAME_ROOT%>/css/component/menu/MenuHeader_Classic02.css"/>
+<link rel="stylesheet" type="text/css" href="<%=DOMAIN_NAME_ROOT%>/css/component/treeview/TreeView_Classic02.css"/>
+<link rel="stylesheet" type="text/css" href="<%=DOMAIN_NAME_ROOT%>/css/component/treeview/TreeViewFile_Classic02.css"/>
+<link rel="stylesheet" type="text/css" href="<%=DOMAIN_NAME_ROOT%>/css/component/treeview/TreeViewImage_Classic02.css"/>
+<link rel="stylesheet" type="text/css" href="<%=DOMAIN_NAME_ROOT%>/css/component/combo/Completion_Classic02.css"/>
+<link rel="stylesheet" type="text/css" href="<%=DOMAIN_NAME_ROOT%>/css/component/navbar/NavBar_Classic02.css"/>
 
 <style type="text/css">
 body {
-    background-image: url(/WorkSpace/img/Style/Informatique/Background/background_whoppix_01.jpg);
+    background-image: url(<%=DOMAIN_NAME_ROOT%>/img/Style/Informatique/Background/background_whoppix_01.jpg);
 /*    background-color: #FFFFEE;*/
 /*
     background-attachment:fixed;

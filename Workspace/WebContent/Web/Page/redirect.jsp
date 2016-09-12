@@ -456,6 +456,7 @@ if ((adresse!=null)&&(!adresse.equals(""))) {
   }
 }
 %>
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
   <head>
   </head>

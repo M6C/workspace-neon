@@ -12,15 +12,16 @@
 --%>
 <%String paramOther = java.net.URLEncoder.encode("&pathSrc="+request.getParameter("pathSrc"));%>
 
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
 	<head>
 		<title>
 			Transforme XML/XSL
 		</title>
-    	<!--link href="/WorkSpace/css/page/common/pagexmlxsl.css" rel="stylesheet" type="text/css"/-->
+    	<!--link href="<%=DOMAIN_NAME_ROOT%>/css/page/common/pagexmlxsl.css" rel="stylesheet" type="text/css"/-->
         <jsp:include page="/css/page/common/pagexmlxsl.jsp" flush="true"/>
-		<script language="javascript" src="/WorkSpace/js/page/common/pagexmlxsl.js" type="text/javascript"></script>
-		<script language="javascript" src="/WorkSpace/js/Popup.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/common/pagexmlxsl.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/Popup.js" type="text/javascript"></script>
 		<script type="text/javascript">
 			function updateXslParameter() {
 				document.EditorJavaXmlXsl.target = '_self';

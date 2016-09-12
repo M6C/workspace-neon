@@ -10,7 +10,7 @@ Paramètres à definir pour utiliser ce composant
 <%@ taglib uri="Framework_Taglib_Request.tld" prefix="request" %>
 <%@ taglib uri="Framework_Taglib_Xml.tld" prefix="Xml" %>
 
-<!--script type="text/javascript" src="/WorkSpace/js/ajax/request/ListProject.js"></script-->
+<!--script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/js/ajax/request/ListProject.js"></script-->
 
 <script type="text/javascript"><!--
 Ext.onReady(function(){

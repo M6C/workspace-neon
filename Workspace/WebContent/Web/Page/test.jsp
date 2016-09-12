@@ -1,4 +1,5 @@
 <%@ taglib uri="Framework_Taglib_Xml.tld" prefix="Xml" %>
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
 	<head>
 	</head>

@@ -5,11 +5,12 @@
 <%@ taglib uri="Framework_Taglib_Request.tld" prefix="request" %>
 <%@ taglib uri="Workspace_Taglib_Versionning.tld" prefix="versionning" %>
 
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
 <head>
   <title>Complex Layout</title>
-    <link rel="stylesheet" type="text/css" href="/WorkSpace/jsFramework/ext-3.4.0/resources/css/ext-all.css" />
-    <link rel="stylesheet" type="text/css" href="/WorkSpace/jsFramework/ext-3.4.0/resources/css/xtheme-gray.css" />
+    <link rel="stylesheet" type="text/css" href="<%=DOMAIN_NAME_ROOT%>/jsFramework/ext-3.4.0/resources/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="<%=DOMAIN_NAME_ROOT%>/jsFramework/ext-3.4.0/resources/css/xtheme-gray.css" />
     
     <style type="text/css">
     html, body {
@@ -24,25 +25,25 @@
         margin:5px;
     }
     .proj {
-        background-image:url(/WorkSpace/jsFramework/ext-3.4.0/examples/shared/icons/fam/cog.png);
+        background-image:url(<%=DOMAIN_NAME_ROOT%>/jsFramework/ext-3.4.0/examples/shared/icons/fam/cog.png);
     }
     .dir {
-        background-image:url(/WorkSpace/jsFramework/ext-3.4.0/examples/shared/icons/fam/folder_go.png);
+        background-image:url(<%=DOMAIN_NAME_ROOT%>/jsFramework/ext-3.4.0/examples/shared/icons/fam/folder_go.png);
     }
     .file {
-        background-image:url(/WorkSpace/jsFramework/ext-3.4.0/examples/shared/icons/fam/book.png);
+        background-image:url(<%=DOMAIN_NAME_ROOT%>/jsFramework/ext-3.4.0/examples/shared/icons/fam/book.png);
     }
     </style>
 
     <!-- GC -->
     <!-- LIBS -->
-    <script type="text/javascript" src="/WorkSpace/jsFramework/ext-3.4.0/adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/jsFramework/ext-3.4.0/adapter/ext/ext-base.js"></script>
     <!-- ENDLIBS -->
 
-    <script type="text/javascript" src="/WorkSpace/jsFramework/ext-3.4.0/ext-all.js"></script>
+    <script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/jsFramework/ext-3.4.0/ext-all.js"></script>
 
     <script type="text/javascript">
-    Ext.BLANK_IMAGE_URL = '/WorkSpace/jsFramework/ext-3.4.0/resources/images/default/s.gif';
+    Ext.BLANK_IMAGE_URL = '<%=DOMAIN_NAME_ROOT%>/jsFramework/ext-3.4.0/resources/images/default/s.gif';
 
     Ext.onReady(function(){
         Ext.QuickTips.init();

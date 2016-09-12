@@ -14,15 +14,16 @@
 <%}%>
 <%--/logic:TagIf--%>
 
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <html>
 	<head>
 		<title>
 			Copy/Move File
 		</title>
-	    <!--link href="/WorkSpace/css/page/common/pagecopymove.css" rel="stylesheet" type="text/css"/-->
+	    <!--link href="<%=DOMAIN_NAME_ROOT%>/css/page/common/pagecopymove.css" rel="stylesheet" type="text/css"/-->
         <jsp:include page="/css/page/common/pagecopymove.jsp" flush="true"/>
-		<script language="javascript" src="/WorkSpace/js/page/common/pagecopymove.js" type="text/javascript"></script>
-		<script language="javascript" src="/WorkSpace/js/Popup.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/common/pagecopymove.js" type="text/javascript"></script>
+		<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/Popup.js" type="text/javascript"></script>
 	</head>
 	<body bgcolor="buttonface" onUnLoad="javascript:form_unload()">
 	        <form name="EditorJavaCopyMove" action="action.servlet" onSubmit="javaScript:form_submit(this);">

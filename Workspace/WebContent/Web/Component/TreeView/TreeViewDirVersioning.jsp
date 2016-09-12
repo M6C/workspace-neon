@@ -12,7 +12,7 @@ Table of possible CVS status information : D:\Dev\Travaux\Java\JBuilder8\WorkSpa
 <table class="treeview">
 <tbody>
 	<tr>
-		<td class="treeviewTopLeft"><IMG height="8px" width="8px" src="/WorkSpace/img/TreeView/b.gif"></td>
+		<td class="treeviewTopLeft"><IMG height="8px" width="8px" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
 		<td class="treeviewTop"></td>
 		<td class="treeviewTopRight"></td>
 	</tr>
@@ -40,7 +40,7 @@ Table of possible CVS status information : D:\Dev\Travaux\Java\JBuilder8\WorkSpa
 							&nbsp;
 						</logic:TagFor>
 						<html:TagA attrClass="treeviewMain" attrHref="action.servlet?event=#R$eventDst#&application=#R$application<encoding=UTF-8>#&pathToExpand=#R$myFile.getPathUriRelative<encoding=UTF-8>##R$paramOther#">
-							<img src="/WorkSpace/img/TreeView/ot1.gif" border="0" align="top"/>
+							<img src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/ot1.gif" border="0" align="top"/>
 							<file:TagFileListItem methode="getName"/>
 						</html:TagA>
 						<br>
@@ -60,16 +60,16 @@ Table of possible CVS status information : D:\Dev\Travaux\Java\JBuilder8\WorkSpa
                                         <html:TagA attrClass="treeviewMain" attrHref="action.servlet?event=#R$eventDst#&application=#R$application<encoding=UTF-8>#&pathToExpand=#R$myFile.getPathUriRelative<encoding=UTF-8>##R$paramOther#">
                                                 <versionning:TagStatusSwitch name="status" scope="request">
                                                   <versionning:TagStatusSwitchCase value="Had Conflicts;File had conflicts on;Needs Merge">
-                                                        <img src="/WorkSpace/img/Versionning/ver_min_conflic.gif" border="0" align="top" alt="Conflic"/>
+                                                        <img src="<%=DOMAIN_NAME_ROOT%>/img/Versionning/ver_min_conflic.gif" border="0" align="top" alt="Conflic"/>
                                                   </versionning:TagStatusSwitchCase>
                                                   <versionning:TagStatusSwitchCase value="Removed;Locally Removed;Entry Invalid;Erased">
-                                                        <img src="/WorkSpace/img/Versionning/ver_min_del_dir.gif" border="0" align="top" alt="Deleted"/>
+                                                        <img src="<%=DOMAIN_NAME_ROOT%>/img/Versionning/ver_min_del_dir.gif" border="0" align="top" alt="Deleted"/>
                                                   </versionning:TagStatusSwitchCase>
                                                   <versionning:TagStatusSwitchCase value="Modified;Locally Modified;Needs Checkout">
-                                                        <img src="/WorkSpace/img/Versionning/ver_min_modified_file.gif" border="0" align="top" alt="Modified"/>
+                                                        <img src="<%=DOMAIN_NAME_ROOT%>/img/Versionning/ver_min_modified_file.gif" border="0" align="top" alt="Modified"/>
                                                   </versionning:TagStatusSwitchCase>
                                                   <versionning:TagStatusSwitchCase value="Up-To-Date;Not modified">
-                                                        <img src="/WorkSpace/img/Versionning/ver_min_uptodate_file.gif" border="0" align="top" alt="Up-To-Date"/>
+                                                        <img src="<%=DOMAIN_NAME_ROOT%>/img/Versionning/ver_min_uptodate_file.gif" border="0" align="top" alt="Up-To-Date"/>
                                                   </versionning:TagStatusSwitchCase>
                                                   <versionning:TagStatusSwitchElse>
                                                         <html:TagImg attrSrc="/img/Versionning/ver_min_else_dir.gif" attrBorder="0" attrAlign="top" attrAlt="#R$status.getStatus#"/>
@@ -87,7 +87,7 @@ Table of possible CVS status information : D:\Dev\Travaux\Java\JBuilder8\WorkSpa
 	<tr>
 		<td class="treeviewBottomLeft"></td>
 		<td class="treeviewBottom"></td>
-		<td class="treeviewBottomRight"><IMG height="8px" width="8px" src="/WorkSpace/img/TreeView/b.gif"></td>
+		<td class="treeviewBottomRight"><IMG height="8px" width="8px" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
 	</tr>
 <tbody>
 </table>

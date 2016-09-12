@@ -5,7 +5,7 @@
 <table class="toolBar">
 	<tr>
 		<td>
-	    <A href="action.servlet?event=Home"><img unselectable="on" class="buttonOut" align="absmiddle" src="/WorkSpace/img/Editor/ed_home.gif" onmouseover="this.className='buttonOver';" onmouseout="this.className='buttonOut';" title="Home"/></A>
+	    <A href="action.servlet?event=Home"><img unselectable="on" class="buttonOut" align="absmiddle" src="<%=DOMAIN_NAME_ROOT%>/img/Editor/ed_home.gif" onmouseover="this.className='buttonOver';" onmouseout="this.className='buttonOut';" title="Home"/></A>
 	    &nbsp;
 	    <A href="javascript:openPopup('action.servlet?event=DebuggerBreakpointVariable', 320, 640)">DebugBreakpointVariable</A>
 	    <A href="javascript:BreakpointCheck()">BreakpointCheck</A>
