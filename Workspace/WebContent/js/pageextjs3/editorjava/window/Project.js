@@ -1,5 +1,5 @@
 // DEPENDENCE
-Ext.Loader.load(['/WorkSpace/js/pageextjs/editorjava/window/project/window/WndProject.js']);
+Ext.Loader.load([DOMAIN_NAME_ROOT + '/js/pageextjs/editorjava/window/project/window/WndProject.js']);
 
 function create_WindowProjectAction(windowEl,formId,comboId,statusbarId,type,submitText,callBackSubmit) {
 	Ext.QuickTips.init();                //n�cessaire pour initialiser les infobulles d�erreur

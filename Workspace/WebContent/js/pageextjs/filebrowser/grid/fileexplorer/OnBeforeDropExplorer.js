@@ -28,7 +28,7 @@ Ext.define('Workspace.filebrowser.grid.fileexplorer.OnBeforeDropExplorer',  {
 				    	console.info('Workspace.filebrowser.grid.fileexplorer.OnBeforeDropExplorer.call success move/copy to:'+itemPathDst+' from:'+itemPathSrc);
 			
 				        Ext.Ajax.request({
-			    		    url: '/WorkSpace/action.servlet?event=FileBrowserCopyMove',
+			    		    url: DOMAIN_NAME_ROOT + '/action.servlet?event=FileBrowserCopyMove',
 			    		    params: {
 			        			pathSrc:itemPathSrc, pathDst:itemPathDst, operation:dropAction
 			    		    },
@@ -44,7 +44,7 @@ Ext.define('Workspace.filebrowser.grid.fileexplorer.OnBeforeDropExplorer',  {
 			    		        var mainEstStore = mainEstGrid.store;
 			    		        var dataModel = mainEstStore.data.getByKey(raw.id);
 
-			    		        // Supprime une donnée
+			    		        // Supprime une donnï¿½e
 			    		        mainEstGrid.data.removeAtKey(raw.id);//item.getKey());
 					        	// Raffaichissement du store et donc de la grid
 					        	mainEstStore.remove(dataModel);

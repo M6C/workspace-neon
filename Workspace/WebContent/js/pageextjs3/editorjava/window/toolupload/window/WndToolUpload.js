@@ -1,5 +1,5 @@
 // DEPENDENCE
-Ext.Loader.load(['/WorkSpace/js/pageextjs/editorjava/window/toolupload/panel/PanelToolUpload.js']);
+Ext.Loader.load([DOMAIN_NAME_ROOT + '/js/pageextjs/editorjava/window/toolupload/panel/PanelToolUpload.js']);
 
 //NAMESPACE
 Ext.ns('Workspace.window.ToolUpload');
@@ -11,12 +11,12 @@ Workspace.window.ToolUpload.WindowToolUpload = Ext.extend(Ext.Window, {
 	    this.items = [
 			{
 				xtype:'panel',
-				autoWidth: true,             //largeur de la fenêtre
-				autoHeight: true,            //hauteur de la fenêtre
+				autoWidth: true,             //largeur de la fenï¿½tre
+				autoHeight: true,            //hauteur de la fenï¿½tre
 			    layout: 'fit',
 			    bbar: new Ext.ux.StatusBar({
 			        id: 'form-statusbar-project',
-			        defaultText: 'Prêt'
+			        defaultText: 'Prï¿½t'
 			        //,plugins: new Ext.ux.ValidationStatus({form:formId})
 			    }),
 				items : [
@@ -29,12 +29,12 @@ Workspace.window.ToolUpload.WindowToolUpload = Ext.extend(Ext.Window, {
 
 	    Workspace.window.ToolUpload.WindowToolUpload.superclass.initComponent.call(this);
 	},
-	title: 'ToolUpload Action',        //titre de la fenêtre
+	title: 'ToolUpload Action',        //titre de la fenï¿½tre
     // el = id du div dans le code html de la page qui contiendra la popup
 //    el:windowEl,        
     layout:'fit',
     width:400,
-    autoHeight: true,        //hauteur de la fenêtre
+    autoHeight: true,        //hauteur de la fenï¿½tre
     modal: true,             //Grise automatiquement le fond de la page
     closeAction:'hide',
     plain: true

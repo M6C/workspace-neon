@@ -1,7 +1,7 @@
 // DEPENDENCE
 Ext.Loader.load(fileList=[
-'/WorkSpace/js/pageextjs/editorjava/window/toolxmlxsl/data/StoreToolXmlXsl.js',
-'/WorkSpace/js/commonextjs/form/combobox/Combo.js'
+DOMAIN_NAME_ROOT + '/js/pageextjs/editorjava/window/toolxmlxsl/data/StoreToolXmlXsl.js',
+DOMAIN_NAME_ROOT + '/js/commonextjs/form/combobox/Combo.js'
 ],
 preserveOrder=true);
 

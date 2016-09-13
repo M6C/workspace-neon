@@ -5,7 +5,7 @@ function onMenuSVNTestCommit(item, event) {
 	    if (btn == 'yes'){
 	    	showWindowWaiting();
 	    	console.info('onMenuSVNTestCommit');
-	    	var requestUrl = '/WorkSpace/action.servlet?event=AjaxSVNTestCommit';
+	    	var requestUrl = DOMAIN_NAME_ROOT + '/action.servlet?event=AjaxSVNTestCommit';
   			Ext.Ajax.request({
   			   url: requestUrl,
   			   params: {},
@@ -27,7 +27,7 @@ function onMenuSVNCommit(item, event) {
 	    	showWindowWaiting();
 	    	console.info('onMenuSVNCommit');
 	  		var project = Ext.getCmp('project').value;
-	    	var requestUrl = '/WorkSpace/action.servlet?event=AjaxSVNCommit';
+	    	var requestUrl = DOMAIN_NAME_ROOT + '/action.servlet?event=AjaxSVNCommit';
   			Ext.Ajax.request({
   			   url: requestUrl,
   			   params: {application:project,messageStr:text},
@@ -49,7 +49,7 @@ function onMenuSVNImport(item, event) {
 	    	showWindowWaiting();
 	    	console.info('onMenuSVNCommit');
 	  		var project = Ext.getCmp('project').value;
-	    	var requestUrl = '/WorkSpace/action.servlet?event=AjaxSVNImport';
+	    	var requestUrl = DOMAIN_NAME_ROOT + '/action.servlet?event=AjaxSVNImport';
   			Ext.Ajax.request({
   			   url: requestUrl,
   			   params: {application:project,messageStr:text},

@@ -1,6 +1,6 @@
 function init_page() {
 
-	Ext.Loader.setPath('Workspace.filebrowser', '/WorkSpace/js/pageextjs/filebrowser');
+	Ext.Loader.setPath('Workspace.filebrowser', DOMAIN_NAME_ROOT + '/js/pageextjs/filebrowser');
 
 // DEPENDENCE
 //	Ext.require('Workspace.filebrowser.view.ViewMain');

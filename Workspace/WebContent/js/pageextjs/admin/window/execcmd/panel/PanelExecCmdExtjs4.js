@@ -36,7 +36,7 @@ Ext.define('Workspace.admin.window.execcmd.panel.PanelExecCmdExtjs4', {
 			            var form = this.up('form').getForm();
 			            if (form.isValid()) {
 			                form.submit({
-				            	url : '/WorkSpace/action.servlet?event=AdminPageExecCmdValiderExtJs',
+				            	url : DOMAIN_NAME_ROOT + '/action.servlet?event=AdminPageExecCmdValiderExtJs',
 			                    success: function(form, action) {
 			                       Ext.Msg.alert('Success', action.result.msg);
 			                    },

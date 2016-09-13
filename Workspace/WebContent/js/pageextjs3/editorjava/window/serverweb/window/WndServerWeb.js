@@ -1,7 +1,7 @@
 //DEPENDENCE
 Ext.Loader.load(fileList=[
-'/WorkSpace/js/pageextjs/editorjava/window/package/window/WndPackage.js',
-'/WorkSpace/js/pageextjs/editorjava/window/serverweb/function/executeCommand.js'
+DOMAIN_NAME_ROOT + '/js/pageextjs/editorjava/window/package/window/WndPackage.js',
+DOMAIN_NAME_ROOT + '/js/pageextjs/editorjava/window/serverweb/function/executeCommand.js'
 ],
 preserveOrder=true);
 
@@ -20,7 +20,7 @@ Workspace.window.ServerWeb.WindowServerWeb = Ext.extend(Workspace.window.Package
 
 		Workspace.window.ServerWeb.WindowServerWeb.superclass.initComponent.call(this);
 
-		// Positionne des paramètres sur le bouton Submit de la window
+		// Positionne des paramï¿½tres sur le bouton Submit de la window
 		Ext.getCmp('pkgsubmit').statusbarId = this.statusbarId;
 		Ext.getCmp('pkgsubmit').cmd = this.cmd;
 	}

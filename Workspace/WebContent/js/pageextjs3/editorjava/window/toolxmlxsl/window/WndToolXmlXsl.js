@@ -1,5 +1,5 @@
 // DEPENDENCE
-Ext.Loader.load(['/WorkSpace/js/pageextjs/editorjava/window/toolxmlxsl/panel/PanelToolXmlXsl.js']);
+Ext.Loader.load([DOMAIN_NAME_ROOT + '/js/pageextjs/editorjava/window/toolxmlxsl/panel/PanelToolXmlXsl.js']);
 
 //NAMESPACE
 Ext.ns('Workspace.window.ToolXmlXsl');
@@ -10,16 +10,16 @@ Workspace.window.ToolXmlXsl.WindowToolXmlXsl = Ext.extend(Ext.Window, {
     initComponent : function(){
 	    this.items = [
     		{
-    			//Ce panel contiendra le panel précédent qui est le formulaire, sauf qu'en bas de celui ci figure la status bar, permettant d'afficher le status de la connexion (chargement ....)
+    			//Ce panel contiendra le panel prï¿½cï¿½dent qui est le formulaire, sauf qu'en bas de celui ci figure la status bar, permettant d'afficher le status de la connexion (chargement ....)
     			xtype:'panel',
     			id:'xml_xsl_form_panel',        
-    			autoWidth: true,             //largeur de la fenêtre
-    			autoHeight: true,            //hauteur de la fenêtre
+    			autoWidth: true,             //largeur de la fenï¿½tre
+    			autoHeight: true,            //hauteur de la fenï¿½tre
     			animCollapse:false,
     			layout: 'fit',
     			bbar: new Ext.ux.StatusBar({
     				id: 'form-statusbar-xml_xsl',
-    				defaultText: 'Prêt'
+    				defaultText: 'Prï¿½t'
     				//,plugins: new Ext.ux.ValidationStatus({form:'xml_xsl_content_panel'})
     			}),
     			items: [
@@ -32,8 +32,8 @@ Workspace.window.ToolXmlXsl.WindowToolXmlXsl = Ext.extend(Ext.Window, {
     		{
     			xtype:'panel',
     			id:'xml_xsl_viewer_panel',        
-    			autoWidth: true,             //largeur de la fenêtre
-    			autoHeight: true,            //hauteur de la fenêtre
+    			autoWidth: true,             //largeur de la fenï¿½tre
+    			autoHeight: true,            //hauteur de la fenï¿½tre
     			animCollapse:false,
         		layout:'fit',
     			collapseFirst:true,
@@ -65,7 +65,7 @@ Workspace.window.ToolXmlXsl.WindowToolXmlXsl = Ext.extend(Ext.Window, {
     	Workspace.window.ToolXmlXsl.WindowToolXmlXsl.superclass.initComponent.call(this);
 	},
 
-	title: 'Xml/Xsl Tranformation',        //titre de la fenêtre
+	title: 'Xml/Xsl Tranformation',        //titre de la fenï¿½tre
     // el = id du div dans le code html de la page qui contiendra la popup
     //el:windowEl,        
     layout:'fit',//'accordion',
@@ -81,7 +81,7 @@ Workspace.window.ToolXmlXsl.WindowToolXmlXsl = Ext.extend(Ext.Window, {
 		activeOnTop: true
 	},
     width:400,
-    autoHeight: true,        //hauteur de la fenêtre
+    autoHeight: true,        //hauteur de la fenï¿½tre
     modal: true,             //Grise automatiquement le fond de la page
     closeAction:'hide',
     plain: true

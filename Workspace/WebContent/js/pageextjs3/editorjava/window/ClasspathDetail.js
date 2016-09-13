@@ -1,5 +1,5 @@
 // DEPENDENCE
-Ext.Loader.load(['/WorkSpace/js/pageextjs/editorjava/window/classpathdetail/window/WndClasspathDetail.js']);
+Ext.Loader.load([DOMAIN_NAME_ROOT + '/js/pageextjs/editorjava/window/classpathdetail/window/WndClasspathDetail.js']);
 
 /**
 /**
@@ -7,8 +7,8 @@ Ext.Loader.load(['/WorkSpace/js/pageextjs/editorjava/window/classpathdetail/wind
  */
 
 function create_WindowClasspathAction(windowEl) {
-	Ext.QuickTips.init();                //nécessaire pour initialiser les infobulles d’erreur
-	Ext.form.Field.prototype.msgTarget = 'side';    //nécessaire pour initialiser les infobulles d’erreur
+	Ext.QuickTips.init();                //nï¿½cessaire pour initialiser les infobulles dï¿½erreur
+	Ext.form.Field.prototype.msgTarget = 'side';    //nï¿½cessaire pour initialiser les infobulles dï¿½erreur
 
 	var wnd = new Workspace.window.ClasspathDetail.WindowClasspathDetail ({
 		el:windowEl
@@ -17,13 +17,13 @@ function create_WindowClasspathAction(windowEl) {
 	return wnd;
 
 //	var classpath_window = new Ext.Window({
-//		title: 'Classpath Detail',        //titre de la fenêtre
+//		title: 'Classpath Detail',        //titre de la fenï¿½tre
 //		// el = id du div dans le code html de la page qui contiendra la popup
 //		el:windowEl,        
 //		layout:'fit',
 //		width:400,
 //		height:300,
-//		//autoHeight: true,        //hauteur de la fenêtre
+//		//autoHeight: true,        //hauteur de la fenï¿½tre
 //		modal: true,             //Grise automatiquement le fond de la page
 //		closeAction:'hide',
 //		plain: true,

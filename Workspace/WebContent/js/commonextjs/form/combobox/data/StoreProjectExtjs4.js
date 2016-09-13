@@ -7,7 +7,7 @@ Ext.define('Workspace.common.form.combobox.data.StoreProjectExtjs4', {
    	model: 'Workspace.data.model.Project',
     proxy: {
         type: 'ajax',
-        url : '/WorkSpace/action.servlet?event=JsonProjectName',
+        url : DOMAIN_NAME_ROOT + '/action.servlet?event=JsonProjectName',
        	reader : {
 			type: 'json',
 			idProperty: 'project',

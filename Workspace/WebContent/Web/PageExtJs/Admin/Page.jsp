@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="<%=DOMAIN_NAME_ROOT%>/css/pageextjs/admin/styles.css"/>
 
     <script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/jsFramework/ext-4.0.7/ext-all-debug-w-comments.js"></script>
+    <script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/js/commonextjs/constant/Constant.js"></script>
     <script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/js/commonextjs/init/InitLoader.js"></script>
     <script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/js/pageextjs/admin/page.js"></script>
     <script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/js/pageextjs/admin/window/WindowMenu.js"></script>

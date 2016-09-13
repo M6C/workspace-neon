@@ -21,7 +21,7 @@ Ext.define('Workspace.filebrowser.button.ButtonFileCartCopyMove', {
         var mainEstTab = mainEstPanel.getActiveTab();
 
         if (!Ext.isEmpty(mainCenterTab)) {
-        	// Création d'une nouvelle collection avec recopie des data
+        	// Crï¿½ation d'une nouvelle collection avec recopie des data
         	var col = new Ext.util.MixedCollection(true, 
         		function(item) {
         			return item.id;//item.getKey();
@@ -38,7 +38,7 @@ Ext.define('Workspace.filebrowser.button.ButtonFileCartCopyMove', {
     		        console.info('Workspace.filebrowser.button.ButtonFileCartCopyMove success move/copy to:'+itemPathDst+' from:'+itemPathSrc);
 
     		        Ext.Ajax.request({
-	        		    url: '/WorkSpace/action.servlet?event=FileBrowserCopyMove',
+	        		    url: DOMAIN_NAME_ROOT + '/action.servlet?event=FileBrowserCopyMove',
 	        		    params: {
 		        			pathSrc:itemPathSrc, pathDst:itemPathDst, operation:item.dropAction
 	        		    },
@@ -52,7 +52,7 @@ Ext.define('Workspace.filebrowser.button.ButtonFileCartCopyMove', {
 	        		        var mainEstStore = mainEstGrid.store;
 	        		        var dataModel = mainEstStore.data.getByKey(item.id);
 
-	        		        // Supprime une donnée
+	        		        // Supprime une donnï¿½e
 	        		        mainEstGrid.data.removeAtKey(item.id);//item.getKey());
 	    		        	// Raffaichissement du store et donc de la grid
 	    		        	mainEstStore.remove(dataModel);

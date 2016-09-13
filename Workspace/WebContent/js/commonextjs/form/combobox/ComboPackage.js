@@ -1,7 +1,7 @@
 // DEPENDENCE
 Ext.Loader.load(fileList=[
-'/WorkSpace/js/commonextjs/form/combobox/Combo.js',
-'/WorkSpace/js/commonextjs/form/combobox/data/StorePackage.js'
+DOMAIN_NAME_ROOT + '/js/commonextjs/form/combobox/Combo.js',
+DOMAIN_NAME_ROOT + '/js/commonextjs/form/combobox/data/StorePackage.js'
 ],
 preserveOrder=true);
 
@@ -40,7 +40,7 @@ Ext.reg('WorkspaceCommonFormComboboxComboPackage', Workspace.common.form.combobo
 //	*/
 //	var storePackage = new Ext.data.Store({
 //	    proxy: new Ext.data.HttpProxy({
-//	        url: '/WorkSpace/action.servlet?event=JsonPackageName'+
+//	        url: DOMAIN_NAME_ROOT + '/action.servlet?event=JsonPackageName'+
 //	        	'&xslParamName=pApplication;pType'+
 //	        	'&pApplication='+project+
 //	        	'&pType='+type

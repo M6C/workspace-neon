@@ -1,5 +1,5 @@
 // DEPENDENCE
-Ext.Loader.load(['/WorkSpace/js/pageextjs/editorjava/window/toolupload/function/upload.js']);
+Ext.Loader.load([DOMAIN_NAME_ROOT + '/js/pageextjs/editorjava/window/toolupload/function/upload.js']);
 
 //NAMESPACE
 Ext.ns('Workspace.window.ToolUpload.panel');
@@ -17,7 +17,7 @@ Workspace.window.ToolUpload.panel.PanelToolUpload = Ext.extend(Ext.FormPanel, {
               buttonText: 'Browse'
           },
           {
-  		    xtype: 'hidden',        //Balise cachée afin de dire qu'il s'agit d'une connexion
+  		    xtype: 'hidden',        //Balise cachï¿½e afin de dire qu'il s'agit d'une connexion
   		    id: 'application',
   		    name: 'application'
   	      }
@@ -37,7 +37,7 @@ Workspace.window.ToolUpload.panel.PanelToolUpload = Ext.extend(Ext.FormPanel, {
 //		                    form_action=1;
 //		                    var project = Ext.getCmp('project').value;
 //		                    build_content_panel.getForm().submit({
-//		                        url: '/WorkSpace/action.servlet?event=EditorJavaPageUploadValider',
+//		                        url: DOMAIN_NAME_ROOT + '/action.servlet?event=EditorJavaPageUploadValider',
 //		                        params: {application:project},
 //		                        waitMsg: 'Uploading file...',
 //		                        success: function(form,action) {

@@ -11,7 +11,7 @@ Ext.define('Workspace.common.grid.data.StoreFileExplorer', {
 
 		//Defini le proxy dans le constructeur pour avoir autant d'instance que de Store
 		config.proxy = Ext.create('Ext.data.proxy.Ajax', {
-	        url: '/WorkSpace/action.servlet?event=JsonFileExplorer',
+	        url: DOMAIN_NAME_ROOT + '/action.servlet?event=JsonFileExplorer',
 			method: 'GET',
 	        reader: {
 	            type: 'json'

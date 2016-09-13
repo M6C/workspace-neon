@@ -1,9 +1,9 @@
 // DEPENDENCE
-Ext.Loader.load(['/WorkSpace/js/pageextjs/editorjava/window/serverweb/window/WndServerWeb.js']);
+Ext.Loader.load([DOMAIN_NAME_ROOT + '/js/pageextjs/editorjava/window/serverweb/window/WndServerWeb.js']);
 
 function create_WindowServerWebCommand(windowEl,formId,comboId,statusbarId,cmd) {
-	Ext.QuickTips.init();                //nécessaire pour initialiser les infobulles d’erreur
-	Ext.form.Field.prototype.msgTarget = 'side';    //nécessaire pour initialiser les infobulles d’erreur
+	Ext.QuickTips.init();                //nï¿½cessaire pour initialiser les infobulles dï¿½erreur
+	Ext.form.Field.prototype.msgTarget = 'side';    //nï¿½cessaire pour initialiser les infobulles dï¿½erreur
 
 	var submitText = 'Execute \''+cmd+'\'';
 	var type = 'War';
@@ -24,8 +24,8 @@ function create_WindowServerWebCommand(windowEl,formId,comboId,statusbarId,cmd) 
 //var pleaseWaitMessage = 'Please Wait ...';
 //
 //function create_WindowServerWebCommand(windowEl,formId,comboId,statusbarId,cmd) {
-//	Ext.QuickTips.init();                //nécessaire pour initialiser les infobulles d’erreur
-//	Ext.form.Field.prototype.msgTarget = 'side';    //nécessaire pour initialiser les infobulles d’erreur
+//	Ext.QuickTips.init();                //nï¿½cessaire pour initialiser les infobulles dï¿½erreur
+//	Ext.form.Field.prototype.msgTarget = 'side';    //nï¿½cessaire pour initialiser les infobulles dï¿½erreur
 //
 //	var submitText = 'Execute \''+cmd+'\'';
 //	var type = 'War';
@@ -34,7 +34,7 @@ function create_WindowServerWebCommand(windowEl,formId,comboId,statusbarId,cmd) 
 //  	  Ext.getCmp(statusbarId).showBusy(pleaseWaitMessage);
 //  		var project = Ext.getCmp('project').value;
 //  		var pack = Ext.getCmp('package').value;
-//  		var requestUrl = '/WorkSpace/action.servlet?event=JsonServerWebCommand';
+//  		var requestUrl = DOMAIN_NAME_ROOT + '/action.servlet?event=JsonServerWebCommand';
 //  		var wndWaiting = showWindowWaiting(); //Ext.MessageBox.wait(runningProcessMessage, pleaseWaitMessage);//wndWaiting.show();
 //  		Ext.Ajax.request({
 //  		   url: requestUrl,

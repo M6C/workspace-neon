@@ -1,6 +1,6 @@
 function init_page() {
 
-	Ext.Loader.setPath('Workspace.editorjava', '/WorkSpace/js/pageextjs/editorjava');
+	Ext.Loader.setPath('Workspace.editorjava', DOMAIN_NAME_ROOT + '/js/pageextjs/editorjava');
 
 // DEPENDENCE
 

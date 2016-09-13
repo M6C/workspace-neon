@@ -1,6 +1,6 @@
 // DEPENDENCE
 Ext.Loader.load(fileList=[
-'/WorkSpace/js/commonextjs/form/combobox/Combo.js'
+DOMAIN_NAME_ROOT + '/js/commonextjs/form/combobox/Combo.js'
 ],
 preserveOrder=true);
 
@@ -10,7 +10,7 @@ Ext.ns('Workspace.common.form.combobox');
 Workspace.common.form.combobox.ComboProject = Ext.extend(Workspace.form.ComboBox, {
     store: new Ext.data.Store({
 	    proxy: new Ext.data.HttpProxy({
-	        url: '/WorkSpace/action.servlet?event=JsonProjectName'
+	        url: DOMAIN_NAME_ROOT + '/action.servlet?event=JsonProjectName'
 	    }),
 	    reader: new Ext.data.JsonReader({
 			idProperty: 'project',
@@ -52,7 +52,7 @@ Ext.reg('WorkspaceCommonFormComboboxComboProject', Workspace.common.form.combobo
 //	*/
 //	var store = new Ext.data.Store({
 //	    proxy: new Ext.data.HttpProxy({
-//	        url: '/WorkSpace/action.servlet?event=JsonProjectName'
+//	        url: DOMAIN_NAME_ROOT + '/action.servlet?event=JsonProjectName'
 //	    }),
 //	    reader: new Ext.data.JsonReader({
 //			idProperty: 'project',
@@ -68,7 +68,7 @@ Ext.reg('WorkspaceCommonFormComboboxComboProject', Workspace.common.form.combobo
 //	var combo = new Ext.form.ComboBox({
 //		id:comboId,
 //        store: store,
-//        //url: '/WorkSpace/action.servlet?event=JsonProjectName',
+//        //url: DOMAIN_NAME_ROOT + '/action.servlet?event=JsonProjectName',
 //        //autoLoad: true,
 //        displayField:'project',
 //        typeAhead: true,

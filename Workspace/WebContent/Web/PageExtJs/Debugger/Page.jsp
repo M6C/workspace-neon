@@ -32,6 +32,7 @@
 	<script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/jsFramework/ext-3.4.0/examples/ux/statusbar/ValidationStatus.js"></script>
 	<script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/jsFramework/ext-3.4.0/examples/ux/fileuploadfield/FileUploadField.js"></script>
 
+    <script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/js/commonextjs/constant/Constant.js"></script>
 	<script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/js/commonextjs/view/ViewPort.js"></script>
 	<script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/js/commonextjs/form/textarea/HtmlEditor.js"></script>
 	<script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/js/commonextjs/window/WndWaiting.js"></script>

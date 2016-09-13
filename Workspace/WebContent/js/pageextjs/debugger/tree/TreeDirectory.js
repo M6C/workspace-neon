@@ -11,7 +11,7 @@ Workspace.debugger.TreeDirectory = Ext.extend(Workspace.tree.TreeDirectory, {
         'dblclick': function (node, event){
 	        //scope: this, //yourScope
 			if (node.attributes.contentType!='directory') {
-			// Remplacé par getRowClass du viewer
+			// Remplacï¿½ par getRowClass du viewer
 //						function lineRenderer(value, metaData, record, rowIndex, colIndex, store) {
 //			                //var row = grid.store.getAt(rowIndex);
 //			                var row = record.store.getAt(rowIndex);
@@ -72,7 +72,7 @@ Workspace.debugger.TreeDirectory = Ext.extend(Workspace.tree.TreeDirectory, {
 		                console.log('rowdblclick', grid, rowIndex, e);
 		                var project = Ext.getCmp('project').value;
 		                var pClass = node.attributes.className;
-		    	    	var requestUrl = '/WorkSpace/action.servlet';
+		    	    	var requestUrl = DOMAIN_NAME_ROOT + '/action.servlet';
 		      			Ext.Ajax.request({
 		      			   url: requestUrl,
 		      			   params: {event:'DebuggerBreakpointAddExtJs',application:project,breakpointClass:pClass,breakpointLine:rowIndex},
@@ -103,10 +103,10 @@ Workspace.debugger.TreeDirectory = Ext.extend(Workspace.tree.TreeDirectory, {
 		      			   }
 		      			});
 	
-		    			// Recopie les données pour mettre à jour l'affichage (ré-executer la méthode lineRenderer)
-		    			// Il faudrait trouver le moyen de faire un fireEvent pour mettre à jour la vue (ou juste la ligne) mise à jour
+		    			// Recopie les donnï¿½es pour mettre ï¿½ jour l'affichage (rï¿½-executer la mï¿½thode lineRenderer)
+		    			// Il faudrait trouver le moyen de faire un fireEvent pour mettre ï¿½ jour la vue (ou juste la ligne) mise ï¿½ jour
 		                //
-		                // Tout ceci à été remplacé par : grid.getView().refresh();
+		                // Tout ceci ï¿½ ï¿½tï¿½ remplacï¿½ par : grid.getView().refresh();
 		                // et dans le viewer : getRowClass
 	//			   			var nwData = {
 	//							data : []
@@ -150,7 +150,7 @@ Workspace.debugger.TreeDirectory = Ext.extend(Workspace.tree.TreeDirectory, {
 				});
 	
 				Ext.Ajax.request({
-					url : '/WorkSpace/action.servlet?event=JsonEditLoadFile',
+					url : DOMAIN_NAME_ROOT + '/action.servlet?event=JsonEditLoadFile',
 					method: 'GET',
 					params :{filename:panelId},
 					success: function ( result, request ) {

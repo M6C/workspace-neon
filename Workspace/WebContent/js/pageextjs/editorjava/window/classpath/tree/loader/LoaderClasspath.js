@@ -4,7 +4,7 @@ Ext.define('Workspace.editorjava.window.classpath.tree.loader.LoaderClasspath', 
 
 	extend: 'Ext.ComponentLoader'
 	,
-	url: '/WorkSpace/action.servlet?event=JsonClasspathDetail',
+	url: DOMAIN_NAME_ROOT + '/action.servlet?event=JsonClasspathDetail',
 	autoLoad: true,
     listeners: {
         //scope: this, //yourScope

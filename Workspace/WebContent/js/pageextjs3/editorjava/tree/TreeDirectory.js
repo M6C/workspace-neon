@@ -1,7 +1,7 @@
 // DEPENDENCE
 Ext.Loader.load(fileList=[
-'/WorkSpace/js/commonextjs/form/textarea/HtmlEditor.js',
-'/WorkSpace/js/pageextjs/editorjava/form/textarea/HtmlEditor.js'
+DOMAIN_NAME_ROOT + '/js/commonextjs/form/textarea/HtmlEditor.js',
+DOMAIN_NAME_ROOT + '/js/pageextjs/editorjava/form/textarea/HtmlEditor.js'
 ],
 preserveOrder=true);
 
@@ -64,9 +64,9 @@ Workspace.editorjava.TreeDirectory = Ext.extend(Workspace.tree.TreeDirectory, {
 //		
 //								var view = e.currentTarget.defaultView;
 //								var selection = view.getSelection();
-//								// Selection du début de la ligne jusqu'au curseur
+//								// Selection du dï¿½but de la ligne jusqu'au curseur
 //								//selection.extend(selection.focusNode,0)
-//								// Selection du début de textarea jusqu'au curseur
+//								// Selection du dï¿½but de textarea jusqu'au curseur
 //								selection.extend(view.document.firstChild,0);
 //								var txt = selection.toString();
 //								var pos = txt.length;
@@ -123,7 +123,7 @@ Workspace.editorjava.TreeDirectory = Ext.extend(Workspace.tree.TreeDirectory, {
 			    				Ext.MessageBox.updateText('Saving process...');
 						    	Ext.Ajax.request({
 									method:'POST',
-									url:'/WorkSpace/action.servlet?event=JsonEditSaveFile',
+									url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonEditSaveFile',
 									callback:function(options, success, response) { 
 		
 						    			if (pnlEdit.build) {
@@ -131,7 +131,7 @@ Workspace.editorjava.TreeDirectory = Ext.extend(Workspace.tree.TreeDirectory, {
 						    				var application = Ext.getCmp('project').value;
 											Ext.Ajax.request({
 												method:'POST',
-												url:'/WorkSpace/action.servlet?event=JsonEditCompileProject',
+												url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonEditCompileProject',
 												callback:create_WindowResultText(response,function(btn, text){
 									  		    	hideWindowWaiting("Building complete.", 1);
 										  		}),
@@ -164,7 +164,7 @@ Workspace.editorjava.TreeDirectory = Ext.extend(Workspace.tree.TreeDirectory, {
 			var filePanelEditor = filePanel.findById(panelEditorId);
 		
 			Ext.Ajax.request({
-				url : '/WorkSpace/action.servlet?event=JsonEditLoadFile',
+				url : DOMAIN_NAME_ROOT + '/action.servlet?event=JsonEditLoadFile',
 				method: 'GET',
 				params :{filename:panelId},
 				success: function ( result, request ) {
@@ -196,7 +196,7 @@ Workspace.editorjava.TreeDirectory = Ext.extend(Workspace.tree.TreeDirectory, {
 	       var menuC = this.menuContext;//Ext.getCmp('treeMenuContext');
 //	       if (!menuC)
 //	    	   menuC = new Workspace.editorjava.TreeMenuContext();
-	       // Stock le noeud selectionné dans le menu contextuel
+	       // Stock le noeud selectionnï¿½ dans le menu contextuel
 	       menuC.data = node;
 	       menuC.show(node.ui.getAnchor());
 	    }

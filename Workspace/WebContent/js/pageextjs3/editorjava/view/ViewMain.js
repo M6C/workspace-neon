@@ -1,13 +1,13 @@
 // DEPENDENCE
 Ext.Loader.load(fileList=[
-'/WorkSpace/js/commonextjs/view/ViewPort.js',
-'/WorkSpace/js/commonextjs/form/combobox/Combo.js',
-'/WorkSpace/js/commonextjs/form/combobox/ComboProject.js',
-'/WorkSpace/js/commonextjs/form/combobox/ComboPackage.js',
-'/WorkSpace/js/commonextjs/tree/TreeDirectory.js',
-'/WorkSpace/js/commonextjs/plugin/AddTabPanel.js',
-'/WorkSpace/js/pageextjs/editorjava/tree/TreeDirectory.js',
-'/WorkSpace/js/pageextjs/editorjava/form/combobox/ComboProject.js'
+DOMAIN_NAME_ROOT + '/js/commonextjs/view/ViewPort.js',
+DOMAIN_NAME_ROOT + '/js/commonextjs/form/combobox/Combo.js',
+DOMAIN_NAME_ROOT + '/js/commonextjs/form/combobox/ComboProject.js',
+DOMAIN_NAME_ROOT + '/js/commonextjs/form/combobox/ComboPackage.js',
+DOMAIN_NAME_ROOT + '/js/commonextjs/tree/TreeDirectory.js',
+DOMAIN_NAME_ROOT + '/js/commonextjs/plugin/AddTabPanel.js',
+DOMAIN_NAME_ROOT + '/js/pageextjs/editorjava/tree/TreeDirectory.js',
+DOMAIN_NAME_ROOT + '/js/pageextjs/editorjava/form/combobox/ComboProject.js'
 ],
 preserveOrder=true);
 
@@ -60,7 +60,7 @@ Workspace.editorjava.ViewMain = Ext.extend(Workspace.common.view.ViewPort, {
       			        		xtype:'WorkspaceEditorjavaComboProject',
       			        		id:'comboProject'
       			        	},
-      				        {	//Balise cachée
+      				        {	//Balise cachï¿½e
       						    xtype: 'hidden',
       						    id: 'project',
       						    name: 'project'

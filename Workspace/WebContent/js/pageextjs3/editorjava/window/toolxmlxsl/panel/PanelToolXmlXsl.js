@@ -1,6 +1,6 @@
 // DEPENDENCE
-Ext.Loader.load(['/WorkSpace/js/pageextjs/editorjava/window/toolxmlxsl/form/ComboBoxToolXmlXsl.js']);
-Ext.Loader.load(['/WorkSpace/js/pageextjs/editorjava/window/toolxmlxsl/function/updateXslParameter.js']);
+Ext.Loader.load([DOMAIN_NAME_ROOT + '/js/pageextjs/editorjava/window/toolxmlxsl/form/ComboBoxToolXmlXsl.js']);
+Ext.Loader.load([DOMAIN_NAME_ROOT + '/js/pageextjs/editorjava/window/toolxmlxsl/function/updateXslParameter.js']);
 
 //NAMESPACE
 Ext.ns('Workspace.window.ToolXmlXsl.panel');
@@ -73,13 +73,13 @@ Workspace.window.ToolXmlXsl.panel.PanelToolXmlXsl = Ext.extend(Ext.FormPanel, {
 		Workspace.window.ToolXmlXsl.panel.PanelToolXmlXsl.superclass.initComponent.call(this);
 	},
 	id: 'xml_xsl_content_panel',   //id du formulaire
-	frame: true,                 //pour que tous les items soient dans la même frame
-	autoWidth: true,            //largeur de la fenêtre
-	autoHeight: true,            //hauteur de la fenêtre
+	frame: true,                 //pour que tous les items soient dans la mï¿½me frame
+	autoWidth: true,            //largeur de la fenï¿½tre
+	autoHeight: true,            //hauteur de la fenï¿½tre
 	labelWidth: 110,             //largeur des labels des champs
 	defaults: {width: 230},         //largeur des champs
 	labelAlign: 'right',            //les labels s'aligneront a droite        
-	bodyCfg: {tag:'center', cls:'x-panel-body'},        //on aligne tous les champs au milieu de la fenêtre
+	bodyCfg: {tag:'center', cls:'x-panel-body'},        //on aligne tous les champs au milieu de la fenï¿½tre
 	bodyStyle: 'padding:5p;margin:0px; '
 });
 

@@ -1,5 +1,5 @@
 // DEPENDENCE
-Ext.Loader.load(['/WorkSpace/js/commonextjs/form/combobox/ComboPackage.js']);
+Ext.Loader.load([DOMAIN_NAME_ROOT + '/js/commonextjs/form/combobox/ComboPackage.js']);
 
 // NAMESPACE
 Ext.ns('Workspace.window.Package.combobox');

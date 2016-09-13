@@ -10,7 +10,7 @@ var hideWindowWaitingDelay = 2;
 			Ext.getCmp('package_statusbar_jar').showBusy(pleaseWaitMessage);
 			var project = Ext.getCmp('project').value;
 			var pack = Ext.getCmp('package').value;
-			var requestUrl = '/WorkSpace/action.servlet?event=JsonEditPackage';
+			var requestUrl = DOMAIN_NAME_ROOT + '/action.servlet?event=JsonEditPackage';
 			try {
 				showWindowWaiting();
 		  		Ext.Ajax.request({

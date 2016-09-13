@@ -9,7 +9,7 @@ Ext.define('Workspace.editorjava.window.completion.tree.data.StoreCompletion', {
 	,
     proxy: {
         type: 'ajax',
-        url: '/WorkSpace/action.servlet?event=JsonCompletion',
+        url: DOMAIN_NAME_ROOT + '/action.servlet?event=JsonCompletion',
 		method: 'GET',
         reader: {
             type: 'json'

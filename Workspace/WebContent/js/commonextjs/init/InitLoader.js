@@ -19,13 +19,13 @@ function init_loader() {
 		    YearMonth: "F, Y"
 		};
 
-	Ext.Loader.setPath('Ext', '/WorkSpace/jsFramework/ext-4.0.7');
+	Ext.Loader.setPath('Ext', DOMAIN_NAME_ROOT + '/jsFramework/ext-4.0.7');
 	console.info('common.ini.init_loader Ext.Loader \'Ext\' setted');
-	Ext.Loader.setPath('Workspace.common', '/WorkSpace/js/commonextjs');
+	Ext.Loader.setPath('Workspace.common', DOMAIN_NAME_ROOT + '/js/commonextjs');
 	console.info('common.ini.init_loader Ext.Loader \'Workspace.common\' setted');
-	Ext.Loader.setPath('Workspace.data', '/WorkSpace/js/dataextjs');
+	Ext.Loader.setPath('Workspace.data', DOMAIN_NAME_ROOT + '/js/dataextjs');
 	console.info('common.ini.init_loader Ext.Loader \'Workspace.data\' setted');
-	Ext.Loader.setPath('Workspace.tool', '/WorkSpace/js/toolextjs');
+	Ext.Loader.setPath('Workspace.tool', DOMAIN_NAME_ROOT + '/js/toolextjs');
 	console.info('common.ini.init_loader Ext.Loader \'Workspace.tool\' setted');
 
 	// Requi pour une utilisation du style : Workspace.tool.Log.defined('...')

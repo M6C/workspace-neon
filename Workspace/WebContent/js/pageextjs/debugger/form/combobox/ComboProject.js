@@ -1,7 +1,7 @@
 // DEPENDENCE
 Ext.Loader.load(fileList=[
-'/WorkSpace/js/commonextjs/form/combobox/ComboProject.js',
-'/WorkSpace/js/commonextjs/form/combobox/Combo.js'
+DOMAIN_NAME_ROOT + '/js/commonextjs/form/combobox/ComboProject.js',
+DOMAIN_NAME_ROOT + '/js/commonextjs/form/combobox/Combo.js'
 ],
 preserveOrder=true);
 

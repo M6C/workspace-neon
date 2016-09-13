@@ -14,7 +14,7 @@ Ext.define('Workspace.filebrowser.plugin.addTabNew.function.New',  {
 	        	Ext.Msg.prompt('Create directory in \''+itemPathDst+'\'', 'Please enter a name:', function(btn, text){
 	        	    if (btn == 'ok' && text != ''){
 	    		        var fileName = text;
-	    		    	var requestUrl = '/WorkSpace/action.servlet?event=FileBrowserNew';
+	    		    	var requestUrl = DOMAIN_NAME_ROOT + '/action.servlet?event=FileBrowserNew';
 	    	  			Ext.Ajax.request({
 	    	  			   url: requestUrl,
 	    	  			   params: {type:typeNew, pathDst:itemPathDst, name:fileName},

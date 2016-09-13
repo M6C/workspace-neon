@@ -24,6 +24,7 @@
         </title>
     	<!--link href="<%=DOMAIN_NAME_ROOT%>/css/page/imageviewer/page.css" rel="stylesheet" type="text/css"-->
         <jsp:include page="/css/page/imageviewer/page.jsp" flush="true"/>
+    	<script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/commonextjs/constant/Constant.js" type="text/javascript" ></script>
         <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/common/function.js" type="text/javascript"></script>
         <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/page/imageviewer/page.js" type="text/javascript"></script>
         <script language="javascript" src="<%=DOMAIN_NAME_ROOT%>/js/Popup.js" type="text/javascript"></script>

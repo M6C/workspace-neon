@@ -1,6 +1,6 @@
 function init_page() {
 
-	Ext.Loader.setPath('Workspace.admin', '/WorkSpace/js/pageextjs/admin');
+	Ext.Loader.setPath('Workspace.admin', DOMAIN_NAME_ROOT + '/js/pageextjs/admin');
 
 // DEPENDENCE
 //	Ext.require('Workspace.admin.view.ViewMain');

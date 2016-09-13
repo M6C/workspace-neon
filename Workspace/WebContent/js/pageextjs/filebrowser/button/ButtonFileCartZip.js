@@ -33,7 +33,7 @@ Ext.define('Workspace.filebrowser.button.ButtonFileCartZip', {
 	    		        for(var i=0;i<len; itemPathSrc += (itemPathSrc=="" ? "" : ";") + items[i++].id);
 
 	    		        var fileName = text;
-	    		    	var requestUrl = '/WorkSpace/action.servlet?event=FileBrowserZip';
+	    		    	var requestUrl = DOMAIN_NAME_ROOT + '/action.servlet?event=FileBrowserZip';
 	    	  			Ext.Ajax.request({
 	    	  			   url: requestUrl,
 	    	  			   params: {pathSrc:itemPathSrc,pathDst:itemPathDst,fileName:fileName},

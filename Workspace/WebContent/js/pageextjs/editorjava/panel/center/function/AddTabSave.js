@@ -24,7 +24,7 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabSave',  {
 			Workspace.common.window.WindowWaiting.updateText('Saving process...');
 	    	Ext.Ajax.request({
 				method:'POST',
-				url:'/WorkSpace/action.servlet?event=JsonEditSaveFile',
+				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonEditSaveFile',
 				callback:function(options, success, response) { 
 
 	    			if (pnlEdit.build) {
@@ -32,7 +32,7 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabSave',  {
 	    				var application = Ext.getCmp('project').value;
 						Ext.Ajax.request({
 							method:'POST',
-							url:'/WorkSpace/action.servlet?event=JsonEditCompileProject',
+							url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonEditCompileProject',
 							callback:function(opts, success, response) {
 								// Explicit load required library (Mandatory for extending this class)
 								Ext.Loader.syncRequire('Workspace.common.window.WindowResultText');

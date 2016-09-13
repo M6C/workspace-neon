@@ -1,9 +1,9 @@
 // DEPENDENCE
 Ext.Loader.load(fileList=[
-'/WorkSpace/js/commonextjs/view/ViewPort.js',
-'/WorkSpace/js/commonextjs/form/combobox/Combo.js',
-'/WorkSpace/js/commonextjs/form/combobox/ComboProject.js',
-'/WorkSpace/js/commonextjs/tree/TreeDirectory.js'
+DOMAIN_NAME_ROOT + '/js/commonextjs/view/ViewPort.js',
+DOMAIN_NAME_ROOT + '/js/commonextjs/form/combobox/Combo.js',
+DOMAIN_NAME_ROOT + '/js/commonextjs/form/combobox/ComboProject.js',
+DOMAIN_NAME_ROOT + '/js/commonextjs/tree/TreeDirectory.js'
 ],
 preserveOrder=true);
 
@@ -49,7 +49,7 @@ Workspace.debugger.ViewMain = Ext.extend(Workspace.common.view.ViewPort, {
 				        		xtype:'WorkspaceDebuggerComboBox',
 				        		id:'comboProject'
 				        	},
-					        {	//Balise cachée
+					        {	//Balise cachï¿½e
 							    xtype: 'hidden',
 							    id: 'project',
 							    name: 'project'

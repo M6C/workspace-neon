@@ -4,7 +4,8 @@
                 exclude-result-prefixes="xalan">
 
 <!-- /Xsl/User/Application/Util/ -->
-<xsl:import href="../../../Util/UtilFormatPath.xsl"/>
+<!-- xsl:import href="../../../Util/UtilFormatPath.xsl"/-->
+<xsl:import href="/Xsl/User/Application/Util/UtilFormatPath.xsl"/>
 
 <xsl:output method="xml" encoding="ISO-8859-1" indent="yes"/>
   <xsl:param name="pApplication"/>

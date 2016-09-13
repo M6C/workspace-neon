@@ -1,9 +1,9 @@
 // DEPENDENCE
-Ext.Loader.load(['/WorkSpace/js/pageextjs/editorjava/window/package/window/WndPackage.js']);
+Ext.Loader.load([DOMAIN_NAME_ROOT + '/js/pageextjs/editorjava/window/package/window/WndPackage.js']);
 
 function create_WindowPackageAction(windowEl,formId,comboId,statusbarId,type,submitText,callBackSubmit) {
-	Ext.QuickTips.init();                //nécessaire pour initialiser les infobulles d’erreur
-	Ext.form.Field.prototype.msgTarget = 'side';    //nécessaire pour initialiser les infobulles d’erreur
+	Ext.QuickTips.init();                //nï¿½cessaire pour initialiser les infobulles dï¿½erreur
+	Ext.form.Field.prototype.msgTarget = 'side';    //nï¿½cessaire pour initialiser les infobulles dï¿½erreur
 
 	var wnd = new Workspace.window.Package.WindowPackage ({
 		el:windowEl,
@@ -28,19 +28,19 @@ function create_WindowPackageAction(windowEl,formId,comboId,statusbarId,type,sub
 //	});
 //
 //	var package_content_panel = new Ext.FormPanel({
-//		id: formId,   //id de la fenêtre
-//		frame: true,                 //pour que tous les items soient dans la même frame
-//		autoWidth: true,            //largeur de la fenêtre
-//		autoHeight: true,            //hauteur de la fenêtre
+//		id: formId,   //id de la fenï¿½tre
+//		frame: true,                 //pour que tous les items soient dans la mï¿½me frame
+//		autoWidth: true,            //largeur de la fenï¿½tre
+//		autoHeight: true,            //hauteur de la fenï¿½tre
 //		labelWidth: 110,             //largeur des labels des champs
 //		//defaults: {width: 230},         //largeur des champs
 //		labelAlign: 'right',            //les labels s'aligneront a droite        
-//		bodyCfg: {tag:'center', cls:'x-panel-body'},        //on aligne tous les champs au milieu de la fenêtre
+//		bodyCfg: {tag:'center', cls:'x-panel-body'},        //on aligne tous les champs au milieu de la fenï¿½tre
 //		bodyStyle: 'padding:5p;margin:0px; ',
 //		items: [
 //			comboPackageAction,
 //			{
-//			    xtype: 'hidden',        //Balise cachée afin de dire qu'il s'agit d'une connexion
+//			    xtype: 'hidden',        //Balise cachï¿½e afin de dire qu'il s'agit d'une connexion
 //			    id: 'package',
 //			    name: 'package',
 //			    allowBlank: false
@@ -54,13 +54,13 @@ function create_WindowPackageAction(windowEl,formId,comboId,statusbarId,type,sub
 ////				var tPackageDetail = createTreePackageDetail ('treePackageDetail');
 ////				tPackageDetail.root.reload();
 //				new Ext.Window({
-//					title: 'Package Detail',        //titre de la fenêtre
+//					title: 'Package Detail',        //titre de la fenï¿½tre
 //					// el = id du div dans le code html de la page qui contiendra la popup
 //					//el:windowEl,        
 //					layout:'fit',
 //					width:400,
 //					height:300,
-//					//autoHeight: true,        //hauteur de la fenêtre
+//					//autoHeight: true,        //hauteur de la fenï¿½tre
 //					modal: true,             //Grise automatiquement le fond de la page
 //					closeAction:'hide',
 //					plain: true,
@@ -68,7 +68,7 @@ function create_WindowPackageAction(windowEl,formId,comboId,statusbarId,type,sub
 //					//hideBorders:true,
 //					//titleCollapse:true,
 //					//header:false,
-//					//items: tPackageDetail        //On met dans cette fenêtre le panel précédent
+//					//items: tPackageDetail        //On met dans cette fenï¿½tre le panel prï¿½cï¿½dent
 //					items: [{
 //						xtype:'WorkspaceTreeTreePackageDetail',
 //						id : 'treePackageDetail',
@@ -80,7 +80,7 @@ function create_WindowPackageAction(windowEl,formId,comboId,statusbarId,type,sub
 //		{
 //			xtype: 'button',
 //			text: submitText,
-//			handler: callBackSubmit    //fonction à appeler lorsque l’on clique sur le bouton
+//			handler: callBackSubmit    //fonction ï¿½ appeler lorsque lï¿½on clique sur le bouton
 //		}
 //		/*
 //		{
@@ -90,7 +90,7 @@ function create_WindowPackageAction(windowEl,formId,comboId,statusbarId,type,sub
 //			items: {
 //				xtype: 'button',
 //				text: submitText,
-//				handler: callBackSubmit    //fonction à appeler lorsque l’on clique sur le bouton
+//				handler: callBackSubmit    //fonction ï¿½ appeler lorsque lï¿½on clique sur le bouton
 //			}
 //		}
 //		*/
@@ -98,17 +98,17 @@ function create_WindowPackageAction(windowEl,formId,comboId,statusbarId,type,sub
 //	});
 //
 //	/**
-//	 * Voila notre formulaire créé. Afin de rendre le design plus attrayant, nous allons ajouter un nouveau panel contenant une status bar. Il s’agit d’une petite ligne en bas à gauche de la fenêtre affichant l’état de la connexion : « formulaire valide, connexion réussie, mot de passe incorrect … »
+//	 * Voila notre formulaire crï¿½ï¿½. Afin de rendre le design plus attrayant, nous allons ajouter un nouveau panel contenant une status bar. Il sï¿½agit dï¿½une petite ligne en bas ï¿½ gauche de la fenï¿½tre affichant lï¿½ï¿½tat de la connexion : ï¿½ formulaire valide, connexion rï¿½ussie, mot de passe incorrect ï¿½ ï¿½
 //	 */
 //
-//	//Ce panel contiendra le panel précédent qui est le formulaire, sauf qu'en bas de celui ci figure la status bar, permettant d'afficher le status de la connexion (chargement ....)
+//	//Ce panel contiendra le panel prï¿½cï¿½dent qui est le formulaire, sauf qu'en bas de celui ci figure la status bar, permettant d'afficher le status de la connexion (chargement ....)
 //	var package_main_panel = new Ext.Panel({
-//		autoWidth: true,             //largeur de la fenêtre
-//		autoHeight: true,            //hauteur de la fenêtre
+//		autoWidth: true,             //largeur de la fenï¿½tre
+//		autoHeight: true,            //hauteur de la fenï¿½tre
 //	    layout: 'fit',
 //	    bbar: new Ext.ux.StatusBar({
 //	        id: statusbarId,
-//	        defaultText: 'Prêt',
+//	        defaultText: 'Prï¿½t',
 //	        plugins: new Ext.ux.ValidationStatus({form:formId})
 //
 //	    }),
@@ -122,28 +122,28 @@ function create_WindowPackageAction(windowEl,formId,comboId,statusbarId,type,sub
 //	});
 //
 //	/**
-//	 * Enfin, créons la fonction qui va instancier la fenêtre contenant ce panel
+//	 * Enfin, crï¿½ons la fonction qui va instancier la fenï¿½tre contenant ce panel
 //	 */
-//	//Si la fenêtre de connexion n'existe pas, on la crée
+//	//Si la fenï¿½tre de connexion n'existe pas, on la crï¿½e
 //    var package_window = new Ext.Window({
-//	    title: 'Package Action',        //titre de la fenêtre
+//	    title: 'Package Action',        //titre de la fenï¿½tre
 //	    // el = id du div dans le code html de la page qui contiendra la popup
 //	    el:windowEl,        
 //	    layout:'fit',
 //	    width:400,
-//	    autoHeight: true,        //hauteur de la fenêtre
+//	    autoHeight: true,        //hauteur de la fenï¿½tre
 //	    modal: true,             //Grise automatiquement le fond de la page
 //	    closeAction:'hide',
 //	    plain: true,
 //	    items: [
 //			{
 //				xtype:'panel',
-//				autoWidth: true,             //largeur de la fenêtre
-//				autoHeight: true,            //hauteur de la fenêtre
+//				autoWidth: true,             //largeur de la fenï¿½tre
+//				autoHeight: true,            //hauteur de la fenï¿½tre
 //			    layout: 'fit',
 //			    bbar: new Ext.ux.StatusBar({
 //			        id: statusbarId,
-//			        defaultText: 'Prêt'
+//			        defaultText: 'Prï¿½t'
 //			        //,plugins: new Ext.ux.ValidationStatus({form:formId})
 //			
 //			    }),

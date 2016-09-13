@@ -31,7 +31,7 @@ Ext.define('Workspace.filebrowser.button.ButtonFileCartDelete', {
 	        	Ext.Msg.confirm('Delete '+len+' item(s)', 'Delete', function(btn, text){
 	        	    if (btn == 'yes'){
 
-	                	// Création d'une nouvelle collection avec recopie des data
+	                	// Crï¿½ation d'une nouvelle collection avec recopie des data
 	                	var col = new Ext.util.MixedCollection(true, 
 	                		function(item) {
 	                			return item.id;//item.getKey();
@@ -43,7 +43,7 @@ Ext.define('Workspace.filebrowser.button.ButtonFileCartDelete', {
 		                	var fileName = item.id;
 		    		        console.info('Workspace.filebrowser.button.ButtonFileCartDelete success delete:'+fileName);
 
-		                	var requestUrl = '/WorkSpace/action.servlet?event=FileBrowserDelete';
+		                	var requestUrl = DOMAIN_NAME_ROOT + '/action.servlet?event=FileBrowserDelete';
 		    	  			Ext.Ajax.request({
 		    	  			   url: requestUrl,
 		    	  			   params: {fileName:fileName},
@@ -56,7 +56,7 @@ Ext.define('Workspace.filebrowser.button.ButtonFileCartDelete', {
 			        		        var mainEstStore = mainEstGrid.store;
 			        		        var dataModel = mainEstStore.data.getByKey(item.id);
 
-			        		        // Supprime une donnée
+			        		        // Supprime une donnï¿½e
 			        		        mainEstGrid.data.removeAtKey(item.id);//item.getKey());
 			    		        	// Raffaichissement du store et donc de la grid
 			    		        	mainEstStore.remove(dataModel);

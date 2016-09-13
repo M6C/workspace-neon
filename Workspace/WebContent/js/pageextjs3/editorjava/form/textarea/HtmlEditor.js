@@ -1,5 +1,5 @@
 // DEPENDENCE
-Ext.Loader.load(['/WorkSpace/js/commonextjs/form/textarea/HtmlEditor.js']);
+Ext.Loader.load([DOMAIN_NAME_ROOT + '/js/commonextjs/form/textarea/HtmlEditor.js']);
 
 // NAMESPACE
 Ext.ns('Workspace.editorjava.form.textarea');
@@ -20,9 +20,9 @@ Workspace.editorjava.form.textarea.HtmlEditor = Ext.extend(Workspace.common.form
 			var editor = this.htmlEditor;
 			var view = e.currentTarget.defaultView;
 			var selection = view.getSelection();
-			// Selection du début de la ligne jusqu'au curseur
+			// Selection du dï¿½but de la ligne jusqu'au curseur
 			//selection.extend(selection.focusNode,0)
-			// Selection du début de textarea jusqu'au curseur
+			// Selection du dï¿½but de textarea jusqu'au curseur
 			selection.extend(view.document.firstChild,0);
 			var txt = selection.toString();
 			var pos = txt.length;

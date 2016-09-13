@@ -1,5 +1,5 @@
 // DEPENDENCE
-Ext.Loader.load(['/WorkSpace/js/pageextjs/editorjava/window/package/combobox/ComboPackage.js']);
+Ext.Loader.load([DOMAIN_NAME_ROOT + '/js/pageextjs/editorjava/window/package/combobox/ComboPackage.js']);
 
 //NAMESPACE
 Ext.ns('Workspace.window.Package.panel');
@@ -16,7 +16,7 @@ Workspace.window.Package.panel.PanelPackage = Ext.extend(Ext.FormPanel, {
   				pkgtype:this.pkgtype
   			},
 			{
-			    xtype: 'hidden',        //Balise cachée afin de dire qu'il s'agit d'une connexion
+			    xtype: 'hidden',        //Balise cachï¿½e afin de dire qu'il s'agit d'une connexion
 			    id: 'package',
 			    name: 'package',
 			    allowBlank: false
@@ -32,13 +32,13 @@ Workspace.window.Package.panel.PanelPackage = Ext.extend(Ext.FormPanel, {
 //		        				var tPackageDetail = createTreePackageDetail ('treePackageDetail');
 //		        				tPackageDetail.root.reload();
     				new Ext.Window({
-    					title: 'Package Detail',        //titre de la fenêtre
+    					title: 'Package Detail',        //titre de la fenï¿½tre
     					// el = id du div dans le code html de la page qui contiendra la popup
     					//el:windowEl,        
     					layout:'fit',
     					width:400,
     					height:300,
-    					//autoHeight: true,        //hauteur de la fenêtre
+    					//autoHeight: true,        //hauteur de la fenï¿½tre
     					modal: true,             //Grise automatiquement le fond de la page
     					closeAction:'hide',
     					plain: true,
@@ -46,7 +46,7 @@ Workspace.window.Package.panel.PanelPackage = Ext.extend(Ext.FormPanel, {
     					//hideBorders:true,
     					//titleCollapse:true,
     					//header:false,
-    					//items: tPackageDetail        //On met dans cette fenêtre le panel précédent
+    					//items: tPackageDetail        //On met dans cette fenï¿½tre le panel prï¿½cï¿½dent
     					pkgtype : this.pkgtype,
     					items: [
 	    					{
@@ -77,7 +77,7 @@ Workspace.window.Package.panel.PanelPackage = Ext.extend(Ext.FormPanel, {
     			items: {
     				xtype: 'button',
     				text: submitText,
-    				handler: submitFunction    //fonction à appeler lorsque l’on clique sur le bouton
+    				handler: submitFunction    //fonction ï¿½ appeler lorsque lï¿½on clique sur le bouton
     			}
     		}
     		*/
@@ -85,14 +85,14 @@ Workspace.window.Package.panel.PanelPackage = Ext.extend(Ext.FormPanel, {
 
 		Workspace.window.Package.panel.PanelPackage.superclass.initComponent.call(this);
 	},
-//	id: formId,   //id de la fenêtre
-	frame: true,                 //pour que tous les items soient dans la même frame
-	autoWidth: true,            //largeur de la fenêtre
-	autoHeight: true,            //hauteur de la fenêtre
+//	id: formId,   //id de la fenï¿½tre
+	frame: true,                 //pour que tous les items soient dans la mï¿½me frame
+	autoWidth: true,            //largeur de la fenï¿½tre
+	autoHeight: true,            //hauteur de la fenï¿½tre
 	labelWidth: 110,             //largeur des labels des champs
 	//defaults: {width: 230},         //largeur des champs
 	labelAlign: 'right',            //les labels s'aligneront a droite        
-	bodyCfg: {tag:'center', cls:'x-panel-body'},        //on aligne tous les champs au milieu de la fenêtre
+	bodyCfg: {tag:'center', cls:'x-panel-body'},        //on aligne tous les champs au milieu de la fenï¿½tre
 	bodyStyle: 'padding:5p;margin:0px; '
 });
 

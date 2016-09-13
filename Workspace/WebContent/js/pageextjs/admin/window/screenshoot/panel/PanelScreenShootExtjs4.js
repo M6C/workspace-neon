@@ -66,7 +66,7 @@ Ext.define('Workspace.admin.window.screenshoot.panel.PanelScreenShootExtjs4', {
 			            var form = this.up('form').getForm();
 			            if (form.isValid()) {
 			            	// change the src of the image programmatically
-			            	var url = '/WorkSpace/Actionscreenshoot';
+			            	var url = DOMAIN_NAME_ROOT + '/Actionscreenshoot';
 			            	url += '?qualityRate='+Ext.getCmp('qualityRate').value;
 			            	url += '&screenHeight='+Ext.getCmp('screenHeight').value;
 			            	url += '&screenWidth='+Ext.getCmp('screenWidth').value;

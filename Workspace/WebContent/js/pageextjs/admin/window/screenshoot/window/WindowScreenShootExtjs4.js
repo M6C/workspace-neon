@@ -22,7 +22,7 @@ Ext.define('Workspace.admin.window.screenshoot.window.WindowScreenShootExtjs4', 
 				,
 				Ext.create('Ext.Img', {
 					id: 'screenshoot',
-				    src: '/WorkSpace/Actionscreenshoot?qualityRate=25&screenHeight=600&screenWidth=800&time='
+				    src: DOMAIN_NAME_ROOT + '/Actionscreenshoot?qualityRate=25&screenHeight=600&screenWidth=800&time='
 				    ,
 					region: 'center',
 	  				collapseMode: 'mini',
@@ -37,7 +37,7 @@ Ext.define('Workspace.admin.window.screenshoot.window.WindowScreenShootExtjs4', 
 	    me.callParent(arguments);
 	}
 	,
-	title: 'Screen shoot',        //titre de la fenêtre
+	title: 'Screen shoot',        //titre de la fenï¿½tre
 	layout:'fit',
 	modal: true,             //Grise automatiquement le fond de la page
 	closeAction:'hide',
