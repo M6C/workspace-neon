@@ -5,7 +5,8 @@ function init_page() {
 // DEPENDENCE
 	Ext.Loader.setConfig({enabled: true});
 
-	Ext.Loader.setPath('Ext.ux', '../ux/');
+//	Ext.Loader.setPath('Ext.ux', '../ux/');
+	Ext.Loader.setPath("Ext.ux", "http://cdn.sencha.io/ext-4.0.7-gpl/examples/ux");
 
 	Ext.require([
 	    'Ext.data.*',
