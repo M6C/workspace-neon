@@ -3,6 +3,18 @@ function init_page() {
 	Ext.Loader.setPath('Workspace.editorjava', DOMAIN_NAME_ROOT + '/js/pageextjs/editorjava');
 
 // DEPENDENCE
+	Ext.Loader.setConfig({enabled: true});
+
+	Ext.Loader.setPath('Ext.ux', '../ux/');
+
+	Ext.require([
+	    'Ext.data.*',
+	    'Ext.grid.*',
+	    'Ext.util.*',
+	    'Ext.ux.data.PagingMemoryProxy',
+	    'Ext.ux.ProgressBarPager'
+	]);
+
 
 //	Ext.QuickTips.init();
 

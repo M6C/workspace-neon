@@ -21,6 +21,22 @@ function hideWindowWaiting(msg) {
 
 function hideWindowWaiting(msg, sec) {
    Ext.window.MessageBox.updateProgress(1, '', msg);
-   // Fermeture de la fenêtre après x sec seconde
+   // Fermeture de la fenï¿½tre aprï¿½s x sec seconde
    var x = window.setInterval(function() {Ext.window.MessageBox.hide();window.clearInterval(x);}, sec*1000);
+}
+
+function setStatusMessageAndHideWaiting(request, statusbarId, defaultMessage) {
+	try {
+		var resultMessage = '';
+		if (defaultMessage == '') {
+			var jsonData = Ext.util.JSON.decode(result.responseText);
+			resultMessage = jsonData.data[0].message;
+		} else {
+			resultMessage = defaultMessage;
+		}
+		Ext.getCmp(statusbarId).setText(resultMessage);
+	}
+	finally {
+		hideWindowWaiting(resultMessage, hideWindowWaitingDelay);
+	}
 }

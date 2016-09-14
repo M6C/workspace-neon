@@ -14,7 +14,7 @@ Ext.define('Workspace.common.form.combobox.ComboPackageExtjs4', {
 	    });
 	    me.callParent(arguments);
 	},
-    displayField:'project',
-    emptyText:'Select a project...'
+    displayField:'package',
+    emptyText:'Select a package...'
 
 }, function() {Workspace.tool.Log.defined('Workspace.common.form.combobox.ComboPackageExtjs4');});

@@ -3,7 +3,8 @@ Ext.define('Workspace.common.window.WindowWaiting',  {
 
 	statics: {
 		pleaseWaitMessage : 'Please Wait...',
-		runningProcessMessage : 'Running process...'
+		runningProcessMessage : 'Running process...',
+		hideWindowWaitingDelay : 2
 		,
 		current : null
 		,
@@ -47,7 +48,49 @@ Ext.define('Workspace.common.window.WindowWaiting',  {
 				Ext.callback(function(wnd) {wnd.hide();}, null, [this.current], sec*1000);
 				this.current = null;
 			}
-		}
+		},
+
+		showWindowWaiting : function () {
+//			return Ext.window.MessageBox.wait(this.runningProcessMessage, this.pleaseWaitMessage);
+			return Ext.window.MessageBox.create().wait(this.runningProcessMessage, this.pleaseWaitMessage);
+		},
+	
+		/**
+		 * TODO Finir la fonction pour affichier un messages sans barre de progression
+		 */ 
+		showWindowWaitingNoProgress : function () {
+		  var config = new Ext.ProgressBar();
+		  config.setVisible(false);
+		  config.hide();
+//		  return Ext.window.MessageBox.wait(this.runningProcessMessage, this.pleaseWaitMessage, config);
+			return Ext.window.MessageBox.create().wait(this.runningProcessMessage, this.pleaseWaitMessage, config);
+		},
+	
+		hideWindowWaiting : function (msg) {
+			this.hideWindowWaiting(msg, 1);
+		},
+	
+		hideWindowWaiting : function (msg, sec) {
+//		   Ext.window.MessageBox.updateProgress(1, '', msg);
+//		   // Fermeture de la fen�tre apr�s x sec seconde
+//		   var x = window.setInterval(function() {Ext.window.MessageBox.hide();window.clearInterval(x);}, sec*1000);
+		},
+	
+		setStatusMessageAndHideWaiting : function (request, statusbarId, defaultMessage) {
+			try {
+				var resultMessage = '';
+				if (defaultMessage == '') {
+					var jsonData = Ext.util.JSON.decode(result.responseText);
+					resultMessage = jsonData.data[0].message;
+				} else {
+					resultMessage = defaultMessage;
+				}
+//				Ext.getCmp(statusbarId).setText(resultMessage);
+			}
+			finally {
+				this.hideWindowWaiting(resultMessage, this.hideWindowWaitingDelay);
+			}
+		},
 	}
 
 }, function() {Workspace.tool.Log.defined('Workspace.common.window.WindowWaiting');});

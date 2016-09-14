@@ -14,8 +14,8 @@ Ext.define('Workspace.editorjava.window.WindowPackage', {
 		    items : [
 	 			{
 					xtype:'panel',
-					autoWidth: true,             //largeur de la fenêtre
-					autoHeight: true,            //hauteur de la fenêtre
+					autoWidth: true,             //largeur de la fenï¿½tre
+					autoHeight: true,            //hauteur de la fenï¿½tre
 				    layout: 'fit',
 //				    bbar: Ext.create('Ext.ux.StatusBar', {
 //				        id: this.statusbarId,
@@ -49,12 +49,12 @@ Ext.define('Workspace.editorjava.window.WindowPackage', {
 		me.callParent(arguments);
 	}
 	,
-	title: 'Package Action',        //titre de la fenêtre
+	title: 'Package Action',        //titre de la fenï¿½tre
 	// el = id du div dans le code html de la page qui contiendra la popup
 	//el:windowEl,        
 	layout:'fit',
 	width:400,
-	autoHeight: true,        //hauteur de la fenêtre
+	autoHeight: true,        //hauteur de la fenï¿½tre
 	modal: true,             //Grise automatiquement le fond de la page
 	closeAction:'hide',
 	plain: true
