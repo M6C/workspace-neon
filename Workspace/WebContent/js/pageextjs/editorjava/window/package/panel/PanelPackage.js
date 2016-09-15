@@ -49,7 +49,9 @@ Ext.define('Workspace.editorjava.window.package.panel.PanelPackage', {
 	    			xtype: 'button',
 	    			id: 'pkgsubmit',
 	    			text: this.submitText,
-	    			handler: this.callBackSubmit
+	    			handler: function() {
+	    				alert(this.callBackSubmit);
+	    			}
 	    		}
     		]
 	    });
