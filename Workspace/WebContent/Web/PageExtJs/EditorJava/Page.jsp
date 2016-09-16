@@ -11,8 +11,9 @@
     <script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/js/commonextjs/init/InitLoader.js"></script>
     <script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/js/pageextjs/editorjava/page.js"></script>
     <script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/js/pageextjs/editorjava/window/WindowMenu.js"></script>
+	<script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/js/pageextjs/editorjava/menu/MenuAction.js"></script>
+	<script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/js/pageextjs/editorjava/menu/MenuServerWeb.js"></script>
     <%--
-	<script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/js/pageextjs3/editorjava/menu/MenuAction.js"></script>
 	<script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/js/pageextjs3/editorjava/window/Package.js"></script>
 	--%>
 
