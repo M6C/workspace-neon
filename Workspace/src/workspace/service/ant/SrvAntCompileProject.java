@@ -29,6 +29,7 @@ import org.apache.tools.ant.Target;
 import org.w3c.dom.Document;
 
 import workspace.adaptateur.application.AdpXmlApplication;
+import workspace.util.UtilPath;
 import framework.beandata.BeanGenerique;
 import framework.ressource.util.UtilString;
 import framework.service.SrvGenerique;
@@ -63,12 +64,16 @@ public class SrvAntCompileProject extends SrvGenerique {
             Document domXml = (Document)session.getAttribute("resultDom");
             //Recuperation du chemin principal de l'application
             String szPathMain = AdpXmlApplication.getPathByName(context, domXml, application, "Main");
+            szPathMain = (szPathMain == null) ? szPathMain : UtilPath.formatPath(domXml, szPathMain);
             //Recuperation du chemin des sources
             String szPathSource = AdpXmlApplication.getPathByName(context, domXml, application, "Source");
+            szPathSource = (szPathSource == null) ? szPathSource : UtilPath.formatPath(domXml, szPathSource);
             //Recuperation du chemin de destination des classes
             String szPathClass = AdpXmlApplication.getPathByName(context, domXml, application, "Class");
+            szPathClass = (szPathClass == null) ? szPathClass : UtilPath.formatPath(domXml, szPathClass);
             //Recuperation des classpath de l'application
             String szClasspath = AdpXmlApplication.getClassPathAll(context, domXml, application);
+            szClasspath = (szClasspath == null) ? szClasspath : UtilPath.formatPath(domXml, szClasspath);
             //Recuperation de la home du jdk
             //String szJdkpath = AdpXmlApplication.getJdkPathByName(context, domXml, application, "Home");
             //Recuperation du repertoire home de la jre

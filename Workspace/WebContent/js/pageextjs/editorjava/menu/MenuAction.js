@@ -6,15 +6,15 @@ function cleanBuild() {
       if (btn == 'yes'){
     	var project = Ext.getCmp('project').value;
     	var requestUrl = DOMAIN_NAME_ROOT + '/action.servlet?event=JsonCleanBuild';
-    	showWindowWaiting();
+		Workspace.common.window.WindowWaiting.showWindowWaiting();
 		Ext.Ajax.request({
 		   url: requestUrl,
 		   params: {application:project},
 		   success: function(result, request){
-  		   hideWindowWaiting('Clean successfull.', hideWindowWaitingDelay);
+			   Workspace.common.window.WindowWaiting.hideWindowWaiting('Clean successfull.', hideWindowWaitingDelay);
 		   },
 		   failure: function (result, request) {
-    	   hideWindowWaiting('Clean failed.', hideWindowWaitingDelay);
+			   Workspace.common.window.WindowWaiting.hideWindowWaiting('Clean failed.', hideWindowWaitingDelay);
 		   }
 		});
       }
@@ -26,7 +26,7 @@ function build() {
 	      if (btn == 'yes'){
 	    	var project = Ext.getCmp('project').value;
 	    	var requestUrl = DOMAIN_NAME_ROOT + '/action.servlet?event=JsonEditCompileProject';
-	    	showWindowWaiting();
+	    	Workspace.common.window.WindowWaiting.showWindowWaiting();
 			Ext.Ajax.request({
 			   url: requestUrl,
 			   params: {application:project,target:'compile'},
@@ -49,7 +49,7 @@ function build() {
 					finally {
 						console.log(data);
 					    Ext.Msg.alert('Trace', data, function(btn, text){
-					    	hideWindowWaiting("");
+					    	Workspace.common.window.WindowWaiting.hideWindowWaiting("");
 						});
 					}
 				}
@@ -129,7 +129,7 @@ function showToolXmlXsl() {
 	if (!wndToolXmlXsl) {
 	  	function onSubmit () {
 	  		if(Ext.getCmp('xml_xsl_content_panel').getForm().isValid()){
-	  			showWindowWaiting();
+	  			Workspace.common.window.WindowWaiting.showWindowWaiting();
 				var values = Ext.getCmp('xml_xsl_content_panel').getForm().getValues(false);
 				Ext.Ajax.request({
 				   url: DOMAIN_NAME_ROOT + '/action.servlet?event=JsonXmlXsl',
@@ -153,7 +153,7 @@ function showToolXmlXsl() {
 								console.info(resultMessage);
 							}
 							finally {
-								hideWindowWaiting(resultMessage, hideWindowWaitingDelay);
+								Workspace.common.window.WindowWaiting.hideWindowWaiting(resultMessage, hideWindowWaitingDelay);
 							}
 						}
 					},
@@ -180,7 +180,7 @@ function showToolXmlXsl() {
 									console.info(resultMessage);
 								}
 								finally {
-									hideWindowWaiting(resultMessage, hideWindowWaitingDelay);
+									Workspace.common.window.WindowWaiting.hideWindowWaiting(resultMessage, hideWindowWaitingDelay);
 								}
 							}
 						}

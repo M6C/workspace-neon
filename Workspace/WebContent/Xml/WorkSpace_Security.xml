@@ -7,9 +7,9 @@
         </APPLICATION>
         <APPLICATION Name="Path_Root">
             <PATHS>
-            	<!--PATH Name="Main">D:/Dev/Travaux/Java/Eclipse/Workspace/Workspace</PATH-->
+            	<PATH Name="Main">D:/Dev/Travaux/Java/Eclipse/Workspace/Workspace</PATH>
                 <!--PATH Name="Main">I:/Workspace</PATH-->
-                <PATH Name="Main">/share/MD0_DATA/droca/Workspace</PATH>
+                <!--PATH Name="Main">/share/MD0_DATA/droca/Workspace</PATH-->
             </PATHS>
         </APPLICATION>
         <APPLICATION Name="FrameWork">
@@ -39,10 +39,11 @@
                 <CLASSPATH Type="Application">FrameWork</CLASSPATH>
                 <CLASSPATH Type="Application">FrameWork_Util</CLASSPATH>
                 <CLASSPATH Type="Application">FrameWork_Lib</CLASSPATH>
-                <CLASSPATH Type="External">D:\jboss-4.0.5.GA\lib</CLASSPATH>
-                <CLASSPATH Type="External">D:\jboss-4.0.5.GA\server\default\lib\javax.servlet.jar</CLASSPATH>
+                <CLASSPATH Type="External">D:\DevJ2EE\glassfish-4.1.1\glassfish\lib</CLASSPATH>
+                <CLASSPATH Type="External">D:\DevJ2EE\glassfish-4.1.1\glassfish\modules</CLASSPATH>
+                <!--CLASSPATH Type="External">D:\jboss-4.0.5.GA\server\default\lib\javax.servlet.jar</CLASSPATH-->
             </BUILD>
-            <JDK Name="j2sdk1.4.2_10"/>
+            <JDK Name="jdk1.8.0_11"/>
         </APPLICATION>
         <APPLICATION Name="FrameWork_Html">
             <PATHS>
@@ -67,6 +68,7 @@
                 <USER>Administrateur</USER>
                 <PASSWORD>32143214</PASSWORD>
             </VERSIONNING>
+            <JDK Name="jdk1.8.0_11"/>
         </APPLICATION>
         <APPLICATION Name="FrameWork_Ihm">
             <PATHS>
@@ -91,6 +93,7 @@
                 <USER>Administrateur</USER>
                 <PASSWORD>32143214</PASSWORD>
             </VERSIONNING>
+            <JDK Name="jdk1.8.0_11"/>
         </APPLICATION>
         <APPLICATION Name="FrameWork_Lib">
             <PATHS>
@@ -105,6 +108,7 @@
                 <USER>Administrateur</USER>
                 <PASSWORD>32143214</PASSWORD>
             </VERSIONNING>
+            <JDK Name="jdk1.8.0_11"/>
         </APPLICATION>
         <APPLICATION Name="FrameWork_TagLib">
             <PATHS>
@@ -133,9 +137,11 @@
                 <CLASSPATH Type="Application">FrameWork</CLASSPATH>
                 <CLASSPATH Type="Application">FrameWork_Util</CLASSPATH>
                 <CLASSPATH Type="Application">FrameWork_Lib</CLASSPATH>
-                <CLASSPATH Type="External">D:\jboss-4.0.5.GA\lib</CLASSPATH>
-                <CLASSPATH Type="External">D:\jboss-4.0.5.GA\server\default\lib\javax.servlet.jar</CLASSPATH>
+                <CLASSPATH Type="External">D:\DevJ2EE\glassfish-4.1.1\glassfish\lib</CLASSPATH>
+                <CLASSPATH Type="External">D:\DevJ2EE\glassfish-4.1.1\glassfish\modules</CLASSPATH>
+                <!--CLASSPATH Type="External">D:\jboss-4.0.5.GA\lib</CLASSPATH-->
             </BUILD>
+            <JDK Name="jdk1.8.0_11"/>
         </APPLICATION>
         <APPLICATION Name="FrameWork_Trace">
             <PATHS>
@@ -160,6 +166,7 @@
                 <USER>Administrateur</USER>
                 <PASSWORD>32143214</PASSWORD>
             </VERSIONNING>
+            <JDK Name="jdk1.8.0_11"/>
         </APPLICATION>
         <APPLICATION Name="FrameWork_Util">
             <PATHS>
@@ -184,6 +191,7 @@
                 <USER>Administrateur</USER>
                 <PASSWORD>32143214</PASSWORD>
             </VERSIONNING>
+            <JDK Name="jdk1.8.0_11"/>
         </APPLICATION>
         <APPLICATION Name="WorkSpace_Ftp">
             <PATHS>
@@ -583,6 +591,13 @@
       </JDK>
       <JDK Name="jdk1.6.0_14">
         <PATH Name="Home">I:\D\jdk1.6.0_14</PATH>
+        <JRE>
+          <PATH Name="Home">jre</PATH>
+          <PATH Name="Lib">lib</PATH>
+        </JRE>
+      </JDK>
+      <JDK Name="jdk1.8.0_11">
+        <PATH Name="Home">C:\Program Files\Java\jdk1.8.0_11</PATH>
         <JRE>
           <PATH Name="Home">jre</PATH>
           <PATH Name="Lib">lib</PATH>
