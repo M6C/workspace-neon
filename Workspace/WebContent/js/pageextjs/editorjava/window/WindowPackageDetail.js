@@ -1,20 +1,23 @@
-Ext.define('Workspace.editorjava.window.WindowPackageDetail', {
-	// REQUIRED
+Ext.require([
+'Workspace.editorjava.window.packagedetail.tree.TreePackageDetail'
+]);
 
-	extend: 'Ext.Window'
-	,
+Ext.define('Workspace.editorjava.window.WindowPackageDetail', {
+
+	extend: 'Ext.Window',
+
 	alias: 'widget.editorjavaWindowPackageDetail',
-	alternateClassName: 'WorkspaceEditorJavaWindowPackageDetail'
-	,
-	// private
+	alternateClassName: 'WorkspaceEditorJavaWindowPackageDetail',
+
 	initComponent : function(){
 		var me = this;
 
 		Ext.apply(me, {
 		    items : [
 				{
-					xtype:'WorkspaceTreeTreePackageDetail',
-					id : 'treePackageDetail'
+					xtype:'editorjavaTreePackageDetail',
+					id : 'treePackageDetail',
+					pkgtype : this.pkgtype
 				},
 				{
 				    xtype: 'hidden',
@@ -28,13 +31,13 @@ Ext.define('Workspace.editorjava.window.WindowPackageDetail', {
 		me.callParent(arguments);
 	}
 	,
-	title: 'Package Detail',        //titre de la fenêtre
+	title: 'Package Detail',        //titre de la fenï¿½tre
 	// el = id du div dans le code html de la page qui contiendra la popup
 	//el:windowEl,        
 	layout:'fit',
 	width:400,
 	height:300,
-	//autoHeight: true,        //hauteur de la fenêtre
+	//autoHeight: true,        //hauteur de la fenï¿½tre
 	modal: true,             //Grise automatiquement le fond de la page
 	closeAction:'hide',
 	plain: true,
@@ -42,6 +45,6 @@ Ext.define('Workspace.editorjava.window.WindowPackageDetail', {
 	//hideBorders:true,
 	//titleCollapse:true,
 	//header:false,
-	//items: tPackageDetail        //On met dans cette fenêtre le panel précédent
+	//items: tPackageDetail        //On met dans cette fenï¿½tre le panel prï¿½cï¿½dent
 
 }, function() {Workspace.tool.Log.defined('Workspace.editorjava.window.WindowPackageDetail');});

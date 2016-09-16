@@ -1,12 +1,11 @@
 Ext.define('Workspace.editorjava.window.packagedetail.tree.data.StorePackageDetail', {
-	// REQUIRED
 
-	extend: 'Ext.data.TreeStore'
-	,
+	extend: 'Ext.data.TreeStore',
+
     clearOnLoad: true,
 	autoLoad: true,
-	autoSync: true
-	,
+	autoSync: true,
+
     proxy: {
         type: 'ajax',
         url: DOMAIN_NAME_ROOT + '/action.servlet?event=JsonPackageDetail',
@@ -21,7 +20,7 @@ Ext.define('Workspace.editorjava.window.packagedetail.tree.data.StorePackageDeta
 	    'beforeload': function(store, operation, options) {
 			console.info('Workspace.editorjava.window.packagedetail.tree.data.StorePackageDetail beforeload:'+operation.node.internalId);
 			store.getProxy().extraParams.pApplication = Ext.getCmp('project').value;
-			store.getProxy().extraParams.pType = Ext.getCmp('pkgtype').value;//'War';
+			store.getProxy().extraParams.pType = 'War';//Ext.getCmp('pkgtype').value;
 			store.getProxy().extraParams.pName = Ext.getCmp('package').value;
 	    }
 	}

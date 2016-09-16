@@ -19,7 +19,7 @@ Ext.define('Workspace.editorjava.window.packagedetail.tree.TreePackageDetail', {
     initComponent : function(){
 		var me = this;
 		Ext.apply(me, {
-			store: Ext.create('Workspace.editorjava.window.packagedetail.tree.data.StorePackageDetail')
+			store: Ext.create('Workspace.editorjava.window.packagedetail.tree.data.StorePackageDetail', {pkgtype : this.pkgtype})
 		});
 	    me.callParent(arguments);
 	}

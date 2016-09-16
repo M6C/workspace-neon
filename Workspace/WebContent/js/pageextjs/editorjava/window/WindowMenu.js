@@ -18,7 +18,7 @@ function showCleanWar() {
 			statusbarId:'package_statusbar_clean_war',
 			type:'War',
 			submitText:'Clean War',
-			callBackSubmit:Ext.create('Workspace.editorjava.window.package.function.OnCleanWar').call
+			callBackSubmit:'Workspace.editorjava.window.package.function.OnCleanWar'
 		}
 	).show();
 }

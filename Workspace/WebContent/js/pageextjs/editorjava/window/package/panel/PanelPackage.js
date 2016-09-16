@@ -1,3 +1,7 @@
+Ext.require([
+'Workspace.editorjava.window.package.form.combobox.ComboPackage',
+'Workspace.editorjava.window.WindowPackageDetail'
+]);
 Ext.define('Workspace.editorjava.window.package.panel.PanelPackage', {
 	// REQUIRED
 
@@ -19,13 +23,13 @@ Ext.define('Workspace.editorjava.window.package.panel.PanelPackage', {
 		var me = this;
 		Ext.apply(me, {
 			items : [
-			    Ext.create('Workspace.editorjava.window.package.form.combobox.ComboPackage',
-		  			{
-		  				id: this.comboId,
-		  				statusbarId: this.statusbarId,
-		  				pkgtype:this.pkgtype
-		  			}
-			    ),
+	  			{
+	  				xtype:'editorjavaWindowPackageComboPackage',
+	  				id: this.comboId,
+	  				statusbarId: this.statusbarId,
+	  				pkgtype:this.pkgtype
+	  			}
+		  		,
 				{
 				    xtype: 'hidden',        //Balise cach�e afin de dire qu'il s'agit d'une connexion
 				    id: 'package',
@@ -40,9 +44,10 @@ Ext.define('Workspace.editorjava.window.package.panel.PanelPackage', {
 	    			text: 'Detail',
 	    			pkgtype : this.pkgtype,
 	    			handler: function() {
-		    			Ext.create('Workspace.editorjava.window.WindowPackageDetail').show({
+		    			Ext.create('Workspace.editorjava.window.WindowPackageDetail',
+		    			{
 							pkgtype : this.pkgtype
-						});
+						}).show();
 	    			}
 	    		},
 	    		{
@@ -50,12 +55,12 @@ Ext.define('Workspace.editorjava.window.package.panel.PanelPackage', {
 	    			id: 'pkgsubmit',
 	    			text: this.submitText,
 	    			handler: function() {
-	    				alert(this.callBackSubmit);
-	    			}
+	    				Ext.create(this.callBackSubmit).call();
+					}
 	    		}
     		]
 	    });
 	    me.callParent(arguments);
 	}
-
+	,
 }, function() {Workspace.tool.Log.defined('Workspace.editorjava.window.package.panel.PanelPackage');});
