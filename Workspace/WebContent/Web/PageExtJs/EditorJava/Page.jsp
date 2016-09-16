@@ -13,6 +13,7 @@
     <script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/js/pageextjs/editorjava/window/WindowMenu.js"></script>
 	<script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/js/pageextjs/editorjava/menu/MenuAction.js"></script>
 	<script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/js/pageextjs/editorjava/menu/MenuServerWeb.js"></script>
+	<script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/js/pageextjs/editorjava/menu/MenuToolUpload.js"></script>
     <%--
 	<script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/js/pageextjs3/editorjava/window/Package.js"></script>
 	--%>

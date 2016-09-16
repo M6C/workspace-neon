@@ -108,12 +108,16 @@ function showServerWebCommandUndeploy() {
 
 var wndToolUpload;
 function showToolUpload() {
-	
-	//if (!wndToolUpload) {
+
+	if (!wndToolUpload) {
 		wndToolUpload = create_WindowToolUpload(
-			Ext.getCmp('el_wnd_menu_tool_upload')
+			Ext.getCmp('el_wnd_menu_tool_upload'),
+			'server_web_command_content_upload',
+			'server_web_command_combo_upload',
+			'server_web_command_statusbar_upload',
+			'Upload'
 		);
-	//}
+	}
 
 	wndToolUpload.show();
 }
