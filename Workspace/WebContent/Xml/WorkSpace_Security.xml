@@ -191,6 +191,9 @@
                 <USER>Administrateur</USER>
                 <PASSWORD>32143214</PASSWORD>
             </VERSIONNING>
+            <BUILD>
+                <CLASSPATH Type="Path">[FrameWork_Lib]/lib/ShowDTDTree.jar</CLASSPATH>
+            </BUILD>
             <JDK Name="jdk1.8.0_11"/>
         </APPLICATION>
         <APPLICATION Name="WorkSpace_Ftp">

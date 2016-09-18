@@ -5,17 +5,34 @@
 
 package workspace.service.ant;
 
-import framework.beandata.BeanGenerique;
-import framework.ressource.util.*;
-import framework.service.SrvGenerique;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.net.URL;
-import java.util.*;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import javax.servlet.ServletContext;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.tools.ant.BuildLogger;
+import org.apache.tools.ant.NoBannerLogger;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.ProjectHelper;
+import org.apache.tools.ant.Target;
 import org.w3c.dom.Document;
+
+import framework.beandata.BeanGenerique;
+import framework.ressource.util.UtilFile;
+import framework.ressource.util.UtilPackage;
+import framework.ressource.util.UtilString;
+import framework.ressource.util.UtilVector;
+import framework.service.SrvGenerique;
+import workspace.adaptateur.application.AdpXmlApplication;
+import workspace.util.UtilPath;
 
 public class SrvAntTargetExecute extends SrvGenerique
 {
@@ -34,100 +51,118 @@ public class SrvAntTargetExecute extends SrvGenerique
         HttpSession session = request.getSession();
         ServletContext context = session.getServletContext();
         String target = (String)bean.getParameterDataByName("target");
-        if(UtilString.isNotEmpty(target))
-        {
-            Dictionary param = new Hashtable();
-            param.put("pApplication", request.getParameter("application"));
-            Document domXml = (Document)session.getAttribute("resultDom");
-            InputStream inputXsl = context.getResourceAsStream("Xsl/User/Application/Paths/Path/FindByName.xsl");
-            StringWriter wPath = null;
-            wPath = new StringWriter();
-            inputXsl.reset();
-            param.put("pPath", "Main");
-            UtilXML.tranformeXmlWithXsl(domXml, inputXsl, wPath, param);
-            String szPathMain = wPath.toString();
-            wPath.close();
-            inputXsl.close();
-            wPath = new StringWriter();
-            inputXsl.reset();
-            param.put("pPath", "Source");
-            UtilXML.tranformeXmlWithXsl(domXml, inputXsl, wPath, param);
-            String szPathSource = wPath.toString();
-            wPath.close();
-            inputXsl.close();
-            wPath = new StringWriter();
-            inputXsl.reset();
-            param.put("pPath", "Class");
-            UtilXML.tranformeXmlWithXsl(domXml, inputXsl, wPath, param);
-            String szPathClass = wPath.toString();
-            wPath.close();
-            inputXsl.close();
-            wPath = new StringWriter();
-            inputXsl = context.getResourceAsStream("Xsl/User/Application/Build/Classpath/All.xsl");
-            param.remove("pPath");
-            UtilXML.tranformeXmlWithXsl(domXml, inputXsl, wPath, param);
-            String szClasspath = wPath.toString();
-            wPath.close();
-            inputXsl.close();
-            wPath = new StringWriter();
-            inputXsl = context.getResourceAsStream("Xsl/User/Application/Jdk/Path/FindByName.xsl");
-            param.put("pPath", "Home");
-            UtilXML.tranformeXmlWithXsl(domXml, inputXsl, wPath, param);
-            String szJdkpath = wPath.toString();
-            wPath.close();
-            inputXsl.close();
-            wPath = new StringWriter();
-            inputXsl = context.getResourceAsStream("Xsl/User/Application/Jdk/Jre/Path/FindByName.xsl");
-            param.put("pPath", "Home");
-            UtilXML.tranformeXmlWithXsl(domXml, inputXsl, wPath, param);
-            String szJreHome = wPath.toString();
-            wPath.close();
-            inputXsl.close();
-            wPath = new StringWriter();
-            inputXsl.reset();
-            param.put("pPath", "Lib");
-            UtilXML.tranformeXmlWithXsl(domXml, inputXsl, wPath, param);
-            String szJreLib = wPath.toString();
-            wPath.close();
-            inputXsl.close();
-            szPathSource = (new File(szPathMain, szPathSource)).getCanonicalPath();
-            szPathClass = (new File(szPathMain, szPathClass)).getCanonicalPath();
-            StringBuffer pathClass = new StringBuffer(UtilPackage.getPackageClassPath());
-            addJarToClassPath(context.getRealPath("WEB-INF"), pathClass);
-            if(UtilString.isNotEmpty(szJdkpath))
-            {
-                File jdkPath = new File(szJdkpath);
-                if(jdkPath.exists())
-                {
-                    File jreHome = null;
-                    File jreLib = null;
-                    if(UtilString.isNotEmpty(szJreHome))
-                        jreHome = szJreHome.indexOf(':') <= 0 ? new File(jdkPath, szJreHome) : new File(szJreHome);
-                    if(UtilString.isNotEmpty(szJreLib))
-                    {
-                        File home = jreHome == null || !jreHome.exists() ? jdkPath : jreHome;
-                        jreLib = szJreLib.indexOf(':') <= 0 ? new File(szJreLib) : new File(home, szJreLib);
-                        if(jreLib.exists())
-                            addJarToClassPath(jreLib.getCanonicalPath(), pathClass);
-                    }
-                }
-            }
-            ProjectHelper ph = ProjectHelper.getProjectHelper();
-            Project p = new Project();
-            File buildXml = new File(context.getResource("Xml/Ant/Task/CompileProject.xml").getPath());
-            ph.parse(p, buildXml);
-            p.setProperty("java.src", szPathSource);
-            p.setProperty("java.cls", szPathClass);
-            Hashtable hTarget = p.getTargets();
-            if(hTarget != null)
-            {
-                target = (String)hTarget.get(target);
-                if(target != null)
-                    p.executeTarget(target);
-            }
-            System.out.println(p.getBaseDir());
-            System.out.println(p.getDefaultTarget());
+        String application = (String)bean.getParameterDataByName("application");
+        if(UtilString.isNotEmpty(target)) {
+
+      	  ByteArrayOutputStream streamLog = new ByteArrayOutputStream();
+          PrintStream psLog = new PrintStream(streamLog);
+          PrintStream out = System.out;
+          PrintStream err = System.err;
+
+          System.setErr(psLog);
+          System.setOut(psLog);
+
+          try {
+	            Document domXml = (Document)session.getAttribute("resultDom");
+
+	            String szPathMain = AdpXmlApplication.getPathByName(context, domXml, application, "Main");
+	            szPathMain = (szPathMain == null) ? szPathMain : UtilPath.formatPath(domXml, szPathMain);
+	            //Recuperation du chemin des sources
+	            String szPathSource = AdpXmlApplication.getPathByName(context, domXml, application, "Source");
+	            szPathSource = (szPathSource == null) ? szPathSource : UtilPath.formatPath(domXml, szPathSource);
+	            //Recuperation du chemin de destination des classes
+	            String szPathClass = AdpXmlApplication.getPathByName(context, domXml, application, "Class");
+	            szPathClass = (szPathClass == null) ? szPathClass : UtilPath.formatPath(domXml, szPathClass);
+	            //Recuperation des classpath de l'application
+	            String szClasspath = AdpXmlApplication.getClassPathAll(context, domXml, application);
+	            szClasspath = (szClasspath == null) ? szClasspath : UtilPath.formatPath(domXml, szClasspath);
+
+	            //Recuperation de la home du jdk
+	            String szJdkpath = AdpXmlApplication.getJdkPathByName(context, domXml, application, "Home");
+	            // Recuperation du repertoire home de la jre
+	            String szJreHome = AdpXmlApplication.getPathByName(context, domXml, application, "Home");
+	            // Recuperation du repertoire lib de la jre
+	            String szJreLib = AdpXmlApplication.getPathByName(context, domXml, application, "Lib");
+
+	            szPathSource = (new File(szPathMain, szPathSource)).getCanonicalPath();
+	            szPathClass = (new File(szPathMain, szPathClass)).getCanonicalPath();
+	            StringBuffer pathClass = new StringBuffer(UtilPackage.getPackageClassPath());
+	            addJarToClassPath(context.getRealPath("WEB-INF"), pathClass);
+	            if(UtilString.isNotEmpty(szJdkpath))
+	            {
+	                File jdkPath = new File(szJdkpath);
+	                if(jdkPath.exists())
+	                {
+	                    File jreHome = null;
+	                    File jreLib = null;
+	                    if(UtilString.isNotEmpty(szJreHome))
+	                        jreHome = szJreHome.indexOf(':') <= 0 ? new File(jdkPath, szJreHome) : new File(szJreHome);
+	                    if(UtilString.isNotEmpty(szJreLib))
+	                    {
+	                        File home = jreHome == null || !jreHome.exists() ? jdkPath : jreHome;
+	                        jreLib = szJreLib.indexOf(':') <= 0 ? new File(szJreLib) : new File(home, szJreLib);
+	                        if(jreLib.exists())
+	                            addJarToClassPath(jreLib.getCanonicalPath(), pathClass);
+	                    }
+	                }
+	            }
+
+//	            String buildXml = new File(context.getRealPath("/Xml/Ant/Task/CompileProject.xml")).getAbsolutePath();
+	            URL buildXml = context.getResource("/Xml/Ant/Task/CompileProject.xml");
+
+	            Project p = new Project();
+	            p.setUserProperty("ant.file", buildXml.getPath());
+	            p.setProperty("java.src", szPathSource);
+	            p.setProperty("java.cls", szPathClass);
+	            p.setProperty("class.path", pathClass.toString());
+
+	            ProjectHelper ph = ProjectHelper.getProjectHelper();
+	            p.addReference("ant.projectHelper", ph);
+
+	            BuildLogger buildLogger = new NoBannerLogger();
+	            buildLogger.setMessageOutputLevel(Project.MSG_INFO);
+	            buildLogger.setOutputPrintStream(System.out);
+	            buildLogger.setErrorPrintStream(System.err);
+	            p.addBuildListener(buildLogger);
+
+	            p.init();
+
+	            System.out.println(p.getBaseDir());
+	            System.out.println(p.getDefaultTarget());
+
+	            ph.parse(p, buildXml);
+
+	            Hashtable<String, Object> hTarget = p.getTargets();
+	            if (hTarget!=null) {
+	              Object aTarget = hTarget.get(target);
+	              if (target!=null) {
+	                  if (aTarget instanceof Target) {
+	                      ((Target)aTarget).execute();
+	                  }
+	                  else if (aTarget instanceof String) {
+	                      p.executeTarget((String)aTarget);
+	                  }
+	              }
+	            }
+	            
+	        } catch (Exception ex) {
+	            //StringWriter sw = new StringWriter();
+	            //ex.printStackTrace(sw);
+	            //request.setAttribute("msgText", sw);
+	            ex.printStackTrace(psLog);
+	        }
+	        finally {
+	      	  System.setErr(err);
+	      	  System.setOut(out);
+	
+	      	  doResponse(request, response, bean, streamLog);
+	        }
         }
+    }
+
+    protected void doResponse(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean, ByteArrayOutputStream streamLog) throws Exception {
+  	  //streamLog.write(new byte[]{'t', 'e', 's', 't'});
+		request.setAttribute("msgText", streamLog.toString());
     }
 
     private void addJarToClassPath(String path, StringBuffer classpath)

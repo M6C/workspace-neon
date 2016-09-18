@@ -29,6 +29,7 @@ import org.apache.tools.ant.Target;
 import org.w3c.dom.Document;
 
 import workspace.adaptateur.application.AdpXmlApplication;
+import workspace.util.UtilExtjs;
 import workspace.util.UtilPath;
 import framework.beandata.BeanGenerique;
 import framework.ressource.util.UtilString;
@@ -135,9 +136,14 @@ public class SrvAntCompileProject extends SrvGenerique {
           finally {
         	  System.setErr(err);
         	  System.setOut(out);
-        	  //streamLog.write(new byte[]{'t', 'e', 's', 't'});
-			request.setAttribute("msgText", streamLog.toString());
+
+        	  doResponse(request, response, bean, streamLog);
           }
       }
+    }
+
+    protected void doResponse(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean, ByteArrayOutputStream streamLog) throws Exception {
+  	  //streamLog.write(new byte[]{'t', 'e', 's', 't'});
+		request.setAttribute("msgText", streamLog.toString());
     }
 }

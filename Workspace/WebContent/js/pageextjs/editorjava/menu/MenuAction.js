@@ -33,7 +33,7 @@ function build() {
 			   callback:function(options, success, response) { 
 				   var data = '';
 				   try {
-					   var jsonData = Ext.util.JSON.decode(response.responseText);
+					   var jsonData = Ext.JSON.decode(response.responseText);
 					   var results = jsonData.results;
 					   console.log(data);
 					   var max=30;
