@@ -80,9 +80,9 @@ public class SrvAntTargetExecute extends SrvGenerique
 	            //Recuperation de la home du jdk
 	            String szJdkpath = AdpXmlApplication.getJdkPathByName(context, domXml, application, "Home");
 	            // Recuperation du repertoire home de la jre
-	            String szJreHome = AdpXmlApplication.getPathByName(context, domXml, application, "Home");
+	            String szJreHome = AdpXmlApplication.getJdkJrePathByName(context, domXml, application, "Home");
 	            // Recuperation du repertoire lib de la jre
-	            String szJreLib = AdpXmlApplication.getPathByName(context, domXml, application, "Lib");
+	            String szJreLib = AdpXmlApplication.getJdkJrePathByName(context, domXml, application, "Lib");
 
 	            szPathSource = (new File(szPathMain, szPathSource)).getCanonicalPath();
 	            szPathClass = (new File(szPathMain, szPathClass)).getCanonicalPath();
@@ -91,27 +91,33 @@ public class SrvAntTargetExecute extends SrvGenerique
 	            if(UtilString.isNotEmpty(szJdkpath))
 	            {
 	                File jdkPath = new File(szJdkpath);
-	                if(jdkPath.exists())
-	                {
-	                    File jreHome = null;
-	                    File jreLib = null;
-	                    if(UtilString.isNotEmpty(szJreHome))
-	                        jreHome = szJreHome.indexOf(':') <= 0 ? new File(jdkPath, szJreHome) : new File(szJreHome);
-	                    if(UtilString.isNotEmpty(szJreLib))
-	                    {
-	                        File home = jreHome == null || !jreHome.exists() ? jdkPath : jreHome;
-	                        jreLib = szJreLib.indexOf(':') <= 0 ? new File(szJreLib) : new File(home, szJreLib);
-	                        if(jreLib.exists())
+	                if(jdkPath.exists()) {
+	                    if(UtilString.isNotEmpty(szJreHome)) {
+	                    	File jreHome = szJreHome.indexOf(':') <= 0 ? new File(jdkPath, szJreHome) : new File(szJreHome);
+	                    	if (jreHome.exists()) {
+		                    	File jreLib = new File(jreHome, "lib");
+		                        if (jreLib.exists()) {
+		                            addJarToClassPath(jreLib.getCanonicalPath(), pathClass);
+		                        }
+	                    	}
+	                    }
+	                    if(UtilString.isNotEmpty(szJreLib)) {
+	                    	File jreLib = szJreLib.indexOf(':') <= 0 ? new File(jdkPath, szJreLib) : new File(szJreLib);
+	                        if(jreLib.exists()) {
 	                            addJarToClassPath(jreLib.getCanonicalPath(), pathClass);
+	                        }
 	                    }
 	                }
 	            }
 
-//	            String buildXml = new File(context.getRealPath("/Xml/Ant/Task/CompileProject.xml")).getAbsolutePath();
-	            URL buildXml = context.getResource("/Xml/Ant/Task/CompileProject.xml");
+//	            URL buildXml = context.getResource("/Xml/Ant/Task/CompileProject.xml");
+//	            Project p = new Project();
+//	            p.setUserProperty("ant.file", buildXml.getPath());
 
+//	            String buildXml = new File(context.getRealPath("/Xml/Ant/Task/CompileProject.xml")).getAbsolutePath();
+	            File buildXml = new File(context.getRealPath("/Xml/Ant/Task/CompileProject.xml"));
 	            Project p = new Project();
-	            p.setUserProperty("ant.file", buildXml.getPath());
+	            p.setUserProperty("ant.file", buildXml.getAbsolutePath());
 	            p.setProperty("java.src", szPathSource);
 	            p.setProperty("java.cls", szPathClass);
 	            p.setProperty("class.path", pathClass.toString());

@@ -92,8 +92,8 @@ public class SrvAntCompileProject extends SrvGenerique {
 
             // Chemin destination des classe 
             szPathClass = new File(szPathMain, szPathClass).getCanonicalPath();
-            Project p = new Project();
             File buildXml = new File(context.getRealPath("/Xml/Ant/Task/CompileProject.xml"));
+            Project p = new Project();
             p.setUserProperty("ant.file", buildXml.getAbsolutePath());
             p.setProperty("java.src", szPathSource);
             p.setProperty("java.cls", szPathClass);

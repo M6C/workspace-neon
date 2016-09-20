@@ -34,14 +34,17 @@ function build() {
 				   var data = '';
 				   try {
 					   var jsonData = Ext.JSON.decode(response.responseText);
+					   console.log('jsonData:' + jsonData);
 					   var results = jsonData.results;
-					   console.log(data);
-					   var max=30;
+					   console.log('results:' + results);
+					   //var max=30;
+					   var max=results;
 					   for(i=0 ; i<max ; i++) {
 						   data += jsonData.data[i].text + '<br>';
-					}
-					if (results>max)
-						data += "...";
+						}
+						if (results>max) {
+							data += "...";
+						}
 					}
 					catch (ex) {
 						data = "Error ex:"+ex;
