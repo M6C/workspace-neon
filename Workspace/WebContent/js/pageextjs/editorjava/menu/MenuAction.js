@@ -1,3 +1,7 @@
+Ext.require([
+	'Workspace.common.window.WindowText'
+]);
+
 var pleaseWaitMessage = 'Please Wait ...';
 var hideWindowWaitingDelay = 2;
 
@@ -26,7 +30,7 @@ function build() {
 	      if (btn == 'yes'){
 	    	var project = Ext.getCmp('project').value;
 	    	var requestUrl = DOMAIN_NAME_ROOT + '/action.servlet?event=JsonEditCompileProject';
-	    	Workspace.common.window.WindowWaiting.showWindowWaiting();
+//	    	Workspace.common.window.WindowWaiting.showWindowWaiting();
 			Ext.Ajax.request({
 			   url: requestUrl,
 			   params: {application:project,target:'compile'},
@@ -51,9 +55,11 @@ function build() {
 					}
 					finally {
 						console.log(data);
-					    Ext.Msg.alert('Trace', data, function(btn, text){
-					    	Workspace.common.window.WindowWaiting.hideWindowWaiting("");
-						});
+//					    Ext.Msg.alert('Trace', data, function(btn, text){
+//					    	Workspace.common.window.WindowWaiting.hideWindowWaiting("");
+//						});
+//						Workspace.common.window.WindowWaiting.hideWindowWaiting("");
+						Ext.create('Workspace.common.window.WindowText').show(data);
 					}
 				}
 			});
