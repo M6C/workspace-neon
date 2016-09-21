@@ -14,7 +14,7 @@ Ext.define('Workspace.common.window.WindowText', {
 	initComponent : function(){
 		var me = this;
 
-		Ext.apply(me, {
+		Ext.applyIf(me, {
 		    items : [
 	 			{
 					xtype:'panel',
@@ -24,8 +24,8 @@ Ext.define('Workspace.common.window.WindowText', {
 				    ,
 					items : [
 					   {
-//						   xtype:'commonHtmlEditor',
-						   xtype:'htmleditor',
+						   xtype:'commonHtmlEditor',
+//						   xtype:'htmleditor',
 						   id:'editorText'
 					   }
 					]
@@ -33,11 +33,10 @@ Ext.define('Workspace.common.window.WindowText', {
 		    ]
 	    	,
 		    listeners:{
-		        'show' : function (text){
+		        'show' : function (wnd){
 		        	var editor = Ext.getCmp('editorText');
-		        	editor.setValue(text);
+		        	editor.setValue(this.text);
 		        	editor.syncValue();
-//		        	Ext.getCmp('editorText').update(text);
 				}
 		   }
 		});
@@ -49,8 +48,9 @@ Ext.define('Workspace.common.window.WindowText', {
 	// el = id du div dans le code html de la page qui contiendra la popup
 	//el:windowEl,        
 	layout:'fit',
-	width:400,
-	autoHeight: true,        //hauteur de la fen�tre
+	width:850,
+	height:450,
+//	autoHeight: true,        //hauteur de la fen�tre
 	modal: true,             //Grise automatiquement le fond de la page
 	closeAction:'hide',
 	plain: true

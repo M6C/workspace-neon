@@ -59,7 +59,7 @@ function build() {
 //					    	Workspace.common.window.WindowWaiting.hideWindowWaiting("");
 //						});
 //						Workspace.common.window.WindowWaiting.hideWindowWaiting("");
-						Ext.create('Workspace.common.window.WindowText').show(data);
+						Ext.create('Workspace.common.window.WindowText', {text:data}).show();
 					}
 				}
 			});
