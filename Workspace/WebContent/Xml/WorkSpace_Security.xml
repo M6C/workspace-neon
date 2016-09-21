@@ -192,7 +192,16 @@
                 <PASSWORD>32143214</PASSWORD>
             </VERSIONNING>
             <BUILD>
+                <CLASSPATH Type="Path">[FrameWork_Lib]/lib/hibernate3.jar</CLASSPATH>
+                <CLASSPATH Type="Path">[FrameWork_Lib]/lib/jel.jar</CLASSPATH>
+                <CLASSPATH Type="Path">[FrameWork_Lib]/lib/jevaESUI2001-03-03.jar</CLASSPATH>
+                <CLASSPATH Type="Path">[FrameWork_Lib]/lib/serializer.jar</CLASSPATH>
                 <CLASSPATH Type="Path">[FrameWork_Lib]/lib/ShowDTDTree.jar</CLASSPATH>
+                <CLASSPATH Type="Path">[FrameWork_Lib]/lib2/tools.jar</CLASSPATH>
+                <CLASSPATH Type="Path">[FrameWork_Lib]/lib/xalan-j_2_7_1/xalan.jar</CLASSPATH>
+                <CLASSPATH Type="Path">[FrameWork_Lib]/lib/xalan-j_2_7_1/xercesImpl.jar</CLASSPATH>
+                <CLASSPATH Type="Path">[FrameWork_Lib]/lib/xalan-j_2_7_1/xml-apis.jar</CLASSPATH>
+                <CLASSPATH Type="Path">[FrameWork_Lib]/lib/xalan-j_2_7_1/xsltc.jar</CLASSPATH>
             </BUILD>
             <JDK Name="jdk1.8.0_11"/>
         </APPLICATION>
@@ -600,7 +609,7 @@
         </JRE>
       </JDK>
       <JDK Name="jdk1.8.0_11">
-        <PATH Name="Home">C:\Program Files\Java\jdk1.8.0_11</PATH>
+        <PATH Name="Home">C:\Program Files\Java\jdk1.8.0_101</PATH>
         <JRE>
           <PATH Name="Home">jre</PATH>
           <PATH Name="Lib">lib</PATH>

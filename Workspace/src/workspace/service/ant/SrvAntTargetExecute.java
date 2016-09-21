@@ -59,9 +59,6 @@ public class SrvAntTargetExecute extends SrvGenerique
           PrintStream out = System.out;
           PrintStream err = System.err;
 
-          System.setErr(psLog);
-          System.setOut(psLog);
-
           try {
 	            Document domXml = (Document)session.getAttribute("resultDom");
 
@@ -87,6 +84,7 @@ public class SrvAntTargetExecute extends SrvGenerique
 	            szPathSource = (new File(szPathMain, szPathSource)).getCanonicalPath();
 	            szPathClass = (new File(szPathMain, szPathClass)).getCanonicalPath();
 	            StringBuffer pathClass = new StringBuffer(UtilPackage.getPackageClassPath());
+	            pathClass.append(";").append(szClasspath);
 	            addJarToClassPath(context.getRealPath("WEB-INF"), pathClass);
 	            if(UtilString.isNotEmpty(szJdkpath))
 	            {
@@ -135,6 +133,10 @@ public class SrvAntTargetExecute extends SrvGenerique
 
 	            System.out.println(p.getBaseDir());
 	            System.out.println(p.getDefaultTarget());
+
+	            System.setErr(psLog);
+	            System.setOut(psLog);
+	            System.out.println(pathClass.toString());
 
 	            ph.parse(p, buildXml);
 

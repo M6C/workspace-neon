@@ -4,8 +4,11 @@
     	<javac	srcdir="${java.src}"
 				destdir="${java.cls}"
 				deprecation="off"
-				classpath="${class.path}"
     			includeantruntime="true"
-    	/>
+    	>
+	 	    <classpath>
+	    	   <pathelement path="${class.path}/"/>
+	    	</classpath>
+    	</javac>
     </target>
 </project>

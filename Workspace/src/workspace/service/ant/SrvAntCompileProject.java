@@ -90,6 +90,9 @@ public class SrvAntCompileProject extends SrvGenerique {
                 szPathSource = new File(szPathMain, szClassName).getCanonicalPath();
             }
 
+            System.setErr(psLog);
+            System.setOut(psLog);
+
             // Chemin destination des classe 
             szPathClass = new File(szPathMain, szPathClass).getCanonicalPath();
             File buildXml = new File(context.getRealPath("/Xml/Ant/Task/CompileProject.xml"));
@@ -101,9 +104,6 @@ public class SrvAntCompileProject extends SrvGenerique {
 
             ProjectHelper ph = ProjectHelper.getProjectHelper();
             p.addReference("ant.projectHelper", ph);
-
-            System.setErr(psLog);
-            System.setOut(psLog);
 
             BuildLogger buildLogger = new NoBannerLogger();
             buildLogger.setMessageOutputLevel(Project.MSG_INFO);
