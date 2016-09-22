@@ -10,15 +10,15 @@ function cleanBuild() {
       if (btn == 'yes'){
     	var project = Ext.getCmp('project').value;
     	var requestUrl = DOMAIN_NAME_ROOT + '/action.servlet?event=JsonCleanBuild';
-		Workspace.common.window.WindowWaiting.showWindowWaiting();
+		var wndWait = Workspace.common.window.WindowWaiting.showWindowWaiting();
 		Ext.Ajax.request({
 		   url: requestUrl,
 		   params: {application:project},
 		   success: function(result, request){
-			   Workspace.common.window.WindowWaiting.hideWindowWaiting('Clean successfull.', hideWindowWaitingDelay);
+			   Workspace.common.window.WindowWaiting.hideWindowWaiting(wndWait, 'Clean successfull.', hideWindowWaitingDelay);
 		   },
 		   failure: function (result, request) {
-			   Workspace.common.window.WindowWaiting.hideWindowWaiting('Clean failed.', hideWindowWaitingDelay);
+			   Workspace.common.window.WindowWaiting.hideWindowWaiting(wndWait, 'Clean failed.', hideWindowWaitingDelay);
 		   }
 		});
       }
@@ -30,17 +30,17 @@ function build() {
 	      if (btn == 'yes'){
 	    	var project = Ext.getCmp('project').value;
 	    	var requestUrl = DOMAIN_NAME_ROOT + '/action.servlet?event=JsonEditCompileProject';
-//	    	Workspace.common.window.WindowWaiting.showWindowWaiting();
+	    	var wndWait = Workspace.common.window.WindowWaiting.showWindowWaiting();
 			Ext.Ajax.request({
 			   url: requestUrl,
 			   params: {application:project,target:'compile'},
 			   callback:function(options, success, response) { 
 				   var data = '';
+				   var jsonData = Ext.JSON.decode(response.responseText);
+				   console.log('jsonData:' + jsonData);
+				   var results = jsonData.results;
+				   console.log('results:' + results);
 				   try {
-					   var jsonData = Ext.JSON.decode(response.responseText);
-					   console.log('jsonData:' + jsonData);
-					   var results = jsonData.results;
-					   console.log('results:' + results);
 					   //var max=30;
 					   var max=results;
 					   for(i=0 ; i<max ; i++) {
@@ -56,10 +56,17 @@ function build() {
 					finally {
 						console.log(data);
 //					    Ext.Msg.alert('Trace', data, function(btn, text){
-//					    	Workspace.common.window.WindowWaiting.hideWindowWaiting("");
+//					    	Workspace.common.window.WindowWaiting.hideWindowWaiting(wndWait, "");
 //						});
-//						Workspace.common.window.WindowWaiting.hideWindowWaiting("");
-						Ext.create('Workspace.common.window.WindowText', {text:data}).show();
+						Workspace.common.window.WindowWaiting.hideWindowWaiting(wndWait, "");
+
+						var option = {
+							text : data,
+							width : (results < 300) ? 600 : 850,
+							height : (results < 100) ? 200 : (results < 300) ? 300 : 450,
+						};
+						
+						Ext.create('Workspace.common.window.WindowText', option).show();
 					}
 				}
 			});
@@ -138,7 +145,7 @@ function showToolXmlXsl() {
 	if (!wndToolXmlXsl) {
 	  	function onSubmit () {
 	  		if(Ext.getCmp('xml_xsl_content_panel').getForm().isValid()){
-	  			Workspace.common.window.WindowWaiting.showWindowWaiting();
+	  			var wndWait = Workspace.common.window.WindowWaiting.showWindowWaiting();
 				var values = Ext.getCmp('xml_xsl_content_panel').getForm().getValues(false);
 				Ext.Ajax.request({
 				   url: DOMAIN_NAME_ROOT + '/action.servlet?event=JsonXmlXsl',
@@ -162,7 +169,7 @@ function showToolXmlXsl() {
 								console.info(resultMessage);
 							}
 							finally {
-								Workspace.common.window.WindowWaiting.hideWindowWaiting(resultMessage, hideWindowWaitingDelay);
+								Workspace.common.window.WindowWaiting.hideWindowWaiting(wndWait, resultMessage, hideWindowWaitingDelay);
 							}
 						}
 					},
@@ -189,7 +196,7 @@ function showToolXmlXsl() {
 									console.info(resultMessage);
 								}
 								finally {
-									Workspace.common.window.WindowWaiting.hideWindowWaiting(resultMessage, hideWindowWaitingDelay);
+									Workspace.common.window.WindowWaiting.hideWindowWaiting(wndWait, resultMessage, hideWindowWaitingDelay);
 								}
 							}
 						}

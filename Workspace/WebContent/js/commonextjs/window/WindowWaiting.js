@@ -52,7 +52,9 @@ Ext.define('Workspace.common.window.WindowWaiting',  {
 
 		showWindowWaiting : function () {
 //			return Ext.window.MessageBox.wait(this.runningProcessMessage, this.pleaseWaitMessage);
-			return Ext.window.MessageBox.create().wait(this.runningProcessMessage, this.pleaseWaitMessage);
+			var wnd = Ext.window.MessageBox.create();
+			wnd.wait(this.runningProcessMessage, this.pleaseWaitMessage);
+			return wnd;
 		},
 	
 		/**
@@ -66,14 +68,14 @@ Ext.define('Workspace.common.window.WindowWaiting',  {
 			return Ext.window.MessageBox.create().wait(this.runningProcessMessage, this.pleaseWaitMessage, config);
 		},
 	
-		hideWindowWaiting : function (msg) {
-			this.hideWindowWaiting(msg, 1);
+		hideWindowWaiting : function (wnd, msg) {
+			this.hideWindowWaiting(wnd, msg, 1);
 		},
 	
-		hideWindowWaiting : function (msg, sec) {
-//		   Ext.window.MessageBox.updateProgress(1, '', msg);
-//		   // Fermeture de la fen�tre apr�s x sec seconde
-//		   var x = window.setInterval(function() {Ext.window.MessageBox.hide();window.clearInterval(x);}, sec*1000);
+		hideWindowWaiting : function (wnd, msg, sec) {
+		   wnd.updateProgress(1, '', msg);
+		   // Fermeture de la fen�tre apr�s x sec seconde
+		   var x = window.setInterval(function() {wnd.hide();wnd.clearInterval(x);}, sec*1000);
 		},
 	
 		setStatusMessageAndHideWaiting : function (request, statusbarId, defaultMessage) {

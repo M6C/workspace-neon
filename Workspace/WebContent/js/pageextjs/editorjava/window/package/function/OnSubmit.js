@@ -18,8 +18,8 @@ Ext.define('Workspace.editorjava.window.package.function.OnSubmit',  {
 //			Ext.getCmp(this.statusbarId).showBusy(pleaseWaitMessage);
 			var project = Ext.getCmp('project').value;
 			var pack = Ext.getCmp('package').value;
+			var wndWait = Workspace.common.window.WindowWaiting.showWindowWaiting();
 			try {
-				Workspace.common.window.WindowWaiting.showWindowWaiting();
 		  		Ext.Ajax.request({
 		  		   url: config.requestUrl,
 		  		   params: {application:project,package:pack,type:config.type},
@@ -32,7 +32,7 @@ Ext.define('Workspace.editorjava.window.package.function.OnSubmit',  {
 		  		});
 			}
 		    finally {
-		    	Workspace.common.window.WindowWaiting.hideWindowWaiting(config.statusbarId, hideWindowWaitingDelay);
+		    	Workspace.common.window.WindowWaiting.hideWindowWaiting(wndWait, config.statusbarId, hideWindowWaitingDelay);
 		    }
 		}
 //	}
