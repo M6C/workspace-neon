@@ -44,7 +44,7 @@ function build() {
 					   //var max=30;
 					   var max=results;
 					   for(i=0 ; i<max ; i++) {
-						   data += jsonData.data[i].text + '<br>';
+						   data += formatFont(jsonData.data[i].text)
 						}
 						if (results>max) {
 							data += "...";
@@ -55,9 +55,6 @@ function build() {
 					}
 					finally {
 						console.log(data);
-//					    Ext.Msg.alert('Trace', data, function(btn, text){
-//					    	Workspace.common.window.WindowWaiting.hideWindowWaiting(wndWait, "");
-//						});
 						Workspace.common.window.WindowWaiting.hideWindowWaiting(wndWait, "");
 
 						var option = {
@@ -211,4 +208,17 @@ function showToolXmlXsl() {
 	}
 
 	wndToolXmlXsl.show();
+}
+
+function formatFont(str) {
+   var fontStart = "";
+   var fontEnd = "";
+   if (str.indexOf(": warning:") >= 0 ) {
+	   fontStart = "<font color='orange'>";
+	   fontEnd = "</font>";
+   } else if (str.indexOf(": error:") >= 0 ) {
+	   fontStart = "<font color='red'>";
+	   fontEnd = "</font>";
+   }
+   return fontStart + str + fontEnd + '<br>';
 }
