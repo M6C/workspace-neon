@@ -187,6 +187,14 @@
             <PARAM Name="xslParamName" Type="STRING" Default="pApplication"/>
         </BEAN>
     </SERVLET>
+    <SERVLET Name="JsonClasspath" Target="" TargetError="">
+        <BEAN Name="BeanClasspath" Scope="request" Service="workspace.service.SrvEditorJavaClasspath">
+            <PARAM Name="xmlName" Type="STRING" Default="resultDom"/>
+            <PARAM Name="xmlScope" Type="STRING" Default="session"/>
+            <PARAM Name="pathXsl" Type="STRING" Default="/XslExtjs/Json/TreeClasspathDetail.xsl"/>
+            <PARAM Name="xslParamName" Type="STRING" Default="pApplication"/>
+        </BEAN>
+    </SERVLET>
     <SERVLET Name="JsonCompletion">
         <BEAN Name="BeanEditorJava" Scope="request" Service="workspace.service.extjs.SrvCompletion">
             <PARAM Name="application" Type="STRING"/>

@@ -147,10 +147,7 @@ public class SrvEditorJavaXmlXsl extends SrvGenerique
                                 if((!jsonData.trim().startsWith("{") || !jsonData.trim().endsWith("}")) && (!jsonData.trim().startsWith("[") || !jsonData.trim().endsWith("]")))
                                     jsonData = (new StringBuilder("{results:1,data:[{message:'")).append(UtilEncoder.encodeHTML(jsonData.trim())).append("'}]}").toString();
                                 Trace.DEBUG(this, (new StringBuilder("SrvEditorJavaXmlXsl jsonData:")).append(jsonData).toString());
-                                OutputStream os = response.getOutputStream();
-                                response.setContentType("text/json");
-                                os.write(jsonData.getBytes());
-                                os.close();
+                                doResponse (request, response, bean, jsonData);
                             }
                     }
                 }
@@ -159,5 +156,12 @@ public class SrvEditorJavaXmlXsl extends SrvGenerique
             {
                 Trace.ERROR(this, ex);
             }
+    }
+
+    protected void doResponse (HttpServletRequest request, HttpServletResponse response, BeanGenerique bean, String data) throws Exception {
+        OutputStream os = response.getOutputStream();
+        response.setContentType("text/json");
+        os.write(data.getBytes());
+        os.close();
     }
 }
