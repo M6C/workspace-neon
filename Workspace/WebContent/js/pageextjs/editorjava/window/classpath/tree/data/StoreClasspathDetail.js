@@ -1,5 +1,5 @@
-Ext.define('Workspace.editorjava.window.classpath.tree.data.StoreClasspath', {
-	// REQUIRED
+Ext.define('Workspace.editorjava.window.classpath.tree.data.StoreClasspathDetail', {
+	// NOT USED
 
 	extend: 'Ext.data.TreeStore'
 	,
@@ -9,7 +9,7 @@ Ext.define('Workspace.editorjava.window.classpath.tree.data.StoreClasspath', {
 	,
     proxy: {
         type: 'ajax',
-        url: DOMAIN_NAME_ROOT + '/action.servlet?event=JsonClasspath',
+        url: DOMAIN_NAME_ROOT + '/action.servlet?event=JsonClasspathDetail',
 		method: 'GET',
         reader: {
             type: 'json'
@@ -31,4 +31,4 @@ Ext.define('Workspace.editorjava.window.classpath.tree.data.StoreClasspath', {
 	    expanded: true,
 	    text: 'root'
 	}
-}, function() {Workspace.tool.Log.defined('Workspace.editorjava.window.classpath.tree.data.StoreClasspath');});
+}, function() {Workspace.tool.Log.defined('Workspace.editorjava.window.classpath.tree.data.StoreClasspathDetail');});

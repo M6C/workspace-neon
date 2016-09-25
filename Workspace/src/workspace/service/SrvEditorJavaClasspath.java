@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Vector;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +25,6 @@ import framework.ressource.util.UtilPackage;
 import framework.ressource.util.UtilString;
 import framework.ressource.util.UtilVector;
 import workspace.adaptateur.application.AdpXmlApplication;
-import workspace.util.UtilPath;
 
 public class SrvEditorJavaClasspath extends SrvEditorJavaXmlXsl
 {
@@ -35,7 +33,7 @@ public class SrvEditorJavaClasspath extends SrvEditorJavaXmlXsl
     protected void doResponse(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean, String data) throws Exception {
         HttpSession session = request.getSession();
         ServletContext context = session.getServletContext();
-        String application = (String)bean.getParameterDataByName("application");
+        String application = request.getParameter("pApplication");
         Document domXml = (Document)session.getAttribute("resultDom");
 
     	List listClassPathWebInf = getClasspathWebInf(context);
@@ -43,38 +41,51 @@ public class SrvEditorJavaClasspath extends SrvEditorJavaXmlXsl
     	List listClassPathJre = getClasspathJre(context, application, domXml);
 
         String classpath = extractClasspathElement(data);
-    	String classPathSystem = getClasspathSystem();
+    	String classPathSystem = null;//getClasspathSystem();
     	String classPathWebInf = toJson(listClassPathWebInf);
     	String classPathJdk = toJson(listClassPathJdk);
     	String classPathJre = toJson(listClassPathJre);
 
-        StringBuffer pathClass = new StringBuffer("[{'id':'root0', 'text':'<xsl:value-of select='"+application+"'/>', children: [");
-        addJsonClasspathChild(pathClass, classPathSystem, "CLASSPATH_SYSTEM");
-        addJsonClasspathChild(pathClass, classPathWebInf, "CLASSPATH_WEB-INF");
-        addJsonClasspathChild(pathClass, classPathJdk, "CLASSPATH_JDK");
-        addJsonClasspathChild(pathClass, classPathJre, "CLASSPATH_JRE");
+        StringBuffer pathClass = new StringBuffer("[{'id':'root0', 'text':'"+application+"', children: [");
+        boolean next = false;
+        next = addJsonClasspathChild(pathClass, classpath, "CLASSPATH", next);
+        next = addJsonClasspathChild(pathClass, classPathSystem, "CLASSPATH_SYSTEM", next);
+        next = addJsonClasspathChild(pathClass, classPathWebInf, "CLASSPATH_WEB-INF", next);
+        next = addJsonClasspathChild(pathClass, classPathJdk, "CLASSPATH_JDK", next);
+        next = addJsonClasspathChild(pathClass, classPathJre, "CLASSPATH_JRE", next);
         pathClass.append("]}]");
 
-    	super.doResponse(request, response, bean, data);
+    	super.doResponse(request, response, bean, pathClass.toString());
     }
 
-    private void addJsonClasspathChild(StringBuffer pathClass, String classpath, String rootName) {
+    private boolean addJsonClasspathChild(StringBuffer pathClass, String classpath, String rootName, boolean next) {
         if (classpath != null) {
-        	pathClass.append("{'id':'"+rootName+"_"+rand.nextLong()+"', 'text':'"+rootName+"',children: [");
+        	if (next) {
+            	pathClass.append(",");
+        	}
+        	pathClass.append("{'id':'"+rootName+"_"+rand.nextLong()+"', 'text':'"+rootName+"',");
+//        	pathClass.append("children: [");
         	pathClass.append(classpath);
+//        	pathClass.append("]");
+        	pathClass.append("}");
+        	return true;
         }
+        return next;
     }
+
     private String toJson(List list) {
     	String ret = null;
     	if (list != null && !list.isEmpty()) {
     		ret = "";
 	    	for(int i=0 ; i<list.size() ; i++) {
+	    		String str = (String)list.get(i);
+	    		str = UtilString.replaceAll(str, "\\", "\\\\");
 	    		if (i>0) {
 	    			ret += ",";
 	    		}
 	    		ret += "{" +
 	    	        "'id':'"+rand.nextLong()+"'" +
-	    		    ",'text':'"+list.get(i)+"'" +
+	    		    ",'text':'"+str+"'" +
 	    		    ",'leaf':'true'" +
 	    		    "}";
 	    	}
@@ -84,7 +95,19 @@ public class SrvEditorJavaClasspath extends SrvEditorJavaXmlXsl
     }
 
     private String extractClasspathElement(String data) {
-    	return data.substring(data.indexOf('[') + 1, data.lastIndexOf(']'));
+    	String ret = extractChildren(data);
+    	ret = extractChildren(ret);
+    	return "children: [" + ret + "]";
+    }
+
+    private String extractChildren(String data) {
+    	String ret = "";
+    	int idxStart = data.indexOf('[');
+    	int idxEnd = data.lastIndexOf(']');
+    	if(idxStart >= 0 && idxEnd > 0) {
+    		ret = data.substring(idxStart + 1, idxEnd);
+    	}
+    	return ret;
     }
 
 	private String getClasspathSystem() {
@@ -113,7 +136,7 @@ public class SrvEditorJavaClasspath extends SrvEditorJavaXmlXsl
 		        if(UtilString.isNotEmpty(szJdkLib)) {
 		        	File jreLib = szJdkLib.indexOf(':') <= 0 ? new File(jdkPath, szJdkLib) : new File(szJdkLib);
 		            if(jreLib.exists()) {
-	                    ret.add(getJar(jreLib.getCanonicalPath()));
+	                    ret.addAll(getJar(jreLib.getCanonicalPath()));
 		            }
 		        }
 		    }
@@ -140,7 +163,7 @@ public class SrvEditorJavaClasspath extends SrvEditorJavaXmlXsl
 		        	if (jreHome.exists()) {
 		            	File jreLib = new File(jreHome, "lib");
 		                if (jreLib.exists()) {
-		                    ret.add(getJar(jreLib.getCanonicalPath()));
+		                    ret.addAll(getJar(jreLib.getCanonicalPath()));
 		                }
 		        	}
 		        }
@@ -151,9 +174,9 @@ public class SrvEditorJavaClasspath extends SrvEditorJavaXmlXsl
 
     private void addToClasspath(List listJar, StringBuffer classpath) throws IOException {
         int max = UtilVector.safeSize(listJar);
-        for(int i = 0; i < max; i++)
-            classpath.append(";").append((String)UtilVector.safeGetElementAt(listJar, i));
-
+        for(int i = 0; i < max; i++) {
+        	classpath.append(";").append((String)UtilVector.safeGetElementAt(listJar, i));
+        }
     }
 
     private List getJar(String path) throws IOException {
