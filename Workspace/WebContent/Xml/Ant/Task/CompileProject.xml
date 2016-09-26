@@ -3,8 +3,9 @@
     	<echo message="Ant project:CompileProject target:compile java.src:${java.src} java.cls:${java.cls} class.path:${class.path}"/>
     	<javac	srcdir="${java.src}"
 				destdir="${java.cls}"
-				deprecation="off"
     			includeantruntime="true"
+				deprecation="off"
+    			nowarn="on"
     	>
 	 	    <classpath>
 	    	   <pathelement path="${class.path}/"/>

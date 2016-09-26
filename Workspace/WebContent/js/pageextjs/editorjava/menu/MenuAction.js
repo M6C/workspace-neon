@@ -35,36 +35,10 @@ function build() {
 			   url: requestUrl,
 			   params: {application:project,target:'compile'},
 			   callback:function(options, success, response) { 
-				   var data = '';
-				   var jsonData = Ext.JSON.decode(response.responseText);
-				   console.log('jsonData:' + jsonData);
-				   var results = jsonData.results;
-				   console.log('results:' + results);
-				   try {
-					   //var max=30;
-					   var max=results;
-					   for(i=0 ; i<max ; i++) {
-						   data += formatFont(jsonData.data[i].text)
-						}
-						if (results>max) {
-							data += "...";
-						}
-					}
-					catch (ex) {
-						data = "Error ex:"+ex;
-					}
-					finally {
-						console.log(data);
-						Workspace.common.window.WindowWaiting.hideWindowWaiting(wndWait, "");
+					Workspace.common.window.WindowWaiting.hideWindowWaiting(wndWait, "");
 
-						var option = {
-							text : data,
-							width : (results < 300) ? 600 : 850,
-							height : (results < 100) ? 200 : (results < 300) ? 300 : 450,
-						};
-						
-						Ext.create('Workspace.common.window.WindowText', option).show();
-					}
+					var option = {response: response};
+					Ext.create('Workspace.common.window.WindowTextCompile', option).show();
 				}
 			});
 	      }
@@ -210,15 +184,15 @@ function showToolXmlXsl() {
 	wndToolXmlXsl.show();
 }
 
-function formatFont(str) {
-   var fontStart = "";
-   var fontEnd = "";
-   if (str.indexOf(": warning:") >= 0 ) {
-	   fontStart = "<font color='orange'>";
-	   fontEnd = "</font>";
-   } else if (str.indexOf(": error:") >= 0 ) {
-	   fontStart = "<font color='red'>";
-	   fontEnd = "</font>";
-   }
-   return fontStart + str + fontEnd + '<br>';
-}
+//function formatFont(str) {
+//   var fontStart = "";
+//   var fontEnd = "";
+//   if (str.indexOf(": warning:") >= 0 ) {
+//	   fontStart = "<font color='orange'>";
+//	   fontEnd = "</font>";
+//   } else if (str.indexOf(": error:") >= 0 ) {
+//	   fontStart = "<font color='red'>";
+//	   fontEnd = "</font>";
+//   }
+//   return fontStart + str + fontEnd + '<br>';
+//}

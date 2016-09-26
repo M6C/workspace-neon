@@ -37,9 +37,10 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabSave',  {
 								// Explicit load required library (Mandatory for extending this class)
 								Ext.Loader.syncRequire('Workspace.common.window.WindowResultText');
 
-								Workspace.common.window.WindowResultText.show(response,function(btn, text){
-									Workspace.common.window.WindowWaiting.hide("Building complete.", 1);
-						  		});
+								Workspace.common.window.WindowWaiting.hide("Building complete.", 1);
+
+								var option = {response: response};
+								Ext.create('Workspace.common.window.WindowTextCompile', option).show();
 							},
 							params:{application:application,target:'compile',className:className}
 						});
