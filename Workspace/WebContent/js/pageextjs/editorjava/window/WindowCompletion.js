@@ -17,6 +17,7 @@ Ext.define('Workspace.editorjava.window.WindowCompletion', {
 		        		id:'treeCompletion',
 		        		pos: me.pos,
 		        		txt: me.txt,
+		        		filename: me.filename,
 		        		onSubmitTree: this.callBackSubmit
 		        	}
 	          	)
@@ -26,13 +27,13 @@ Ext.define('Workspace.editorjava.window.WindowCompletion', {
 		me.callParent(arguments);
 	}
 ,
-	title: 'Method list',        //titre de la fenêtre
+	title: 'Method list',        //titre de la fenï¿½tre
 	// el = id du div dans le code html de la page qui contiendra la popup
 	//el:windowEl,        
 	layout:'fit',
 	width:400,
 	height:300,
-	//autoHeight: true,        //hauteur de la fenêtre
+	//autoHeight: true,        //hauteur de la fenï¿½tre
 	modal: true
 	/*,             //Grise automatiquement le fond de la page
 	closeAction:'hide',

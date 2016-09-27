@@ -20,8 +20,17 @@ Ext.define('Workspace.editorjava.window.completion.tree.data.StoreCompletion', {
 	    //scope: this, //yourScope
 	    'beforeload': function(store, operation, options) {
 			console.info('Workspace.editorjava.window.completion.tree.data.StoreCompletion beforeload:'+operation.node.internalId);
-			store.getProxy().extraParams.caretPos = store.pos;
-			store.getProxy().extraParams.source = store.txt;
+//			store.getProxy().extraParams.caretPos = store.pos;
+//			store.getProxy().extraParams.source = store.txt;
+
+			var application = Ext.getCmp('project').value;
+			Ext.create('Workspace.editorjava.request.JsonEditSaveAndCompletion',
+			{
+				params:{filename:store.filename,content:store.txt,caretPos:store.pos},
+				store:store,
+				application:application
+			}).request(this);
+			var application2 = Ext.getCmp('project').value;
 	    }
 //		,
 //		'expand' : function(node, eOpts) {

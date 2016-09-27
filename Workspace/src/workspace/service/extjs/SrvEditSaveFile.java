@@ -43,6 +43,9 @@ public class SrvEditSaveFile extends SrvGenerique
                 if(UtilString.isNotEmpty(filenameFormated))
                 {
                     File outputFile = new File(filenameFormated);
+                    if (!outputFile.exists()) {
+                    	outputFile.createNewFile();
+                    }
                     if(outputFile.exists() && outputFile.isFile())
                     {
                         if(UtilString.isNotEmpty(navIndex) && UtilString.isNotEmpty(navNbRow))

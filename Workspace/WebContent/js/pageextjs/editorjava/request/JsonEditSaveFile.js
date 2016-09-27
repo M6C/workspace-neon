@@ -1,31 +1,34 @@
+//Parameters :
+// - callback
+// - params
+// - application
 Ext.define('Workspace.editorjava.request.JsonEditSaveFile',  {
-	extend: 'Ext.Ajax.request'
-	,
+
 	method:'POST',
 	url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonEditSaveFile',
-	callback:function(options, success, response) { 
 
-		if (pnlEdit.build) {
-			Workspace.common.window.WindowWaiting.updateText('Building process...');
-			var application = Ext.getCmp('project').value;
-			Ext.Ajax.request({
-				method:'POST',
-				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonEditCompileProject',
-				callback:function(opts, success, response) {
-					// Explicit load required library (Mandatory for extending this class)
-					Ext.Loader.syncRequire('Workspace.common.window.WindowResultText');
+	callback:function(options, success, response) {},
 
-					Workspace.common.window.WindowWaiting.hide("Building complete.", 1);
+    constructor: function(config) {
+        var me = this;
 
-					var option = {response: response};
-					Ext.create('Workspace.common.window.WindowTextCompile', option).show();
-				},
-				params:{application:application,target:'compile',className:className}
-			});
-		}
-		else {
-			Workspace.common.window.WindowWaiting.hide("Saving complete.", 1);
-		}
-	},
-	//params:{filename:panelId,content:value}
-}, function() {Workspace.tool.Log.defined('Workspace.editorjava.panel.center.function.AddTabSave');});
+        Ext.apply(me, config);
+
+        me.callParent();
+    },
+
+    success: function(response, opts) {},
+    failure: function(response, opts) {},
+
+    request: function() {
+        var me = this;
+        Ext.Ajax.request({
+            success: me.success,
+            failure: me.failure,
+            url: me.url,
+            method: me.method,
+            params: me.params,
+            callback: me.callback
+        });
+    }
+}, function() {Workspace.tool.Log.defined('Workspace.editorjava.request.JsonEditSaveFile');});

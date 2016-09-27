@@ -1,0 +1,32 @@
+//Parameters :
+// - params
+// - application
+// - build
+// - className
+Ext.define('Workspace.editorjava.request.JsonEditSaveAndCompletion',  {
+
+	extend: 'Workspace.editorjava.request.JsonEditSaveFile'
+	,
+    constructor: function(config) {
+        var me = this;
+
+        config.params.filename += Date.now() + ".tmp";
+        config.callback = function(options, success, response) {
+    		Workspace.common.window.WindowWaiting.updateText('Completion process...');
+
+    		Ext.Ajax.request({
+    			method:'GET',
+    			url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonCompletion',
+    			callback:function(opts, success, response) {
+    				Workspace.common.window.WindowWaiting.hide("Completion complete.", 1);
+    				config.store.data = response.responseText;
+    			},
+    			params:{filename:config.params.filename,caretPos:config.params.caretPos,deleteFile:true}
+    		});
+    	};
+
+        Ext.apply(me, config);
+
+        me.callParent();
+    }
+}, function() {Workspace.tool.Log.defined('Workspace.editorjava.request.JsonEditSaveAndCompletion');});

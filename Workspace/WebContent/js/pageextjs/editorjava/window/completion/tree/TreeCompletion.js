@@ -24,6 +24,7 @@ Ext.define('Workspace.editorjava.window.completion.tree.TreeCompletion', {
 		Ext.apply(me, {
 			store: Ext.create('Workspace.editorjava.window.completion.tree.data.StoreCompletion',
 				{
+					filename:me.filename,
 					pos:me.pos,
 					txt:me.txt
 				}

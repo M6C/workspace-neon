@@ -7,16 +7,19 @@ Ext.define('Workspace.editorjava.form.textarea.HtmlEditor', {
 	alias: 'widget.editorJavaHtmlEditor',
 	alternateClassName: 'WorkspaceEditorJavaHtmlEditor'
 	,
-//    initComponent : function(){
-//		var me = this;
 //
-//		Ext.apply(me, {
-		    cleanHtml: function(html) {
+    initComponent : function(){
+		var me = this;
+
+		Ext.apply(me, {
+//
+			cleanHtml: function(html) {
 		        var bd = this.getEditorBody();
 		        html = bd.innerText;
 				return html;
 			}
 			, onKeydown : function (e, cmp) {
+//				var me = this;
 				if (e.ctrlKey && Ext.EventObject.SPACE == e.keyCode) {
 					e.preventDefault();
 					e.stopPropagation();
@@ -24,9 +27,9 @@ Ext.define('Workspace.editorjava.form.textarea.HtmlEditor', {
 					var editor = this.htmlEditor;
 					var view = e.currentTarget.defaultView;
 					var selection = view.getSelection();
-					// Selection du début de la ligne jusqu'au curseur
+					// Selection du dï¿½but de la ligne jusqu'au curseur
 					//selection.extend(selection.focusNode,0)
-					// Selection du début de textarea jusqu'au curseur
+					// Selection du dï¿½but de textarea jusqu'au curseur
 					selection.extend(view.document.firstChild,0);
 					var txt = selection.toString();
 					var pos = txt.length;
@@ -48,6 +51,7 @@ Ext.define('Workspace.editorjava.form.textarea.HtmlEditor', {
 					var wndClasspathDetail = Ext.create('Workspace.editorjava.window.WindowCompletion', {
 						pos: pos,
 						txt: txt,
+						filename: me.panelId,
 						callBackSubmit:fnOnSubmitTree
 					});
 					wndClasspathDetail.show();
@@ -63,9 +67,11 @@ Ext.define('Workspace.editorjava.form.textarea.HtmlEditor', {
 					editor.insertAtCursor('<br>\b');
 				}
 			}
-//		});
-//		me.callParent(arguments);
-//	}
+//
+		});
+		me.callParent(arguments);
+	}
+//
 	,
 	enableColors: false,
 	enableAlignments: false

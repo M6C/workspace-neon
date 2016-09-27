@@ -5,17 +5,35 @@
 
 package workspace.service;
 
-import framework.beandata.BeanGenerique;
-import framework.ressource.util.*;
-import framework.service.SrvGenerique;
-import java.io.*;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.net.URLDecoder;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.w3c.dom.Document;
+
+import framework.beandata.BeanGenerique;
+import framework.ressource.util.UtilFile;
+import framework.ressource.util.UtilPackage;
+import framework.ressource.util.UtilPackageResource;
+import framework.ressource.util.UtilReflect;
+import framework.ressource.util.UtilSafe;
+import framework.ressource.util.UtilString;
+import framework.ressource.util.UtilVector;
+import framework.service.SrvGenerique;
+import workspace.util.UtilPath;
 
 public class SrvEditorJavaCompletion extends SrvGenerique
 {
@@ -30,20 +48,42 @@ public class SrvEditorJavaCompletion extends SrvGenerique
         String className = (String)bean.getParameterDataByName("className");
         String source = (String)bean.getParameterDataByName("source");
         String caretPos = (String)bean.getParameterDataByName("caretPos");
+        String filename = (String)bean.getParameterDataByName("filename");
+        String deleteFile = (String)bean.getParameterDataByName("deleteFile");
         Method listMethod[] = (Method[])null;
-        if(UtilString.isEmpty(className) && UtilString.isNotEmpty(source) && UtilString.isNotEmpty(caretPos))
-        {
-            int iCaretPos = Integer.parseInt(caretPos);
-            source = URLDecoder.decode(source);
-            className = getClassBeforePos(source, iCaretPos);
+        File file = null;
+
+        try {
+	        if (UtilString.isNotEmpty(filename)) {
+		        Document dom = (Document)request.getSession().getAttribute("resultDom");
+		        String filenameFormated = UtilPath.formatPath(dom, filename);
+	            if(UtilString.isNotEmpty(filenameFormated)) {
+	                file = new File(filenameFormated);
+	                if(file != null && file.exists() && file.isFile()) {
+	                    source = UtilFile.read(file);
+	                } else {
+	                	file = null;
+	                }
+	            }
+	        }
+	        if(UtilString.isEmpty(className) && UtilString.isNotEmpty(source) && UtilString.isNotEmpty(caretPos))
+	        {
+	            int iCaretPos = Integer.parseInt(caretPos);
+	            source = URLDecoder.decode(source);
+	            className = getClassBeforePos(source, iCaretPos);
+	        }
+	        if(UtilString.isNotEmpty(className)) {
+	                listMethod = UtilReflect.getMethods(className);
+	        }
+	        doResponse(request, response, bean, className, caretPos, listMethod);
         }
-        if(UtilString.isNotEmpty(className))
-            try
-            {
-                listMethod = UtilReflect.getMethods(className);
-            }
-            catch(ClassNotFoundException classnotfoundexception) { }
-        doResponse(request, response, bean, className, caretPos, listMethod);
+        catch(ClassNotFoundException classnotfoundexception) {
+        }
+        finally {
+			 if (file != null && deleteFile != null && Boolean.TRUE.toString().equalsIgnoreCase(deleteFile)) {
+				 file.delete();
+			 }
+		}
     }
 
     protected void doResponse(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean, String className, String caretPos, Method listMethod[])

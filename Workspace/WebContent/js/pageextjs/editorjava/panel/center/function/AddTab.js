@@ -25,7 +25,8 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTab',  {
 				    id: panelEditorId,
 					className: raw.className,
 					contentType: raw.contentType,
-					build: raw.build
+					build: raw.build,
+					panelId: panelId
 				});
 		
 				mainCenterPanel.add({

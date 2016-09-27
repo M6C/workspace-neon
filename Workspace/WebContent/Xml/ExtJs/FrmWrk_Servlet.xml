@@ -198,10 +198,12 @@
     <SERVLET Name="JsonCompletion">
         <BEAN Name="BeanEditorJava" Scope="request" Service="workspace.service.extjs.SrvCompletion">
             <PARAM Name="application" Type="STRING"/>
-            <PARAM Name="FileName" Type="STRING"/>
+            <PARAM Name="filename" Type="STRING"/>
             <PARAM Name="className" Type="STRING"/>
             <PARAM Name="source" Type="STRING"/>
             <PARAM Name="caretPos" Type="STRING"/>
+            <PARAM Name="deleteFile" Type="STRING" Default="false"/>
+
         </BEAN>
     </SERVLET>
     <SERVLET Name="AjaxSVNTestCommit" Target="" TargetError="">

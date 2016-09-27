@@ -2,7 +2,7 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabSave',  {
 	// REQUIRED
 	requires: ['Workspace.common.window.WindowWaiting',
 	           'Workspace.common.window.WindowResultText',
-	           'Workspace.editorjava.request.JsonEditSaveFile']
+	           'Workspace.editorjava.request.JsonEditSaveAndBuild']
 	,
 	statics: {
 
@@ -12,6 +12,7 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabSave',  {
 			// Explicit load required library (Mandatory for extending this class)
 			Ext.Loader.syncRequire('Workspace.common.window.WindowWaiting');
 
+			var application = Ext.getCmp('project').value;
 			var mainCenterPanel=Ext.getCmp('mainCenterPanel');
 		    var pnl = mainCenterPanel.getComponent(panelId);
 			var pnlEdit = pnl.getComponent(panelEditorId);
@@ -20,42 +21,13 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabSave',  {
 			//value=value.replace(/&\w+;/g,"");
 			var className=pnlEdit.className;
 
-			Ext.create('Workspace.editorjava.request.JsonEditSaveFile',
+			Ext.create('Workspace.editorjava.request.JsonEditSaveAndBuild',
 			{
-				params:{filename:panelId,content:value}
-			});
-//			var wndWaiting = Workspace.common.window.WindowWaiting.show();
-//
-//			Workspace.common.window.WindowWaiting.updateText('Saving process...');
-//	    	Ext.Ajax.request({
-//				method:'POST',
-//				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonEditSaveFile',
-//				callback:function(options, success, response) { 
-//
-//	    			if (pnlEdit.build) {
-//	    				Workspace.common.window.WindowWaiting.updateText('Building process...');
-//	    				var application = Ext.getCmp('project').value;
-//						Ext.Ajax.request({
-//							method:'POST',
-//							url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonEditCompileProject',
-//							callback:function(opts, success, response) {
-//								// Explicit load required library (Mandatory for extending this class)
-//								Ext.Loader.syncRequire('Workspace.common.window.WindowResultText');
-//
-//								Workspace.common.window.WindowWaiting.hide("Building complete.", 1);
-//
-//								var option = {response: response};
-//								Ext.create('Workspace.common.window.WindowTextCompile', option).show();
-//							},
-//							params:{application:application,target:'compile',className:className}
-//						});
-//	    			}
-//	    			else {
-//	    				Workspace.common.window.WindowWaiting.hide("Saving complete.", 1);
-//	    			}
-//				},
-//				params:{filename:panelId,content:value}
-//			});
+				params:{filename:panelId,content:value},
+				application:application,
+				build:pnlEdit.build,
+				className:className
+			}).request();
 		}
 	}
 
