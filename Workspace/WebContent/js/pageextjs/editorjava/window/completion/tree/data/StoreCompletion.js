@@ -1,63 +1,44 @@
 Ext.define('Workspace.editorjava.window.completion.tree.data.StoreCompletion', {
-	// REQUIRED
 
 	extend: 'Ext.data.TreeStore'
 	,
     clearOnLoad: true,
 	autoLoad: true,
 	autoSync: true
-//	,
-//    proxy: {
-//        type: 'ajax',
-//        url: DOMAIN_NAME_ROOT + '/action.servlet?event=JsonCompletion',
-//		method: 'GET',
-//        reader: {
-//            type: 'json'
-//        }
-//    }
 	,
-	proxy: {
-        type: 'memory',
-    	reader: {
-            type: 'json',
+    proxy: {
+        type: 'ajax',
+        url: DOMAIN_NAME_ROOT + '/action.servlet?event=JsonCompletion',
+		method: 'GET',
+        reader: {
+            type: 'json'
         }
     }
-	,
-	constructor: function(config) {
-		console.info('<-666->Workspace.editorjava.request.JsonEditSaveAndCompletion constructor');
-		var application = Ext.getCmp('project').value;
-		Ext.create('Workspace.editorjava.request.JsonEditSaveAndCompletion',
-		{
-			params:{filename:config.filename,content:config.txt,caretPos:config.pos},
-			store:this,
-			application:application
-		}).request(this);
-	}
 	,
     listeners:{
 	    //scope: this, //yourScope
 	    'beforeload': function(store, operation, options) {
 			console.info('<-666->Workspace.editorjava.window.completion.tree.data.StoreCompletion beforeload');//:'+operation.node.internalId);
-//			store.getProxy().extraParams.caretPos = store.pos;
-//			store.getProxy().extraParams.source = store.txt;
+			var filename = store.filename + "." + Date.now() + ".tmp";
 
-//			var application = Ext.getCmp('project').value;
-//			Ext.create('Workspace.editorjava.request.JsonEditSaveAndCompletion',
-//			{
-//				params:{filename:store.filename,content:store.txt,caretPos:store.pos},
-//				store:store,
-//				application:application
-//			}).request(this);
-//			var application2 = Ext.getCmp('project').value;
+			store.getProxy().extraParams.application = Ext.getCmp('project').value;
+			store.getProxy().extraParams.filename = filename;
+			store.getProxy().extraParams.caretPos = store.pos;
+			store.getProxy().extraParams.deleteFile = 'true';
+
+			var application = Ext.getCmp('project').value;
+			Ext.create('Workspace.editorjava.request.JsonEditSaveFile',
+			{
+				params:{filename:filename,content:store.txt},
+				application:application,
+    			callback:function(opts, success, response) {
+    				store.txt = "";
+    				var data = response.responseText;
+					store.data = data;
+					store.sync();
+				}
+			}).request(this);
 	    }
-//		,
-//		'expand' : function(node, eOpts) {
-//			console.info('Workspace.editorjava.window.completion.tree.data.StoreCompletion expand');
-//		}
-//		,
-//		'load' : function(store, node, records, successful, eOpts) {
-//			console.info('Workspace.editorjava.window.completion.tree.data.StoreCompletion load');
-//		}
 	}
 	,
 	root: {

@@ -23,7 +23,7 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndCompletion',  {
     				Workspace.common.window.WindowWaiting.hide("Completion complete.", 1);
     				var data = response.responseText;
     				console.info('<-666->Workspace.editorjava.request.JsonEditSaveAndCompletion JsonCompletion data:' + data);
-//    				config.store.data = data;
+    				config.store.data = data;
 //    				config.store.setRootNode(data);
     				config.store.proxy.data = data;
     				config.store.sync();
