@@ -10,6 +10,7 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveFile',  {
 	callback:function(options, success, response) {},
 
     constructor: function(config) {
+		console.info('<-666->Workspace.editorjava.request.JsonEditSaveFile constructor');
         var me = this;
 
         Ext.apply(me, config);

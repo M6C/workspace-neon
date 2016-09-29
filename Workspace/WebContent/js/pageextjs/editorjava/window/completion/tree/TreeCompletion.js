@@ -32,7 +32,7 @@ Ext.define('Workspace.editorjava.window.completion.tree.TreeCompletion', {
 		    ,
 		    listeners : {
 				'add' : function ( container, component, index, eOpts ) {
-					console.info('Workspace.editorjava.window.completion.tree.TreeCompletion beforeadd');
+					console.info('<-666->Workspace.editorjava.window.completion.tree.TreeCompletion add');
 					component.on('itemkeydown', function(view, record, item, index, e, eOpts) {
 						var key = e.keyCode;
 						if (key==Ext.EventObject.ENTER) {// code:13
@@ -47,7 +47,7 @@ Ext.define('Workspace.editorjava.window.completion.tree.TreeCompletion', {
 				}
 				,
 				'load' : function(store, records, successful, operation, eOpts) {
-					console.info('Workspace.editorjava.window.completion.tree.TreeCompletion load successful:'+successful);
+					console.info('<-666->Workspace.editorjava.window.completion.tree.TreeCompletion load successful:'+successful);
 					if (successful) {
 						var view = this.getView();
 						view.panel.getRootNode().expand(true, function(n) {

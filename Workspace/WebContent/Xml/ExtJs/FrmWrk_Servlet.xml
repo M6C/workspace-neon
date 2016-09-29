@@ -202,7 +202,7 @@
             <PARAM Name="className" Type="STRING"/>
             <PARAM Name="source" Type="STRING"/>
             <PARAM Name="caretPos" Type="STRING"/>
-            <PARAM Name="deleteFile" Type="STRING" Default="false"/>
+            <PARAM Name="deleteFile" Type="STRING"/>
 
         </BEAN>
     </SERVLET>

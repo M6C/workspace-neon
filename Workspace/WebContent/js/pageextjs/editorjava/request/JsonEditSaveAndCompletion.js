@@ -8,10 +8,12 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndCompletion',  {
 	extend: 'Workspace.editorjava.request.JsonEditSaveFile'
 	,
     constructor: function(config) {
+		console.info('<-666->Workspace.editorjava.request.JsonEditSaveAndCompletion constructor');
         var me = this;
 
-        config.params.filename += Date.now() + ".tmp";
+        config.params.filename += "." + Date.now() + ".tmp";
         config.callback = function(options, success, response) {
+			console.info('<-666->Workspace.editorjava.request.JsonEditSaveAndCompletion JsonEditSaveFile callback');
     		Workspace.common.window.WindowWaiting.updateText('Completion process...');
 
     		Ext.Ajax.request({
@@ -19,9 +21,14 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndCompletion',  {
     			url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonCompletion',
     			callback:function(opts, success, response) {
     				Workspace.common.window.WindowWaiting.hide("Completion complete.", 1);
-    				config.store.data = response.responseText;
+    				var data = response.responseText;
+    				console.info('<-666->Workspace.editorjava.request.JsonEditSaveAndCompletion JsonCompletion data:' + data);
+//    				config.store.data = data;
+//    				config.store.setRootNode(data);
+    				config.store.proxy.data = data;
+    				config.store.sync();
     			},
-    			params:{filename:config.params.filename,caretPos:config.params.caretPos,deleteFile:true}
+    			params:{filename:config.params.filename,caretPos:config.params.caretPos,deleteFile:'true'}
     		});
     	};
 
