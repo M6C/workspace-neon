@@ -23,13 +23,14 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveFile',  {
 
     request: function() {
         var me = this;
-        Ext.Ajax.request({
-            success: me.success,
-            failure: me.failure,
-            url: me.url,
-            method: me.method,
-            params: me.params,
-            callback: me.callback
-        });
+//        Ext.Ajax.request({
+//            success: me.success,
+//            failure: me.failure,
+//            url: me.url,
+//            method: me.method,
+//            params: me.params,
+//            callback: me.callback
+//        });
+        me.callback(null, true, null);
     }
 }, function() {Workspace.tool.Log.defined('Workspace.editorjava.request.JsonEditSaveFile');});

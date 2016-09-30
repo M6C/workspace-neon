@@ -8,38 +8,54 @@ Ext.define('Workspace.editorjava.window.completion.tree.data.StoreCompletion', {
 	,
     proxy: {
         type: 'ajax',
-        url: DOMAIN_NAME_ROOT + '/action.servlet?event=JsonCompletion',
-		method: 'GET',
-        reader: {
+        url: DOMAIN_NAME_ROOT + '/action.servlet?event=JsonEditSaveFile',
+//		method: 'POST',
+        actionMethods: {
+            create: 'POST',
+            read: 'POST',
+            update: 'POST',
+            destroy: 'POST'
+        }
+		,
+		reader: {
             type: 'json'
         }
     }
 	,
     listeners:{
-	    //scope: this, //yourScope
 	    'beforeload': function(store, operation, options) {
 			console.info('<-666->Workspace.editorjava.window.completion.tree.data.StoreCompletion beforeload');//:'+operation.node.internalId);
-			var filename = store.filename + "." + Date.now() + ".tmp";
+			store.filename = store.filename + "." + Date.now() + ".tmp";
+			store.getProxy().extraParams.filename = store.filename;
+			store.getProxy().extraParams.content = store.txt;
 
-			store.getProxy().extraParams.application = Ext.getCmp('project').value;
-			store.getProxy().extraParams.filename = filename;
-			store.getProxy().extraParams.caretPos = store.pos;
-			store.getProxy().extraParams.deleteFile = 'true';
-
+			store.jsonData = JSON.stringify({
+				filename : store.filename,
+				content : store.txt
+			});
+			store.txt = "";
+	    }
+		,
+	    'load': function(store, records, successful) {
+			console.info('<-666->Workspace.editorjava.window.completion.tree.data.StoreCompletion load');
+	    	var me = this;
 			var application = Ext.getCmp('project').value;
-			Ext.create('Workspace.editorjava.request.JsonEditSaveFile',
+
+			Ext.create('Workspace.editorjava.request.JsonEditSaveAndCompletion',
 			{
-				params:{filename:filename,content:store.txt},
+				params:{application:application,filename:store.filename,caretPos:store.pos,deleteFile:'true'},
 				application:application,
+				store:me,
     			callback:function(opts, success, response) {
-    				store.txt = "";
+    				console.info('<-666->Workspace.editorjava.window.completion.tree.data.StoreCompletion load callback');
     				var data = response.responseText;
 					store.data = data;
 					store.sync();
+					me.saveDone = true;
 				}
-			}).request(this);
+			}).request();
 	    }
-	}
+    }
 	,
 	root: {
         nodeType: 'async',
