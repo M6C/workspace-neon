@@ -11,7 +11,7 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndCompletion',  {
 		console.info('<-666->Workspace.editorjava.request.JsonEditSaveAndCompletion constructor');
         var me = this;
 
-//        config.params.filename += "." + Date.now() + ".tmp";
+        config.params.filename += "." + Date.now() + ".tmp";
         config.callback = function(options, success, response) {
 			console.info('<-666->Workspace.editorjava.request.JsonEditSaveAndCompletion JsonEditSaveFile callback');
     		Workspace.common.window.WindowWaiting.updateText('Completion process...');
@@ -21,22 +21,23 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndCompletion',  {
     			url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonCompletion',
     			callback:function(opts, success, response) {
     				Workspace.common.window.WindowWaiting.hide("Completion complete.", 1);
-    				var data = response.responseText;
-    				data = {
-    					result: Ext.JSON.decode(data)
-    				};
-    				console.info('<-666->Workspace.editorjava.request.JsonEditSaveAndCompletion JsonCompletion data:' + data);
-    				config.store.data = data;
-    				Ext.apply(config.store.proxy, {
-				        type: 'memory',
-				    	reader: {
-				            type: 'json',
-				            root: 'result'
-				        }
-				    });
-//    				config.store.setRootNode(data);
-//    				config.store.sync();
-    				config.store.load(data);
+    				config.callbackCompletion(opts, success, response);
+//    				var data = response.responseText;
+//    				console.info('<-666->Workspace.editorjava.request.JsonEditSaveAndCompletion JsonCompletion data:' + data);
+//    				data = {
+//    					result: Ext.JSON.decode(data)
+//    				};
+//    				config.store.data = data;
+//    				Ext.apply(config.store.proxy, {
+//				        type: 'memory',
+//				    	reader: {
+//				            type: 'json',
+//				            root: 'result'
+//				        }
+//				    });
+////    				config.store.setRootNode(data);
+////    				config.store.sync();
+//    				config.store.load(data);
     			},
     			params:{filename:config.params.filename,caretPos:config.params.caretPos,deleteFile:'true'}
     		});
