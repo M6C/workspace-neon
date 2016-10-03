@@ -39,7 +39,7 @@ Ext.define('Workspace.editorjava.form.textarea.HtmlEditor', {
 					var txt=editor.getValue();//.getRawValue();
 					txt=escape(txt);
 	
-					var fnOnSubmitTree = function(tree, e) {
+					var fnOnSubmitTree = function(tree, key, e) {
 						var sm = tree.getSelectionModel();
 						if (sm.getSelection().length>0) {
 							var node = sm.getSelection()[0];
@@ -67,7 +67,6 @@ Ext.define('Workspace.editorjava.form.textarea.HtmlEditor', {
 					editor.insertAtCursor('<br>\b');
 				}
 			}
-//
 		});
 		me.callParent(arguments);
 	}
