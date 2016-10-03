@@ -10,17 +10,16 @@ Ext.define('Workspace.editorjava.window.completion.tree.data.StoreCompletionMemo
         type: 'memory'
         ,
 		reader: {
-			root: 'data',
+//			root: 'data',
             type: 'json'
         }
     }
 	,
 	root: {
-//        nodeType: 'async',
+        nodeType: 'async',
         draggable: false,
-//        id: 'root',
+        id: 'root',
 	    expanded: true,
-	    text: 'root',
-	    "data": []
+	    text: 'root'
 	}
 }, function() {Workspace.tool.Log.defined('Workspace.editorjava.window.completion.tree.data.StoreCompletionMemory');});
