@@ -10,7 +10,6 @@ Ext.define('Workspace.editorjava.window.completion.tree.data.StoreCompletionMemo
         type: 'memory'
         ,
 		reader: {
-//			root: 'data',
             type: 'json'
         }
     }

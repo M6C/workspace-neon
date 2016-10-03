@@ -1,4 +1,4 @@
-Ext.define('Workspace.editorjava.window.completion.tree.data.StoreCompletion', {
+Ext.define('Workspace.editorjava.window.completion.tree.data.StoreCompletionNotUsed2', {
 
 	extend: 'Ext.data.TreeStore'
 	,
@@ -19,7 +19,7 @@ Ext.define('Workspace.editorjava.window.completion.tree.data.StoreCompletion', {
 	    //scope: this, //yourScope
 	    'beforeload': function(store, operation, options) {
 	    	var me = this;
-			console.info('<-666->Workspace.editorjava.window.completion.tree.data.StoreCompletion beforeload');//:'+operation.node.internalId);
+			console.info('Workspace.editorjava.window.completion.tree.data.StoreCompletion beforeload');//:'+operation.node.internalId);
 			var filename = store.filename + "." + Date.now() + ".tmp";
 
 			store.getProxy().extraParams.application = Ext.getCmp('project').value;
@@ -44,14 +44,14 @@ Ext.define('Workspace.editorjava.window.completion.tree.data.StoreCompletion', {
 	    }
 		,
 	    'load': function(store, records, successful) {
-			console.info('<-666->Workspace.editorjava.window.completion.tree.data.StoreCompletion load saveDone:' + this.saveDone);
+			console.info('Workspace.editorjava.window.completion.tree.data.StoreCompletion load saveDone:' + this.saveDone);
 	    }
     }
 	,
 	saveDone: false
 	,
 	checkSaveDone : function() {
-		console.info('<-666->Workspace.editorjava.window.completion.tree.data.StoreCompletion checkSaveDone saveDone:' + this.saveDone);
+		console.info('Workspace.editorjava.window.completion.tree.data.StoreCompletion checkSaveDone saveDone:' + this.saveDone);
 		if (!this.saveDone) {
 			this.sleep(100);
 			setTimeout(this.checkSaveDone, 100);
@@ -67,4 +67,4 @@ Ext.define('Workspace.editorjava.window.completion.tree.data.StoreCompletion', {
 	    expanded: true,
 	    text: 'root'
 	}
-}, function() {Workspace.tool.Log.defined('Workspace.editorjava.window.completion.tree.data.StoreCompletion');});
+}, function() {Workspace.tool.Log.defined('Workspace.editorjava.window.completion.tree.data.StoreCompletionNotUsed2');});
