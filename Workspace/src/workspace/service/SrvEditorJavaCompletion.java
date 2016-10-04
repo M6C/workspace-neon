@@ -5,7 +5,9 @@
 
 package workspace.service;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -33,6 +35,7 @@ import framework.ressource.util.UtilSafe;
 import framework.ressource.util.UtilString;
 import framework.ressource.util.UtilVector;
 import framework.service.SrvGenerique;
+import framework.trace.Trace;
 import workspace.util.UtilPath;
 
 public class SrvEditorJavaCompletion extends SrvGenerique
@@ -60,7 +63,7 @@ public class SrvEditorJavaCompletion extends SrvGenerique
 	            if(UtilString.isNotEmpty(filenameFormated)) {
 	                file = new File(filenameFormated);
 	                if(file != null && file.exists() && file.isFile()) {
-	                    source = UtilFile.read(file);
+	                    source = read(file);
 	                } else {
 	                	file = null;
 	                }
@@ -81,7 +84,11 @@ public class SrvEditorJavaCompletion extends SrvGenerique
         }
         finally {
 			 if (file != null && deleteFile != null && Boolean.TRUE.toString().equalsIgnoreCase(deleteFile)) {
-				 file.delete();
+				 if (!file.delete()) {
+					 Trace.WARNING(this, (new StringBuilder("file '")).append(file.getPath()).append("' can not be deleted.").toString());
+				 } else {
+					 Trace.DEBUG(this, (new StringBuilder("file '")).append(file.getPath()).append("' deleted.").toString());
+				 }
 			 }
 		}
     }
@@ -120,6 +127,37 @@ public class SrvEditorJavaCompletion extends SrvGenerique
 
             out.print(sb.toString());
         }
+    }
+
+    private String read(File file) throws IOException {
+        Trace.DEBUG(this, (new StringBuilder("read file '")).append(file.getPath()).append("'").toString());
+        StringBuffer ret = new StringBuffer();
+        if (file.exists()) {
+//        	UtilFile.read(file);
+//			Trace.DEBUG(this, (new StringBuilder("file '")).append(file.getPath()).append("' read.").toString());
+	        FileReader fr = new FileReader(file);
+	        BufferedReader in = new BufferedReader(fr) ;
+	        try {
+		        int ch = -1;
+		        int iNbLine = 0;
+		        while((ch = in.read()) != -1) 
+		        {
+		            if(ch == 13)
+		                iNbLine++;
+		            ret.append((char)ch);
+		        }
+	        } finally {
+	            try {
+	            	in.close();
+	            } finally {
+	    			fr.close();
+					 Trace.DEBUG(this, (new StringBuilder("file '")).append(file.getPath()).append("' read.").toString());
+	    		}
+			}
+        } else {
+            Trace.ERROR(this, (new StringBuilder("file '")).append(file.getPath()).append("' do not exist.").toString());
+        }
+        return ret.toString();
     }
 
     private String getClassBeforePos(String source, int pos)

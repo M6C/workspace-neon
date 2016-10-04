@@ -1,17 +1,20 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   SrvEditSaveFile.java
-
 package workspace.service.extjs;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.StringReader;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.w3c.dom.Document;
+
 import framework.beandata.BeanGenerique;
+import framework.ressource.util.UtilFile;
 import framework.ressource.util.UtilString;
 import framework.service.SrvGenerique;
 import framework.trace.Trace;
-import java.io.*;
-import javax.servlet.http.*;
-import org.w3c.dom.Document;
 import workspace.util.UtilPath;
 
 public class SrvEditSaveFile extends SrvGenerique
@@ -21,9 +24,7 @@ public class SrvEditSaveFile extends SrvGenerique
     {
     }
 
-    public void execute(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean)
-        throws Exception
-    {
+    public void execute(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean) throws Exception {
         String content;
         String filename;
         String navIndex;
@@ -43,16 +44,21 @@ public class SrvEditSaveFile extends SrvGenerique
                 if(UtilString.isNotEmpty(filenameFormated))
                 {
                     File outputFile = new File(filenameFormated);
-                    if (!outputFile.exists()) {
-                    	outputFile.createNewFile();
-                    }
-                    if(outputFile.exists() && outputFile.isFile())
-                    {
-                        if(UtilString.isNotEmpty(navIndex) && UtilString.isNotEmpty(navNbRow))
-                            content = replaceText(read(outputFile), content, Integer.parseInt(navIndex), Integer.parseInt(navNbRow));
-                        content = content.replaceAll("\n", "\r\n");
-                        write(outputFile, content);
-                    }
+                    try {
+	                    if(outputFile.exists() && !outputFile.isFile()) {
+	   					 	Trace.WARNING(this, (new StringBuilder("'")).append(outputFile.getPath()).append("' is not a file.").toString());
+	                    } else {
+							if(UtilString.isNotEmpty(navIndex) && UtilString.isNotEmpty(navNbRow)) {
+								content = replaceText(read(outputFile), content, Integer.parseInt(navIndex), Integer.parseInt(navNbRow));
+							}
+							content = content.replaceAll("\n", "\r\n");
+							write(outputFile, content);
+	                    }
+                    } finally {
+						outputFile = null;
+						System.gc();
+						System.gc();
+					}
                 } else
                 {
                     Trace.DEBUG(this, "path is Empty");
@@ -69,34 +75,24 @@ public class SrvEditSaveFile extends SrvGenerique
         Trace.DEBUG(this, (new StringBuilder("filename:")).append(filename).append(" filenameFormated:").append(filenameFormated).append(" navIndex:").append(navIndex).append(" navNbRow:").append(navNbRow).toString());
     }
 
-    private String read(File file)
-        throws IOException
-    {
+    private String read(File file) throws IOException {
         Trace.DEBUG(this, (new StringBuilder("read file '")).append(file.getPath()).append("'").toString());
         StringBuffer ret = new StringBuffer();
-        FileReader fr = new FileReader(file);
-        int ch = -1;
-        int iNbLine = 0;
-        while((ch = fr.read()) != -1) 
-        {
-            if(ch == 13)
-                iNbLine++;
-            ret.append((char)ch);
+        if (file.exists()) {
+        	ret.append(UtilFile.read(file));
+			Trace.DEBUG(this, (new StringBuilder("file '")).append(file.getPath()).append("' read.").toString());
+        } else {
+            Trace.ERROR(this, (new StringBuilder("file '")).append(file.getPath()).append("' do not exist.").toString());
         }
         return ret.toString();
     }
 
-    private void write(File file, String content)
-        throws IOException
-    {
+    private void write(File file, String content) throws IOException {
         Trace.DEBUG(this, (new StringBuilder("write file '")).append(file.getPath()).append("'").toString());
-        if(file.canWrite())
-        {
-            FileWriter out = new FileWriter(file);
-            out.write(content.replace('\240', ' '));
-            out.close();
-        } else
-        {
+        if(!file.exists() || file.canWrite()) {
+        	UtilFile.write(file, content);
+    		Trace.DEBUG(this, (new StringBuilder("file '")).append(file.getPath()).append("' writed.").toString());
+        } else {
             Trace.ERROR(this, (new StringBuilder("file '")).append(file.getPath()).append("' can not be writable.").toString());
         }
     }
@@ -104,30 +100,33 @@ public class SrvEditSaveFile extends SrvGenerique
     private String replaceText(String content, String text, int startIndex, int nbRow)
         throws IOException
     {
-        StringBuffer ret;
-        BufferedReader in;
         Trace.DEBUG(this, (new StringBuilder("replaceText content:")).append(content).append(" text:").append(text).append(" startIndex:").append(startIndex).append(" nbRow:").append(nbRow).toString());
-        ret = new StringBuffer();
+        StringBuffer ret = new StringBuffer();
         StringReader sr = new StringReader(content);
-        in = new BufferedReader(sr);
-        if(!in.ready())
+        BufferedReader in = new BufferedReader(sr);
+        if(!in.ready()) {
             throw new IOException();
+        }
         try
         {
             String line;
-            for(int i = 1; i < startIndex && (line = in.readLine()) != null; i++)
+            for(int i = 1; i < startIndex && (line = in.readLine()) != null; i++) {
                 ret.append(line).append("\r\n");
+            }
 
             ret.append(text).append("\r\n");
             for(int i = 1; i <= nbRow && (line = in.readLine()) != null; i++);
-            while((line = in.readLine()) != null) 
+            while((line = in.readLine()) != null) { 
                 ret.append(line).append("\r\n");
+            }
         }
         catch(Exception ex)
         {
             Trace.ERROR(this, ex);
         }
-        in.close();
+        finally {
+        	in.close();
+		}
         return ret.toString();
     }
 }

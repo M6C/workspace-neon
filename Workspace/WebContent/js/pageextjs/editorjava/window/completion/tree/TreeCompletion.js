@@ -65,6 +65,7 @@ Ext.define('Workspace.editorjava.window.completion.tree.TreeCompletion', {
 				,
 				'load' : function(store, records, successful, operation, eOpts) {
 					console.info('Workspace.editorjava.window.completion.tree.TreeCompletion load successful:'+successful);
+//					records.findChild('id','root0', true).select();
 					if (successful) {
 //						var view = this.getView();
 //						view.panel.getRootNode().expand(true, function(n) {
@@ -73,6 +74,16 @@ Ext.define('Workspace.editorjava.window.completion.tree.TreeCompletion', {
 //						view.focus();
 					}
 				}
+				,
+				'expand': function(node, opts) {
+		          node.eachChild( function(child) { 
+//		              if(child.attributes.real_id == real_id ) {
+//		                child.select();
+//		                categories_panel.un('expandnode', select_node);
+//		              }
+		        	  child.select();
+		            });
+		          }
 				,
 				'render' : function(component, eOpts) {
 					console.info('Workspace.editorjava.window.completion.tree.TreeCompletion render');
