@@ -8,6 +8,45 @@ Ext.define('Workspace.editorjava.tree.TreeFileExplorer', {
 	alias: 'widget.editorjavaTreeFileExplorer',
 	alternateClassName: 'WorkspaceEditorJavaTreeFileExplorer'
 	,
+    useArrows: true,
+    layout:'fit',
+	autoScroll: true,
+    animate: true,
+    enableDD: true,
+    containerScroll: true,
+    border: false,
+    collapsible: false,
+    rootVisible: false,
+	enableKeyEvents:true
+	,
+    initComponent : function() {
+    	var me = this;
+		console.info('Workspace.editorjava.tree.TreeFileExplorer initComponent');
+		Ext.apply(me, {
+		    listeners : {
+		    	'itemappend' : function(/*Tree*/ tree, /*Node*/ parent, /*Node*/ node, /*Number*/ index) {
+					console.info('Workspace.editorjava.tree.TreeFileExplorer itemappend');
+		    	}
+		    	,
+				'add' : function ( container, component, index, eOpts ) {
+					console.info('Workspace.editorjava.tree.TreeFileExplorer add');
+				    var me = this;
+					component.on('itemkeydown', function(view, record, item, index, e, eOpts) {
+						var key = e.keyCode;
+						console.info('Workspace.editorjava.tree.TreeFileExplorer itemkeydown key:' + key);
+						if (key==Ext.EventObject.ENTER) {// code:13
+							// Explicit load required library (Mandatory for extending this class)
+							Ext.Loader.syncRequire('Workspace.editorjava.panel.center.function.AddTab');
+						
+							Workspace.editorjava.panel.center.function.AddTab.call(record.raw);
+						}
+					});
+				}
+			}
+		});
+    	me.callParent(arguments);
+    }
+	,
     listeners: {
         //scope: this, //yourScope
 		'beforeitemdblclick' : function(view, record, item, index, event, eOpts ) {
