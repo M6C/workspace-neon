@@ -1,5 +1,4 @@
 Ext.define('Workspace.common.tree.data.StoreFileExplorerExtjs4', {
-	// REQUIRED
 
 	extend: 'Ext.data.TreeStore'
 	,

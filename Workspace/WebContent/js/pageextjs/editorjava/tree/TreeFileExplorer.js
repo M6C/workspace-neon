@@ -1,23 +1,9 @@
 Ext.define('Workspace.editorjava.tree.TreeFileExplorer', {
-	// REQUIRED
-//	requiers: ['Workspace.editorjava.grid.GridFileExplorer',
-//	           'Workspace.editorjava.panel.center.function.AddTab']
-//	,
+	
 	extend: 'Workspace.common.tree.TreeFileExplorerExtjs4'
 	,
 	alias: 'widget.editorjavaTreeFileExplorer',
 	alternateClassName: 'WorkspaceEditorJavaTreeFileExplorer'
-	,
-    useArrows: true,
-    layout:'fit',
-	autoScroll: true,
-    animate: true,
-    enableDD: true,
-    containerScroll: true,
-    border: false,
-    collapsible: false,
-    rootVisible: false,
-	enableKeyEvents:true
 	,
     initComponent : function() {
     	var me = this;

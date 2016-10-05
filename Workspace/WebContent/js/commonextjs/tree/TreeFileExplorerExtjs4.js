@@ -11,17 +11,6 @@ Ext.define('Workspace.common.tree.TreeFileExplorerExtjs4', {
 		var me = this;
 		Ext.apply(me, {
 			store: Ext.create('Workspace.common.tree.data.StoreFileExplorerExtjs4')
-//			,
-//			listeners:{
-//			    //scope: this, //yourScope
-//				'movenode': function (tree, node, oldParent, newParent, index){
-//					 alert('moved. Old parent node id='+ oldParent.id+'. new parent node id='+newParent.id);
-//				}
-////		    	,
-////				'render': function (tree){
-////					new Ext.tree.TreeSorter(tree, {folderSort:true});
-////				}
-//		    }
         });
 	    me.callParent(arguments);
 	}
