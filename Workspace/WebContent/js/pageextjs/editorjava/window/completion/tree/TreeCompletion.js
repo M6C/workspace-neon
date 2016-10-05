@@ -63,7 +63,7 @@ Ext.define('Workspace.editorjava.window.completion.tree.TreeCompletion', {
 				}
 	 			,
 	 			'load' : function(store, records, successful, operation, eOpts) {
-	 				console.info('<-666->Workspace.editorjava.window.completion.tree.TreeCompletion load successful:'+successful);
+	 				console.info('Workspace.editorjava.window.completion.tree.TreeCompletion load successful:'+successful);
 	 				if (successful) {
 	 					var view = this.getView();
 	 					view.panel.getRootNode().expand(true, function(n) {

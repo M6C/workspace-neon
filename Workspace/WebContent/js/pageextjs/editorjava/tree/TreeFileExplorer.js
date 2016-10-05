@@ -16,6 +16,18 @@ Ext.define('Workspace.editorjava.tree.TreeFileExplorer', {
 		
 			Workspace.editorjava.panel.center.function.AddTab.call(record.raw);
 	    }
+		,
+		'load' : function(store, records, successful, operation, eOpts) {
+			if (successful) {
+				var view = this.getView();
+				var node = view.panel.getRootNode();
+				if (node.firstChild != undefined) {
+					node = node.firstChild;
+				}
+				view.select(node);
+				view.focus();
+			}
+		}
 	}
 
 }, function() {Workspace.tool.Log.defined('Workspace.editorjava.tree.TreeFileExplorer');});
