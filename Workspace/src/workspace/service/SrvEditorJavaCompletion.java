@@ -76,7 +76,9 @@ public class SrvEditorJavaCompletion extends SrvGenerique
 	            className = getClassBeforePos(source, iCaretPos);
 	        }
 	        if(UtilString.isNotEmpty(className)) {
-	                listMethod = UtilReflect.getMethods(className);
+	            listMethod = UtilReflect.getMethods(className);
+	        } else {
+	        	className = "Undefined class";
 	        }
 	        doResponse(request, response, bean, className, caretPos, listMethod);
         }

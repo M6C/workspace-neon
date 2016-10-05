@@ -67,13 +67,18 @@ Ext.define('Workspace.editorjava.window.completion.tree.TreeCompletion', {
 	 				if (successful) {
 	 					var view = this.getView();
 	 					view.panel.getRootNode().expand(true, function(n) {
-	 						view.select(n[0].firstChild);
+	 						var node = n[0];
+	 						if (n[0].firstChild != undefined) {
+	 							node = n[0].firstChild;
+	 						}
+ 							view.select(node);
 	 					});
 	 					view.focus();
 	 				}
 	 			}
 			}
 		});
+		me.store.getRootNode().removeAll(true);
     	me.callParent(arguments);
     }
 	,
