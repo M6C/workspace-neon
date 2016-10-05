@@ -24,16 +24,11 @@ Ext.define('Workspace.editorjava.tree.TreeFileExplorer', {
 		console.info('Workspace.editorjava.tree.TreeFileExplorer initComponent');
 		Ext.apply(me, {
 		    listeners : {
-		    	'itemappend' : function(/*Tree*/ tree, /*Node*/ parent, /*Node*/ node, /*Number*/ index) {
-					console.info('Workspace.editorjava.tree.TreeFileExplorer itemappend');
-		    	}
-		    	,
 				'add' : function ( container, component, index, eOpts ) {
-					console.info('Workspace.editorjava.tree.TreeFileExplorer add');
+					console.info('Workspace.editorjava.tree.TreeFileExplorer add2');
 				    var me = this;
 					component.on('itemkeydown', function(view, record, item, index, e, eOpts) {
 						var key = e.keyCode;
-						console.info('Workspace.editorjava.tree.TreeFileExplorer itemkeydown key:' + key);
 						if (key==Ext.EventObject.ENTER) {// code:13
 							// Explicit load required library (Mandatory for extending this class)
 							Ext.Loader.syncRequire('Workspace.editorjava.panel.center.function.AddTab');
