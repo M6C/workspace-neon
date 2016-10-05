@@ -22,11 +22,18 @@ Ext.define('Workspace.editorjava.window.WindowCompletion', {
 		        	}
 	          	)
 		    ]
+			,
+			listeners : {
+				'show' : function (wnd) {
+					console.info('Workspace.editorjava.window.WindowCompletion activate');
+					Ext.getCmp('treeCompletion').focus();
+				}
+			}
 		});
 
 		me.callParent(arguments);
 	}
-,
+	,
 	title: 'Method list',        //titre de la fen�tre
 	// el = id du div dans le code html de la page qui contiendra la popup
 	//el:windowEl,        

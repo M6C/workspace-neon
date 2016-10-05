@@ -36,6 +36,7 @@ Ext.define('Workspace.editorjava.window.completion.tree.TreeCompletion', {
 				);
 			}
 		}).request();
+		me.id = config.id;
 		me.onSubmitTree = config.onSubmitTree;
 	    me.callParent();
     }
@@ -60,6 +61,17 @@ Ext.define('Workspace.editorjava.window.completion.tree.TreeCompletion', {
 						me.onSubmitTree(me, -1, e);
 					});
 				}
+	 			,
+	 			'load' : function(store, records, successful, operation, eOpts) {
+	 				console.info('<-666->Workspace.editorjava.window.completion.tree.TreeCompletion load successful:'+successful);
+	 				if (successful) {
+	 					var view = this.getView();
+	 					view.panel.getRootNode().expand(true, function(n) {
+	 						view.select(n[0].firstChild);
+	 					});
+	 					view.focus();
+	 				}
+	 			}
 			}
 		});
     	me.callParent(arguments);
