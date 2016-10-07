@@ -42,6 +42,13 @@
             <PARAM Name="FileName" Type="STRING"/>
         </BEAN>
     </SERVLET>
+    <SERVLET Name="EditorJavaPageExtJsAce" Target="/Web/PageExtJs/EditorJava/PageAce.jsp" TargetError="/Web/Page/index.jsp">
+        <BEAN Name="BeanEditorJava" Scope="request" Service="workspace.service.SrvEditorJavaPage">
+            <PARAM Name="application" Type="STRING"/>
+            <PARAM Name="pathToExpand" Type="STRING"/>
+            <PARAM Name="FileName" Type="STRING"/>
+        </BEAN>
+    </SERVLET>
     <SERVLET Name="JsonProjectName" Target="" TargetError="">
         <BEAN Name="BeanProjectName" Scope="request" Service="workspace.service.SrvEditorJavaXmlXsl">
             <PARAM Name="xmlName" Type="STRING" Default="resultDom"/>

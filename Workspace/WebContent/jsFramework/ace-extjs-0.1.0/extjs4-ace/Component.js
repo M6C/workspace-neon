@@ -1,11 +1,11 @@
-if (typeof bravojs == 'undefined') { bravojs = {}; }
-if (typeof window != 'undefined' && typeof bravojs.url == 'undefined') {
-bravojs.url = window.location.protocol + '//' + window.location.host + '/extjs4-ace/Component.js';
-} else if(typeof importScripts != 'undefined' && typeof bravojs.url == 'undefined') {
-bravojs.url = location;
-}
-bravojs.mainModuleDir = /^(https?|resource):\/(.*?)\.js$/.exec(bravojs.url)[2];
-bravojs.mainContext = bravojs.mainModuleDir + '/c371cd05c8df40c0af3b1515b808c9d737b98b02';
+//if (typeof bravojs == 'undefined') { bravojs = {}; }
+//if (typeof window != 'undefined' && typeof bravojs.url == 'undefined') {
+//bravojs.url = window.location.protocol + '//' + window.location.host + '/extjs4-ace/Component.js';
+//} else if(typeof importScripts != 'undefined' && typeof bravojs.url == 'undefined') {
+//bravojs.url = location;
+//}
+//bravojs.mainModuleDir = /^(https?|resource):\/(.*?)\.js$/.exec(bravojs.url)[2];
+//bravojs.mainContext = bravojs.mainModuleDir + '/c371cd05c8df40c0af3b1515b808c9d737b98b02';
 bravojs.platform = 'browser';
 function dump() { (bravojs.dump || bravojs.print).apply(null, arguments); };
 

@@ -37,7 +37,7 @@
                                 <table width="100%">
                                     <tr>
                                         <td class="treeviewMain">
-                                            <a href="action.servlet?event=EditorJavaPageExtJs">Editeur Java</a>
+                                            <a href="action.servlet?event=EditorJavaPageExtJs">Editeur Java</a>&nbsp;<a href="action.servlet?event=EditorJavaPageExtJsAce">Editeur Java Ace</a>
                                         </td>
                                         <td class="treeviewMain">
                                             <a href="action.servlet?event=DebuggerPageExtJs">Debugger</a>
