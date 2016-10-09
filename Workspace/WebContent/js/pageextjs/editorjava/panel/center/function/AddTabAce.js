@@ -21,15 +21,8 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 				Ext.Loader.syncRequire('Workspace.editorjava.panel.center.function.AddTabSave');
 				Ext.Loader.syncRequire('Workspace.editorjava.panel.center.function.AddTabReload');
 
-//				var htmlEditor = Ext.create('Workspace.editorjava.form.textarea.HtmlEditor', {
-//					id: panelEditorId,
-//					className: raw.className,
-//					contentType: raw.contentType,
-//					build: raw.build,
-//					panelId: panelId
-//				});
-				var htmlEditor = Ext.create('Ace.ux.AceEditor', {
-				    id: panelEditorId,
+				var htmlEditor = Ext.create('Workspace.editorjava.form.textarea.HtmlEditorAce', {
+					id: panelEditorId,
 					className: raw.className,
 					contentType: raw.contentType,
 					build: raw.build,
@@ -98,14 +91,15 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 						var results = jsonData.results;
 						var resultMessage = '';
 						for(i=0 ; i<results ; i++) {
-							resultMessage += jsonData.data[i].text + '<br>';//'\r\n';
+//							resultMessage += jsonData.data[i].text + '<br>';//'\r\n';
+							resultMessage += jsonData.data[i].text + '\r\n';
 						}
 			
-						resultMessage = Workspace.editorjava.function.FormatHtml.call(resultMessage);
-						resultMessage = Workspace.editorjava.function.Colorize.call(resultMessage);
+//						resultMessage = Workspace.editorjava.function.FormatHtml.call(resultMessage);
+//						resultMessage = Workspace.editorjava.function.Colorize.call(resultMessage);
 			
 						filePanelEditor.setValue(resultMessage);
-						filePanelEditor.syncValue();
+//						filePanelEditor.syncValue();
 						
 						filePanelEditor.focus();
 					},
