@@ -28,7 +28,10 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 					build: raw.build,
 					panelId: panelId
 				});
-		
+//				var htmlEditor = Ext.create('Ext.ux.AceEditor', {
+//					id: panelEditorId
+//				});
+
 				mainCenterPanel.add({
 					title: raw.text,
 					id: panelId,
@@ -71,41 +74,48 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 //				    	    me.callParent(arguments);
 //				    	}
 				    })
-				});
-			
-				var filePanel = mainCenterPanel.getComponent(panelId);
-				mainCenterPanel.setActiveTab(filePanel);
-			
-				var filePanelEditor = filePanel.getComponent(panelEditorId);
-			
-				Ext.Ajax.request({
-					url : DOMAIN_NAME_ROOT + '/action.servlet?event=JsonEditLoadFile',
-					method: 'GET',
-					params :{filename:panelId},
-					success: function ( result, request ) {
-			    		// Explicit load required library (Mandatory for extending this class)
-			    		Ext.Loader.syncRequire('Workspace.editorjava.function.FormatHtml');
-			    		Ext.Loader.syncRequire('Workspace.editorjava.function.Colorize');
-
-			    		var jsonData = Ext.decode(result.responseText);
-						var results = jsonData.results;
-						var resultMessage = '';
-						for(i=0 ; i<results ; i++) {
-//							resultMessage += jsonData.data[i].text + '<br>';//'\r\n';
-							resultMessage += jsonData.data[i].text + '\r\n';
-						}
-			
-//						resultMessage = Workspace.editorjava.function.FormatHtml.call(resultMessage);
-//						resultMessage = Workspace.editorjava.function.Colorize.call(resultMessage);
-			
-						filePanelEditor.setValue(resultMessage);
-//						filePanelEditor.syncValue();
+				    ,
+				    listeners : {
+				    	'render': function() {
+							var filePanel = mainCenterPanel.getComponent(panelId);
+							mainCenterPanel.setActiveTab(filePanel);
 						
-						filePanelEditor.focus();
-					},
-					failure: function ( result, request ) {
-						alert('failure');
-					}
+							var filePanelEditor = filePanel.getComponent(panelEditorId);
+						
+							Ext.Ajax.request({
+								url : DOMAIN_NAME_ROOT + '/action.servlet?event=JsonEditLoadFile',
+								method: 'GET',
+								params :{filename:panelId},
+								success: function ( result, request ) {
+						    		// Explicit load required library (Mandatory for extending this class)
+						    		Ext.Loader.syncRequire('Workspace.editorjava.function.FormatHtml');
+						    		Ext.Loader.syncRequire('Workspace.editorjava.function.Colorize');
+
+						    		var jsonData = Ext.decode(result.responseText);
+									var results = jsonData.results;
+									var resultMessage = '';
+									for(i=0 ; i<results ; i++) {
+//										resultMessage += jsonData.data[i].text + '<br>';//'\r\n';
+										resultMessage += jsonData.data[i].text + '\r\n';
+									}
+						
+//									resultMessage = Workspace.editorjava.function.FormatHtml.call(resultMessage);
+//									resultMessage = Workspace.editorjava.function.Colorize.call(resultMessage);
+						
+									filePanelEditor.setValue(resultMessage);
+//									filePanelEditor.syncValue();
+									
+									filePanelEditor.focus();
+									filePanelEditor.initEditor(filePanelEditor.getEditor());
+									filePanelEditor.container.onkeydown = filePanelEditor.onKeydown;
+									filePanelEditor.container.onkeyup = filePanelEditor.onKeyUp;
+								},
+								failure: function ( result, request ) {
+									alert('failure');
+								}
+							});
+				    	}
+				    }
 				});
 			}
 		}

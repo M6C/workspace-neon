@@ -4,8 +4,8 @@ Ext.define('Workspace.editorjava.form.textarea.HtmlEditorAce', {
 	,
 	extend: 'Workspace.common.form.textarea.HtmlEditorAce'
 	,
-	alias: 'widget.editorJavaHtmlEditor',
-	alternateClassName: 'WorkspaceEditorJavaHtmlEditor'
+	alias: 'widget.editorJavaHtmlEditorAce',
+	alternateClassName: 'WorkspaceEditorJavaHtmlEditorAce'
 	,
 //
     initComponent : function(){
@@ -71,8 +71,8 @@ Ext.define('Workspace.editorjava.form.textarea.HtmlEditorAce', {
 		me.callParent(arguments);
 	}
 //
-	,
-	enableColors: false,
-	enableAlignments: false
+//	,
+//	enableColors: false,
+//	enableAlignments: false
 
 }, function() {Workspace.tool.Log.defined('Workspace.editorjava.form.textarea.HtmlEditorAce');});

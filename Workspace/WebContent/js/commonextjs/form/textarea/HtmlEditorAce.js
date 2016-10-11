@@ -8,34 +8,39 @@ Ext.define('Workspace.common.form.textarea.HtmlEditorAce', {
 	alternateClassName: 'WorkspaceCommonHtmlEditor'
 	,
 	frame : true,
-	initComponent : function() {
-		console.log('Workspace.common.form.textarea.HtmlEditor initComponent');
-//		this.initEditor();
-		commands.addCommand({
-		    name: "...",
-		    exec: function() {
-		    	this.onKeydown();
-		    	this.onKeyUp();
-		    },
-		    bindKey: {mac: "cmd-enter", win: "ctrl-enter"}
-		})
-		this.callParent(arguments);;
-		this.addEvents('submit');
-	},
-	initEditor : function() {
+//	initComponent : function() {
+//		var me = this;
+//		this.htmlEditor = this;
+////		console.log('Workspace.common.form.textarea.HtmlEditor initComponent');
+//////		this.initEditor();
+//////		this.commands.addCommand({
+//////		    name: "...",
+//////		    exec: function() {
+//////		    	this.onKeydown();
+//////		    	this.onKeyUp();
+//////		    },
+//////		    bindKey: {mac: "cmd-enter", win: "ctrl-enter"}
+//////		})
+////		this.callParent(arguments);;
+////		this.addEvents('submit');
+//	    me.callParent(arguments);
+//	}
+//	,
+	initEditor : function(editor) {
 		console.log('Workspace.common.form.textarea.HtmlEditor initEditor');
-//		this.callParent(arguments);;
-		var iframe = this.textInput.getElement();
-		iframe.htmlEditor = this;
-		if (Ext.isIE) {
-			///////////////IE///////////////////////////////
-			iframe.attachEvent('onkeydown', this.onKeydown, this);
-			iframe.attachEvent('onkeyup', this.onKeyUp, this);
-		} else {
-			//////////////Mozilla///////////////////////////
-			iframe.addEventListener('keydown', this.onKeydown, this);
-			iframe.addEventListener('keyup', this.onKeyUp, this);
-		}
+//		var iframe = this.textInput.getElement();
+//		iframe.htmlEditor = this;
+//		if (Ext.isIE) {
+//			///////////////IE///////////////////////////////
+//			iframe.attachEvent('onkeydown', this.onKeydown, this);
+//			iframe.attachEvent('onkeyup', this.onKeyUp, this);
+//		} else {
+//			//////////////Mozilla///////////////////////////
+//			iframe.addEventListener('keydown', this.onKeydown, this);
+//			iframe.addEventListener('keyup', this.onKeyUp, this);
+//		}
+//		editor.container.onkeydown = this.onKeydown;
+//		editor.container.onkeyup = this.onKeyUp;
 	},
     enableKeyEvents: true,
 	onKeydown : function(evt, cmp) {
