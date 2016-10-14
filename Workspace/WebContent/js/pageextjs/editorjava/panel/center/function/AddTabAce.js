@@ -21,17 +21,6 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 				Ext.Loader.syncRequire('Workspace.editorjava.panel.center.function.AddTabSave');
 				Ext.Loader.syncRequire('Workspace.editorjava.panel.center.function.AddTabReload');
 
-				var htmlEditor = Ext.create('Workspace.editorjava.form.textarea.HtmlEditorAce', {
-					id: panelEditorId,
-					className: raw.className,
-					contentType: raw.contentType,
-					build: raw.build,
-					panelId: panelId
-				});
-//				var htmlEditor = Ext.create('Ext.ux.AceEditor', {
-//					id: panelEditorId
-//				});
-
 				mainCenterPanel.add({
 					title: raw.text,
 					id: panelId,
@@ -39,7 +28,10 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 					closable:true,
 					layout: 'fit',
 				    items: [
-				          htmlEditor
+							Ext.create('Ext.panel.Panel', {
+								id: panelEditorId,
+								panelId: panelId
+							})
 				    ],
 				    tbar: Ext.create('Ext.toolbar.Toolbar', {
 				    	cls: 'x-panel-header',
@@ -80,35 +72,60 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 							var filePanel = mainCenterPanel.getComponent(panelId);
 							mainCenterPanel.setActiveTab(filePanel);
 						
-							var filePanelEditor = filePanel.getComponent(panelEditorId);
-						
 							Ext.Ajax.request({
 								url : DOMAIN_NAME_ROOT + '/action.servlet?event=JsonEditLoadFile',
 								method: 'GET',
 								params :{filename:panelId},
 								success: function ( result, request ) {
-						    		// Explicit load required library (Mandatory for extending this class)
-						    		Ext.Loader.syncRequire('Workspace.editorjava.function.FormatHtml');
-						    		Ext.Loader.syncRequire('Workspace.editorjava.function.Colorize');
-
 						    		var jsonData = Ext.decode(result.responseText);
 									var results = jsonData.results;
 									var resultMessage = '';
 									for(i=0 ; i<results ; i++) {
-//										resultMessage += jsonData.data[i].text + '<br>';//'\r\n';
 										resultMessage += jsonData.data[i].text + '\r\n';
 									}
-						
-//									resultMessage = Workspace.editorjava.function.FormatHtml.call(resultMessage);
-//									resultMessage = Workspace.editorjava.function.Colorize.call(resultMessage);
-						
-									filePanelEditor.setValue(resultMessage);
-//									filePanelEditor.syncValue();
-									
-									filePanelEditor.focus();
-									filePanelEditor.initEditor(filePanelEditor.getEditor());
-									filePanelEditor.container.onkeydown = filePanelEditor.onKeydown;
-									filePanelEditor.container.onkeyup = filePanelEditor.onKeyUp;
+
+									var editor = ace.edit(panelEditorId);
+									editor.getSession().setMode("ace/mode/java");
+									editor.setValue(resultMessage);
+								    editor.gotoLine(1);
+								    editor.focus();
+
+								    editor.commands.addCommand({
+								        name: 'Completion',
+								        bindKey: {win: 'Ctrl-M',  mac: 'Command-M'},
+								        exec: function(editor) {
+											console.info('Workspace.editorjava.panel.center.function.AddTabAce editor.commands Ctrl-M');
+
+											var col = selection.getCursor().col;
+											var row = selection.getCursor().row;
+											var selection = editor.selection;
+											var pos = row + '.0';
+											if (row > 0) {
+												pos = '' + (row + (col / Math.pow(10, (('' + col).length))));
+											}
+
+											var txt=editor.getValue();//.getRawValue();
+											txt=escape(txt);
+							
+											var fnOnSubmitTree = function(tree, key, e) {
+												var sm = tree.getSelectionModel();
+												if (sm.getSelection().length>0) {
+													var node = sm.getSelection()[0];
+													editor.insertAtCursor('.'+node.data.text);
+													this.ownerCt.close();
+												}
+											};
+							
+											var wndClasspathDetail = Ext.create('Workspace.editorjava.window.WindowCompletion', {
+												pos: pos,
+												txt: txt,
+												filename: editor.panelId,
+												callBackSubmit:fnOnSubmitTree
+											});
+											wndClasspathDetail.show();
+								        },
+								        readOnly: true // false if this command should not apply in readOnly mode
+								    });
 								},
 								failure: function ( result, request ) {
 									alert('failure');
