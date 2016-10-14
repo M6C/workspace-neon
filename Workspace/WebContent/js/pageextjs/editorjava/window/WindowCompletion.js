@@ -28,6 +28,8 @@ Ext.define('Workspace.editorjava.window.WindowCompletion', {
 					console.info('Workspace.editorjava.window.WindowCompletion activate');
 					Ext.getCmp('treeCompletion').focus();
 				}
+				,
+				'destroy' : me.listeners.destroy
 			}
 		});
 

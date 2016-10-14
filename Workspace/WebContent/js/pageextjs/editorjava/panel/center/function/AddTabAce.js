@@ -1,11 +1,9 @@
 Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 	// REQUIRED
-	requires: ['Workspace.editorjava.function.FormatHtml',
-	           'Workspace.editorjava.function.Colorize',
-	           'Workspace.editorjava.form.textarea.HtmlEditor',
-	           'Workspace.editorjava.panel.center.function.AddTabSave',
-	           'Workspace.editorjava.panel.center.function.AddTabReload'
-	     ]
+	requires: [
+	     'Workspace.editorjava.panel.center.function.AddTabSave',
+	     'Workspace.editorjava.panel.center.function.AddTabReload'
+	]
 	,
 	statics: {
 
@@ -41,7 +39,7 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 //
 //				    		Ext.apply(me, {
 						        items: [
-								    '<span style="color:#15428B; font-weight:bold">Title Here</span>',
+//								    '<span style="color:#15428B; font-weight:bold">Title Here</span>',
 								    '->',
 								    {
 								    	text: 'Save', 
@@ -92,18 +90,20 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 
 								    editor.commands.addCommand({
 								        name: 'Completion',
-								        bindKey: {win: 'Ctrl-M',  mac: 'Command-M'},
+								        bindKey: {win: 'Ctrl-space',  mac: 'Command-space'},
 								        exec: function(editor) {
 											console.info('Workspace.editorjava.panel.center.function.AddTabAce editor.commands Ctrl-M');
 
-											var col = selection.getCursor().col;
-											var row = selection.getCursor().row;
 											var selection = editor.selection;
-											var pos = row + '.0';
-											if (row > 0) {
-												pos = '' + (row + (col / Math.pow(10, (('' + col).length))));
-											}
+											var col = selection.getCursor().column;
+											var row = selection.getCursor().row;
 
+											selection.selectToPosition({column:0,row:0});
+
+											var txtRange = editor.session.getTextRange(editor.getSelectionRange());
+											selection.selectToPosition({column:col,row:row});
+											pos = txtRange.length;
+											
 											var txt=editor.getValue();//.getRawValue();
 											txt=escape(txt);
 							
@@ -111,7 +111,7 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 												var sm = tree.getSelectionModel();
 												if (sm.getSelection().length>0) {
 													var node = sm.getSelection()[0];
-													editor.insertAtCursor('.'+node.data.text);
+													editor.insert('.'+node.data.text);
 													this.ownerCt.close();
 												}
 											};
@@ -121,6 +121,15 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 												txt: txt,
 												filename: editor.panelId,
 												callBackSubmit:fnOnSubmitTree
+												,
+												panelEditorId:editor
+												,
+												listeners : {
+													'destroy' : function (wnd) {
+														console.info('Workspace.editorjava.window.WindowCompletion destroy');
+														editor.focus();
+													}
+												}
 											});
 											wndClasspathDetail.show();
 								        },
