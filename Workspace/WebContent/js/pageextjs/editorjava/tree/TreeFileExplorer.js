@@ -34,7 +34,7 @@ Ext.define('Workspace.editorjava.tree.TreeFileExplorer', {
 			// Explicit load required library (Mandatory for extending this class)
 			Ext.Loader.syncRequire('Workspace.editorjava.panel.center.function.AddTabAce');
 		
-			Workspace.editorjava.panel.center.function.AddTab.call(record.raw);
+			Workspace.editorjava.panel.center.function.AddTabAce.call(record.raw);
 	    }
 		,
 		'load' : function(store, records, successful, operation, eOpts) {

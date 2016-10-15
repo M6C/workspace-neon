@@ -18,9 +18,10 @@ Ext.define('Workspace.editorjava.window.completion.tree.TreeCompletion', {
 	enableKeyEvents:true
     ,
     constructor: function(config) {
-    	var me = this;
 		console.info('Workspace.editorjava.windows.tree.TreeCompletion constructor');
+		var me = this;
 		var application = Ext.getCmp('project').value;
+		me.setLoading(true);
 		Ext.create('Workspace.editorjava.request.JsonEditSaveAndCompletion',
 		{
 			params:{filename:config.filename,content:config.txt,caretPos:config.pos},
@@ -34,6 +35,7 @@ Ext.define('Workspace.editorjava.window.completion.tree.TreeCompletion', {
 						action:'read'
 					})
 				);
+				me.setLoading(false);
 			}
 		}).request();
 		me.id = config.id;
