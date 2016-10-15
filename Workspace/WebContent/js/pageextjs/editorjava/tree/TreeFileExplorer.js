@@ -32,7 +32,7 @@ Ext.define('Workspace.editorjava.tree.TreeFileExplorer', {
         //scope: this, //yourScope
 		'beforeitemdblclick' : function(view, record, item, index, event, eOpts ) {
 			// Explicit load required library (Mandatory for extending this class)
-			Ext.Loader.syncRequire('Workspace.editorjava.panel.center.function.AddTab');
+			Ext.Loader.syncRequire('Workspace.editorjava.panel.center.function.AddTabAce');
 		
 			Workspace.editorjava.panel.center.function.AddTab.call(record.raw);
 	    }

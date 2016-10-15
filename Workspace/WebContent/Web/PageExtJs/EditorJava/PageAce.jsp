@@ -30,7 +30,6 @@
 			bravojs.mainContext = bravojs.mainModuleDir + '/c371cd05c8df40c0af3b1515b808c9d737b98b02';
 
 			addScript('/jsFramework/ace-1.2.5/src-min-noconflict/ace.js');
-	        addScript('/jsFramework/ace-extjs-0.1.0/extjs4-ace/Component.js');
 
 	        init_loader();
 

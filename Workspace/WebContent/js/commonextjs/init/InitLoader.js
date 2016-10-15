@@ -27,8 +27,6 @@ function init_loader() {
 	console.info('common.ini.init_loader Ext.Loader \'Workspace.data\' setted');
 	Ext.Loader.setPath('Workspace.tool', DOMAIN_NAME_ROOT + '/js/toolextjs');
 	console.info('common.ini.init_loader Ext.Loader \'Workspace.tool\' setted');
-	Ext.Loader.setPath('Ext.ux.AceEditor', DOMAIN_NAME_ROOT + '/jsFramework/ace-extjs-0.1.0/extjs4-ace/AceEditor.js');
-	console.info('common.ini.init_loader Ext.Loader \'AceEditor\' setted');
 
 	// Requi pour une utilisation du style : Workspace.tool.Log.defined('...')
 	Ext.Loader.syncRequire('Workspace.tool.Log');
