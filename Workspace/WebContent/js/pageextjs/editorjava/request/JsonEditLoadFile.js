@@ -32,53 +32,8 @@ Ext.define('Workspace.editorjava.request.JsonEditLoadFile',  {
 			    editor.gotoLine(1);
 			    editor.focus();
 
-			    editor.commands.addCommand({
-			        name: 'Completion',
-			        bindKey: {win: 'Ctrl-space',  mac: 'Command-space'},
-			        exec: function(editor) {
-						console.info('Workspace.editorjava.panel.center.function.AddTabAce editor.commands Ctrl-M');
-
-						var selection = editor.selection;
-						var col = selection.getCursor().column;
-						var row = selection.getCursor().row;
-
-						selection.selectToPosition({column:0,row:0});
-
-						var txtRange = editor.session.getTextRange(editor.getSelectionRange());
-						selection.selectToPosition({column:col,row:row});
-						pos = txtRange.length;
-						
-						var txt=editor.getValue();//.getRawValue();
-						txt=escape(txt);
-		
-						var fnOnSubmitTree = function(tree, key, e) {
-							var sm = tree.getSelectionModel();
-							if (sm.getSelection().length>0) {
-								var node = sm.getSelection()[0];
-								editor.insert('.'+node.data.text);
-								this.ownerCt.close();
-							}
-						};
-		
-						var wndClasspathDetail = Ext.create('Workspace.editorjava.window.WindowCompletion', {
-							pos: pos,
-							txt: txt,
-							filename: editor.panelId,
-							callBackSubmit:fnOnSubmitTree
-							,
-							panelEditorId:editor
-							,
-							listeners : {
-								'destroy' : function (wnd) {
-									console.info('Workspace.editorjava.window.WindowCompletion destroy');
-									editor.focus();
-								}
-							}
-						});
-						wndClasspathDetail.show();
-			        },
-			        readOnly: true // false if this command should not apply in readOnly mode
-			    });
+				Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandCompletion');
+			    Workspace.editorjava.aceeditor.command.CommandCompletion.addCommand(editor);
 			},
 			failure: function ( result, request ) {
 				alert('failure');
