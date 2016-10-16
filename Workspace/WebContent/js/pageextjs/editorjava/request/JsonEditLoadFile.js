@@ -26,8 +26,27 @@ Ext.define('Workspace.editorjava.request.JsonEditLoadFile',  {
 					resultMessage += jsonData.data[i].text + '\r\n';
 				}
 
+				var filename = me.panelId.toLowerCase();
 				var editor = ace.edit(me.panelEditorId);
-				editor.getSession().setMode("ace/mode/java");
+				if (filename.endsWith('.java')) {
+					editor.getSession().setMode("ace/mode/java");
+				} else if (filename.endsWith('.js')) {
+					editor.getSession().setMode("ace/mode/javascript");
+				} else if (filename.endsWith('.html') || filename.endsWith('.htm')) {
+					editor.getSession().setMode("ace/mode/html");
+				} else if (filename.endsWith('.xml')) {
+					editor.getSession().setMode("ace/mode/xml");
+				} else if (filename.endsWith('.ini')) {
+					editor.getSession().setMode("ace/mode/ini");
+				} else if (filename.endsWith('.json')) {
+					editor.getSession().setMode("ace/mode/json");
+				} else if (filename.endsWith('.jsp')) {
+					editor.getSession().setMode("ace/mode/jsp");
+				} else if (filename.endsWith('.properties')) {
+					editor.getSession().setMode("ace/mode/properties");
+				} else {
+					editor.getSession().setMode("ace/mode/text");
+				}
 				editor.setValue(resultMessage);
 			    editor.gotoLine(1);
 			    editor.focus();
