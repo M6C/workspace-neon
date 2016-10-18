@@ -61,7 +61,7 @@ function onClickTvFile(param, filename) {
  reloadEditor(DOMAIN_NAME_ROOT+'/Web/Component/Reload/Reload_Editor_Border01.jsp', param, szAfterReloadEditor);
  reloadEditorFilename(DOMAIN_NAME_ROOT+'/Web/Component/Reload/Reload_Editor_Filename_Border01.jsp', param);
  reloadMenu(DOMAIN_NAME_ROOT+'/Web/Component/Menu/EditorJava/MenuHeader.jsp', param);
-// document.forms["ValiderEditorJava"].navIndex.value = 0;
+ document.forms["ValiderEditorJava"].navIndex.value = 0;
 }
 function onClickNavBar(param, index, nbRow, filename) {
  var iIndex = parseInt(index.substring(index.indexOf('=')+1,index.length));
