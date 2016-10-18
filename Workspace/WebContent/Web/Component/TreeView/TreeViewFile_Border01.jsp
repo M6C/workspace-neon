@@ -67,7 +67,7 @@
                             </td><td class="treeviewMain">
                             <date:TagDateFormat time="#R$myFile.File.lastModified#" pattern="dd/MM/yyyy HH:mm:ss"/>
                             </td><td class="treeviewMain" align="right">
-                            <html:TagFont attrSize="2" content="#R$myFile.File.length#"/>
+                            <html:TagFont content="#R$myFile.File.length#"/>
                             </td></tr>
                         <%}%>
                         <%--/logic:TagIf--%>

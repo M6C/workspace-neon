@@ -13,7 +13,7 @@
 	</logic:TagIfDefine>
 </logic:TagIfNotDefine>
 
-<table class="treeview">
+<table class="treeview" height="100%">
     <tr>
         <td class="treeviewTopLeft"><IMG class="BorderTopLeft" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
         <td class="treeviewTop"></td>

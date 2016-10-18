@@ -71,12 +71,7 @@
                     <table cellspacing="0" cellpadding="0" width="100%" height="100%">
                         <tr valign="top">
                             <td>
-                                <div id="reloaddir">
-<%--
-              <a href="http://latest.workspacecloud.appspot.com/Workspace/action.servlet?event=EditorJavaPage&application=WorkSpace_Dev">
-                 <img width="15px" height="14px" src="<%=DOMAIN_NAME_ROOT%>/img/Common/home_small.gif"/>
-              </a>
---%>
+                                <div style="height: 100%" id="reloaddir">
                                     <jsp:include page="/Web/Component/TreeView/TreeViewDir_Border01.jsp" flush="true">
                                         <jsp:param name="eventDst" value="EditorJavaPage"/>
                                         <jsp:param name="formName" value="GoEditorJava"/>
@@ -90,7 +85,7 @@
                         </tr>
                         <tr valign="top">
                             <td>
-                            <div id="reloadfile">
+                            <div id="reloadfile" style="height: 100%">
                                 <jsp:include page="/Web/Component/TreeView/TreeViewFile_Border01.jsp" flush="true">
                                     <jsp:param name="eventDst" value="EditorJavaPage"/>
                                 </jsp:include>
