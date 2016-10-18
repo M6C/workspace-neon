@@ -79,7 +79,9 @@
                                     </jsp:include>
                                 </div>
                                 <script type="text/javascript">
-                                    document.getElementById('treeviewDir').scrollTop = document.getElementById('<request:TagPrintAttribut name="myAnchor" scope="request"/>').offsetTop;
+                                	var anchor = '<request:TagPrintAttribut name="myAnchor" scope="request"/>';
+                                    //document.getElementById('treeviewDir').scrollTop = document.getElementById(name).offsetTop;
+                                    afterClickTvDir('', anchor);
                                 </script>
                             </td>
                         </tr>
@@ -98,6 +100,8 @@
                     <table class="treeview">
                         <form name="ValiderEditorJava" action="action.servlet" method="post">
                             <input type="hidden" name="event" value="EditorJavaPageSave"/>
+                            <input type="hidden" name="navIndex" value="0"/>
+                            <input type="hidden" name="navNbRow" value="0"/>
                             <input type="hidden" name="len" id="len"/>
                                 <tr>
                                     <td class="treeviewTopLeft"><IMG class="BorderTopLeft" src="<%=DOMAIN_NAME_ROOT%>/img/TreeView/b.gif"></td>
@@ -147,7 +151,7 @@
                                           <div id="classNameDiv" style="position:absolute;left:0px;top:21px;visibility:hidden;border:solid green 2px;background-color:white;z-index:1"></div>
                                           <A id="classIdAncre" name="classNameAncre"></A>
                                           <textarea style="position:absolute;visibility:hidden;" name="FileEditor" wrap="off"></textarea>
-                                          <iframe id="htmle" name="htmle" height="100%" width="100%" FRAMEBORDER="0px" class="texteditor" MARGINWIDTH="0px" MARGINHEIGHT="0px"></iframe>
+                                          <iframe id="htmle" name="htmle" height="100%" width="100%" frameborder="0px" class="texteditor" marginwidth="0px" marginheight="0px"></iframe>
                                     </td>
                                     <td class="treeviewRight"></td>
                                 </tr>
