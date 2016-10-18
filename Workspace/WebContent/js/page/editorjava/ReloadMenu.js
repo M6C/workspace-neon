@@ -1,9 +1,9 @@
 
 // The server-side script
-var urlReloadMenu = ""//Pour Google App Engine"/WorkSpace";
+var urlReloadMenu = ""//Pour Google App Engine"/Workspace";
 var hHttp_ReloadMenu;
 
-include_js("/js/HTTPObject.js")
+include_js(DOMAIN_NAME_ROOT+"/js/HTTPObject.js")
 
 function reloadMenu(urlPage, urlParam) {
   hHttp_ReloadMenu = getHTTPObject();

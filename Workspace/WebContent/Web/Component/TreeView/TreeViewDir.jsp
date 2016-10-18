@@ -2,6 +2,7 @@
 <%@ taglib uri="Framework_Taglib_Logic.tld" prefix="logic" %>
 <%@ taglib uri="Framework_Taglib_File.tld" prefix="file" %>
 <%@ taglib uri="Framework_Taglib_Eval.tld" prefix="eval" %>
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <logic:TagIfDefine name="path" scope="request">
 	<html:TagA attrHref="action.servlet?event=#R$eventDst#&path=#R$path#&pathToExpand=#R$path#&pathBuildJava=#R$pathBuildJava#&pathBuildJar=#R$pathBuildJar##R$paramOther#">
 		<%--eval:TagEval expression="new java.io.File(&quot;#R$path#&quot;).getName()"/--%>

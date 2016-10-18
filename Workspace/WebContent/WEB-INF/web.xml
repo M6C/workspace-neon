@@ -3,7 +3,7 @@
     PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
     "http://java.sun.com/dtd/web-app_2_3.dtd">
 <web-app>
-  <display-name>WorkSpace</display-name>
+  <display-name>Workspace</display-name>
 
   <!-- Filters -->
   <filter>
@@ -31,7 +31,7 @@
     </init-param>
     <init-param>
       <param-name>DefaultUrl</param-name>
-      <param-value>/WorkSpace/action.servlet?event=Index</param-value>
+      <param-value>/Workspace/action.servlet?event=Index</param-value>
     </init-param>
   </filter>
 
@@ -68,7 +68,7 @@
     <servlet-class>workspace.action.ActionFileReader</servlet-class>
     <init-param>
       <param-name>Temporary_Directory</param-name>
-      <param-value>C:/Perso/Dev/Travaux/Java/JBuilder8/WorkSpace/Tmp/</param-value>
+      <param-value>C:/Perso/Dev/Travaux/Java/JBuilder8/Workspace/Tmp/</param-value>
     </init-param>
   </servlet>
   <servlet>

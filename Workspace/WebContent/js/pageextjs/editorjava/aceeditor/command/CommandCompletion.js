@@ -15,7 +15,7 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandCompletion',  {
 					var col = selection.getCursor().column;
 					var row = selection.getCursor().row;
 	
-					selection.selectToPosition({column:0,row:0});
+					selection.selectFileStart();
 	
 					var txtRange = editor.session.getTextRange(editor.getSelectionRange());
 					selection.selectToPosition({column:col,row:row});

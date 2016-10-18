@@ -9,7 +9,7 @@
 
   <table class="treeview" id="theTableResolved">
       <tr>
-          <td class="treeviewTopLeft"><IMG height="8px" width="8px" src="/WorkSpace/img/TreeView/b.gif"/></td>
+          <td class="treeviewTopLeft"><IMG height="8px" width="8px" src="/Workspace/img/TreeView/b.gif"/></td>
           <td class="treeviewTop"></td>
           <td class="treeviewTopRight"></td>
       </tr>
@@ -44,7 +44,7 @@
       <tr>
           <td class="treeviewBottomLeft"></td>
           <td class="treeviewBottom"></td>
-          <td class="treeviewBottomRight"><IMG height="8px" width="8px" src="/WorkSpace/img/TreeView/b.gif"/></td>
+          <td class="treeviewBottomRight"><IMG height="8px" width="8px" src="/Workspace/img/TreeView/b.gif"/></td>
       </tr>
   </table>
 

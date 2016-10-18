@@ -1,6 +1,7 @@
 <%@ taglib uri="Framework_Taglib_Html.tld" prefix="html" %>
 <%@ taglib uri="Framework_Taglib_Logic.tld" prefix="logic" %>
 <%@ taglib uri="Framework_Taglib_File.tld" prefix="file" %>
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <file:TagFileList path="C:/Tmp" pathToExpand="#R$pathToExpand#" sortMethod="getName">
   <file:TagFileListItem name="myFile" scope="request"/>
   <logic:TagFor to="#R$myFile.Index#">

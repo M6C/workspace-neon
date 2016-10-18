@@ -279,7 +279,7 @@ AutoComplete.prototype.colorizeHtml = function(text) {
 
 AutoComplete.prototype.onDivMouseDown = function() {
 //alert("AutoCompleteDB.prototype.onDivMouseDown");
-    // Insertion du text à la postion actuelle
+    // Insertion du text ï¿½ la postion actuelle
     insertAtCaret(this.AutoComplete.oText, this.innerHTML);
 
     // clear the popup-div.
@@ -448,7 +448,7 @@ function isTextCaractere(car) {
       (((car >= 65) && (car <= 90))) ||
       // entre a et z
       (((car >= 97) && (car <= 122))) ||
-      // entre À [&Agrave;] et ÿ [&yuml;] sauf × [&times;], ÷ [&divide;]
+      // entre ï¿½ [&Agrave;] et ï¿½ [&yuml;] sauf ï¿½ [&times;], ï¿½ [&divide;]
       (((car >= 192) && (car <= 255) && (car != 215) && (car != 247)))
 }
 
@@ -461,7 +461,7 @@ function initIframe(text) {
   text = AutoComplete.prototype.colorizeHtml(formatHtml(text));
   frames['htmle'].document.open("text/html","replace");
   frames['htmle'].document.write('<html><head>');
-  frames['htmle'].document.write('<link href="/css/component/wysywyg/editor_iframe.css" rel="stylesheet" type="text/css">');
+  frames['htmle'].document.write('<link href="'+DOMAIN_NAME_ROOT+'/css/component/wysywyg/editor_iframe.css" rel="stylesheet" type="text/css">');
   frames['htmle'].document.write('</head>');
   frames['htmle'].document.write('<body>');
   frames['htmle'].document.write('<div>');
@@ -510,7 +510,7 @@ function completion(txt, pos) {
     ac.oHttp.send(urlParam);
   }
 
-  // Damp;eacute;cramp;eacute;mente le nombre de retour chario du nombre de caractères
+  // Damp;eacute;cramp;eacute;mente le nombre de retour chario du nombre de caractï¿½res
   var posOrig = pos;
   for(var i=0;i<posOrig;i++) {
     if (txt.charAt(i)=="\r")
@@ -606,7 +606,7 @@ function setCursorPosition(oInput, range, oStart, oEnd) {
 }
 
 /*********
- * Positionnement d'un Div par Rapport à un Anchor
+ * Positionnement d'un Div par Rapport ï¿½ un Anchor
  */
 
 
@@ -616,9 +616,9 @@ var dom = (document.getElementById)? true:false;   //DOM
 
 
 function setToAnchor(aAnchorId, aAnchorName, aDiv)
-//Fonction permettant de positionner un DIV à une position occupamp;eacute;e par une ancre
+//Fonction permettant de positionner un DIV ï¿½ une position occupamp;eacute;e par une ancre
     {
-var DivLeft = 0;   //Position du Div par rapport au côtamp;eacute; gauche de la page
+var DivLeft = 0;   //Position du Div par rapport au cï¿½tamp;eacute; gauche de la page
 var DivTop = 0;   //Position du Div par rapport au haut de la page
 
     if (dom) {
@@ -643,9 +643,9 @@ var DivTop = 0;   //Position du Div par rapport au haut de la page
 }
 
 function getLeft(obj)
-//Fonction permettant de connaître la position d'un objet
+//Fonction permettant de connaï¿½tre la position d'un objet
 //par rapport au bord gauche de la page.
-//Cet objet peut être à l'intamp;eacute;rieur d'un autre objet.
+//Cet objet peut ï¿½tre ï¿½ l'intamp;eacute;rieur d'un autre objet.
     {
 	var curleft = 0;
 	if (obj.offsetParent)
@@ -661,9 +661,9 @@ function getLeft(obj)
 	return curleft;
     }
 function getTop(obj)
-//Fonction permettant de connaître la position d'un objet
+//Fonction permettant de connaï¿½tre la position d'un objet
 //par rapport au bord haut de la page.
-//Cet objet peut être à l'intamp;eacute;rieur d'un autre objet.
+//Cet objet peut ï¿½tre ï¿½ l'intamp;eacute;rieur d'un autre objet.
     {
 	var curtop = 0;
 	if (obj.offsetParent)

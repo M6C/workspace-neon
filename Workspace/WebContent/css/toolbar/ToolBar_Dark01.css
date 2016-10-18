@@ -2,7 +2,7 @@ table.toolBar {
 	width:100%;
 	text-align: left;
 /*	background-color: white;*/
-	background-image: url(/WorkSpace/img/Style/Dark/ToolBar/toolbar01.jpg);
+	background-image: url(/Workspace/img/Style/Dark/ToolBar/toolbar01.jpg);
 	background-repeat: repeat-x;
 	background-position: right;
 }

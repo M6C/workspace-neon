@@ -1,9 +1,9 @@
 
 // The server-side script
-var urlReloadEditorFilename = ""//Pour Google App Engine"/WorkSpace";
+var urlReloadEditorFilename = ""//Pour Google App Engine"/Workspace";
 var hHttp_ReloadEditorFilename;
 
-include_js("/js/HTTPObject.js")
+include_js(DOMAIN_NAME_ROOT+"/js/HTTPObject.js")
 
 function reloadEditorFilename(urlPage, urlParam) {
   hHttp_ReloadEditorFilename = getHTTPObject();

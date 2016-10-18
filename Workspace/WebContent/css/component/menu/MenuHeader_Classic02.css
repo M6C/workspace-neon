@@ -4,7 +4,7 @@ table.level {
 tr.level01 {
 }
 tr.level02 {
-	background-image: url(/WorkSpace/img/Style/Classic/Menu/menuitem_level02.gif);
+	background-image: url(/Workspace/img/Style/Classic/Menu/menuitem_level02.gif);
 }
 
 table.menuLevel01 {
@@ -71,7 +71,7 @@ td.menuLevel02 {
 
 td.separatorLevel02 {
 /*
-	background-image: url(/WorkSpace/img/Style/Classic/Menu/separator_menuitem_level02.gif);
+	background-image: url(/Workspace/img/Style/Classic/Menu/separator_menuitem_level02.gif);
 	background-repeat: repeat-y;
 	background-position: left top;
 */

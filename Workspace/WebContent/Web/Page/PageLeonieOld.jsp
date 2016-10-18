@@ -26,7 +26,7 @@ function openWindow(url) {
 <br>
 <%
   String szPathImg = "/Photos/Leonie/";
-  String szPath = "/Dev/Travaux/Java/JBuilder8/WorkSpace"+szPathImg;
+  String szPath = "/Dev/Travaux/Java/JBuilder8/Workspace"+szPathImg;
 //  String szPath = "/members/DIDRnjGI6yOUHilItsEF1DKfLtdFnyHE/"+szPathImg;
   File path = new File(szPath);
   if ( path.exists() && path.isDirectory() )
@@ -67,7 +67,7 @@ function openWindow(url) {
         out.write("<td colspan=\"5\"><center><table><tr>");
         for( int i=0 ; i<end ; i++ )
         {
-%>        <TD><%=((i==index) ? "<b>" : "")%><A HREF="action.servlet?event=PageLeonie&path=/Dev/Travaux/Java/JBuilder8/WorkSpace/Photos&index=<%=i%>"><%=i+1%><%=((i==index) ? "</b>" : "")%></A></TD><%
+%>        <TD><%=((i==index) ? "<b>" : "")%><A HREF="action.servlet?event=PageLeonie&path=/Dev/Travaux/Java/JBuilder8/Workspace/Photos&index=<%=i%>"><%=i+1%><%=((i==index) ? "</b>" : "")%></A></TD><%
         }
         out.write("</tr></table></center></td>");
     }

@@ -770,7 +770,7 @@ function initIframe(text, colorize) {
   var iFLeft= frames['htmle'].document.body.scrollLeft;
   frames['htmle'].document.open("text/html","replace");
   frames['htmle'].document.write('<html><head>');
-  frames['htmle'].document.write('<link href="/css/component/wysywyg/editor_iframe.css" rel="stylesheet" type="text/css">');
+  frames['htmle'].document.write('<link href="'+DOMAIN_NAME_ROOT+'/css/component/wysywyg/editor_iframe.css" rel="stylesheet" type="text/css">');
   frames['htmle'].document.write('</head>');
   frames['htmle'].document.write('<body>');
   //frames['htmle'].document.write('<div>');
@@ -812,7 +812,7 @@ function addIframe(text, colorize) {
   var html = trimDiv(frames['htmle'].document.body.innerHTML);
   frames['htmle'].document.open("text/html","replace");
   frames['htmle'].document.write('<html><head>');
-  frames['htmle'].document.write('<link href="/css/component/wysywyg/editor_iframe.css" rel="stylesheet" type="text/css">');
+  frames['htmle'].document.write('<link href="'+DOMAIN_NAME_ROOT+'/css/component/wysywyg/editor_iframe.css" rel="stylesheet" type="text/css">');
   frames['htmle'].document.write('</head>');
   frames['htmle'].document.write('<body>');
   //frames['htmle'].document.write('<div>');

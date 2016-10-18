@@ -73,7 +73,7 @@
                             <td>
                                 <div id="reloaddir">
 <%--
-              <a href="http://latest.workspacecloud.appspot.com/WorkSpace/action.servlet?event=EditorJavaPage&application=WorkSpace_Dev">
+              <a href="http://latest.workspacecloud.appspot.com/Workspace/action.servlet?event=EditorJavaPage&application=WorkSpace_Dev">
                  <img width="15px" height="14px" src="<%=DOMAIN_NAME_ROOT%>/img/Common/home_small.gif"/>
               </a>
 --%>

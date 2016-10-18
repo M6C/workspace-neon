@@ -4,7 +4,7 @@
 
 <%!
 	static final String STR_SERVER = "http://rocadavid.no-ip.info";//"http://172.0.0.1:7001";
-	static final String STR_DOMAINE = STR_SERVER+"/WorkSpace";
+	static final String STR_DOMAINE = STR_SERVER+"/Workspace";
 	static final String STR_WEBAPP_HOME = STR_DOMAINE+"/action.servlet";
 	static final String STR_WEBAPP_REDIRECT = STR_WEBAPP_HOME + "?event=Redirect&adresse=";
 	static final String STR_WEBAPP_IMAGEREADER = STR_DOMAINE+"/Actionimagereader?file=";

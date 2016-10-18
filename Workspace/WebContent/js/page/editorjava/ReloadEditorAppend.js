@@ -1,10 +1,10 @@
 
 // The server-side script
-var urlReloadEditorAppend = ""//Pour Google App Engine"/WorkSpace";
+var urlReloadEditorAppend = ""//Pour Google App Engine"/Workspace";
 var hHttp_ReloadEditorAppend;
 var afterReloadEditorAppend;
 
-include_js("/js/HTTPObject.js")
+include_js(DOMAIN_NAME_ROOT+"/js/HTTPObject.js")
 
 function reloadEditorAppend(urlPage, urlParam, szAfterReloadEditorAppend) {
   afterReloadEditorAppend = szAfterReloadEditorAppend;

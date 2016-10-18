@@ -5,6 +5,7 @@
 <%@ taglib uri="Framework_Taglib_Request.tld" prefix="request" %>
 <%@ taglib uri="Framework_Taglib_Logic.tld" prefix="logic" %>
 <%@ taglib uri="Workspace_Taglib_Path.tld" prefix="path" %>
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 
 <logic:TagIfNotDefine name="path" scope="request" checkNotEmpty="true">
 	<logic:TagIfDefine name="application" scope="request" checkNotEmpty="true">

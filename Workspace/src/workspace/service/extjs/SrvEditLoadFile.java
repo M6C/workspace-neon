@@ -44,7 +44,7 @@ public class SrvEditLoadFile extends SrvGenerique
                     if(file != null && file.exists() && file.isFile())
                     {
                         String content = UtilFile.read(file);
-                        if(UtilString.isNotEmpty(filenameFormated))
+                        if(UtilString.isNotEmpty(content))
                         {
                             String lines[] = content.split("\r\n");
                             String line = null;

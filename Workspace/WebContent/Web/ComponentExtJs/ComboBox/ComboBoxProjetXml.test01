@@ -10,8 +10,8 @@ Paramètres à definir pour utiliser ce composant
 <%@ taglib uri="Framework_Taglib_Request.tld" prefix="request" %>
 <%@ taglib uri="Framework_Taglib_Xml.tld" prefix="Xml" %>
 
-<link rel="stylesheet" type="text/css" href="/WorkSpace/essai/jsFramework/extjs/resources/css/ext-all.css" />
-<script type="text/javascript" src="/WorkSpace/essai/jsFramework/extjs/examples/shared/examples.js"></script>
+<link rel="stylesheet" type="text/css" href="/Workspace/essai/jsFramework/extjs/resources/css/ext-all.css" />
+<script type="text/javascript" src="/Workspace/essai/jsFramework/extjs/examples/shared/examples.js"></script>
 <script type="text/javascript" src="selectbox.js"></script> 
 
 <script type="text/javascript">
@@ -60,7 +60,7 @@ Ext.onReady(function(){
 	    {name: 'occupation'},                // This field will use "occupation" as the mapping.
 	]);
 	var store = new Ext.data.Store({
-        url: '/WorkSpace/action.servlet?event=JsonProjectName',
+        url: '/Workspace/action.servlet?event=JsonProjectName',
         autoLoad: true, // required for the combo that does not use Ajax
         //reader: new Ext.data.JsonReader(
         //    {root:'Projects'},
@@ -106,7 +106,7 @@ Ext.onReady(function(){
 	    applyTo: 'local-project',
         onSelect: function(record){ // override default onSelect to do redirect
 	        window.location = 
-		        String.format('/WorkSpace/action.servlet'+
+		        String.format('/Workspace/action.servlet'+
 				'?event={0}&application={1}'+
 	        	'<request:TagPrintAttribut name="paramOther" scope="request"/>', 
 	        	'<request:TagPrintAttribut name="eventDst" scope="request"/>', record.data.name);

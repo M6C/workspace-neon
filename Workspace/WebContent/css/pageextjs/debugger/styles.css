@@ -10,13 +10,13 @@ p {
    margin:5px;
 }
 .proj {
-   background-image:url(/WorkSpace/essai/jsFramework/extjs/examples/shared/icons/fam/cog.png);
+   background-image:url(/Workspace/essai/jsFramework/extjs/examples/shared/icons/fam/cog.png);
 }
 .dir {
-   background-image:url(/WorkSpace/essai/jsFramework/extjs/examples/shared/icons/fam/folder_go.png);
+   background-image:url(/Workspace/essai/jsFramework/extjs/examples/shared/icons/fam/folder_go.png);
 }
 .file {
-   background-image:url(/WorkSpace/essai/jsFramework/extjs/examples/shared/icons/fam/book.png);
+   background-image:url(/Workspace/essai/jsFramework/extjs/examples/shared/icons/fam/book.png);
 }
 
 .breakpoint-row{ background-color: #F5C0C0 !important; } 

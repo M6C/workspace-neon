@@ -5,9 +5,10 @@
 <%@ taglib uri="Framework_Taglib_Eval.tld" prefix="eval" %>
 <%@ taglib uri="Framework_Taglib_Request.tld" prefix="request" %>
 <%@ taglib uri="Workspace_Taglib_Versionning.tld" prefix="versionning" %>
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 
 <%--
-Table of possible CVS status information : D:\Dev\Travaux\Java\JBuilder8\WorkSpace\doc\CVS States.htm
+Table of possible CVS status information : D:\Dev\Travaux\Java\JBuilder8\Workspace\doc\CVS States.htm
 --%>
 
 

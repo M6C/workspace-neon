@@ -61,7 +61,7 @@
 	    var Tree = Ext.tree;
 
 	    var treeLoader = new Ext.tree.TreeLoader({
-			url: '/WorkSpace/action.servlet?event=JsonTreeDirectory',
+			url: '/Workspace/action.servlet?event=JsonTreeDirectory',
 			requestMethod: 'GET',
 			preloadChildren: true,
 			clearOnLoad: true

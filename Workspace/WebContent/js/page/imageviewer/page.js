@@ -7,11 +7,11 @@ function openWindow(url) {
 }
 
 function onClickTvDir(param) {
-	reloadDir('/Web/Component/TreeView/TreeViewDir_Border01.jsp', param);
-	reloadFile('/Web/Component/TreeView/TreeViewImage_Border02.jsp', param);
-	reloadMenu('/Web/Component/Menu/ImageViewer/MenuHeader.jsp', param);
+	reloadDir(DOMAIN_NAME_ROOT+'/Web/Component/TreeView/TreeViewDir_Border01.jsp', param);
+	reloadFile(DOMAIN_NAME_ROOT+'/Web/Component/TreeView/TreeViewImage_Border02.jsp', param);
+	reloadMenu(DOMAIN_NAME_ROOT+'/Web/Component/Menu/ImageViewer/MenuHeader.jsp', param);
 }
 
 function onClickTvFile(param) {
-	reloadFile('/Web/Component/TreeView/TreeViewImage_Border02.jsp', param);
+	reloadFile(DOMAIN_NAME_ROOT+'/Web/Component/TreeView/TreeViewImage_Border02.jsp', param);
 }

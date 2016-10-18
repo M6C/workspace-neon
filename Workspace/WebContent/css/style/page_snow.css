@@ -3,17 +3,17 @@
 @import url ("../component/treeview/TreeView_Snow01.css");
 @import url ("../component/treeview/TreeViewFile_Snow01.css");
 */
-@import url ("/WorkSpace/css/toolbar/ToolBar_Snow01.css");
-@import url ("/WorkSpace/css/component/treeview/TreeView_Snow01.css");
-@import url ("/WorkSpace/css/component/treeview/TreeViewFile_Snow01.css");
-@import url ("/WorkSpace/css/component/combo/Completion_Snow01.css");
+@import url ("/css/toolbar/ToolBar_Snow01.css");
+@import url ("/css/component/treeview/TreeView_Snow01.css");
+@import url ("/css/component/treeview/TreeViewFile_Snow01.css");
+@import url ("/css/component/combo/Completion_Snow01.css");
 
 body {
-/*	background-image: url(/WorkSpace/img/Style/Snow/Background/snow01.gif);*/
-/*	background-image: url(/WorkSpace/img/Style/Snow/Background/snow02.jpg);*/
-/*	background-image: url(/WorkSpace/img/Style/Snow/Background/snow03.jpg);*/
-/*	background-image: url(/WorkSpace/img/Style/Snow/Background/snow04.jpg);*/
-	background-image: url(/WorkSpace/img/Style/Snow/Background/snow05.gif);
+/*	background-image: url(/Workspace/img/Style/Snow/Background/snow01.gif);*/
+/*	background-image: url(/Workspace/img/Style/Snow/Background/snow02.jpg);*/
+/*	background-image: url(/Workspace/img/Style/Snow/Background/snow03.jpg);*/
+/*	background-image: url(/Workspace/img/Style/Snow/Background/snow04.jpg);*/
+	background-image: url(/Workspace/img/Style/Snow/Background/snow05.gif);
 	background-color: white;
 	scrollbar-face-color: white;
 	scrollbar-highlight-color: #84B2C6;

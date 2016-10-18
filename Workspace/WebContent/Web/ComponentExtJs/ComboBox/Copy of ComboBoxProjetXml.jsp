@@ -28,7 +28,7 @@ Ext.onReady(function(){
 
 	var combo = new Ext.form.ComboBox({
         store: store,
-        //url: '/WorkSpace/action.servlet?event=JsonProjectName',
+        //url: '/Workspace/action.servlet?event=JsonProjectName',
         //autoLoad: true,
         displayField:'project',
         typeAhead: true,
@@ -40,7 +40,7 @@ Ext.onReady(function(){
         applyTo: 'local-project'/*,
 		onSelect: function(record){ // override default onSelect to do redirect
 			window.location = 
-			String.format('/WorkSpace/action.servlet?event={0}&application={1}'+
+			String.format('/Workspace/action.servlet?event={0}&application={1}'+
 				'<request:TagPrintAttribut name="paramOther" scope="request"/>', 
 				'<request:TagPrintAttribut name="eventDst" scope="request"/>', record.data.project);
 		}*/

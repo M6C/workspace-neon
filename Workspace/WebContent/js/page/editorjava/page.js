@@ -47,18 +47,18 @@ function getFileNameFromURI(szFileName) {
 function onClickTvDir(param, anchor) {
  //var szAfterReloadDir = "document.getElementById('treeviewDir').scrollTop = document.getElementById('"+anchor+"').offsetTop";
  var szAfterReloadDir = "afterClickTvDir('"+param+"', '"+anchor+"')";
- reloadDir('/Web/Component/TreeView/TreeViewDir_Border01.jsp', param, szAfterReloadDir);
- reloadFile('/Web/Component/TreeView/TreeViewFile_Border01.jsp', param);
- reloadMenu('/Web/Component/Menu/EditorJava/MenuHeader.jsp', param);
+ reloadDir(DOMAIN_NAME_ROOT+'/Web/Component/TreeView/TreeViewDir_Border01.jsp', param, szAfterReloadDir);
+ reloadFile(DOMAIN_NAME_ROOT+'/Web/Component/TreeView/TreeViewFile_Border01.jsp', param);
+ reloadMenu(DOMAIN_NAME_ROOT+'/Web/Component/Menu/EditorJava/MenuHeader.jsp', param);
 }
 function afterClickTvDir(param, anchor) {
     document.getElementById('treeviewDir').scrollTop = document.getElementById(anchor).offsetTop;
 }
 function onClickTvFile(param, filename) {
- var szAfterReloadEditor = "reloadEditorNavBar('/Web/Component/Reload/Reload_Editor_NavBar_Border01.jsp', '"+param+"')";
- reloadEditor('/Web/Component/Reload/Reload_Editor_Border01.jsp', param, szAfterReloadEditor);
- reloadEditorFilename('/Web/Component/Reload/Reload_Editor_Filename_Border01.jsp', param);
- reloadMenu('/Web/Component/Menu/EditorJava/MenuHeader.jsp', param);
+ var szAfterReloadEditor = "reloadEditorNavBar(DOMAIN_NAME_ROOT+'/Web/Component/Reload/Reload_Editor_NavBar_Border01.jsp', '"+param+"')";
+ reloadEditor(DOMAIN_NAME_ROOT+'/Web/Component/Reload/Reload_Editor_Border01.jsp', param, szAfterReloadEditor);
+ reloadEditorFilename(DOMAIN_NAME_ROOT+'/Web/Component/Reload/Reload_Editor_Filename_Border01.jsp', param);
+ reloadMenu(DOMAIN_NAME_ROOT+'/Web/Component/Menu/EditorJava/MenuHeader.jsp', param);
  document.forms["ValiderEditorJava"].navIndex.value = 0;
 }
 function onClickNavBar(param, index, nbRow, filename) {
@@ -70,12 +70,12 @@ function onClickNavBar(param, index, nbRow, filename) {
  //var param1 = param + "&navIndex="+iIndex+"&navNbRow=50";
  var param1 = param + "&"+index+"&navNbRow=50";
 // alert("param1:"+param1);
- var szAfterReloadEditor = "reloadEditorNavBar('/Web/Component/Reload/Reload_Editor_NavBar_Border01.jsp', '"+param1+"')";
+ var szAfterReloadEditor = "reloadEditorNavBar(DOMAIN_NAME_ROOT+'/Web/Component/Reload/Reload_Editor_NavBar_Border01.jsp', '"+param1+"')";
 // alert("szAfterReloadEditor:"+szAfterReloadEditor);
  if (iIndex>=iNavIndex) {
   var param2 = param + "&navIndex="+iNavIndex+"&navNbRow="+iNavNbRow;
   //var param2 = param + "&"+index+"&navNbRow="+iNavNbRow;
-  reloadEditorAppend('/Web/Component/Reload/Reload_Editor_Append_Border01.jsp', param2, szAfterReloadEditor);
+  reloadEditorAppend(DOMAIN_NAME_ROOT+'/Web/Component/Reload/Reload_Editor_Append_Border01.jsp', param2, szAfterReloadEditor);
 // alert("iIndex + nbRow:"+(iIndex + nbRow));
   document.forms["ValiderEditorJava"].navIndex.value = iIndex + nbRow;// - 1;
   document.forms["ValiderEditorJava"].navNbRow.value = iIndex + nbRow;
@@ -89,7 +89,7 @@ function onClickNavBar(param, index, nbRow, filename) {
 function onClickNavBarNextPrev(param, index, nbRow) {
  //var param1 = param + "&navIndex="+index+"&navNbRow="+nbRow;
  var param1 = param + "&"+index+"&navNbRow="+nbRow;
- reloadEditorNavBar('/Web/Component/Reload/Reload_Editor_NavBar_Border01.jsp', param1);
+ reloadEditorNavBar(DOMAIN_NAME_ROOT+'/Web/Component/Reload/Reload_Editor_NavBar_Border01.jsp', param1);
 }
 function iniNumberLine() {
    var numline = document.getElementById("numberline").value;

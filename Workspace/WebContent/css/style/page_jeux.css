@@ -3,15 +3,15 @@
 @import url ("../component/treeview/TreeView_Snow01.css");
 @import url ("../component/treeview/TreeViewFile_Snow01.css");
 */
-@import url ("/WorkSpace/css/toolbar/ToolBar_Snow01.css");
-@import url ("/WorkSpace/css/component/treeview/TreeView_Snow01.css");
-@import url ("/WorkSpace/css/component/treeview/TreeViewFile_Snow01.css");
-@import url ("/WorkSpace/css/component/combo/Completion_Snow01.css");
+@import url ("/css/toolbar/ToolBar_Snow01.css");
+@import url ("/css/component/treeview/TreeView_Snow01.css");
+@import url ("/css/component/treeview/TreeViewFile_Snow01.css");
+@import url ("/css/component/combo/Completion_Snow01.css");
 
 body {
-	background-image: url(/WorkSpace/img/Style/Jeux/Background/jeux01.jpg);
-/*	background-image: url(/WorkSpace/img/Style/Jeux/Background/jeux02.jpg);*/
-/*	background-image: url(/WorkSpace/img/Style/Jeux/Background/jeux03.jpg);*/
+	background-image: url(/Workspace/img/Style/Jeux/Background/jeux01.jpg);
+/*	background-image: url(/Workspace/img/Style/Jeux/Background/jeux02.jpg);*/
+/*	background-image: url(/Workspace/img/Style/Jeux/Background/jeux03.jpg);*/
 	background-color: white;
 	scrollbar-face-color: white;
 	scrollbar-highlight-color: #84B2C6;

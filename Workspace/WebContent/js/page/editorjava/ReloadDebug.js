@@ -1,9 +1,9 @@
 
 // The server-side script
-var urlReloadDebug = ""//Pour Google App Engine"/WorkSpace";
+var urlReloadDebug = ""//Pour Google App Engine"/Workspace";
 var hHttp_ReloadDebug;
 
-include_js("/js/HTTPObject.js")
+include_js(DOMAIN_NAME_ROOT+"/js/HTTPObject.js")
 
 function reloadDebug(urlPage, urlParam) {
 //alert("reloadDebug: '"+urlPage+"' '"+urlParam+"'");

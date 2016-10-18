@@ -42,7 +42,7 @@ td.treeviewTopLeft {
 	WIDTH: 10px;
 	HEIGHT: 5px;
 	FONT-SIZE: 1px;
-	background-image: url(/WorkSpace/img/TreeView/boxTL.gif);
+	background-image: url(/Workspace/img/TreeView/boxTL.gif);
 	background-repeat: no-repeat;
 	background-position: left top;
 	border: 0px solid black;
@@ -51,7 +51,7 @@ td.treeviewTopLeft {
 td.treeviewTop {
 	WIDTH: 100%;
 	HEIGHT: 5px;
-	background-image: url(/WorkSpace/img/TreeView/boxTop.gif);
+	background-image: url(/Workspace/img/TreeView/boxTop.gif);
 	background-repeat: repeat-x;
 	background-position: top;
 	border: 0px solid black;
@@ -60,7 +60,7 @@ td.treeviewTop {
 td.treeviewTopRight {
 	WIDTH: 10px;
 	HEIGHT: 5px;
-	background-image: url(/WorkSpace/img/TreeView/boxTR.gif);
+	background-image: url(/Workspace/img/TreeView/boxTR.gif);
 	background-repeat: no-repeat;
 	background-position: left top;
 	border: 0px solid black;
@@ -68,7 +68,7 @@ td.treeviewTopRight {
 /*                      Left                       */
 td.treeviewLeft {
 	WIDTH: 10px;
-	background-image: url(/WorkSpace/img/TreeView/boxLeft.gif);
+	background-image: url(/Workspace/img/TreeView/boxLeft.gif);
 	background-repeat: repeat-y;
 	background-position: left top;
 	border: 0px solid black;
@@ -106,7 +106,7 @@ a.treeviewHeader:active {
 /*                     Right                       */
 td.treeviewRight {
 	WIDTH: 10px;
-	background-image: url(/WorkSpace/img/TreeView/boxRight.gif);
+	background-image: url(/Workspace/img/TreeView/boxRight.gif);
 	background-repeat: repeat-y;
 	background-position: left top;
 	border: 0px solid black;
@@ -115,7 +115,7 @@ td.treeviewRight {
 td.treeviewBottomLeft {
 	WIDTH: 10px;
 	HEIGHT: 10px;
-	background-image: url(/WorkSpace/img/TreeView/boxBL.gif);
+	background-image: url(/Workspace/img/TreeView/boxBL.gif);
 	background-repeat: no-repeat;
 	background-position: left top;
 	border: 0px solid black;
@@ -124,7 +124,7 @@ td.treeviewBottomLeft {
 td.treeviewBottom {
 	WIDTH: 100%;
 	HEIGHT: 10px;
-	background-image: url(/WorkSpace/img/TreeView/boxBottom.gif);
+	background-image: url(/Workspace/img/TreeView/boxBottom.gif);
 	background-repeat: repeat-x;
 	background-position: top;
 	border: 0px solid black;
@@ -134,7 +134,7 @@ td.treeviewBottomRight {
 	WIDTH: 10px;
 	HEIGHT: 10px;
 	FONT-SIZE: 1px;
-	background-image: url(/WorkSpace/img/TreeView/boxBR.gif);
+	background-image: url(/Workspace/img/TreeView/boxBR.gif);
 	background-repeat: no-repeat;
 	background-position: left top;
 	border: 0px solid black;

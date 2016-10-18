@@ -1,10 +1,10 @@
 
 // The server-side script
-var urlReloadDir = ""//Pour Google App Engine"/WorkSpace";
+var urlReloadDir = ""//Pour Google App Engine"/Workspace";
 var hHttp_ReloadDir;
 var afterReloadDir;
 
-include_js("/js/HTTPObject.js")
+include_js(DOMAIN_NAME_ROOT+"/js/HTTPObject.js")
 
 function reloadDir(urlPage, urlParam, szAfterReloadDir) {
   afterReloadDir = szAfterReloadDir;

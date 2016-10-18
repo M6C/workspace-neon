@@ -2,7 +2,7 @@
 var urlMousePress = "/ActionMouseEvent";
 var hHttp_ReloadMouseClick;
 
-include_js("/js/HTTPObject.js")
+include_js(DOMAIN_NAME_ROOT+"/js/HTTPObject.js")
 
 function getMouseDown(e) {
   reloadMouseClick(e, "CLICK") ;

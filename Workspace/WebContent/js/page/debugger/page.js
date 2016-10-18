@@ -43,12 +43,12 @@ function getFileNameFromURI(szFileName) {
 }
 
 function onClickTvDir(param) {
-	reloadDir('/Web/Component/TreeView/TreeViewDir_Border01.jsp', param);
-	reloadFile('/Web/Component/TreeView/TreeViewFile_Border01.jsp', param);
-	reloadMenu('/Web/Component/Menu/Debugger/MenuHeader.jsp', param);
+	reloadDir(DOMAIN_NAME_ROOT+'/Web/Component/TreeView/TreeViewDir_Border01.jsp', param);
+	reloadFile(DOMAIN_NAME_ROOT+'/Web/Component/TreeView/TreeViewFile_Border01.jsp', param);
+	reloadMenu(DOMAIN_NAME_ROOT+'/Web/Component/Menu/Debugger/MenuHeader.jsp', param);
 }
 
 function onClickTvFile(param, filename) {
 //	window.location = 'action.servlet?event=DebuggerPage&' + param;
-	reloadDebug('/Web/Component/Reload/Reload_Debug_Border01.jsp', param);
+	reloadDebug(DOMAIN_NAME_ROOT+'/Web/Component/Reload/Reload_Debug_Border01.jsp', param);
 }

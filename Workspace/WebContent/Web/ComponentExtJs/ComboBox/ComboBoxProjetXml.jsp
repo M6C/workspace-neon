@@ -32,7 +32,7 @@ Ext.onReady(function(){
 
 	var store = new Ext.data.Store({
 	    proxy: new Ext.data.HttpProxy({
-	        url: '/WorkSpace/action.servlet?event=JsonProjectName'
+	        url: '/Workspace/action.servlet?event=JsonProjectName'
 	    }),
 	    reader: new Ext.data.JsonReader({
 			idProperty: 'project',
@@ -47,7 +47,7 @@ Ext.onReady(function(){
 
 	var combo = new Ext.form.ComboBox({
         store: store,
-        //url: '/WorkSpace/action.servlet?event=JsonProjectName',
+        //url: '/Workspace/action.servlet?event=JsonProjectName',
         //autoLoad: true,
         displayField:'project',
         typeAhead: true,

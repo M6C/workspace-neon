@@ -1,5 +1,5 @@
-@import url ("/WorkSpace/css/style/page.css");
-@import url ("/WorkSpace/css/page/debugger/styles.css");
+@import url ("/css/style/page.css");
+@import url ("/css/page/debugger/styles.css");
 table.treeview {
 	width:100%;
 }

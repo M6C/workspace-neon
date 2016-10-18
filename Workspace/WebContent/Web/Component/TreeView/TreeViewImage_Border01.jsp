@@ -4,6 +4,7 @@
 <%@ taglib uri="Framework_Taglib_Date.tld" prefix="date" %>
 <%@ taglib uri="Framework_Taglib_Eval.tld" prefix="eval" %>
 <%@ taglib uri="Framework_Taglib_Request.tld" prefix="request" %>
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 
 <logic:TagIfDefine name="pathToExpand" scope="request">
     <request:TagDefineAttribute scope="request" name="pathTreeViewFileExt" expression="#R$path##R$pathToExpand#"/>

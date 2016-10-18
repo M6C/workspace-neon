@@ -1,9 +1,9 @@
 
 // The server-side script
-var urlReloadEditorNavBar = ""//Pour Google App Engine"/WorkSpace";
+var urlReloadEditorNavBar = ""//Pour Google App Engine"/Workspace";
 var hHttp_ReloadEditorNavBar;
 
-include_js("/js/HTTPObject.js")
+include_js(DOMAIN_NAME_ROOT+"/js/HTTPObject.js")
 
 function reloadEditorNavBar(urlPage, urlParam) {
   hHttp_ReloadEditorNavBar = getHTTPObject();

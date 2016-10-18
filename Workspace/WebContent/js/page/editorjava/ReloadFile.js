@@ -1,9 +1,9 @@
 
 // The server-side script
-var urlReloadFile = ""//Pour Google App Engine"/WorkSpace";
+var urlReloadFile = ""//Pour Google App Engine"/Workspace";
 var hHttp_ReloadFile;
 
-include_js("/js/HTTPObject.js")
+include_js(DOMAIN_NAME_ROOT+"/js/HTTPObject.js")
 
 function reloadFile(urlPage, urlParam) {
   hHttp_ReloadFile = getHTTPObject();
