@@ -100,7 +100,7 @@
                     <table class="treeview">
                         <form name="ValiderEditorJava" action="action.servlet" method="post">
                             <input type="hidden" name="event" value="EditorJavaPageSave"/>
-                            <input type="hidden" name="navIndex" value="0"/>
+                            <input type="hidden" name="navIndex" value="1"/>
                             <input type="hidden" name="navNbRow" value="0"/>
                             <input type="hidden" name="len" id="len"/>
                                 <tr>

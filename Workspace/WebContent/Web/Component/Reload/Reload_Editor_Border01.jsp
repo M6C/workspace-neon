@@ -13,15 +13,16 @@
 </logic:TagIfNotDefine>
 
 <logic:TagIfDefine name="FileName" scope="request">
-    <%--logic:TagIf expression='"#R$FileName#".toLowerCase().endsWith(".java")'--%>
-    <%if ((request.getAttribute("FileName")!=null)&&((String)request.getAttribute("FileName")).toLowerCase().endsWith(".java")) { %>
-        initIframe('<file:TagFileReader path="#R$path##R$pathToExpand##R$FileName#" encoding="HTML" nameFileOut="fileReaded" scopeFileOut="session" startLine="#R$navIndex#" nbLine="#R$navNbRow#" reUseFileOut="true"/>', true);
-    <%--/logic:TagIf--%>
-    <%--logic:TagIf expression='!"#R$FileName#".toLowerCase().endsWith(".java")'--%>
-    <%} else { %>
-        initIframe('<file:TagFileReader path="#R$path##R$pathToExpand##R$FileName#" encoding="HTML" nameFileOut="fileReaded" scopeFileOut="session" startLine="#R$navIndex#" nbLine="#R$navNbRow#" reUseFileOut="true"/>', false);
-    <%}%>
-    <%--/logic:TagIf--%>
+    <%boolean colorize = false;%>
+    <logic:TagIf expression='"#R$FileName#".toLowerCase().endsWith(".java")'>
+    <%colorize = true;%>
+    </logic:TagIf>
+    <%
+    if (!colorize && (request.getAttribute("FileName")!=null)&&((String)request.getAttribute("FileName")).toLowerCase().endsWith(".java")) {
+    	colorize = true;
+    }
+    %>
+    initIframe('<file:TagFileReader path="#R$path##R$pathToExpand##R$FileName#" encoding="HTML" nameFileOut="fileReaded" scopeFileOut="session" startLine="#R$navIndex#" nbLine="#R$navNbRow#" reUseFileOut="true"/>', <%=colorize%>);
    	var iNavIndex = document.forms["ValiderEditorJava"].navIndex.value;
    	if (iNavIndex==1) {
    		document.forms["ValiderEditorJava"].navIndex.value = 51;
