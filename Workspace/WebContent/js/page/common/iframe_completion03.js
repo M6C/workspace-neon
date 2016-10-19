@@ -173,17 +173,24 @@ AutoComplete.prototype.getDocument = function() {
 }
 
 AutoComplete.prototype.getRange = function() {
-//alert("AutoCompleteDB.prototype.getRange");
-  if (this.oText.tagName.toUpperCase() == 'IFRAME') {
-    return frames[this.oText.name].document.selection.createRange().duplicate();
-  }
-  else {
-    if(this.getDocument().createTextRange ) {
-      return this.oText.createTextRange();
-    }
-    else
-      return;
-  }
+	//alert("AutoCompleteDB.prototype.getRange");
+	  if (this.oText.tagName.toUpperCase() == 'IFRAME') {
+//	    return frames[this.oText.name].document.selection.createRange().duplicate();2
+	    return this.getRangeSelection();
+	  }
+	  else {
+	    if(this.getDocument().createTextRange ) {
+	      return this.oText.createTextRange();
+	    }
+	    else
+	      return;
+	  }
+	}
+
+AutoComplete.prototype.getRangeSelection = function() {
+	var d = this.getDocument();
+	if (d.getSelection) return d.getSelection();
+	else if(d.selection) return d.selection.createRange().duplicate();
 }
 
 AutoComplete.prototype.getText = function() {
@@ -1028,7 +1035,7 @@ var DivTop = 0;   //Position du Div par rapport au haut de la page
 RECUPERATION DE LA POSITION DU CURSEUR DANS LA IFRAME
 */
 var textBox = document.getElementById('htmle')
-var caretPos = document.selection.createRange();
+var caretPos = (document.getSelection) ? (document.getSelection)() : document.selection.createRange();
 var boundingTop = caretPos.offsetTop;
 if (textBox.scrollTop != undefined)
     boundingTop += textBox.scrollTop;

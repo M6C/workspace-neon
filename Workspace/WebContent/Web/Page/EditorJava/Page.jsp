@@ -42,14 +42,16 @@
     </head>
     <%--logic:TagIf expression='"#R$FileName#".toLowerCase().endsWith(".java")'--%>
     
-    <%if ((request.getAttribute("FileName")!=null)&&((String)request.getAttribute("FileName")).toLowerCase().endsWith(".java")) { %>
-    	<body onload="javascript:init(true);">
-    <%--/logic:TagIf--%>
-    <%--logic:TagIf expression='!"#R$FileName#".toLowerCase().endsWith(".java")'--%>
-    <%} else { %>
-	    <body onload="javascript:init(false);">
-    <%}%>
-    <%--/logic:TagIf--%>
+    <%boolean completion = false;%>
+    <logic:TagIf expression='"#R$FileName#".toLowerCase().endsWith(".java")'>
+    <%completion = true;%>
+    </logic:TagIf>
+    <%
+    if (!completion && (request.getAttribute("FileName")!=null)&&((String)request.getAttribute("FileName")).toLowerCase().endsWith(".java")) {
+    	completion = true;
+    }
+    %>
+   	<body onload="javascript:init(<%=completion%>);">
         <table cellspacing="0" cellpadding="0" width="100%" height="100%">
         <tr height="10%" valign="top" align="center">
             <td colspan="2" valign="top">
