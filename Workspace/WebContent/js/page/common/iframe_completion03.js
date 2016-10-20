@@ -1,4 +1,4 @@
-var url = "/action.servlet";//"/action.servlet?event=EditorJavaCompletion&"; // The server-side script
+var url = DOMAIN_NAME_ROOT + "/action.servlet";//"/action.servlet?event=EditorJavaCompletion&"; // The server-side script
 /*
 function SymError() {
   return true;
@@ -231,18 +231,30 @@ AutoComplete.prototype.getCaretPos = function() {
       var orig;
       var pos = 0;
 
-      if (this.oText.tagName.toUpperCase() == 'IFRAME') {
-        var workRange=frames[this.oText.name].document.selection.createRange();
+      if (this.oText.contentDocument) {
+    	  //granularity : "character", "word", "sentence", "line", "paragraph", "lineboundary", "sentenceboundary", "paragraphboundary", or "documentboundary"
+    	  var granularity = "line";
+    	  //this.oText.contentDocument.documentElement.innerText.length;
+    	  var range = ac.extendSelection(granularity, -1);
+    	  var cnt = range.baseOffset;
+    	  while(cnt > 0) {
+    		  ac.modifyRange(range, "extend", "backward", granularity, 1);
+    		  cnt = range.extentOffset;
+    		  pos += cnt;
+    	  }
+      }
+      else if (this.oText.tagName.toUpperCase() == 'IFRAME') {
+        var workRange=this.getRangeSelection();//frames[this.oText.name].document.selection.createRange();
         var len = workRange.text.length;
         var lenTmp = len-1;
         while (len != lenTmp) {
           lenTmp = len;
-          workRange.moveStart('character', -1);
+          ac.extendSelection('character', -1);
           pos++;
           len = workRange.text.length;
         }
         pos--;
-        workRange.moveStart('character', pos);
+        ac.extendSelection('character', pos);
       }
       else {
         orig = this.oText.value;
@@ -280,14 +292,14 @@ AutoComplete.prototype.beforeTextChange = function(evt) {
   var aRange;
   if (aCar==8){ //DELETE BACK
     aRange = ac.getRange();
-    aRange.moveStart('character', -2);
+    ac.extendSelection('character', -2);
     cnt=2;
     car = aRange.text;
     unComment = car=='//';
     unCommentBlock = !unComment && (car=='/*' || car=='*/');
     if (!unComment && !unCommentBlock) {
-      aRange.moveStart('character', 1);
-      aRange.moveEnd('character', 1);
+      ac.extendSelection('character', -1); //aRange.moveStart('character', 1)
+      ac.extendSelection('character', +1); //aRange.moveEnd('character', 1)
       car = aRange.text;
       unComment = car=='//';
       unCommentBlock = !unComment && (car=='/*' || car=='*/');
@@ -296,7 +308,7 @@ AutoComplete.prototype.beforeTextChange = function(evt) {
   }
   else if (aCar==46) {  //DELETE
     aRange = ac.getRange();
-    aRange.moveEnd('character', 2);
+    ac.extendSelection('character', +2); //aRange.moveEnd('character', 2);
     cnt=2;
     pos=1;
     cnt++;
@@ -304,10 +316,10 @@ AutoComplete.prototype.beforeTextChange = function(evt) {
     unComment = car=='//';
     unCommentBlock = !unComment && (car=='/*' || car=='*/');
     if (!unComment && !unCommentBlock) {
-      aRange.moveStart('character', -1);
-      aRange.moveEnd('character', -1);
+      aRange = ac.extendSelection('character', -1); //ac.extendSelection('character', -1);
+      aRange = ac.extendSelection('character', +1); //aRange.moveEnd('character', -1);
       cnt++;
-      car = aRange.text;
+      car = ac.text(aRange);
       unComment = car=='//';
       unCommentBlock = !unComment && (car=='/*' || car=='*/');
       middle = true;
@@ -321,18 +333,18 @@ AutoComplete.prototype.beforeTextChange = function(evt) {
   if (unComment) {
     do {
       len = car.length;
-      aRange.moveEnd('character', 1);
+      ac.extendSelection('character', +1); //aRange.moveEnd('character', 1);
       car = aRange.htmlText;
       if(car.toLowerCase().indexOf('<br>')>=0) {
-        aRange.moveStart('character', -1);
-        aRange.moveEnd('character', 1);
+    	ac.extendSelection('character', -1); //aRange.moveStart('character', -1);
+    	ac.extendSelection('character', +1); //aRange.moveEnd('character', 1);
         var html = trimDiv(aRange.htmlText);
         html = html.toLowerCase();
         html = html.replace(comment[0], '');
         html = html.replace(comment[1], '');
         aRange.pasteHTML('<font>'+html+'</font>');
-        aRange.moveStart('character', -cnt);
-        aRange.moveEnd('character', -cnt);
+        ac.extendSelection('character', -cnt); //aRange.moveStart('character', -cnt);
+        ac.extendSelection('character', +cnt); //aRange.moveEnd('character', -cnt);
         aRange.select();
         break;
       }
@@ -353,36 +365,37 @@ AutoComplete.prototype.beforeTextChange = function(evt) {
     var ret = 0;
     do {
       len = car.length;
-      if (aSens>0) {
-        ret=aRange.moveEnd('character', aSens);
-      }
-      else {
-        ret=aRange.moveStart('character', aSens);
-      }
-      car = aRange.htmlText;
+      aRange = ac.extendSelection('character', aSens);
+//      if (aSens>0) {
+//        ret=aRange.moveEnd('character', aSens);
+//      }
+//      else {
+//        ret=ac.extendSelection('character', aSens);
+//      }
+      car = ac.text(aRange);//aRange.htmlText;
       if (((len>=4)&&(car.substring(len-4, len).toLowerCase()=='<br>')) ||
           ((len>=5)&&(car.substring(len-5, len).toLowerCase()=='<div>'))) {
         cnt++;
       }
       if(car.indexOf(aEnd)>=0) {
-        aRange.moveStart('character', -1);
-        aRange.moveEnd('character', 1);
+    	ac.extendSelection('character', -1); //aRange.moveStart('character', -1);
+    	ac.extendSelection('character', +1); //aRange.moveEnd('character', 1);
         var html = trimDiv(aRange.htmlText);
         html = html.toLowerCase();
         html = html.replace(comment[0], '');
         html = html.replace(comment[1], '');
-        aRange.pasteHTML(html);
+        ac.insertHtml(html);//aRange.pasteHTML(html);
         if (aSens>0) {
           if(pos==1)       cnt--;
           else if (middle) cnt++;
-          aRange.moveStart('character', -cnt);
-          aRange.moveEnd('character', -cnt);
+          ac.extendSelection('character', -cnt); //aRange.moveStart('character', -cnt);
+          ac.extendSelection('character', +cnt); //aRange.moveEnd('character', -cnt);
         }
         else {
             if (middle) cnt = 2;
             else        cnt = (pos==0) ? 1 : 3;
-            aRange.moveStart('character', -cnt);
-            aRange.moveEnd('character', -cnt);
+            ac.extendSelection('character', -cnt); //aRange.moveStart('character', -cnt);
+            ac.extendSelection('character', +cnt); //aRange.moveEnd('character', -cnt);
         }
         aRange.select();
         break;
@@ -407,23 +420,25 @@ AutoComplete.prototype.onTextChange = function(evt) {
       this.db = new Array();
       completion(text, pos);
     }
-    document.focus();
+    if (document.focus) {
+    	document.focus();
+    }
   }
   else if (aCar==51) { // Caractere : '"'
-    aRange.moveStart('character', -1);
+	ac.extendSelection('character', -1);
     aRange.pasteHTML(stringChar[0] + '"' + stringChar[1]);
   }
   else if (aCar==106) { // Caractere : '*'
-    aRange.moveStart('character', -2);
+	ac.extendSelection('character', -2);
     var c = aRange.text;
     if (c=='/*') {
-      aRange.moveEnd('character', +1);
+      ac.extendSelection('character', +1); //aRange.moveEnd('character', +1);
       c = aRange.text;
       var len = 0;
       var cnt = 2;
       while(len!=c.length) {
         len = c.length;
-        aRange.moveEnd('character', +1);
+        ac.extendSelection('character', +1); //aRange.moveEnd('character', +1);
         c = aRange.text.substring(2);
         if(c.indexOf('/*')>=0) {
           break;
@@ -431,8 +446,8 @@ AutoComplete.prototype.onTextChange = function(evt) {
         else if(c.indexOf('*/')>=0) {
           var html = trimDiv(aRange.htmlText);
           aRange.pasteHTML(comment[0] + html + comment[1]);
-          aRange.moveStart('character', -cnt);
-          aRange.moveEnd('character', -cnt);
+          ac.extendSelection('character', -cnt); //aRange.moveStart('character', -cnt);
+          ac.extendSelection('character', +cnt); //aRange.moveEnd('character', -cnt);
           aRange.select();
           break;
         }
@@ -441,13 +456,13 @@ AutoComplete.prototype.onTextChange = function(evt) {
     }
   }
   else if (aCar==111) { // Caractere : '/'
-    aRange.moveStart('character', -2);
+	  ac.extendSelection('character', -2);
     var c = aRange.text;
     if (c=='*/') {
       var len = 0;
       do {
         len = c.length;
-        aRange.moveStart('character', -1);
+        ac.extendSelection('character', -1);
         c = aRange.text;
         var aLen = c.length-2;
         if(c.substring(0, aLen).indexOf('/*')>=0) {
@@ -465,13 +480,13 @@ AutoComplete.prototype.onTextChange = function(evt) {
       var len = 0, cnt = 1;
       do {
         len = c.length;
-        aRange.moveEnd('character', 1);
+        ac.extendSelection('character', +1); //aRange.moveEnd('character', 1);
         c = aRange.htmlText;
         if(c.toLowerCase().indexOf('<br>')>=0) {
           var html = trimDiv(aRange.htmlText);
           aRange.pasteHTML(comment[0] + html + comment[1]);
-          aRange.moveStart('character', -cnt);
-          aRange.moveEnd('character', -cnt);
+          ac.extendSelection('character', -cnt); //aRange.moveStart('character', -cnt);
+          ac.extendSelection('character', +cnt); //aRange.moveEnd('character', -cnt);
           aRange.select();
           break;
         }
@@ -480,17 +495,131 @@ AutoComplete.prototype.onTextChange = function(evt) {
       while(len!=c.length);
     }
   }
+  else if (aCar==46) {} // Delete - Do Nothing
+  else if (aCar==8) {} // Back space - Do Nothing
   else { //if (isSpaceCar(aCar)) {
-    aRange.moveStart('word', -1);
-    aText = aRange.text;
-    for (var i=0; i<source.length; i++) {
-      // parcours des tableaux de mots a formater (colorizer)
-      if (aText.toUpperCase()==source[i].toUpperCase()) {
-        aRange.pasteHTML(remplacant[i][0] + aText + remplacant[i][1]);
-        break;
-      }
+	aRange = ac.extendSelection('word', -1);
+    aText = ac.text(aRange);
+    var find = false;
+    if (aText != undefined) {
+	    for (var i=0; i<source.length; i++) {
+	      // parcours des tableaux de mots a formater (colorizer)
+	      if (aText.toUpperCase()==source[i].toUpperCase()) {
+	    	  ac.insertHtml(remplacant[i][0] + aText + remplacant[i][1]);
+	    	  find = true;
+	    	  ac.moveSelection('character', aText.length);
+	    	  break;
+	      }
+	    }
     }
+    if (find == false)
+    ac.collapse(aRange);
   }
+}
+
+AutoComplete.prototype.text = function (range) {
+    return (range.text) ? range.text : range.anchorNode.data;
+}
+
+AutoComplete.prototype.collapse = function (range) {
+    if (range.collapseToEnd) {
+    	range.collapseToEnd();
+    }
+}
+
+AutoComplete.prototype.moveSelection = function (granularity, value) {
+	return this.backspace("move", granularity, value);
+}
+
+AutoComplete.prototype.extendSelection = function (granularity, value) {
+	return this.backspace("extend", granularity, value);
+}
+
+//alter : "move" or "extend"
+//granularity : "character", "word", "sentence", "line", "paragraph", "lineboundary", "sentenceboundary", "paragraphboundary", or "documentboundary"
+AutoComplete.prototype.backspace = function (alter, granularity, value) {
+	// "forward" or "backward", "left" or "right"
+	var direction = (value < 0) ? "backward" : "forward";
+    //var sel = window.getSelection();
+	var sel = this.getRangeSelection();
+
+	ac.modifyRange(sel, alter, direction, granularity, value);
+
+	return sel;
+}
+
+//alter : "move" or "extend"
+//direction : "forward" or "backward", "left" or "right"
+//granularity : "character", "word", "sentence", "line", "paragraph", "lineboundary", "sentenceboundary", "paragraphboundary", or "documentboundary"
+AutoComplete.prototype.modifyRange = function (range, alter, direction, granularity, value) {
+	if (range.moveStart) {
+		range.moveStart('word', value);
+		return ac.getRange();
+	} else {
+		var cnt = Math.abs(value);
+		for(var i=0 ; i<cnt ; i++) {
+		    // If there is a selection rather than a caret, just delete the selection
+//		    if (!range.isCollapsed) {
+//		        range.deleteFromDocument();
+//		    } else
+		    if (range.rangeCount && range.modify) {
+		    	range.modify(alter, direction, granularity);
+//		        range.deleteFromDocument();
+		    }
+		}
+	}
+}
+
+AutoComplete.prototype.insertText = function (text) {
+	var sel = this.getRangeSelection();
+	if (sel) {
+        if (sel.getRangeAt && sel.rangeCount) {
+            range = sel.getRangeAt(0);
+            range.deleteContents();
+            range.insertNode( document.createTextNode(text));
+        }
+	} else if (document.selection && document.selection.createRange) {
+        document.selection.createRange().text = text;
+    }
+}
+
+AutoComplete.prototype.insertHtml = function (text) {
+	var sel = this.getRangeSelection();
+	if (sel) {
+        if (sel.getRangeAt && sel.rangeCount) {
+            range = sel.getRangeAt(0);
+            range.deleteContents();
+            var descriptionNode = document.createElement("font");
+            descriptionNode.innerHTML = text;
+            range.insertNode(descriptionNode);
+        }
+	} else if (document.selection && document.selection.createRange) {
+        document.selection.createRange().text = text;
+    }
+}
+
+AutoComplete.prototype.saveSelection = function () {
+	var sel = this.getRangeSelection();
+	if (sel) {
+        if (sel.getRangeAt && sel.rangeCount) {
+            return sel.getRangeAt(0);
+        }
+    } else if (document.selection && document.selection.createRange) {
+        return document.selection.createRange();
+    }
+    return null;
+}
+
+AutoComplete.prototype.restoreSelection = function (range) {
+    if (range) {
+    	var sel = this.getRangeSelection();
+    	if (sel) {
+            sel.removeAllRanges();
+            sel.addRange(range);
+        } else if (document.selection && range.select) {
+            range.select();
+        }
+    }
 }
 
 AutoComplete.prototype.colorizeHtml = function(text) {
@@ -601,9 +730,7 @@ AutoComplete.prototype.handleHttpResponse = function() {
 
 AutoComplete.prototype.storeCaret = function() {
 //alert("AutoCompleteDB.prototype.storeCaret");
-  if (this.getDocument().selection) {
-    this.oText.caretPos = this.getDocument().selection.createRange().duplicate();
-  }
+  this.oText.caretPos = this.getRangeSelection();
 }
 
 AutoComplete.prototype.cleanData = function() {
@@ -924,43 +1051,46 @@ function cleanDiv() {
 function buildDiv() {
 //alert("buildDiv");
 
-  // add each string to the popup-div
-  var n = ac.db.length;
-  if (n>0) {
-    // clear the popup-div.
-    cleanDiv();
+	// add each string to the popup-div
+	var n = ac.db.length;
+	// clear the popup-div.
+	cleanDiv();
 
-var szHead = "<table width='100%'><tr><td align='left' class='AutoCompleteHeader'>" + ac.db[0] + "</td><td align='right'><a href='javascript:cleanDiv()'>[X]</a></td></tr></table>";
-    var lDiv = document.createElement("div");
-    lDiv.id = "aDiv0";
-    lDiv.innerHTML = szHead ;
-    lDiv.className = "AutoCompleteHeader";
-    lDiv.AutoComplete = this;
-    ac.oDiv.appendChild(lDiv);
-
-    var aDiv = document.createElement("div");
-    aDiv.id = "aDiv";
-    aDiv.className = "comboCompletion";
-    ac.oDiv.appendChild(aDiv);
-    for (var i=1 ; i<n ; i++ ) {
-      lDiv = document.createElement("div");
-      lDiv.id = "aDiv"+i;
-      lDiv.innerHTML = ac.db[i];
-      lDiv.onmousedown = AutoComplete.prototype.onDivMouseDown;
-      lDiv.onmouseover = AutoComplete.prototype.onDivMouseOver;
-      //lDiv.onmouseout = AutoComplete.prototype.onDivMouseOut;
-      lDiv.onfocus = AutoComplete.prototype.onDivMouseOver;
-      lDiv.onkeyup = AutoComplete.prototype.onDivKeyUp;
-      lDiv.className = "AutoCompleteBackground";
-      lDiv.AutoComplete = ac;
-      aDiv.appendChild(lDiv);
-    }
-    setToAnchor(ac.oAnchorId, ac.oAnchorName, ac.oDivName);
-    ac.oDiv.style.visibility = "visible";
-    ac.oDiv.focus();
-    document.getElementById("aDiv1").focus();
-    ac.cleanData();
-  }
+	var title = (n>0) ? ac.db[0] : "Not Found";
+	var szHead = "<table width='100%'><tr><td align='left' class='AutoCompleteHeader'>" + title + "</td><td align='right'><a href='javascript:cleanDiv()'>[X]</a></td></tr></table>";
+	var lDiv = document.createElement("div");
+	lDiv.id = "aDiv0";
+	lDiv.innerHTML = szHead ;
+	lDiv.className = "AutoCompleteHeader";
+	lDiv.AutoComplete = this;
+	ac.oDiv.appendChild(lDiv);
+	
+	var aDiv = document.createElement("div");
+	aDiv.id = "aDiv";
+	aDiv.className = "comboCompletion";
+	ac.oDiv.appendChild(aDiv);
+	if (n>0) {
+	    for (var i=1 ; i<n ; i++ ) {
+	      lDiv = document.createElement("div");
+	      lDiv.id = "aDiv"+i;
+	      lDiv.innerHTML = ac.db[i];
+	      lDiv.onmousedown = AutoComplete.prototype.onDivMouseDown;
+	      lDiv.onmouseover = AutoComplete.prototype.onDivMouseOver;
+	      //lDiv.onmouseout = AutoComplete.prototype.onDivMouseOut;
+	      lDiv.onfocus = AutoComplete.prototype.onDivMouseOver;
+	      lDiv.onkeyup = AutoComplete.prototype.onDivKeyUp;
+	      lDiv.className = "AutoCompleteBackground";
+	      lDiv.AutoComplete = ac;
+	      aDiv.appendChild(lDiv);
+	    }
+	}
+	setToAnchor(ac.oAnchorId, ac.oAnchorName, ac.oDivName);
+	ac.oDiv.style.visibility = "visible";
+	ac.oDiv.focus();
+	if (n>0) {
+		document.getElementById("aDiv1").focus();
+	}
+	ac.cleanData();
 }
 
 function insertAtCaret(lText, text) {
@@ -975,8 +1105,8 @@ function setCursorPosition(oInput, range, oStart, oEnd) {
   oInput.focus();
   if (oInput.tagName.toUpperCase() == 'IFRAME') {
     range.collapse(true);
-    range.moveEnd('character',oEnd);
     range.moveStart('character',oStart);
+    range.moveEnd('character',oEnd);
     range.select();
   }
   else {
