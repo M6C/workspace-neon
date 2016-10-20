@@ -240,8 +240,13 @@ AutoComplete.prototype.getCaretPos = function() {
     	  while(cnt > 0) {
     		  ac.modifyRange(range, "extend", "backward", granularity, 1);
     		  cnt = range.extentOffset;
-    		  pos += cnt;
     	  }
+
+    	  var txt = range.toString();
+    	  txt = txt.replace(/\n|\n/g, "");
+    	  pos = txt.length;
+
+    	  ac.collapse(range);
       }
       else if (this.oText.tagName.toUpperCase() == 'IFRAME') {
         var workRange=this.getRangeSelection();//frames[this.oText.name].document.selection.createRange();
@@ -635,7 +640,7 @@ AutoComplete.prototype.onDivMouseDown = function() {
 //alert("AutoCompleteDB.prototype.onDivMouseDown");
     
     // Insertion du text ? la postion actuelle
-    insertAtCaret(this.AutoComplete.oText, "."+this.innerHTML);
+	ac.insertText("."+this.innerHTML);
 
     // clear the popup-div.
     while ( this.AutoComplete.oDiv.hasChildNodes() )
