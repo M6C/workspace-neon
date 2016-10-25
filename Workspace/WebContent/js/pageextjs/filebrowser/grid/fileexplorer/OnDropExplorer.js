@@ -1,14 +1,14 @@
 Ext.define('Workspace.filebrowser.grid.fileexplorer.OnDropExplorer',  {
-	// REQUIRED
-
+	requires: ['Workspace.filebrowser.grid.fileexplorer.function.CopyMove']
+	,
 	statics: {
 
-		call : function(node, data, overModel, dropPosition, eOpts) {
+		call : function(grid, node, data, overModel, dropPosition, eOpts) {
 		    console.info('Workspace.filebrowser.grid.fileexplorer.OnDropExplorer.call OnDropExplorer');
 
-		    var ret = true;
-	    	
-	    	return ret;
+		    var itemPathDst = node.viewRecordId;//mainCenterTab.id;
+
+		    return Workspace.filebrowser.grid.fileexplorer.function.CopyMove.call(grid, itemPathDst, data);
 		}
 	}
 

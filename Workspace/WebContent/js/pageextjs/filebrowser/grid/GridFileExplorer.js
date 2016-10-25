@@ -102,7 +102,7 @@ Ext.define('Workspace.filebrowser.grid.GridFileExplorer', {
 	    // Explicit load required library (Mandatory for extending this class)
 		Ext.Loader.syncRequire('Workspace.filebrowser.grid.fileexplorer.OnEditCompleteExplorer');
 
-	    return Workspace.filebrowser.grid.fileexplorer.OnDropExplorer.call(node, data, overModel, dropPosition, eOpts);
+	    return Workspace.filebrowser.grid.fileexplorer.OnDropExplorer.call(me, node, data, overModel, dropPosition, eOpts);
 	}
 	,
 	onBeforeDrop : function(nodeEl, data) {
