@@ -34,13 +34,12 @@ Ext.define('Workspace.filebrowser.grid.GridFileExplorer', {
 		 	    	 	Workspace.filebrowser.grid.fileexplorer.OnEditCompleteExplorer.call(editor, value, startValue, eOpts);
 		 	     	}
 //NE FONCTIONNE PAS
-//			 	    ,
-//			 	    listeners : {
-//			 	  		'validateedit' : function(editor, e, eOpts) {
-//			 				console.info('Workspace.filebrowser.grid.GridFileExplorer on validateedit ['+e.rowIdx+','+e.colIdx+'] \''+e.originalValue+'\'->\''+e.value+'\'');
-//			 				return e.colIdx==0;
-//			 			}
-//			 	    }
+			 	    ,
+			 	    listeners : {
+			 	    	'beforenodedrop': function(e){
+							console.info('Workspace.filebrowser.grid.GridFileExplorer beforenodedrop');
+			 	    	}
+			 	    }
 		           }
 		 	     )
 		     ]
