@@ -28,7 +28,7 @@ Ext.define('Workspace.filebrowser.panel.center.function.AddTab',  {
 							defaults     : { flex : 1 }//auto stretch
 							,
 						    items: [
-								Ext.create('Workspace.filebrowser.grid.GridFileExplorer', {
+								Ext.create('Workspace.poc.draganddrop.GridFileExplorer', {
 									id: gridId
 								})
 						    ]
@@ -38,7 +38,7 @@ Ext.define('Workspace.filebrowser.panel.center.function.AddTab',  {
 
 					var grid = panel.getComponent(gridId);
 
-					// Chargement des données
+					// Chargement des donnï¿½es
 					var gridStore = grid.getStore();
 					gridStore.getProxy().extraParams.path = raw.path;
 					gridStore.getProxy().extraParams.application = raw.application;
@@ -49,7 +49,7 @@ Ext.define('Workspace.filebrowser.panel.center.function.AddTab',  {
 //
 //				var grid = panel.getComponent(gridId);
 //
-//				// Chargement des données
+//				// Chargement des donnï¿½es
 //				var gridStore = grid.getStore();
 //				gridStore.getProxy().extraParams.path = raw.path;
 //				gridStore.getProxy().extraParams.application = raw.application;

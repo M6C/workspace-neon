@@ -27,6 +27,8 @@ function init_loader() {
 	console.info('common.ini.init_loader Ext.Loader \'Workspace.data\' setted');
 	Ext.Loader.setPath('Workspace.tool', DOMAIN_NAME_ROOT + '/js/toolextjs');
 	console.info('common.ini.init_loader Ext.Loader \'Workspace.tool\' setted');
+	Ext.Loader.setPath('Workspace.poc', DOMAIN_NAME_ROOT + '/js/poc');
+	console.info('common.ini.init_loader Ext.Loader \'Workspace.poc\' setted');
 
 	// Requi pour une utilisation du style : Workspace.tool.Log.defined('...')
 	Ext.Loader.syncRequire('Workspace.tool.Log');
