@@ -15,8 +15,28 @@ Ext.define('Workspace.poc.draganddrop.GridFileExplorer', {
 	        	  , 
 	        	  editor: {xtype: 'textfield', allowBlank: false}
         	  }
-          )
+          ) 
 	]
+	,
+	initComponent : function(){
+		var me = this;
+
+		// Explicit load required library (Mandatory for extending this class)
+		Ext.Loader.syncRequire('Workspace.poc.draganddrop.function.ApplyDragAndDrop');
+		Workspace.poc.draganddrop.function.ApplyDragAndDrop.apply(me, me.onBeforeDrop, me.onDrop);
+
+		me.callParent(arguments);
+	}
+	,
+	onBeforeDrop : function(nodeEl, data) {
+		console.info('Workspace.poc.draganddrop.GridFileExplorer onBeforeDrop');
+		return true;
+	}
+	,
+	onDrop : function(nodeEl, data, overModel, dropPosition, eOpts) {
+		console.info('Workspace.poc.draganddrop.GridFileExplorer onDrop');
+		return true;
+	}
 	,
 	store: Ext.create('Ext.data.Store', {
     	sortOnLoad: true,

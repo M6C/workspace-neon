@@ -2,7 +2,7 @@ Ext.define('Workspace.filebrowser.panel.PanelWest', {
 	// REQUIRED
 	requires: ['Workspace.filebrowser.form.combobox.ComboProject'
 	           ,
-	           'Workspace.filebrowser.tree.TreeDirectoryExplorer'
+	           'Workspace.poc.draganddrop.TreeDirectoryExplorer'
 	           ]
 	,
 	extend: 'Workspace.common.panel.PanelCollapsible'
@@ -35,7 +35,7 @@ Ext.define('Workspace.filebrowser.panel.PanelWest', {
 				        {
 				        	xtype: 'filebrowserComboProject'
 				        },
-  				        {	//Balise cachée
+  				        {	//Balise cachï¿½e
   						    xtype: 'hidden',
   						    id: 'project',
   						    name: 'project'
