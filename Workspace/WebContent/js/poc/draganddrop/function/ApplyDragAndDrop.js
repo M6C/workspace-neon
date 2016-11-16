@@ -26,6 +26,9 @@ Ext.define('Workspace.poc.draganddrop.function.ApplyDragAndDrop', {
 					,
 					listeners: {
 					    beforedrop: function(nodeEl, data) {
+					    	//The dragged in record needs to be decorated so it will work with the other tree data.
+					    	//Fix error: record.getDepth is not a function
+					    	Ext.data.NodeInterface.decorate(data.records[0]);
 							return onBeforeDrop(nodeEl, data);
 						}
 						,
