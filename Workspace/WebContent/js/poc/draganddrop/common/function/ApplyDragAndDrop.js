@@ -1,8 +1,8 @@
-Ext.define('Workspace.poc.draganddrop.function.ApplyDragAndDrop', {
+Ext.define('Workspace.poc.draganddrop.common.function.ApplyDragAndDrop', {
 	statics: {
 
 		apply : function(cmp, onBeforeDrop, onDrop) {
-		    console.info('Workspace.poc.draganddrop.function.ApplyDragAndDrop apply');
+		    console.info('Workspace.poc.draganddrop.common.function.ApplyDragAndDrop apply');
 			Ext.apply(cmp, {
 				draggable: true,
 				viewConfig: {
@@ -19,21 +19,20 @@ Ext.define('Workspace.poc.draganddrop.function.ApplyDragAndDrop', {
 				        stripeRows : true
 				        ,dropZone:{
 				        	isValidDropPoint:function(node, position, dragZone, e, data){
-				    		    console.info('Workspace.poc.draganddrop.function.ApplyDragAndDrop dropZone isValidDropPoint');
+				    		    console.info('Workspace.poc.draganddrop.common.function.ApplyDragAndDrop dropZone isValidDropPoint');
 				        	}
 				        }
 				    }
 					,
 					listeners: {
 					    beforedrop: function(nodeEl, data) {
-					    	//The dragged in record needs to be decorated so it will work with the other tree data.
-					    	//Fix error: record.getDepth is not a function
-					    	Ext.data.NodeInterface.decorate(data.records[0]);
-							return onBeforeDrop(nodeEl, data);
+					    	Workspace.poc.draganddrop.common.function.ApplyDragAndDrop.decorateNode(data);
+							return onBeforeDrop(this, nodeEl, data);
 						}
 						,
 						drop: function(nodeEl, data, overModel, dropPosition, eOpts) {
-							return onDrop(nodeEl, data, overModel, dropPosition, eOpts);
+//					    	Workspace.poc.draganddrop.common.function.ApplyDragAndDrop.decorateNode(data);
+							return onDrop(this, nodeEl, data, overModel, dropPosition, eOpts);
 						}
 					}
 					,
@@ -87,6 +86,15 @@ Ext.define('Workspace.poc.draganddrop.function.ApplyDragAndDrop', {
 				}
 		      });
 		}
+		,
+		decorateNode(data) {
+	    	//The dragged in record needs to be decorated so it will work with the other tree data.
+	    	//Fix error: record.getDepth is not a function
+			var size = data.records.length;
+			for(var i=0 ; i<size ; i++) {
+		    	Ext.data.NodeInterface.decorate(data.records[i]);
+			}
+		}
 	}
 
-}, function() {Workspace.tool.Log.defined('Workspace.poc.draganddrop.function.ApplyDragAndDrop');});
+}, function() {Workspace.tool.Log.defined('Workspace.poc.draganddrop.common.function.ApplyDragAndDrop');});

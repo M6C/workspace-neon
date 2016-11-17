@@ -12,7 +12,8 @@ Ext.define('Workspace.poc.draganddrop.data.StoreFileExplorer', {
 		method: 'GET',
         reader: {
             type: 'json'
-        },
+        }
+		,
         extraParams: {
         	application: '',
         	path: ''
@@ -26,4 +27,4 @@ Ext.define('Workspace.poc.draganddrop.data.StoreFileExplorer', {
 	    expanded: true,
 	    text: 'Current'
 	}
-}, function() {Workspace.tool.Log.defined('Workspace.poc.draganddrop.data.StoreFileExplorerExtjs4');});
+}, function() {Workspace.tool.Log.defined('Workspace.poc.draganddrop.data.StoreFileExplorer');});
