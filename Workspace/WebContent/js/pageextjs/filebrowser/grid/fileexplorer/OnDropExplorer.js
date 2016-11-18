@@ -8,7 +8,7 @@ Ext.define('Workspace.filebrowser.grid.fileexplorer.OnDropExplorer',  {
 
 		    var itemPathDst = node.viewRecordId;//mainCenterTab.id;
 
-		    return Workspace.filebrowser.grid.fileexplorer.function.CopyMove.call(grid, itemPathDst, data);
+		    return Workspace.filebrowser.grid.fileexplorer.function.CopyMove.request(grid, itemPathDst, data);
 		}
 	}
 
