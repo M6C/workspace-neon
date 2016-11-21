@@ -49,9 +49,8 @@ Ext.define('Workspace.filebrowser.grid.fileexplorer.function.CopyMove',  {
 	    	return ret;
 		}
 		,
-		request : function(grid, itemPathDst, data) {
-		    var ret = false;
-			
+		request : function(grid, node, data, callBackSuccess = null, callBackFailure = null) {
+		    var itemPathDst = node.viewRecordId;//mainCenterTab.id;
 		    var nb = data.records.length;
 			
 			var dropAction = data.copy ? 'copy' : 'move';
@@ -62,40 +61,30 @@ Ext.define('Workspace.filebrowser.grid.fileexplorer.function.CopyMove',  {
 				var itemPathSrc = raw.id;//raw.getKey();
 
 		        Ext.Ajax.request({
-	    		    url: DOMAIN_NAME_ROOT + '/action.servlet?event=FileBrowserCopyMove',
+		        	url: DOMAIN_NAME_ROOT + '/action.servlet?event=FileBrowserCopyMove',
 	    		    params: {
 	        			pathSrc:itemPathSrc, pathDst:itemPathDst, operation:dropAction
 	    		    },
 	    		    success: function(response){
-	    		        Ext.getCmp('mainSouthPanel').log('Workspace.filebrowser.grid.fileexplorer.function.CopyMove.request', 'success', 'Success ' + dropAction+' from:'+itemPathSrc + ' to:'+itemPathDst);
-	
-	    				// Rechargement de la grid
-//	    		    	grid.refresh();
-	    		    	grid.getStore().load();
+	    		        if (callBackSuccess != null) {
+	    		        	callBackSuccess(grid, node, data);
+	    		        }
 
-	    		    	var mainEstPanel = Ext.getCmp('mainEstPanel');
-	    		        var mainEstTab = mainEstPanel.getActiveTab();
-	    		        var mainEstGrid = mainEstTab.items.items[0].panel;
-	    		        var mainEstStore = mainEstGrid.store;
-	    		        var dataModel = mainEstStore.data.getByKey(raw.id);
-	
-	    		        // Supprime une donn�e
-	    		        //mainEstGrid.data.removeAtKey(raw.id);//item.getKey());
-			        	// Raffaichissement du store et donc de la grid
-			        	mainEstStore.remove(dataModel);
-	
-			        	ret = true;
+	    		        Ext.getCmp('mainSouthPanel').log('Workspace.filebrowser.grid.fileexplorer.function.CopyMove.request', 'success', 'Success ' + dropAction+' from:'+itemPathSrc + ' to:'+itemPathDst);
 	    		    },
 	    		    failure: function(response){
+	    		    	if (callBackSuccess != null) {
+	    		    		callBackFailure(grid, node, data);
+	    		    	}
+
 	    		    	raw.bodyStyle='background:#fcc;';
-	
+
 	    		    	var text = response.responseText;
 				        Ext.getCmp('mainSouthPanel').log('Workspace.filebrowser.grid.fileexplorer.function.CopyMove.request', 'failure', 'Failure ' + dropAction + ' item:'+raw.id+' cause:'+text);
+
 	    		    }
 	    		});
 		    }
-	    	
-	    	return ret;
 		}
 	}
 
