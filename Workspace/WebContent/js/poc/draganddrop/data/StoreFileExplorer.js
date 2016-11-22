@@ -1,25 +1,31 @@
 Ext.define('Workspace.poc.draganddrop.data.StoreFileExplorer', {
 
-	extend: 'Ext.data.TreeStore'
+	extend: 'Ext.data.Store'
 	,
     clearOnLoad: true,
 	autoLoad: true,
 	autoSync: true
 	,
-    proxy: {
-        type: 'ajax',
-        url: DOMAIN_NAME_ROOT + '/action.servlet?event=JsonFileExplorer',
-		method: 'GET',
-        reader: {
-            type: 'json'
-        }
-		,
-        extraParams: {
-        	application: '',
-        	path: ''
-        }
-    }
-	,
+    constructor: function(config) {
+		console.info('Workspace.poc.draganddrop.data.StoreFileExplorer constructor');
+		var me = this;
+
+		config.proxy = Ext.create('Ext.data.proxy.Ajax', {
+	        url: DOMAIN_NAME_ROOT + '/action.servlet?event=JsonFileExplorer',
+			method: 'GET',
+	        reader: {
+	            type: 'json'
+	        },
+	        extraParams: {
+	        	application: '',
+	        	path: ''
+	        }
+	    });
+
+        Ext.apply(me, config);
+
+        me.callParent();
+    },
 	root: {
         nodeType: 'async',
         draggable: false,

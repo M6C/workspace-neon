@@ -1,11 +1,9 @@
 Ext.define('Workspace.filebrowser.panel.center.function.AddTab',  {
-	// REQUIRED
 
 	statics: {
 
-		call : function(raw) {
+		call : function(raw, closable = true) {
 		    console.info('Workspace.filebrowser.panel.center.function.AddTab.call OnBeforeDropCart');
-//		    var ret = true;
 
 			if (raw.contentType=='directory') {
 
@@ -17,50 +15,42 @@ Ext.define('Workspace.filebrowser.panel.center.function.AddTab',  {
 
 				var panel=mainCenterPanel.getComponent(panelId);
 				if (!Ext.isDefined(panel)) {
+					var grid = Ext.create('Workspace.poc.draganddrop.GridFileExplorer', {
+						id: gridId
+					});
+
 					mainCenterPanel.insert(
-						0,
-						{
-							title: panelId,
-							id: panelId,
-							//elements: 'body,tbar',
-							closable:true,
-							layout: 'fit',
-							defaults     : { flex : 1 }//auto stretch
-							,
-						    items: [
-								Ext.create('Workspace.poc.draganddrop.GridFileExplorer', {
-									id: gridId
-								})
-						    ]
-						}
-					);
-					panel = Ext.getCmp(panelId);
+					0,
+					{
+						xtype:'panel',
+						title: panelId,
+						id: panelId,
+						//elements: 'body,tbar',
+						closable:closable,
+						layout: 'fit',
+						defaults: { flex : 1 },//auto stretch
+					    items: [
+							grid
+					    ]
+					});
 
-					var grid = panel.getComponent(gridId);
+					panel=mainCenterPanel.getComponent(panelId);
 
-					// Chargement des donn�es
+					// Chargement des donnees
 					var gridStore = grid.getStore();
 					gridStore.getProxy().extraParams.path = raw.path;
 					gridStore.getProxy().extraParams.application = raw.application;
 					grid.refresh();
+				} else {
+					var grid = panel.getComponent(gridId);
+					var gridStore = grid.getStore();
+					grid.refresh();
 				}
 
 				mainCenterPanel.setActiveTab(panel);
-//
-//				var grid = panel.getComponent(gridId);
-//
-//				// Chargement des donn�es
-//				var gridStore = grid.getStore();
-//				gridStore.getProxy().extraParams.path = raw.path;
-//				gridStore.getProxy().extraParams.application = raw.application;
-//				grid.refresh();
-
-//				return false;
 			}
 			else {
 			}
-
-//		    return ret;
 		}
 	}
 

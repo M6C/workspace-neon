@@ -32,7 +32,7 @@ Ext.define('Workspace.filebrowser.form.combobox.ComboProject', {
 					);
 
 					var raw = {contentType:'directory', id:'['+application+']', path:'', application:application};
-					Workspace.filebrowser.panel.center.function.AddTab.call(raw);
+					Workspace.filebrowser.panel.center.function.AddTab.call(raw, false);
 				}
 			}
 		});

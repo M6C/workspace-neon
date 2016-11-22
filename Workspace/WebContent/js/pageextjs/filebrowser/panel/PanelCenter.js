@@ -19,12 +19,13 @@ Ext.define('Workspace.filebrowser.panel.PanelCenter', {
 			listeners: {
 				'tabchange' : function (tabPanel, newCard, oldCard, eOpts ) {
 					console.info('Workspace.filebrowser.panel.PanelCenter tabchange newCard:'+newCard.id+' oldCard:'+oldCard.id);
-					var gridStore = newCard.items.items[0].getStore();
+					var gridStore = newCard.items.getByKey('gridFileExplorer_' + newCard.id).getStore();
 					gridStore.load(
 						new Ext.data.Operation({
 							action:'read'
 						})
 					);
+					gridStore.sync();
 				}
 			}
 	    });
