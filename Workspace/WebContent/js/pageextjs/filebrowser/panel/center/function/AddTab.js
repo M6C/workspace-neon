@@ -15,20 +15,14 @@ Ext.define('Workspace.filebrowser.panel.center.function.AddTab',  {
 
 				var panel=mainCenterPanel.getComponent(panelId);
 				if (Ext.isDefined(panel)) {
-					var panelConfig = panel.initConfig().initialConfig;
-					var panelClosable = panelConfig.closable;
-					if (panelClosable != closable) {
-						panel.close();
-						panel.destroy();
-						panel = undefined;
-					} else {
-						var grid = panel.getComponent(gridId);
-						var gridStore = grid.getStore();
-						grid.refresh();
-					}
-				}
+					// Set close button visibility
+					panel.tab.closeEl.setVisible(closable);
 
-				if (!Ext.isDefined(panel)) {
+					// Refresh data grid
+					var grid = panel.getComponent(gridId);
+					var gridStore = grid.getStore();
+					grid.refresh();
+				} else {
 					var grid = Ext.create('Workspace.poc.draganddrop.GridFileExplorer', {
 						id: gridId
 					});
@@ -40,7 +34,7 @@ Ext.define('Workspace.filebrowser.panel.center.function.AddTab',  {
 						title: panelId,
 						id: panelId,
 						//elements: 'body,tbar',
-						closable:closable,
+						closable:true, // Always create close button. Closable will be set soon.
 						layout: 'fit',
 						defaults: { flex : 1 },//auto stretch
 					    items: [
@@ -49,6 +43,8 @@ Ext.define('Workspace.filebrowser.panel.center.function.AddTab',  {
 					});
 
 					panel=mainCenterPanel.getComponent(panelId);
+					// Set close button visibility
+					panel.tab.closeEl.setVisible(closable);
 
 					// Chargement des donnees
 					var gridStore = grid.getStore();

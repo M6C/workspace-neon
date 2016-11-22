@@ -33,14 +33,8 @@ Ext.define('Workspace.filebrowser.form.combobox.ComboProject', {
 			var panel=mainCenterPanel.getComponent(panelId);
 			// Check if old tab exist
 			if (Ext.isDefined(panel)) {
-				// Get old tab position
-				var position = mainCenterPanel.items.indexOf(panel);
-				// Close/Destroy old tab
-				panel.close();
-				panel.destroy();
-				// Recreate old tab with default closable value (true)
-				var raw = {contentType:'directory', id:'['+application+']', path:'', application:application};
-				Workspace.filebrowser.panel.center.function.AddTab.call(raw, position);
+				// Set close button visibility
+				panel.tab.closeEl.setVisible(true);
 			}
 		}
 	},
