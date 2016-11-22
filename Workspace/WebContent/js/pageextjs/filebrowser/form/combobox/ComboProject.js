@@ -1,7 +1,5 @@
 Ext.define('Workspace.filebrowser.form.combobox.ComboProject', {
-	// REQUIRED
-	requiers: ['Workspace.filebrowser.panel.center.function.AddTab']
-	,
+
 	extend: 'Workspace.common.form.combobox.ComboProjectExtjs4'
 	,
 	alias: 'widget.filebrowserComboProject',
@@ -15,28 +13,55 @@ Ext.define('Workspace.filebrowser.form.combobox.ComboProject', {
 
 		Ext.apply(me, {
 			listeners: {
-				//scope: this, //yourScope
-				'select': function (cmb, record, index){
-					var application = record[0].data.project;
-					console.info('Workspace.filebrowser.form.combobox.ComboProject select:'+application);
-
-					Ext.getCmp('project').value=application;
-
-					var tree = Ext.getCmp("treeDirectory");
-					tree.getStore().getProxy().extraParams.path = '';
-					tree.getStore().getProxy().extraParams.application = application;//Ext.getCmp('project').value;//record.data.project;
-					tree.getStore().load(
-						new Ext.data.Operation({
-							action:'read'
-						})
-					);
-
-					var raw = {contentType:'directory', id:'['+application+']', path:'', application:application};
-					Workspace.filebrowser.panel.center.function.AddTab.call(raw, false);
+				'select': function (combo, record, index) {
+					me.manageOldTab(combo, record, index);
+					me.manageNewTab(combo, record, index);
 				}
 			}
 		});
 		me.callParent(arguments);
+	}
+	,
+	manageOldTab : function ( combo, record, index ) {
+		var application = Ext.getCmp('project').value;
+		console.info('Workspace.filebrowser.form.combobox.ComboProject manageOldTab application:'+application);
+		// Check if application change
+		if (Ext.isDefined(application) && application != record.internalId) {
+			var panelId = '['+application+']';
+
+			var mainCenterPanel=Ext.getCmp('mainCenterPanel');
+			var panel=mainCenterPanel.getComponent(panelId);
+			// Check if old tab exist
+			if (Ext.isDefined(panel)) {
+				// Get old tab position
+				var position = mainCenterPanel.items.indexOf(panel);
+				// Close/Destroy old tab
+				panel.close();
+				panel.destroy();
+				// Recreate old tab with default closable value (true)
+				var raw = {contentType:'directory', id:'['+application+']', path:'', application:application};
+				Workspace.filebrowser.panel.center.function.AddTab.call(raw, position);
+			}
+		}
+	},
+	manageNewTab : function (cmb, record, index){
+		var application = record[0].data.project;
+		console.info('Workspace.filebrowser.form.combobox.ComboProject manageNewTab application:'+application);
+
+		Ext.getCmp('project').value=application;
+
+		var tree = Ext.getCmp("treeDirectory");
+		tree.getStore().getProxy().extraParams.path = '';
+		tree.getStore().getProxy().extraParams.application = application;//Ext.getCmp('project').value;//record.data.project;
+		tree.getStore().load(
+			new Ext.data.Operation({
+				action:'read'
+			})
+		);
+
+		// Create new tab with closableless state at 1st position
+		var raw = {contentType:'directory', id:'['+application+']', path:'', application:application};
+		Workspace.filebrowser.panel.center.function.AddTab.call(raw, 0, false);
 	}
 
 }, function() {Workspace.tool.Log.defined('Workspace.filebrowser.form.combobox.ComboProject');});
