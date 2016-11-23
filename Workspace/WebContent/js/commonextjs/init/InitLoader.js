@@ -21,6 +21,8 @@ function init_loader() {
 
 	Ext.Loader.setPath('Ext', DOMAIN_NAME_ROOT + '/jsFramework/ext-4.0.7');
 	console.info('common.ini.init_loader Ext.Loader \'Ext\' setted');
+	Ext.Loader.setPath('Ext.ux', DOMAIN_NAME_ROOT + '/jsFramework/ext-4.0.7/examples/ux');
+	console.info('common.ini.init_loader Ext.Loader \'Ext.ux\' setted');
 	Ext.Loader.setPath('Workspace.common', DOMAIN_NAME_ROOT + '/js/commonextjs');
 	console.info('common.ini.init_loader Ext.Loader \'Workspace.common\' setted');
 	Ext.Loader.setPath('Workspace.data', DOMAIN_NAME_ROOT + '/js/dataextjs');
