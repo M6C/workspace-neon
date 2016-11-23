@@ -19,8 +19,8 @@ Ext.define('Workspace.filebrowser.grid.fileexplorer.OnBeforeDropExplorer',  {
 			}
 			if (dataDst.data.contentType != 'directory') {
 		        var text = 'No move/copy because destination is not a directory.';
-		        Ext.getCmp('mainSouthPanel').log('Workspace.poc.draganddrop.function.ApplyDragAndDropCopyMove onBeforeDrop', 'error', text);
-		        console.info('Workspace.poc.draganddrop.function.ApplyDragAndDropCopyMove onBeforeDrop error:' + text);
+		        Ext.getCmp('mainSouthPanel').log('Workspace.filebrowser.grid.fileexplorer.OnBeforeDropExplorer', 'error', text);
+		        console.info('Workspace.filebrowser.grid.fileexplorer.OnBeforeDropExplorer error:' + text);
 
 				return false;
 			}

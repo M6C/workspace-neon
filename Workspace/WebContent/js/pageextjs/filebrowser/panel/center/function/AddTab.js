@@ -23,7 +23,7 @@ Ext.define('Workspace.filebrowser.panel.center.function.AddTab',  {
 					var gridStore = grid.getStore();
 					grid.refresh();
 				} else {
-					var grid = Ext.create('Workspace.poc.draganddrop.GridFileExplorer', {
+					var grid = Ext.create('Workspace.filebrowser.grid.GridFileExplorer', {
 						id: gridId
 					});
 

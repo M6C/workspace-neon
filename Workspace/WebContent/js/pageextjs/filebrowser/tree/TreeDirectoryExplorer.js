@@ -1,12 +1,17 @@
 Ext.define('Workspace.filebrowser.tree.TreeDirectoryExplorer', {
 	// REQUIRED
-	requiers: ['Workspace.filebrowser.grid.GridFileExplorer',
-	           'Workspace.filebrowser.panel.center.function.AddTab']
+	requiers: ['Workspace.filebrowser.panel.center.function.AddTab']
 	,
 	extend: 'Workspace.common.tree.TreeDirectoryExplorerExtjs4'
 	,
 	alias: 'widget.filebrowserTreeDirectoryExplorer',
 	alternateClassName: 'WorkspaceFilebrowserTreeDirectoryExplorer'
+	,
+	applyDragAndDrop: function(me) {
+		// Explicit load required library (Mandatory for extending this class)
+		Ext.Loader.syncRequire('Workspace.filebrowser.function.ApplyDragAndDropCopyMove');
+		Workspace.filebrowser.function.ApplyDragAndDropCopyMove.apply(me);
+	}
 	,
 	listeners: {
 		//scope: this, //yourScope

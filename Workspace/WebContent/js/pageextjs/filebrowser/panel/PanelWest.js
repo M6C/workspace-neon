@@ -2,7 +2,7 @@ Ext.define('Workspace.filebrowser.panel.PanelWest', {
 	// REQUIRED
 	requires: ['Workspace.filebrowser.form.combobox.ComboProject'
 	           ,
-	           'Workspace.poc.draganddrop.TreeDirectoryExplorer'
+	           'Workspace.filebrowser.tree.TreeDirectoryExplorer'
 	           ]
 	,
 	extend: 'Workspace.common.panel.PanelCollapsible'

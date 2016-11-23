@@ -1,38 +1,36 @@
 Ext.define('Workspace.common.tree.TreeDirectoryExplorerExtjs4', {
-	// REQUIRED
-	requiers: ['Workspace.common.tree.data.StoreFileExplorerExtjs4']
+
+	requiers: ['Workspace.common.tree.data.StoreDirectoryExplorer']
 	,
 	extend: 'Ext.tree.Panel'
+		,
+		alias: 'widget.CommonTreeDirectoryExplorer',
+		alternateClassName: 'WorkspaceCommonTreeDirectoryExplorer'
 	,
-	alias: 'widget.TreeDirectoryExplorerExtjs4',
-	alternateClassName: 'WorkspaceTreeFileExplorer'
-	,
-    initComponent : function(){
+	initComponent : function(){
 		var me = this;
 		Ext.apply(me, {
 			store: Ext.create('Workspace.common.tree.data.StoreDirectoryExplorerExtjs4')
-			,
-			listeners:{
-			    //scope: this, //yourScope
-				'movenode': function (tree, node, oldParent, newParent, index){
-					 alert('moved. Old parent node id='+ oldParent.id+'. new parent node id='+newParent.id);
-				}
-//		    	,
-//				'render': function (tree){
-//					new Ext.tree.TreeSorter(tree, {folderSort:true});
-//				}
-		    }
-        });
-	    me.callParent(arguments);
+	    });
+	
+		me.applyDragAndDrop(me);
+
+		me.callParent(arguments);
 	}
 	,
-    useArrows: true,
-    autoScroll: false,
-    animate: true,
-    enableDD: true,
-    containerScroll: true,
-    border: false,
-    collapsible: false,
-    rootVisible: false
+	applyDragAndDrop: function(me) {
+		// Explicit load required library (Mandatory for extending this class)
+		Ext.Loader.syncRequire('Workspace.common.function.ApplyDragAndDrop');
+		Workspace.common.function.ApplyDragAndDrop.apply(me, me.onBeforeDrop, me.onDrop);
+	}
+	,
+	useArrows: true,
+	autoScroll: false,
+	animate: true,
+	enableDD: true,
+	containerScroll: true,
+	border: false,
+	collapsible: false,
+	rootVisible: false
 
 }, function() {Workspace.tool.Log.defined('Workspace.common.tree.TreeDirectoryExplorerExtjs4');});

@@ -1,5 +1,4 @@
 Ext.define('Workspace.common.tree.data.StoreDirectoryExplorerExtjs4', {
-	// REQUIRED
 
 	extend: 'Ext.data.TreeStore'
 	,
@@ -14,18 +13,12 @@ Ext.define('Workspace.common.tree.data.StoreDirectoryExplorerExtjs4', {
         reader: {
             type: 'json'
         }
-    }
-	,
-    listeners:{
-	    //scope: this, //yourScope
-	    'beforeload': function(store, operation, options) {
-			if (!operation.node.isRoot()) {
-				console.info('Workspace.common.tree.data.StoreDirectoryExplorerExtjs4 beforeload:'+operation.node.internalId);
-				store.getProxy().extraParams.path = operation.node.internalId;
-				store.getProxy().extraParams.contentType = 'directory';
-			}
+		,
+	    extraParams: {
+	    	contentType: 'directory',
+        	path: ''
 	    }
-	}
+    }
 	,
 	root: {
         nodeType: 'async',
@@ -33,5 +26,24 @@ Ext.define('Workspace.common.tree.data.StoreDirectoryExplorerExtjs4', {
         id: 'root',
 	    expanded: true,
 	    text: 'Current'
+	}
+	,
+    listeners:{
+	    //scope: this, //yourScope
+	    'beforeload': function(store, operation, options) {
+			if (!operation.node.isRoot()) {
+				console.info('Workspace.common.tree.data.StoreDirectoryExplorer beforeload:'+operation.node.internalId);
+				store.getProxy().extraParams.path = operation.node.internalId;
+			}
+	    }
+		,
+		'load': function(store, node, records, successful, options) {
+			var size = records.length;
+			for(var i=0 ; i<size ; i++) {
+				record = records[i];
+				Ext.apply(record.data, record.raw);
+			}
+
+		}
 	}
 }, function() {Workspace.tool.Log.defined('Workspace.common.tree.data.StoreDirectoryExplorerExtjs4');});

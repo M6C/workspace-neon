@@ -1,15 +1,15 @@
 Ext.define('Workspace.common.grid.data.StoreFileExplorer', {
-	// REQUIRED
 
 	extend: 'Ext.data.Store'
 	,
     clearOnLoad: true,
+	autoLoad: true,
 	autoSync: true
 	,
-	constructor: function(config) {
-		//modify config in some way
+    constructor: function(config) {
+		console.info('Workspace.common.grid.data.StoreFileExplorer constructor');
+		var me = this;
 
-		//Defini le proxy dans le constructeur pour avoir autant d'instance que de Store
 		config.proxy = Ext.create('Ext.data.proxy.Ajax', {
 	        url: DOMAIN_NAME_ROOT + '/action.servlet?event=JsonFileExplorer',
 			method: 'GET',
@@ -21,9 +21,11 @@ Ext.define('Workspace.common.grid.data.StoreFileExplorer', {
 	        	path: ''
 	        }
 	    });
-		this.superclass.constructor.call(this, config);
-	}
-	,
+
+        Ext.apply(me, config);
+
+        me.callParent();
+    },
 	root: {
         nodeType: 'async',
         draggable: false,
