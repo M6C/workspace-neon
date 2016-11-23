@@ -7,8 +7,12 @@ Ext.define('Workspace.filebrowser.grid.GridFileExplorer', {
 		initComponent : function(){
 			var me = this;
 
+			var sm = new Ext.selection.RowModel({
+				mode: 'MULTI'
+			});
 
 			Ext.apply(me, {
+			    selModel: sm,
 				plugins: [
 			 	     Ext.create('Ext.grid.plugin.CellEditing', {
 			 	    	clicksToEdit: 2
