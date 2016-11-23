@@ -1,4 +1,4 @@
-Ext.define('Workspace.poc.draganddrop.data.StoreFileExplorer', {
+Ext.define('Workspace.poc.draganddrop.common.grid.data.StoreFileExplorer', {
 
 	extend: 'Ext.data.Store'
 	,
@@ -7,7 +7,7 @@ Ext.define('Workspace.poc.draganddrop.data.StoreFileExplorer', {
 	autoSync: true
 	,
     constructor: function(config) {
-		console.info('Workspace.poc.draganddrop.data.StoreFileExplorer constructor');
+		console.info('Workspace.poc.draganddrop.common.grid.data.StoreFileExplorer constructor');
 		var me = this;
 
 		config.proxy = Ext.create('Ext.data.proxy.Ajax', {
@@ -33,4 +33,5 @@ Ext.define('Workspace.poc.draganddrop.data.StoreFileExplorer', {
 	    expanded: true,
 	    text: 'Current'
 	}
-}, function() {Workspace.tool.Log.defined('Workspace.poc.draganddrop.data.StoreFileExplorer');});
+
+}, function() {Workspace.tool.Log.defined('Workspace.poc.draganddrop.common.grid.data.StoreFileExplorer');});

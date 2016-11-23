@@ -1,4 +1,4 @@
-Ext.define('Workspace.poc.draganddrop.data.StoreDirectoryExplorer', {
+Ext.define('Workspace.poc.draganddrop.common.tree.data.StoreDirectoryExplorer', {
 
 	extend: 'Ext.data.TreeStore'
 	,
@@ -32,7 +32,7 @@ Ext.define('Workspace.poc.draganddrop.data.StoreDirectoryExplorer', {
 	    //scope: this, //yourScope
 	    'beforeload': function(store, operation, options) {
 			if (!operation.node.isRoot()) {
-				console.info('Workspace.poc.draganddrop.data.StoreDirectoryExplorer beforeload:'+operation.node.internalId);
+				console.info('Workspace.poc.draganddrop.common.tree.data.StoreDirectoryExplorer beforeload:'+operation.node.internalId);
 				store.getProxy().extraParams.path = operation.node.internalId;
 			}
 	    }
@@ -46,4 +46,4 @@ Ext.define('Workspace.poc.draganddrop.data.StoreDirectoryExplorer', {
 
 		}
 	}
-}, function() {Workspace.tool.Log.defined('Workspace.poc.draganddrop.data.StoreDirectoryExplorer');});
+}, function() {Workspace.tool.Log.defined('Workspace.poc.draganddrop.common.tree.data.StoreDirectoryExplorer');});

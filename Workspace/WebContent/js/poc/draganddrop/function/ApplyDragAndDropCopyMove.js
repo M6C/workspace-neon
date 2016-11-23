@@ -3,7 +3,7 @@ Ext.define('Workspace.poc.draganddrop.function.ApplyDragAndDropCopyMove', {
 	,
 	statics: {
 
-		apply : function(cmp, onBeforeDrop, onDrop) {
+		apply : function(cmp) {
 		    console.info('Workspace.poc.draganddrop.function.ApplyDragAndDropCopyMove apply');
 
 		    var me = Workspace.poc.draganddrop.function.ApplyDragAndDropCopyMove;
