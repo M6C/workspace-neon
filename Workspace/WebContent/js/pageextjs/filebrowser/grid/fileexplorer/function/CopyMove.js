@@ -32,6 +32,8 @@ Ext.define('Workspace.filebrowser.grid.fileexplorer.function.CopyMove',  {
 					console.info('Workspace.filebrowser.grid.fileexplorer.function.CopyMove.check CopyMove itemPathSrc:'+itemPathSrc);
 			
 				    if (Workspace.tool.UtilString.isNotEqualPath(itemPathDst, itemPathSrc)) {
+				    	// TODO Check if file do not already exist on server at destination path
+				    	
 				    	console.info('Workspace.filebrowser.grid.fileexplorer.function.CopyMove.check success ' + dropAction + ' from:'+itemPathSrc+ ' to:'+itemPathDst);
 				    }
 				    else {
@@ -57,8 +59,8 @@ Ext.define('Workspace.filebrowser.grid.fileexplorer.function.CopyMove',  {
 		    console.info('Workspace.filebrowser.grid.fileexplorer.function.CopyMove.request ' + dropAction + ' to:'+itemPathDst+' data.records.length:'+data.records.length);
 
 		    for(i=0 ; i<nb ; i++) {
-				var raw = data.records[i].raw;//data.records[i].data;
-				var itemPathSrc = raw.id;//raw.getKey();
+				var raw = data.records[i];//data.records[i].raw;//data.records[i].data;
+				var itemPathSrc = raw.internalId;//raw.id;//raw.getKey();
 
 		        Ext.Ajax.request({
 		        	url: DOMAIN_NAME_ROOT + '/action.servlet?event=FileBrowserCopyMove',

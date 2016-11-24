@@ -6,6 +6,8 @@ Ext.define('Workspace.common.function.ApplyDragAndDrop', {
 			Ext.apply(cmp, {
 				draggable: true,
 				viewConfig: {
+		    		allowCopy: true,
+//		    		copy: true,
 //				    getRowClass: function (record) {
 //						if (Ext.isDefined(this.panel.getRowClass))
 //							return this.panel.getRowClass(this, record);

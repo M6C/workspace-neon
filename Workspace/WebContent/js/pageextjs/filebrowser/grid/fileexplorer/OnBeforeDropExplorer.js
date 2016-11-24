@@ -17,6 +17,13 @@ Ext.define('Workspace.filebrowser.grid.fileexplorer.OnBeforeDropExplorer',  {
 			} else {
 				dataDst = grid.store.data.getByKey(nodeEl.viewRecordId);
 			}
+			if (!Ext.isDefined(dataDst) || !Ext.isDefined(dataDst.data)) {
+		        var text = 'No move/copy Destination data defined.';
+		        Ext.getCmp('mainSouthPanel').log('Workspace.filebrowser.grid.fileexplorer.OnBeforeDropExplorer', 'error', text);
+		        console.info('Workspace.filebrowser.grid.fileexplorer.OnBeforeDropExplorer error:' + text);
+
+				return false;
+			}
 			if (dataDst.data.contentType != 'directory') {
 		        var text = 'No move/copy because destination is not a directory.';
 		        Ext.getCmp('mainSouthPanel').log('Workspace.filebrowser.grid.fileexplorer.OnBeforeDropExplorer', 'error', text);
