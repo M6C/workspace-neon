@@ -21,14 +21,12 @@ function showMenuLevel(tableId, trId) {
 		<td>
 			<table class="menuLevel01" id="menuLevel01">
 				<tr class="menuLevel01">
-<%--
 					<td class="menuLevel01" onmouseover="javascript:showMenuLevel('menuLevel02', 'File')">
 						File
 					</td>
 					<td class="menuLevel01" onmouseover="javascript:showMenuLevel('menuLevel02', 'Build')">
 						Build
 					</td>
---%>
 					<td class="menuLevel01" onmouseover="javascript:showMenuLevel('menuLevel02', 'Tool')">
 						Tool
 					</td>
@@ -45,8 +43,8 @@ function showMenuLevel(tableId, trId) {
 	<tr class="level02">
 		<td align="center">
 			<table cellspacing="0" cellpadding="0" class="menuLevel02" id="menuLevel02">
-<%--
 				<tr class="menuLevel02" id="File">
+<%--
 					<td class="menuLevel02">
 						<html:TagA attrClass="menuLevel02" attrHref="javascript:openPopup('action.servlet?event=EditorJavaPageNew&application=#R$application#&Type=File&Path=#R$pathToExpand#', 'EditorJavaPageNew', 320, 120)">New File</html:TagA>
 					</td>
@@ -63,8 +61,9 @@ function showMenuLevel(tableId, trId) {
 						<html:TagA attrClass="menuLevel02" attrHref="javascript:openPopup('action.servlet?event=EditorJavaPageRename&application=#R$application#&oldName=#R$pathToExpand#&newName=#R$pathToExpand#', 'EditorJavaPageRename', 320, 120)">Rename</html:TagA>
 					</td>
 					<td class="separatorLevel02">&nbsp;</td>
+--%>
 					<td class="menuLevel02">
-						<html:TagA attrClass="menuLevel02" attrHref="javascript:openPopup('action.servlet?event=EditorJavaPageDelete&application=#R$application#&fileName=#R$pathToExpand#', 'EditorJavaPageDelete', 320, 120)">Delete</html:TagA>
+						<html:TagA attrClass="menuLevel02" attrHref="javascript:(function(){Ext.create('Workspace.filebrowser.menu.MenuFile').deleteFile();}())">Delete</html:TagA>
 					</td>
 					<td width="*">&nbsp;
 					</td>
@@ -80,7 +79,6 @@ function showMenuLevel(tableId, trId) {
 					<td width="*">&nbsp;
 					</td>
 				</tr>
---%>
 				<tr class="menuLevel02" id="Tool">
 					<td class="menuLevel02">
 						<html:TagA attrClass="menuLevel02" attrHref="javascript:openPopup('action.servlet?event=EditorJavaPageUpload&application=#R$application#&path=#R$pathToExpand#', 'EditorJavaPageUpload', 500, 200)">Upload</html:TagA>

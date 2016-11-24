@@ -17,6 +17,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.*;
 import org.w3c.dom.Document;
 import workspace.adaptateur.application.AdpXmlApplication;
+import workspace.util.UtilPath;
 
 public class SrvEditorJavaDelete extends SrvGenerique
 {
@@ -37,20 +38,28 @@ public class SrvEditorJavaDelete extends SrvGenerique
             try
             {
                 Document dom = (Document)request.getSession().getAttribute("resultDom");
-                String filePathMain = AdpXmlApplication.getFormatedPathMain(context, dom, application);
-                if(filePathMain != null && !filePathMain.equals(""))
-                    if(filePathMain.toUpperCase().startsWith("FTP://"))
+                String filenameFormated = UtilPath.formatPath(dom, application, fileName);
+                if(filenameFormated != null && !filenameFormated.equals(""))
+                    if(filenameFormated.toUpperCase().startsWith("FTP://"))
                     {
-                        BeanFTPAddress address = new BeanFTPAddress(filePathMain);
-                        fileName = (new StringBuilder(String.valueOf(pathToExpand != null ? ((Object) (pathToExpand)) : ""))).append(fileName).toString();
+                        BeanFTPAddress address = new BeanFTPAddress(filenameFormated);
+                    	if (UtilString.isNotEmpty(pathToExpand)) {
+                    		fileName = pathToExpand + fileName;
+                    	}
                         BeanFTP ftp = new BeanFTP(address, fileName);
                         ftp.delete();
                     } else
                     {
-                        File fileMain = new File(filePathMain);
-                        File file = new File(filePathMain, fileName);
-                        if(!file.getCanonicalPath().equals(fileMain.getCanonicalPath()))
+                    	if (UtilString.isNotEmpty(application)) {
+                            String filePathMain = AdpXmlApplication.getFormatedPathMain(context, dom, application);
+                            File fileMain = new File(filePathMain);
+                            File file = new File(filenameFormated);
+                            if(!file.getCanonicalPath().equals(fileMain.getCanonicalPath()))
+                                UtilFile.delete(file);
+                    	} else {
+                            File file = new File(filenameFormated);
                             UtilFile.delete(file);
+                    	}
                     }
             }
             catch(Exception ex)

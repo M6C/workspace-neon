@@ -69,15 +69,19 @@ Ext.define('Workspace.common.window.WindowWaiting',  {
 		},
 	
 		hideWindowWaiting : function (wnd, msg) {
-			this.hideWindowWaiting(wnd, msg, 1);
+			this.hideWindowWaiting(wnd, msg, this.hideWindowWaitingDelay);
 		},
 	
 		hideWindowWaiting : function (wnd, msg, sec) {
 		   wnd.updateProgress(1, '', msg);
 		   // Fermeture de la fen�tre apr�s x sec seconde
-		   var x = window.setInterval(function() {wnd.hide();wnd.clearInterval(x);}, sec*1000);
+		   var x = window.setInterval(function() {wnd.hide();/*wnd.clearInterval(x);*/}, sec*1000);
 		},
 	
+		updateWindowWaiting : function (wnd, msg) {
+		   wnd.updateProgress(1, '', msg);
+		},
+		
 		setStatusMessageAndHideWaiting : function (request, statusbarId, defaultMessage) {
 			try {
 				var resultMessage = '';
