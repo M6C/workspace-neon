@@ -70,11 +70,11 @@ function showMenuLevel(tableId, trId) {
 				</tr>
 				<tr class="menuLevel02" id="Build">
 					<td class="menuLevel02">
-						<html:TagA attrClass="menuLevel02" attrHref="javascript:openPopup('action.servlet?event=EditorJavaPageJar&application=#R$application#&pathSrc=#R$pathToExpand#&pathDst=#R$pathBuildJar#&path=', 'EditorJavaPageJar', 390, 150)">Jar</html:TagA>
+						<html:TagA attrClass="menuLevel02" attrHref="javascript:(function(){Ext.create('Workspace.filebrowser.menu.MenuFile').archive('Jar');}())">Jar</html:TagA>
 					</td>
 					<td class="separatorLevel02">&nbsp;</td>
 					<td class="menuLevel02">
-						<html:TagA attrClass="menuLevel02" attrHref="javascript:openPopup('action.servlet?event=EditorJavaPageZip&application=#R$application#&pathSrc=#R$pathToExpand#&pathDst=&path=', 'EditorJavaPageZip', 390, 150)">Zip</html:TagA>
+						<html:TagA attrClass="menuLevel02" attrHref="javascript:(function(){Ext.create('Workspace.filebrowser.menu.MenuFile').archive('Zip');}())">Zip</html:TagA>
 					</td>
 					<td width="*">&nbsp;
 					</td>
