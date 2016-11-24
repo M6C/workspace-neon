@@ -1,12 +1,14 @@
 Ext.define('Workspace.filebrowser.menu.MenuFile',  {
-	requires: ['Workspace.common.window.WindowWaiting'],
+	requires: ['Workspace.common.window.WindowWaiting',
+	           'Workspace.filebrowser.menu.MenuCheck'
+	],
 
 //	statics: {
 
 		deleteFile : function () {
 			var me = this;
 
-			var config = me.check();
+			var config = Workspace.filebrowser.menu.MenuCheck.check();
 			if (config.success == false) {
 				return;
 			}
@@ -37,7 +39,8 @@ Ext.define('Workspace.filebrowser.menu.MenuFile',  {
 
 			var msg = "";
 			var pathSrc = "";
-			var config = me.check();
+			var config = {alertSelection: false}; 
+			config = Workspace.filebrowser.menu.MenuCheck.check(config);
 			if (config.success == false) {
 				if (Ext.isDefined(config.sm) && (config.sm.getCount() == 0)) {
 					msg = 'Archive all current elements in ' + type + '?';
@@ -79,81 +82,6 @@ Ext.define('Workspace.filebrowser.menu.MenuFile',  {
 			var fileName = "archive." + type.toLowerCase();
 			Ext.Msg.prompt('Delete File', msg, fx, me, false, fileName);
 		}
-		// Private Stuff
-		,
-		manageWindowWaiting : function(wndWait, message, index, count, grid) {
-			if (index < count) {
-				Workspace.common.window.WindowWaiting.updateWindowWaiting(wndWait, message);
-			} else {
-				Workspace.common.window.WindowWaiting.hideWindowWaiting(wndWait, message);
-				grid.refresh();
-			}
-		}
-		,
-		check : function() {
-			var ret = {success:true};
-			var me = this;
-
-			if (!me.checkApplication(ret)) {
-				ret.success = false;
-				return ret;
-			}
-		
-			if (!me.checkTab(ret)) {
-				ret.success = false;
-				return ret;
-			}
-		
-			if (!me.checkGrid(ret)) {
-				ret.success = false;
-				return ret;
-			}
-
-			if (!me.checkSelection(ret)) {
-				ret.success = false;
-				return ret;
-			}
-
-			return ret;
-		}
-		,
-		checkApplication : function(config) {
-			config.application = Ext.getCmp('project').value;
-			if (!Ext.isDefined(config.application)) {
-				Ext.Msg.alert('Delete File', 'No application selected', function() {
-					Ext.getCmp('project').focus();
-				});
-				return false;
-			}
-			return true;
-		}
-		,
-		checkTab : function(config) {
-			config.tab = Ext.getCmp('mainCenterPanel').getActiveTab();
-			if (!Ext.isDefined(config.tab)) {
-				Ext.Msg.alert('Delete File', 'No active tab');
-				return false;
-			}
-			return true;
-		}
-		,
-		checkGrid : function(config) {
-			config.grid = config.tab.getComponent('gridFileExplorer_'+config.tab.id);
-			if (!Ext.isDefined(config.grid)) {
-				Ext.Msg.alert('Delete File', 'No active grid');
-				return false;
-			}
-			return true;
-		}
-		,
-		checkSelection : function(config) {
-			config.sm = config.grid.getSelectionModel();
-			if (config.sm.getCount() == 0) {
-				Ext.Msg.alert('Delete File', 'No row selected');
-				return false;
-			}
-			return true;
-		}
 //	}
 
-}, function() {Workspace.tool.Log.defined('Workspace.filebrowser.panel.center.function.AddTab');});
+}, function() {Workspace.tool.Log.defined('Workspace.filebrowser.menu.MenuFile');});

@@ -81,7 +81,7 @@ function showMenuLevel(tableId, trId) {
 				</tr>
 				<tr class="menuLevel02" id="Tool">
 					<td class="menuLevel02">
-						<html:TagA attrClass="menuLevel02" attrHref="javascript:openPopup('action.servlet?event=EditorJavaPageUpload&application=#R$application#&path=#R$pathToExpand#', 'EditorJavaPageUpload', 500, 200)">Upload</html:TagA>
+						<html:TagA attrClass="menuLevel02" attrHref="javascript:(function(){Ext.create('Workspace.filebrowser.menu.MenuTool').upload();}())">Upload</html:TagA>
 					</td>
 					<td width="*">&nbsp;
 					</td>

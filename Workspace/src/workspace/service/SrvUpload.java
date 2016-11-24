@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.w3c.dom.Document;
 
 import workspace.bean.BeanUploadData;
+import workspace.util.UtilPath;
 import framework.beandata.BeanGenerique;
 import framework.service.SrvGenerique;
 
@@ -186,6 +187,7 @@ public class SrvUpload extends SrvGenerique {
                   String application = getValue(map, "application");
                   Document dom = (Document)getObject(map, "resultDom");
 
+            path = UtilPath.formatPath(dom, application, path);
             file = new File(path);
             if (path != null && file.exists() && file.isDirectory()) {
             file = new File(path, filename);
