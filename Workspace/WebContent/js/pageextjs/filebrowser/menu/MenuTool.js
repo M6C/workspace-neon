@@ -12,7 +12,7 @@ Ext.define('Workspace.filebrowser.menu.MenuTool',  {
 				return;
 			}
 
-			var wnd = Ext.create('Workspace.common.window.WindowUpload', {path: config.tab.id});
+			var wnd = Ext.create('Workspace.common.window.WindowUpload', {path: config.tab.id, gridId: 'gridFileExplorer_'+config.tab.id});
 			wnd.show();
 		}
 //	}

@@ -18,6 +18,7 @@ import org.w3c.dom.Document;
 import workspace.bean.BeanUploadData;
 import workspace.util.UtilPath;
 import framework.beandata.BeanGenerique;
+import framework.ressource.util.UtilFile;
 import framework.service.SrvGenerique;
 
 // import org.apache.log4j.Category; // if you use Log4j
@@ -82,15 +83,17 @@ public class SrvUpload extends SrvGenerique {
     HashMap map = new HashMap();
     int result = in.readLine(buffer, 0, BUFFER_SIZE);
 
-    if (true) { // dump out the input stream for debugging
-        while (result > 0) {
-        String line = new String(buffer, 0, result);
-        System.out.println("LINE: " + line);
-        result = in.readLine(buffer, 0, BUFFER_SIZE);
-        }
-        //return;
-    }
+//    if (true) { // dump out the input stream for debugging
+//        while (result > 0) {
+//        String line = new String(buffer, 0, result);
+//        System.out.println("LINE: " + line);
+//        result = in.readLine(buffer, 0, BUFFER_SIZE);
+//        }
+//        //return;
+//        System.out.println("-----------------------------------------------------");
+//    }
 
+    int idx=0;
     outer:
     while (true) {
         if (result <= 0) {
@@ -100,10 +103,10 @@ public class SrvUpload extends SrvGenerique {
         }
 
         String line = new String(buffer, 0, result);
-        // System.out.println("LINE: " + line);
+        System.out.println("LINE "+(idx++)+":" + line);
 
         if (!line.startsWith(boundaryString)) {
-        System.out.println("Error. multipart boundary missing.");
+        System.out.println("Error. multipart boundary missing:'" + boundaryString + "'.");
         //                 logger.info("Upload : error. multipart boundary missing.");
         break;
         }
@@ -185,12 +188,15 @@ public class SrvUpload extends SrvGenerique {
 //                    String path = UPLOAD_PATH;
                   String path = getValue(map, PATH_KEY);
                   String application = getValue(map, "application");
-                  Document dom = (Document)getObject(map, "resultDom");
+//                  Document dom = (Document)getObject(map, "resultDom");
+                  Document dom = (Document)request.getSession().getAttribute("resultDom");
+                  System.out.println("application:" + application + " path:" + path + " filename:" + filename + " dom:" + dom);
 
             path = UtilPath.formatPath(dom, application, path);
+            System.out.println("file:" + file);
             file = new File(path);
             if (path != null && file.exists() && file.isDirectory()) {
-            file = new File(path, filename);
+            file = new File(UtilFile.formatPath(path, filename));
             }
         }
 

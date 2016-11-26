@@ -23,10 +23,10 @@ Ext.define('Workspace.filebrowser.menu.MenuFile',  {
 		    		   url: requestUrl,
 		    		   params: {fileName:item.internalId},
 		    		   success: function(result, request){
-		    			   me.manageWindowWaiting(wndWait, 'Delete successfull.', index, allItems.length-1, config.grid);
+		    			   Workspace.filebrowser.menu.MenuCheck.manageWindowWaiting(wndWait, 'Delete successfull.', index, allItems.length-1, config.grid);
 		    		   },
 		    		   failure: function (result, request) {
-		    			   me.manageWindowWaiting(wndWait, 'Delete failed.', index, allItems.length-1, config.grid);
+		    			   Workspace.filebrowser.menu.MenuCheck.manageWindowWaiting(wndWait, 'Delete failed.', index, allItems.length-1, config.grid);
 		    		   }
 		    		});
 		    	});
@@ -70,10 +70,10 @@ Ext.define('Workspace.filebrowser.menu.MenuFile',  {
 		    		   url: requestUrl,
 		    		   params: {pathSrc:pathSrc, pathDst:pathDst, fileName:fileName},
 		    		   success: function(result, request){
-		    			   me.manageWindowWaiting(wndWait, 'Archive \'' + type + '\' successfull.', 1, 1, config.grid);
+		    			   Workspace.filebrowser.menu.MenuCheck.manageWindowWaiting(wndWait, 'Archive \'' + type + '\' successfull.', 1, 1, config.grid);
 		    		   },
 		    		   failure: function (result, request) {
-		    			   me.manageWindowWaiting(wndWait, 'Archive \'' + type + '\' failed.', 1, 1, config.grid);
+		    			   Workspace.filebrowser.menu.MenuCheck.manageWindowWaiting(wndWait, 'Archive \'' + type + '\' failed.', 1, 1, config.grid);
 		    		   }
 		    		});
 				}

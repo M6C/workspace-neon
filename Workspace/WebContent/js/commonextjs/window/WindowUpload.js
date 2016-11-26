@@ -24,24 +24,38 @@ Ext.define('Workspace.common.window.WindowUpload', {
 					        allowBlank: false,
 					        anchor: '100%',
 					        buttonText: 'Select File...'
-					   },
-					   {
-						   xtype: 'hidden',
-						   name: 'path',
-						   value: arguments.path
 					   }
+//					   ,
+//					   {
+//						   xtype: 'hidden',
+//						   name: 'path',
+//						   value: me.path
+//					   }
 					]
 					,
 				    buttons: [{
 				        text: 'Upload',
+				        name: 'uploadservlet',
 				        handler: function() {
 				            var form = this.up('form').getForm();
 				            if(form.isValid()){
 				                form.submit({
 				                    url: 'action.servlet?event=EditorJavaPageUploadValider',
+				                    method: 'POST',
+				                    headers: {'Content-Type':'multipart/form-data'},
+							        params: {path: me.path},
 				                    waitMsg: 'Uploading...',
-				                    success: function(fp, o) {
-				                        Ext.Msg.alert('Success', 'Your file "' + o.result.file + '" has been uploaded.');
+				                    success: function(/*fp, o*/) {
+				                    	if (Ext.isDefined(me.gridId)) {
+				                    		Ext.getCmp(me.gridId).refresh();
+				                    	}
+				                    },
+				                    handleResponse: function(response) {
+				                    	if (Ext.isDefined(me.gridId)) {
+				                    		Ext.getCmp(me.gridId).refresh();
+				                    	}
+				                    	me.close();
+				                    	return {success:true};
 				                    }
 				                });
 				            }
@@ -56,8 +70,8 @@ Ext.define('Workspace.common.window.WindowUpload', {
 	,
     title: 'Upload a File',
 	layout:'fit',
-	width:850,
-	height:450,
+	width:450,
+	height:150,
 //	autoHeight: true,        //hauteur de la fen�tre
 	modal: true,             //Grise automatiquement le fond de la page
 	plain: true
