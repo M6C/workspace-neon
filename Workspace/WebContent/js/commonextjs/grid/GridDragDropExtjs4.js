@@ -10,15 +10,11 @@ Ext.define('Workspace.common.grid.GridDragDropExtjs4', {
 		
 		me.applyDragAndDrop(me);
 
-		Ext.apply(me, {
-		    listeners : {
-		    	'render': function() {
-		    		if (Ext.isDefined(me.getRowClass)) {
-		    			me.view.getRowClass = me.getRowClass;
-		    		}
-		    	}
-		    }
-	    });
+		me.addListener('render', function() {
+    		if (Ext.isDefined(me.getRowClass)) {
+    			me.view.getRowClass = me.getRowClass;
+    		}
+    	});
 
 	    me.callParent(arguments);
 	}

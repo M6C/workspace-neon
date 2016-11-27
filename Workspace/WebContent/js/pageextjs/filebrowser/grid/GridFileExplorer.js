@@ -12,7 +12,8 @@ Ext.define('Workspace.filebrowser.grid.GridFileExplorer', {
 			});
 
 			Ext.apply(me, {
-			    selModel: sm,
+			    selModel: sm
+			    ,
 				plugins: [
 			 	     Ext.create('Ext.grid.plugin.CellEditing', {
 			 	    	clicksToEdit: 2
@@ -25,6 +26,23 @@ Ext.define('Workspace.filebrowser.grid.GridFileExplorer', {
 			 	     	}
 			         })
 				]
+				,
+				listeners: {
+					'itemdblclick': function(grid, record, item, index, e, eOpts ) {
+						console.info('Workspace.common.grid.GridFileExplorer itemdblclick');
+					}
+					,
+					'cellclick': function(iView, iCellEl, iColIdx, iStore, iRowEl, iRowIdx, iEvent) {
+						console.info('Workspace.common.grid.GridFileExplorer cellclick iColIdx:' + iColIdx);
+						if (iColIdx == 0) {
+							var zRec = iView.getRecord(iRowEl);
+							Ext.create('Workspace.filebrowser.window.WindowEditor', {
+								title:zRec.raw.text,
+								panelId:zRec.raw.path
+							}).show();
+						}
+				    }
+				}
 		    });
 
 		    me.callParent(arguments);
