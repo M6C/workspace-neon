@@ -51,7 +51,9 @@ public class SrvEditSaveFile extends SrvGenerique
 							if(UtilString.isNotEmpty(navIndex) && UtilString.isNotEmpty(navNbRow)) {
 								content = replaceText(read(outputFile), content, Integer.parseInt(navIndex), Integer.parseInt(navNbRow));
 							}
-							content = content.replaceAll("\n", "\r\n");
+							if (content.indexOf('\r')<0) { 
+								content = content.replaceAll("\n", "\r\n");
+							}
 							write(outputFile, content);
 	                    }
                     } finally {
