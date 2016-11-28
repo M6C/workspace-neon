@@ -32,8 +32,8 @@ Ext.define('Workspace.filebrowser.grid.GridFileExplorer', {
 						console.info('Workspace.common.grid.GridFileExplorer itemdblclick');
 					}
 					,
-					'cellclick': function(iView, iCellEl, iColIdx, iStore, iRowEl, iRowIdx, iEvent) {
-						console.info('Workspace.common.grid.GridFileExplorer cellclick iColIdx:' + iColIdx);
+					'celldblclick': function(iView, iCellEl, iColIdx, iStore, iRowEl, iRowIdx, iEvent) {
+						console.info('Workspace.common.grid.GridFileExplorer celldblclick iColIdx:' + iColIdx);
 						if (iColIdx == 0) {
 							var zRec = iView.getRecord(iRowEl);
 							if (zRec.data.contentType != 'directory') {
@@ -43,6 +43,18 @@ Ext.define('Workspace.filebrowser.grid.GridFileExplorer', {
 									width:1000,
 									height:600,
 								}).show();
+							} else {
+								if (me.root) {
+	                				// Explicit load required library (Mandatory for extending this class)
+	                				Ext.Loader.syncRequire('Workspace.filebrowser.panel.center.function.AddTab');
+	                	
+	                				Workspace.filebrowser.panel.center.function.AddTab.call(zRec.raw);
+								} else {
+	            					var gridStore = me.getStore();
+	            					gridStore.getProxy().extraParams.path = zRec.raw.path;
+	            					me.refresh();
+	            					me.up('panel').setTitle(zRec.raw.path);
+								}
 							}
 						}
 				    }

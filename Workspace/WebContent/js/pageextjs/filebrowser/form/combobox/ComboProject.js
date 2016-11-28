@@ -31,10 +31,12 @@ Ext.define('Workspace.filebrowser.form.combobox.ComboProject', {
 
 			var mainCenterPanel=Ext.getCmp('mainCenterPanel');
 			var panel=mainCenterPanel.getComponent(panelId);
+			var gridId = 'gridFileExplorer_'+panelId;
 			// Check if old tab exist
 			if (Ext.isDefined(panel)) {
 				// Set close button visibility
 				panel.tab.closeEl.setVisible(true);
+				panel.getComponent(gridId).root=false;
 			}
 		}
 	},

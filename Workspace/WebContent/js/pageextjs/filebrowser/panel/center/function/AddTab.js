@@ -24,7 +24,8 @@ Ext.define('Workspace.filebrowser.panel.center.function.AddTab',  {
 					grid.refresh();
 				} else {
 					var grid = Ext.create('Workspace.filebrowser.grid.GridFileExplorer', {
-						id: gridId
+						id: gridId,
+						root: false
 					});
 
 					mainCenterPanel.insert(
@@ -52,6 +53,7 @@ Ext.define('Workspace.filebrowser.panel.center.function.AddTab',  {
 					gridStore.getProxy().extraParams.application = raw.application;
 					grid.refresh();
 				}
+				grid.root = !closable;
 
 				mainCenterPanel.setActiveTab(panel);
 			}
