@@ -13,10 +13,13 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabSave',  {
 			Ext.Loader.syncRequire('Workspace.common.window.WindowWaiting');
 
 			var application = Ext.getCmp('project').value;
-			var mainCenterPanel=Ext.getCmp('mainCenterPanel');
-		    var pnl = mainCenterPanel.getComponent(panelId);
-			var pnlEdit = pnl.getComponent(panelEditorId);
-			pnlEdit.syncValue();
+//			var mainCenterPanel=Ext.getCmp('mainCenterPanel');
+//		    var pnl = mainCenterPanel.getComponent(panelId);
+//			var pnlEdit = pnl.getComponent(panelEditorId);
+			var pnlEdit = ace.edit(panelEditorId);
+			if (Ext.isDefined(pnlEdit.syncValue)) {
+				pnlEdit.syncValue();
+			}
 			var value=pnlEdit.getValue();//pnlEdit.getRawValue();
 			//value=value.replace(/&\w+;/g,"");
 			var className=pnlEdit.className;

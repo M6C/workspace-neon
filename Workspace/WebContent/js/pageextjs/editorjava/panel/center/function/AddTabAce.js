@@ -20,6 +20,7 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 
 					mainCenterPanel.add(
 						Ext.create('Workspace.editorjava.panel.center.PanelCenterEditor', {
+							closable:true,
 							title: raw.text,
 							id: panelId,
 							panelEditorId: panelEditorId,
@@ -27,12 +28,10 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 						})
 					);
 					panelTab = Ext.getCmp(panelId);
-					mainCenterPanel.setActiveTab(panelTab);
-				} else {
-					mainCenterPanel.setActiveTab(panelTab);
-					var editor = ace.edit(panelEditorId);
-				    editor.focus();
 				}
+				mainCenterPanel.setActiveTab(panelTab);
+				var editor = ace.edit(panelEditorId);
+			    editor.focus();
 			}
 		}
 	}

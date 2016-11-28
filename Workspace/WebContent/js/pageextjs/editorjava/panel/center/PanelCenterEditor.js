@@ -13,7 +13,6 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 	alternateClassName: 'PanelCenterEditor'
 	,
 	elements: 'body,tbar',
-	closable:true,
 	layout: 'fit',
     initComponent : function(){
 		var me = this;
@@ -34,13 +33,13 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 					    {
 					    	text: 'Save', 
 					    	handler:  function(button, e) {
-					    		Workspace.editorjava.panel.center.function.AddTabSave.call(panelId, panelEditorId)
+					    		Workspace.editorjava.panel.center.function.AddTabSave.call(me.panelId, me.panelEditorId)
 				    		}
 					    },
 			            {
 					    	text: 'Reload',
 					    	handler:  function(button, e) {
-					    		Workspace.editorjava.panel.center.function.AddTabReload.call(panelId, panelEditorId)
+					    		Workspace.editorjava.panel.center.function.AddTabReload.call(me.panelId, me.panelEditorId)
 					    	}
 			            }
 			        ]
