@@ -36,12 +36,14 @@ Ext.define('Workspace.filebrowser.grid.GridFileExplorer', {
 						console.info('Workspace.common.grid.GridFileExplorer cellclick iColIdx:' + iColIdx);
 						if (iColIdx == 0) {
 							var zRec = iView.getRecord(iRowEl);
-							Ext.create('Workspace.filebrowser.window.WindowEditor', {
-								title:zRec.raw.path,
-								panelId:zRec.raw.path,
-								width:1000,
-								height:600,
-							}).show();
+							if (zRec.data.contentType != 'directory') {
+								Ext.create('Workspace.filebrowser.window.WindowEditor', {
+									title:zRec.raw.path,
+									panelId:zRec.raw.path,
+									width:1000,
+									height:600,
+								}).show();
+							}
 						}
 				    }
 				}
