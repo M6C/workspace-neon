@@ -29,12 +29,16 @@ Ext.define('Workspace.editorjava.window.completion.tree.TreeCompletion', {
 			callbackCompletion: function(opts, success, response) {
 				var vdata = response.responseText;
 				console.info('Workspace.editorjava.windows.tree.TreeCompletion constructor callbackCompletion data:' + vdata);
-				me.store.proxy.data = Ext.JSON.decode(vdata);
+				if (!Ext.isEmpty(vdata)) {
+					me.store.proxy.data = Ext.JSON.decode(vdata);
+				} else {
+					me.store.proxy.data = [{'id':'root0','text':'No method found','className':'','expanded':true,draggable:false,animate:false,'caretPosition':'',children:[]}];
+				}
 				me.store.load(
-					new Ext.data.Operation({
-						action:'read'
-					})
-				);
+						new Ext.data.Operation({
+							action:'read'
+						})
+					);
 				me.setLoading(false);
 			}
 		}).request();
