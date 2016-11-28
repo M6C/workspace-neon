@@ -46,7 +46,7 @@ public class SrvEditLoadFile extends SrvGenerique
                         String content = UtilFile.read(file);
                         if(UtilString.isNotEmpty(content))
                         {
-                            String lines[] = content.split("\r\n");
+                            String lines[] = content.split(content.indexOf('\r')>=0 ? "\r\n" : "\n");
                             String line = null;
                             int nb = lines.length;
                             for(int i = 0; i < nb; i++)
