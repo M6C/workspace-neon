@@ -1,8 +1,10 @@
 Ext.define('Workspace.editorjava.panel.center.function.AddTabSave',  {
 	// REQUIRED
-	requires: ['Workspace.common.window.WindowWaiting',
-	           'Workspace.common.window.WindowResultText',
-	           'Workspace.editorjava.request.JsonEditSaveAndBuild']
+	requires: [
+	    'Workspace.common.tool.Toast',
+	    'Workspace.common.window.WindowWaiting',
+	    'Workspace.common.window.WindowResultText',
+	    'Workspace.editorjava.request.JsonEditSaveAndBuild']
 	,
 	statics: {
 
@@ -31,6 +33,7 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabSave',  {
 				build:pnlEdit.build,
 				className:className
 			}).request();
+			Workspace.common.tool.Toast.show('File \'' + panelId + '\' saved');
 		}
 	}
 

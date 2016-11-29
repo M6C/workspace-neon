@@ -4,6 +4,7 @@ function init_page() {
 
 	Ext.Loader.setConfig({enabled: true, origine:DOMAIN_NAME_ROOT});
 	Ext.Loader.setPath('Ext.ux', DOMAIN_NAME_ROOT + '/jsFramework/ext-4.0.7/examples/ux');
+	Ext.Loader.setPath('Ext.ux.window.Notification', DOMAIN_NAME_ROOT + '/jsFramework/Notification/Notification.js');
 
 	Ext.require([
 	    'Ext.data.*',

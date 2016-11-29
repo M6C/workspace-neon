@@ -15,8 +15,9 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 				var panelEditorId=panelId+'Editor';
 				var mainCenterPanel=Ext.getCmp('mainCenterPanel');
 
+				var initializeEditor = false;
 				var panelTab = Ext.getCmp(panelId);
-				if (panelTab == undefined) {
+				if (!Ext.isDefined(panelTab)) {
 
 					mainCenterPanel.add(
 						Ext.create('Workspace.editorjava.panel.center.PanelCenterEditor', {
@@ -28,9 +29,26 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 						})
 					);
 					panelTab = Ext.getCmp(panelId);
+					initializeEditor = true;
 				}
 				mainCenterPanel.setActiveTab(panelTab);
 				var editor = ace.edit(panelEditorId);
+
+				if (initializeEditor) {
+				    editor.commands.addCommand({
+				        name: "showKeyboardShortcuts",
+				        bindKey: {win: "Ctrl-s", mac: "Command-s"},
+				        exec: function(editor) {
+//				            ace.config.loadModule("ace/ext/keybinding_menu", function(module) {
+//				                module.init(editor);
+//				                editor.showKeyboardShortcuts()
+//				            })
+				    		Workspace.editorjava.panel.center.function.AddTabSave.call(panelId, panelEditorId);
+				        }
+				    })
+//				    editor.execCommand("showKeyboardShortcuts")
+				}
+				
 			    editor.focus();
 			}
 		}
