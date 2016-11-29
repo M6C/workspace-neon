@@ -39,8 +39,8 @@ public class SrvServerCommand extends SrvGenerique
             {
                 String msgText = null;
                 String filePathMain = AdpXmlApplication.getFormatedPathMain(context, domXml, application);
-                String szCommand = AdpXmlServer.getCommandByName(context, domXml, application, command);
-                String szServerDeploy = AdpXmlServer.getPathByName(context, domXml, application, "Root Deploy");
+                String szCommand = AdpXmlServer.getCommandByName(context, domXml, application, "Web Application", command);
+                String szServerDeploy = AdpXmlServer.getPathByName(context, domXml, application, "Web Application", "Root Deploy");
                 String szFilename = AdpXmlApplication.getPackageFileNameByName(context, domXml, application, "War", packagename);
                 String szWebApp = (new File(szServerDeploy, szFilename)).toURL().toString();
                 szCommand = (new StringBuilder(String.valueOf(szCommand))).append(URLEncoder.encode(szWebApp)).toString();

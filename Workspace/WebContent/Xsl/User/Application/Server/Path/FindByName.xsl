@@ -2,11 +2,12 @@
 <xsl:output method="text" encoding="ISO-8859-1" indent="no"/>
 
 	<xsl:param name="pApplication"/>
+	<xsl:param name="pType"/>
 	<xsl:param name="pName"/>
 
 	<xsl:variable name="user" select="/ROOT/USER"/>
 	<xsl:variable name="application" select="$user/PROFILES/PROFILE/APPLICATIONS/APPLICATION[@Name=$pApplication]"/>
-	<xsl:variable name="path" select="$application/SERVER[@Type='Web Application']/PATHS/PATH[@Name=$pName]"/>
+	<xsl:variable name="path" select="$application/SERVER[@Type=$pType]/PATHS/PATH[@Name=$pName]"/>
 	
 	<xsl:template match="/">
     <xsl:value-of select="$path"/>

@@ -24,7 +24,7 @@ public class AdpXmlServer extends AdpXml
     {
     }
 
-    public static String getCommandByName(ServletContext context, Document dom, String application, String name)
+    public static String getCommandByName(ServletContext context, Document dom, String application, String type, String name)
         throws TransformerException
     {
         String ret = null;
@@ -33,13 +33,14 @@ public class AdpXmlServer extends AdpXml
         String szXsl = "/Xsl/User/Application/Server/Command/FindByName.xsl";
         Dictionary dictionary = new Hashtable();
         dictionary.put("pApplication", application);
+        dictionary.put("pType", type);
         dictionary.put("pName", name);
         StringWriter strWriter = new StringWriter();
         UtilXML.tranformeXmlWithXsl(dom, context.getResourceAsStream(szXsl), strWriter, dictionary);
         ret = strWriter.toString();
         if(UtilString.isEmpty(ret))
         {
-            throw new IllegalArgumentException((new StringBuilder("Command '")).append(name).append("' not found in application '").append(application).append("'").toString());
+            throw new IllegalArgumentException(new StringBuilder("Type '").append(type).append("' Command '").append(name).append("' not found in application '").append(application).append("'").toString());
         } else
         {
             ret = ret.trim();
@@ -47,7 +48,7 @@ public class AdpXmlServer extends AdpXml
         }
     }
 
-    public static String getPathByName(ServletContext context, Document dom, String application, String command)
+    public static String getPathByName(ServletContext context, Document dom, String application, String type, String name)
         throws TransformerException
     {
         String ret = null;
@@ -56,13 +57,14 @@ public class AdpXmlServer extends AdpXml
         String szXsl = "/Xsl/User/Application/Server/Path/FindByName.xsl";
         Dictionary dictionary = new Hashtable();
         dictionary.put("pApplication", application);
-        dictionary.put("pName", command);
+        dictionary.put("pType", type);
+        dictionary.put("pName", name);
         StringWriter strWriter = new StringWriter();
         UtilXML.tranformeXmlWithXsl(dom, context.getResourceAsStream(szXsl), strWriter, dictionary);
         ret = strWriter.toString();
         if(UtilString.isEmpty(ret))
         {
-            throw new IllegalArgumentException((new StringBuilder("Command '")).append(command).append("' not found in application '").append(application).append("'").toString());
+            throw new IllegalArgumentException(new StringBuilder("Type '").append(type).append("' Command '").append(name).append("' not found in application '").append(application).append("'").toString());
         } else
         {
             ret = ret.trim();
