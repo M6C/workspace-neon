@@ -54,6 +54,7 @@ public class SrvEditSaveFile extends SrvGenerique
 							if (content.indexOf('\r')<0) { 
 								content = content.replaceAll("\n", "\r\n");
 							}
+							content = content.trim();
 							write(outputFile, content);
 	                    }
                     } finally {
