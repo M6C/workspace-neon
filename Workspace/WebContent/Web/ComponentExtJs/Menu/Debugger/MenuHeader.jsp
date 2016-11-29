@@ -74,7 +74,7 @@ function showMenuLevel(tableId, trId) {
 				</tr>
 				<tr class="menuLevel02" id="Exit">
 					<td class="menuLevel02">
-						<html:TagA attrClass="menuLevel02" attrHref="action.servlet?event=EditorJavaPageExtJs&application=#R$application#&pathToExpand=#R$pathToExpand#&fileName=#R$FileName#">Editeur Java</html:TagA>
+						<html:TagA attrClass="menuLevel02" attrHref="action.servlet?event=EditorJavaPageExtJsAce&application=#R$application#&pathToExpand=#R$pathToExpand#&fileName=#R$FileName#">Editeur Java</html:TagA>
 					</td>
 					<td class="menuLevel02">
 						<html:TagA attrClass="menuLevel02" attrHref="action.servlet?event=FileBrowserPageExtJs&application=#R$application#&pathToExpand=#R$pathToExpand#&fileName=#R$FileName#">Explorateur de fichier</html:TagA>
