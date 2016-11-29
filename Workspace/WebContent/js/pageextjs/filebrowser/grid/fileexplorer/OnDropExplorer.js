@@ -5,9 +5,23 @@ Ext.define('Workspace.filebrowser.grid.fileexplorer.OnDropExplorer',  {
 
 		call : function(grid, node, data, overModel, dropPosition, eOpts) {
 		    console.info('Workspace.filebrowser.grid.fileexplorer.OnDropExplorer.call OnDropExplorer');
-
 		    var me = Workspace.filebrowser.grid.fileexplorer.OnDropExplorer;
-		    Workspace.filebrowser.grid.fileexplorer.function.CopyMove.request(grid, node, data, me.callBackSuccess, me.callBackFailure);
+
+		    var nb = data.records.length;
+		    var itemPathSrc = nb + ' files';
+		    if (nb == 1) {
+			    var itemPathSrc = 'from:' + data.records[0].internalId;//raw.id;//raw.getKey();
+		    }
+		    var itemPathDst = node.viewRecordId;//mainCenterTab.id;
+			var dropAction = data.copy ? 'copy' : 'move';
+        	Ext.Msg.confirm('Confirm', dropAction + ' ' + itemPathSrc + ' to:' + itemPathDst + ' ?', function(btn, text){
+        	    if (btn == 'yes'){
+        		    Workspace.filebrowser.grid.fileexplorer.function.CopyMove.request(grid, node, data, me.callBackSuccess, me.callBackFailure);
+        	    } else {
+        	        me.callBackSuccess(grid, node, data);
+        	        return false;
+        	    }
+        	});
 
 		    return true;
 		}
@@ -71,7 +85,7 @@ Ext.define('Workspace.filebrowser.grid.fileexplorer.OnDropExplorer',  {
 //		        var mainEstStore = mainEstGrid.store;
 //		        var dataModel = mainEstStore.data.getByKey(raw.id);
 //	
-//		        // Supprime une donn�e
+//		        // Supprime une donn?e
 //		        //mainEstGrid.data.removeAtKey(raw.id);//item.getKey());
 //	        	// Raffaichissement du store et donc de la grid
 //	        	mainEstStore.remove(dataModel);
