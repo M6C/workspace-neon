@@ -13,7 +13,7 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
 
         config.callback = function(options, success, response) { 
 
-    		if (me.build) {
+    		if (config.build == 'true') {
     			Workspace.common.window.WindowWaiting.updateText('Building process...');
     			Ext.Ajax.request({
     				method:'POST',

@@ -49,6 +49,7 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 //				    editor.execCommand("showKeyboardShortcuts")
 				}
 				
+				editor.build = raw.build;
 			    editor.focus();
 			}
 		}

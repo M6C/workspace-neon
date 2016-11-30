@@ -26,6 +26,6 @@ public class SrvAdminExecuteCmd extends workspace.service.SrvAdminExecuteCmd
     {
         super.execute(request, response, bean);
         String content = request.getParameter("resultCommandLine");
-        UtilExtjs.splitAndSendJason(content, response);
+        UtilExtjs.splitAndSendJson(content, response);
     }
 }

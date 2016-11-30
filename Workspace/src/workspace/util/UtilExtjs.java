@@ -18,12 +18,13 @@ public class UtilExtjs
     {
     }
 
-    public static void splitAndSendJason(String text, HttpServletResponse response)
-        throws IOException
-    {
+    public static String splitToJson(String text, HttpServletResponse response) throws IOException {
+    	return splitToJson(text, null, response);
+    }
+
+    public static String splitToJson(String text, String jsonAdd, HttpServletResponse response) throws IOException {
         String jsonData = null;
-        if(UtilString.isNotEmpty(text))
-        {
+        if(UtilString.isNotEmpty(text)) {
             String content = text.toString();
             String lines[] = content.split("\r\n");
             String line = null;
@@ -39,19 +40,34 @@ public class UtilExtjs
                 jsonData = (new StringBuilder(String.valueOf(jsonData))).append("{'text':'").append(line).append("',").append("'id':'").append(i).append("'").append("}").toString();
             }
 
-        } else
-        {
+        } else {
             Trace.DEBUG("splitAndSendJason text is Empty");
         }
         if(jsonData != null)
-            jsonData = (new StringBuilder(String.valueOf(jsonData))).append("]}").toString();
+            jsonData = (new StringBuilder(String.valueOf(jsonData))).append("]").toString();
         else
-            jsonData = "{results:0,data:[]}";
-        Trace.DEBUG((new StringBuilder("splitAndSendJason jsonData:")).append(jsonData).toString());
+            jsonData = "{results:0,data:[]";
+        if (jsonAdd != null) {
+        	jsonData += "," + jsonAdd;
+        }
+        jsonData += "}";
+        Trace.DEBUG("splitAndSendJason jsonData:"+jsonData);
+        return jsonData;
+    }
+
+    public static void sendJson(String json, HttpServletResponse response) throws IOException {
         OutputStream os = response.getOutputStream();
         response.setContentType("text/json");
-        os.write(jsonData.getBytes());
+        os.write(json.getBytes());
         os.close();
+    }
+    public static void splitAndSendJson(String text, HttpServletResponse response) throws IOException {
+        splitAndSendJson(text, null, response);
+    }
+
+    public static void splitAndSendJson(String text, String jsonAdd, HttpServletResponse response) throws IOException {
+        String jsonData = splitToJson(text, jsonAdd, response);
+        sendJson(jsonData, response);
     }
 
     private static String simpleFormat(String text)

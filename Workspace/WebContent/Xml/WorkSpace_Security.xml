@@ -41,9 +41,9 @@
       </JDK>
     </JDKS>
     <SERVERS>
-       <SERVER Name="JBoss 4.0.5 Dev" Type="Web Application">
+       <SERVER Name="JBoss 4.0.5 Dev" Type="WebApplication">
             <PATHS>
-                <PATH Name="Root Deploy">
+                <PATH Name="RootDeploy">
                     /jboss-4.0.5.GA/server/dev/deploy
                 </PATH>
             </PATHS>
@@ -56,6 +56,18 @@
                 </COMMAND>
                 <COMMAND Name="Undeploy">
                     <![CDATA[http://localhost:8380/jmx-console/HtmlAdaptor?action=invokeOpByName&name=jboss.system:service%3DMainDeployer&methodName=undeploy&argType=java.net.URL&arg0=]]>
+                </COMMAND>
+            </COMMANDS>
+        </SERVER>
+        <SERVER Name="GlassFish 4.1.1 Dev" Type="WebApplication">
+            <PATHS>
+                <PATH Name="RootDeploy">
+                    /glassfish-4.1.1/glassfish/domains/domain1
+                </PATH>
+            </PATHS>
+            <COMMANDS>
+                <COMMAND Name="AutoDeploy">
+                    /eclipseApps/Test
                 </COMMAND>
             </COMMANDS>
         </SERVER>

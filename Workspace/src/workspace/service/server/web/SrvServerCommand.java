@@ -34,13 +34,13 @@ public class SrvServerCommand extends SrvGenerique
         String command = (String)bean.getParameterDataByName("command");
         String packagename = (String)bean.getParameterDataByName("package");
         Document domXml = (Document)session.getAttribute("resultDom");
-        if(UtilString.isNotEmpty(application) && UtilString.isNotEmpty(command) && UtilString.isNotEmpty(packagename) && domXml != null)
+        if(UtilString.isNotEmpty(application) && UtilString.isNotEmpty(command) && UtilString.isNotEmpty(packagename) && domXml != null) {
             try
             {
                 String msgText = null;
                 String filePathMain = AdpXmlApplication.getFormatedPathMain(context, domXml, application);
-                String szCommand = AdpXmlServer.getCommandByName(context, domXml, application, "Web Application", command);
-                String szServerDeploy = AdpXmlServer.getPathByName(context, domXml, application, "Web Application", "Root Deploy");
+                String szCommand = AdpXmlServer.getCommandByName(context, domXml, application, "WebApplication", command);
+                String szServerDeploy = AdpXmlServer.getPathByName(context, domXml, application, "WebApplication", "RootDeploy");
                 String szFilename = AdpXmlApplication.getPackageFileNameByName(context, domXml, application, "War", packagename);
                 String szWebApp = (new File(szServerDeploy, szFilename)).toURL().toString();
                 szCommand = (new StringBuilder(String.valueOf(szCommand))).append(URLEncoder.encode(szWebApp)).toString();
@@ -54,6 +54,7 @@ public class SrvServerCommand extends SrvGenerique
                 Trace.ERROR(this, ex);
                 throw ex;
             }
+        }
     }
 
     private String sendHttpRequest(String request)

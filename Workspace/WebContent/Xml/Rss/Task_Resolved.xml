@@ -79,7 +79,7 @@
 </item>
 <item>
 <title>Server Web</title>
-<description>Redepoyement du serveur Web à partir du repertoire "Root Deploy" configurer dans le serveur d'application.</description>
+<description>Redepoyement du serveur Web à partir du repertoire "RootDeploy" configurer dans le serveur d'application.</description>
 <pubDate>16/01/2007</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 </item>
