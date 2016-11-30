@@ -1,8 +1,3 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   SrvAntTargetExecute.java
-
 package workspace.service.ant;
 
 import java.io.ByteArrayOutputStream;
@@ -45,9 +40,7 @@ public class SrvAntTargetExecute extends SrvGenerique
     {
     }
 
-    public void execute(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean)
-        throws Exception
-    {
+    public void execute(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean) throws Exception {
         HttpSession session = request.getSession();
         ServletContext context = session.getServletContext();
         String target = (String)bean.getParameterDataByName("target");

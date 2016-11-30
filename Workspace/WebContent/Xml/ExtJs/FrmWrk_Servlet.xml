@@ -213,6 +213,16 @@
 
         </BEAN>
     </SERVLET>
+    <SERVLET Name="JsonAutoDeployBuild" Target="" TargetError="">
+        <BEAN Name="BeanAutoDeployBuild" Scope="request" Service="workspace.service.extjs.SrvAutoDeployBuild">
+            <PARAM Name="application" Type="STRING"/>
+        </BEAN>
+    </SERVLET>
+    <SERVLET Name="JsonAutoDeployWebContent" Target="" TargetError="">
+        <BEAN Name="BeanAutoDeployWebContent" Scope="request" Service="workspace.service.extjs.SrvAutoDeployWebContent">
+            <PARAM Name="filename" Type="STRING"/>
+        </BEAN>
+    </SERVLET>
     <SERVLET Name="AjaxSVNTestCommit" Target="" TargetError="">
         <BEAN Name="BeanTestCommit" Scope="request" Service="workspace.service.versioning.svn.TestCommit"/>
     </SERVLET>

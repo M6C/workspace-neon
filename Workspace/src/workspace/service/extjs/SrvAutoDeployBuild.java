@@ -1,11 +1,5 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   SrvCompileProject.java
-
 package workspace.service.extjs;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -22,32 +16,26 @@ import org.w3c.dom.Document;
 import framework.beandata.BeanGenerique;
 import framework.ressource.util.UtilFile;
 import framework.ressource.util.UtilString;
+import framework.service.SrvGenerique;
 import framework.trace.Trace;
 import workspace.adaptateur.application.AdpXmlApplication;
 import workspace.adaptateur.application.AdpXmlServer;
-import workspace.service.ant.SrvAntTargetExecute;
 import workspace.util.UtilExtjs;
 import workspace.util.UtilPath;
 
-public class SrvCompileProject extends SrvAntTargetExecute// SrvAntCompileProject
-{
+public class SrvAutoDeployBuild extends SrvGenerique {
 
-    public SrvCompileProject()
-    {
+    public void execute(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean) throws Exception {
+		List<String> list = autoDeploy(request, bean);
+
+		String json = "";
+    	for(int i=0 ; i<list.size() ; json += (i>0 ? "," : "") + list.get(i++));
+
+    	String jsonData = "{results:"+list.size()+",autodeploy:["+json+"]}";
+        UtilExtjs.sendJson(jsonData, response);
     }
 
-    public void init()
-    {
-    }
-
-    protected void doResponse(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean, ByteArrayOutputStream streamLog) throws Exception {
-        System.out.println(streamLog.toString());
-        String content = streamLog.toString();
-		String jsonAutodeploy = null;//autoDeploy(request, bean);
-        UtilExtjs.splitAndSendJson(content, jsonAutodeploy, response);
-    }
-
-    private String autoDeploy(HttpServletRequest request, BeanGenerique bean) throws IOException {
+    private List<String> autoDeploy(HttpServletRequest request, BeanGenerique bean) throws IOException {
     	List<String> json = new ArrayList<>();
     	try
         {
@@ -82,7 +70,7 @@ public class SrvCompileProject extends SrvAntTargetExecute// SrvAntCompileProjec
 	        	}
 	
 	        	int pathClassLen = szPathClass.length();
-	        	List list = UtilFile.dir(szPathClass, true, (FilenameFilter)null, false, true);
+	        	List<?> list = UtilFile.dir(szPathClass, true, (FilenameFilter)null, false, true);
 	        	for(int i=0 ; i<list.size() ; i++) {
 	        		String classname = (String) list.get(i);
 	            	String filenameDst = UtilFile.formatPath(autoDeploy, "WEB-INF" + File.separator + "classes");
@@ -115,14 +103,6 @@ public class SrvCompileProject extends SrvAntTargetExecute// SrvAntCompileProjec
         catch (Exception ex) {
             Trace.ERROR(this, ex);
         }
-    	String ret = "autodeploy: [";
-    	for(int i=0 ; i<json.size() ; i++) {
-    		if (i>0) {
-    			ret += ",";
-    		}
-    		ret += json.get(i);
-    	}
-    	ret += "]";
-		return ret;
+		return json;
     }
 }

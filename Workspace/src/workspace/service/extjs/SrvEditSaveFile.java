@@ -66,7 +66,7 @@ public class SrvEditSaveFile extends SrvGenerique
 							}
 							content = content.trim();
 							if (write(outputFile, content)) {
-								autoDeploy(request, bean, filename);
+//								autoDeploy(request, bean, filename);
 							}
 	                    }
                     } finally {
