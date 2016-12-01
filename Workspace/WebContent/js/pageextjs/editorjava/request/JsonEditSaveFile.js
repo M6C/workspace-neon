@@ -23,8 +23,8 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveFile',  {
 
     request: function() {
         var me = this;
-        me.wnd = Workspace.common.window.WindowWaiting.showWindowWaiting();
-		Workspace.common.window.WindowWaiting.updateWindowWaiting(me.wnd, 'Saving...');
+//        me.wnd = Workspace.common.window.WindowWaiting.showWindowWaiting();
+//		Workspace.common.window.WindowWaiting.updateWindowWaiting(me.wnd, 'Saving...');
         Ext.Ajax.request({
             success: me.success,
             failure: me.failure,

@@ -13,7 +13,7 @@ Ext.define('Workspace.common.window.WindowTextCompile', {
 		var me = this;
 
 	   var data = '';
-	   var jsonData = Ext.JSON.decode(this.response.responseText);
+	   var jsonData = me;
 	   var nbLine = jsonData.results;
 	   console.log('jsonData:' + jsonData);
 	   console.log('nbLine:' + nbLine);

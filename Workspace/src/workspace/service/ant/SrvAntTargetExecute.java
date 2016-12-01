@@ -91,7 +91,7 @@ public class SrvAntTargetExecute extends SrvGenerique
 
 	            System.setErr(psLog);
 	            System.setOut(psLog);
-	            System.out.println(pathClass.toString());
+//	            System.out.println(pathClass.toString());
 
 	            ph.parse(p, buildXml);
 

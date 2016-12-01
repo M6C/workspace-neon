@@ -15,11 +15,6 @@ import workspace.adaptateur.application.AdpXmlApplication;
 
 public class ActionFileReader extends framework.action.ActionFileReader
 {
-
-    public ActionFileReader()
-    {
-    }
-
     protected File getFileRootSource(HttpServletRequest req)
     {
         HttpSession session = req.getSession();
