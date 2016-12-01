@@ -31,7 +31,20 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
     		    				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonAutoDeployBuild',
     		    				callback:function(opts, success, response) {
     		    					var jsonData = Ext.JSON.decode(response.responseText);
-    		    					Workspace.editorjava.tool.Pop.info('AutoDeploy complete ' + jsonData.results + ' file(s).');
+    		    					var pop = Workspace.editorjava.tool.Pop.info('AutoDeploy complete ' + jsonData.results + ' file(s).');
+    		    					if (jsonData.results > 0) {
+    		    						var message = 'AutoDeploy complete<br>';
+    		    						for(var i=0 ; i<jsonData.results ; i++) {
+    		    							data = jsonData.autodeploy[i];
+    		    							message += data.src + "=>" +  data.dst + "<br>";
+    		    						}
+    		    						console.info('Workspace.editorjava.request.JsonEditSaveAndBuild message:' + message);
+    		    						var toast = pop.toast;
+    		    						Ext.fly(toast.body.dom).on('click', function () {
+    		    							toast.doClose();
+    		    							Workspace.editorjava.tool.Pop.info(message);
+    		    						}, me);
+    		    					}
     		    				},
     		    				params:{application:me.application}
     		    			});

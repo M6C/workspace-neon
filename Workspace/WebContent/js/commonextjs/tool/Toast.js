@@ -5,7 +5,7 @@ Ext.define('Workspace.common.tool.Toast', {
 
 		show : function(message, closeDelay = 4000) {
 		    console.info('Workspace.common.function.ApplyDragAndDrop apply');
-		    Ext.create('widget.uxNotification', {
+		    return Ext.create('widget.uxNotification', {
 				position: 'tr',
 				useXAxis: true,
 				cls: 'ux-notification-light',
@@ -17,7 +17,9 @@ Ext.define('Workspace.common.tool.Toast', {
 				slideBackDuration: 1500,
 				autoCloseDelay: closeDelay,
 				slideInAnimation: 'elasticIn',
-				slideBackAnimation: 'elasticIn'
+				slideBackAnimation: 'elasticIn',
+				// Don't close if mouse is over the toast
+				stickWhileHover: true
 			}).show();
 		}
 	}

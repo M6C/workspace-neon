@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.w3c.dom.Document;
 
 import framework.beandata.BeanGenerique;
+import framework.ressource.util.UtilEncoder;
 import framework.ressource.util.UtilFile;
 import framework.ressource.util.UtilString;
 import framework.service.SrvGenerique;
@@ -54,6 +55,7 @@ public class SrvAutoDeployBuild extends SrvGenerique {
 		    	// if no RootDeploy defined this call throw an IllegalArgumentException
 		        String serverDeploy = AdpXmlServer.getPathByName(context, dom, application, "WebApplication", "RootDeploy");
 	        	serverDeploy = UtilPath.formatPath(dom, serverDeploy);
+	        	int serverDeployLen = serverDeploy.length();
 	
 		    	// if no Main path defined this call throw an IllegalArgumentException
 	            String szPathMain = AdpXmlApplication.getPathByName(context, dom, application, "Main");
@@ -69,14 +71,14 @@ public class SrvAutoDeployBuild extends SrvGenerique {
 	        		autoDeploy = UtilFile.formatPath(serverDeploy, autoDeploy);
 	        	}
 	
+            	String filenameDst = UtilFile.formatPath(autoDeploy, "WEB-INF" + File.separator + "classes");
 	        	int pathClassLen = szPathClass.length();
 	        	List<?> list = UtilFile.dir(szPathClass, true, (FilenameFilter)null, false, true);
 	        	for(int i=0 ; i<list.size() ; i++) {
 	        		String classname = (String) list.get(i);
-	            	String filenameDst = UtilFile.formatPath(autoDeploy, "WEB-INF" + File.separator + "classes");
-	            	filenameDst = UtilFile.formatPath(filenameDst, classname.substring(pathClassLen));
+	            	String classnameDst = UtilFile.formatPath(filenameDst, classname.substring(pathClassLen));
 	            	
-	            	File fileDst = new File(filenameDst);
+	            	File fileDst = new File(classnameDst);
 	            	if (fileDst.isDirectory())
 	            		continue;
 
@@ -89,8 +91,12 @@ public class SrvAutoDeployBuild extends SrvGenerique {
 
 	            	if (!fileDst.exists() || fileSrc.lastModified() > fileDst.lastModified()) {
 		            	UtilFile.copyFile(fileSrc, fileDst);
-		            	json.add("{src:'" + classname + "', dst:'" + filenameDst + "'}");
-		            	Trace.DEBUG(this, "Success autoDeploy '" + classname + "' copied to '"+filenameDst+"'");
+		            	String src = UtilEncoder.encodeHTMLEntities("[" + application + "]" + classname.substring(pathClassLen));
+		            	String dst = UtilEncoder.encodeHTMLEntities("[DEPLOYED_SERVER]" + classnameDst.substring(serverDeployLen));
+		            	src = UtilString.replaceAll(src, "\\", "\\\\");
+		            	dst = UtilString.replaceAll(dst, "\\", "\\\\");
+		            	json.add("{src:'" + src + "', dst:'" + dst + "'}");
+		            	Trace.DEBUG(this, "Success autoDeploy '" + classname + "' copied to '"+classnameDst+"'");
 	            	} else {
 		            	Trace.DEBUG(this, "No autoDeploy '" + classname + "' fileSrc.lastModified:"+fileSrc.lastModified()+" fileDst.lastModified:" + fileDst.lastModified());
 	            	}

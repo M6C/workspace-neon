@@ -4,9 +4,11 @@ Ext.define('Workspace.editorjava.tool.Pop', {
 	statics: {
 
 		info : function(message, toast = true) {
+			var ret = {};
 			if (toast) {
-				Workspace.common.tool.Toast.show(Ext.util.Format.htmlDecode(message));
+				ret.toast = Workspace.common.tool.Toast.show(Ext.util.Format.htmlDecode(message));
 			}
+			return ret;
 		}
 	}
 
