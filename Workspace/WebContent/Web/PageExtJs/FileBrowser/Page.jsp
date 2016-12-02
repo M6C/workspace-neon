@@ -10,6 +10,8 @@
     <%--script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/jsFramework/ext-4.0.7/ext-all-debug-w-comments.js"></script--%>
     <script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/jsFramework/ext-4.0.7/ext-all-debug.js"></script>
     <script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/jsFramework/ace-1.2.5/src-min-noconflict/ace.js"></script>
+	<%--Use for 'ace/ext/language_tools' (Completion...)--%>
+    <script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/jsFramework/ace-1.2.5/src-min-noconflict/ext-language_tools.js"></script>
     <script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/js/commonextjs/constant/Constant.js"></script>
     <script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/js/commonextjs/init/InitLoader.js"></script>
     <script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/js/pageextjs/filebrowser/page.js"></script>

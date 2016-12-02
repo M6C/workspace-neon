@@ -30,10 +30,12 @@
 			bravojs.mainModuleDir = /^(https?|resource):\/(.*?)\.js$/.exec(bravojs.url)[2];
 			bravojs.mainContext = bravojs.mainModuleDir + '/c371cd05c8df40c0af3b1515b808c9d737b98b02';
 
-			addScript('/jsFramework/ace-1.2.5/src-min-noconflict/ace.js');
-
 	        init_loader();
 
+/* 			addScript('/jsFramework/ace-1.2.5/src-min-noconflict/ace.js');
+			// Use for 'ace/ext/language_tools' (Completion...)
+			addScript('/jsFramework/ace-1.2.5/src-min-noconflict/ext-language_tools.js');
+ */
 	        addScript('/js/pageextjs/editorjava/window/WindowMenu.js');
 	        addScript('/js/pageextjs/editorjava/menu/MenuAction.js');
 	        addScript('/js/pageextjs/editorjava/menu/MenuServerWeb.js');
@@ -43,6 +45,8 @@
     		init_page();
 		});
 	</script>
+    <script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/jsFramework/ace-1.2.5/src-min-noconflict/ace.js"></script>
+    <script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/jsFramework/ace-1.2.5/src-min-noconflict/ext-language_tools.js"></script>
 </head>
 <body>
 	<div id="popup_log" class="x-hidden"><div id="popup_log_window"></div></div>

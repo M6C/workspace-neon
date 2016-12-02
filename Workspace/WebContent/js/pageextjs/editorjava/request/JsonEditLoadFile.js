@@ -2,7 +2,8 @@
 // - panelId
 // - panelEditorId
 Ext.define('Workspace.editorjava.request.JsonEditLoadFile',  {
-
+	requires: ['Workspace.common.tool.Toast']
+	,
     constructor: function(config) {
 		console.info('Workspace.editorjava.request.JsonEditLoadFile constructor');
         var me = this;
@@ -28,13 +29,14 @@ Ext.define('Workspace.editorjava.request.JsonEditLoadFile',  {
 
 				var filename = me.panelId.toLowerCase();
 				var editor = ace.edit(me.panelEditorId);
+				ace.require("ace/ext/language_tools");
 				if (filename.endsWith('.java')) {
 					editor.getSession().setMode("ace/mode/java");
 				} else if (filename.endsWith('.js')) {
 					editor.getSession().setMode("ace/mode/javascript");
-				} else if (filename.endsWith('.html') || filename.endsWith('.htm')) {
+				} else if (filename.endsWith('.html') || filename.endsWith('.htm') || filename.endsWith('.xhtml')) {
 					editor.getSession().setMode("ace/mode/html");
-				} else if (filename.endsWith('.xml')) {
+				} else if (filename.endsWith('.xml') || filename.endsWith('.dtd') || filename.endsWith('.xsd') || filename.endsWith('.xsl')) {
 					editor.getSession().setMode("ace/mode/xml");
 				} else if (filename.endsWith('.ini')) {
 					editor.getSession().setMode("ace/mode/ini");
@@ -44,12 +46,20 @@ Ext.define('Workspace.editorjava.request.JsonEditLoadFile',  {
 					editor.getSession().setMode("ace/mode/jsp");
 				} else if (filename.endsWith('.properties')) {
 					editor.getSession().setMode("ace/mode/properties");
+				} else if (filename.endsWith('.php')) {
+					editor.getSession().setMode("ace/mode/properties");
 				} else {
 					editor.getSession().setMode("ace/mode/text");
 				}
+			    editor.setOptions({
+			        enableBasicAutocompletion: true,
+			        enableSnippets: true,
+			        enableLiveAutocompletion: false
+			    });
 				editor.setValue(resultMessage);
-			    editor.gotoLine(1);
 			    editor.focus();
+			    editor.scrollToLine(1, true, false, function(){});
+		    	editor.gotoLine(1, 0, true);
 
 				Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandCompletion');
 			    Workspace.editorjava.aceeditor.command.CommandCompletion.addCommand(editor);
