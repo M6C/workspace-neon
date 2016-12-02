@@ -29,28 +29,21 @@ Ext.define('Workspace.editorjava.request.JsonEditLoadFile',  {
 
 				var filename = me.panelId.toLowerCase();
 				var editor = ace.edit(me.panelEditorId);
+		        var mode = 'text';
 				ace.require("ace/ext/language_tools");
-				if (filename.endsWith('.java')) {
-					editor.getSession().setMode("ace/mode/java");
-				} else if (filename.endsWith('.js')) {
-					editor.getSession().setMode("ace/mode/javascript");
-				} else if (filename.endsWith('.html') || filename.endsWith('.htm') || filename.endsWith('.xhtml')) {
-					editor.getSession().setMode("ace/mode/html");
-				} else if (filename.endsWith('.xml') || filename.endsWith('.dtd') || filename.endsWith('.xsd') || filename.endsWith('.xsl')) {
-					editor.getSession().setMode("ace/mode/xml");
-				} else if (filename.endsWith('.ini')) {
-					editor.getSession().setMode("ace/mode/ini");
-				} else if (filename.endsWith('.json')) {
-					editor.getSession().setMode("ace/mode/json");
-				} else if (filename.endsWith('.jsp')) {
-					editor.getSession().setMode("ace/mode/jsp");
-				} else if (filename.endsWith('.properties')) {
-					editor.getSession().setMode("ace/mode/properties");
-				} else if (filename.endsWith('.php')) {
-					editor.getSession().setMode("ace/mode/properties");
+				if (filename.endsWith('.js')) {
+					mode = 'javascript';
+				} else if (filename.endsWith('.htm') || filename.endsWith('.xhtml')) {
+					mode = 'html';
+				} else if (filename.endsWith('.dtd') || filename.endsWith('.xsd') || filename.endsWith('.xsl')) {
+					mode = 'xml';
 				} else {
-					editor.getSession().setMode("ace/mode/text");
+				    var idx=filename.lastIndexOf('.');
+				    if (idx > 0) {
+				        var mode = filename.substring(idx+1);
+				    }
 				}
+		        editor.getSession().setMode({path: "ace/mode/" + mode, pure:true, /*other options here*/})
 			    editor.setOptions({
 			        enableBasicAutocompletion: true,
 			        enableSnippets: true,
