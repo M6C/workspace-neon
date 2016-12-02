@@ -16,7 +16,7 @@ public class SrvCompileProject extends SrvAntTargetExecute
     protected void doResponse(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean, ByteArrayOutputStream streamLog) throws Exception {
         System.out.println(streamLog.toString());
         String content = streamLog.toString();
-    	String jsonSuccess = "success:" + UtilString.isEmpty(content);
+    	String jsonSuccess = "success:" + (UtilString.isEmpty(content) || (content.indexOf("error") < 0));
         UtilExtjs.splitAndSendJson(content, jsonSuccess, response);
     }
 }

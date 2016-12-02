@@ -17,6 +17,7 @@ import framework.ressource.util.UtilString;
 import framework.service.SrvGenerique;
 import framework.trace.Trace;
 import workspace.adaptateur.application.AdpXmlApplication;
+import workspace.adaptateur.application.AdpXmlServer;
 import workspace.util.UtilPath;
 
 public class SrvTreeDirectory extends SrvGenerique {
@@ -41,6 +42,7 @@ public class SrvTreeDirectory extends SrvGenerique {
                 Document dom = (Document)request.getSession().getAttribute("resultDom");
                 pathMain = AdpXmlApplication.getFormatedPathMain(context, dom, application);
                 pathSrc = AdpXmlApplication.getPathSource(context, dom, application);
+	            boolean isAutoDeploy = AdpXmlServer.isAutoDeploy(context, dom, application);
                 Trace.DEBUG(this, (new StringBuilder("execute pathMain:")).append(pathMain).toString());
                 Trace.DEBUG(this, (new StringBuilder("execute pathSrc:")).append(pathSrc).toString());
                 if(UtilString.isNotEmpty(pathMain)) {
@@ -109,7 +111,16 @@ public class SrvTreeDirectory extends SrvGenerique {
                                     else
                                         jsonData = (new StringBuilder(String.valueOf(jsonData))).append(",").toString();
                                     String pathRoot = (new StringBuilder("[")).append(application).append("]").append(pathRelative).toString();
-                                    jsonData = (new StringBuilder(String.valueOf(jsonData))).append("{'text':'").append(file.getName()).append("',").append("'id':'").append(pathRoot).append("',").append("'application':'").append(application).append("',").append("'path':'").append(pathRoot).append("',").append("'className':'").append(className).append("',").append("'contentType':'").append(contentType).append("',").append("'build':'").append(bBuild).append("',").append("'leaf':").append(leaf).append("}").toString();
+                                    jsonData += "{'text':'" + file.getName() + "',"
+                                        + "'id':'" + pathRoot + "',"
+                                        + "'application':'" + application + "',"
+                                        + "'path':'" + pathRoot + "',"
+                                        + "'className':'" + className + "',"
+                                        + "'contentType':'" + contentType + "',"
+                                        + "'build':'" + bBuild + "',"
+                                        + "'leaf':" + leaf + ","
+                                        + "'autoDeploy':" + isAutoDeploy
+                                        + "}";
                                 }
                             }
 

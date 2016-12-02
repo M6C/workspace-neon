@@ -1,8 +1,3 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   AdpXmlServer.java
-
 package workspace.adaptateur.application;
 
 import framework.ressource.util.UtilString;
@@ -14,19 +9,11 @@ import javax.servlet.ServletContext;
 import javax.xml.transform.TransformerException;
 import org.w3c.dom.Document;
 
-// Referenced classes of package workspace.adaptateur.application:
-//            AdpXml
+public class AdpXmlServer extends AdpXml {
 
-public class AdpXmlServer extends AdpXml
-{
+    private static final String XSL_PATH_PREFIX = "/";
 
-    private AdpXmlServer()
-    {
-    }
-
-    public static String getCommandByName(ServletContext context, Document dom, String application, String type, String name)
-        throws TransformerException
-    {
+    public static String getCommandByName(ServletContext context, Document dom, String application, String type, String name) throws TransformerException {
         String ret = null;
         checkDocument(dom);
         checkApplication(application);
@@ -48,9 +35,7 @@ public class AdpXmlServer extends AdpXml
         }
     }
 
-    public static String getPathByName(ServletContext context, Document dom, String application, String type, String name)
-        throws TransformerException
-    {
+    public static String getPathByName(ServletContext context, Document dom, String application, String type, String name) throws TransformerException {
         String ret = null;
         checkDocument(dom);
         checkApplication(application);
@@ -72,5 +57,12 @@ public class AdpXmlServer extends AdpXml
         }
     }
 
-    private static final String XSL_PATH_PREFIX = "/";
+    public static boolean isAutoDeploy(ServletContext context, Document dom, String application) {
+        try {
+            String autoDeploy = getCommandByName(context, dom, application, "WebApplication", "AutoDeploy");
+            return UtilString.isNotEmpty(autoDeploy);
+        } catch (Exception ex) {
+        }
+        return false;
+    }
 }
