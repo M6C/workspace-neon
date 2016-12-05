@@ -19,13 +19,15 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabSave',  {
 			var value=pnlEdit.getValue();//pnlEdit.getRawValue();
 			//value=value.replace(/&\w+;/g,"");
 			var className=pnlEdit.className;
+			var autoDeploy = pnlEdit.autoDeploy;
 
 			Ext.create('Workspace.editorjava.request.JsonEditSaveAndBuild',
 			{
 				params:{filename:panelId,content:value},
 				application:application,
 				build:pnlEdit.build,
-				className:className
+				className:className,
+				autoDeploy:autoDeploy
 			}).request();
 		}
 	}

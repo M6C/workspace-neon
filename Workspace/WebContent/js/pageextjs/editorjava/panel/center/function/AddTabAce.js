@@ -25,7 +25,8 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 							title: raw.text,
 							id: panelId,
 							panelEditorId: panelEditorId,
-							panelId: panelId
+							panelId: panelId,
+							autoDeploy: raw.autoDeploy
 						})
 					);
 					panelTab = Ext.getCmp(panelId);
@@ -50,6 +51,7 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 				}
 				
 				editor.build = raw.build;
+				editor.autoDeploy = raw.autoDeploy;
 			    editor.focus();
 			}
 		}

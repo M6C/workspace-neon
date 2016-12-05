@@ -27,27 +27,29 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
     					Workspace.editorjava.tool.Pop.info("Building complete.");
     					var jsonData = Ext.JSON.decode(responseCompile.responseText);
     					if (jsonData.success) {
-    		    			Ext.Ajax.request({
-    		    				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonAutoDeployBuild',
-    		    				callback:function(opts, success, response) {
-    		    					var jsonData = Ext.JSON.decode(response.responseText);
-    		    					var pop = Workspace.editorjava.tool.Pop.info('AutoDeploy complete ' + jsonData.results + ' file(s).');
-    		    					if (jsonData.results > 0) {
-    		    						var message = 'AutoDeploy complete<br>';
-    		    						for(var i=0 ; i<jsonData.results ; i++) {
-    		    							data = jsonData.autodeploy[i];
-    		    							message += data.src + "=>" +  data.dst + "<br>";
-    		    						}
-    		    						console.info('Workspace.editorjava.request.JsonEditSaveAndBuild message:' + message);
-    		    						var toast = pop.toast;
-    		    						Ext.fly(toast.body.dom).on('click', function () {
-    		    							toast.doClose();
-    		    							Workspace.editorjava.tool.Pop.info(message);
-    		    						}, me);
-    		    					}
-    		    				},
-    		    				params:{application:me.application}
-    		    			});
+    						if (config.autoDeploy == true) {
+	    		    			Ext.Ajax.request({
+	    		    				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonAutoDeployBuild',
+	    		    				callback:function(opts, success, response) {
+	    		    					var jsonData = Ext.JSON.decode(response.responseText);
+	    		    					var pop = Workspace.editorjava.tool.Pop.info('AutoDeploy complete ' + jsonData.results + ' file(s).');
+	    		    					if (jsonData.results > 0) {
+	    		    						var message = 'AutoDeploy complete<br>';
+	    		    						for(var i=0 ; i<jsonData.results ; i++) {
+	    		    							data = jsonData.autodeploy[i];
+	    		    							message += data.src + "=>" +  data.dst + "<br>";
+	    		    						}
+	    		    						console.info('Workspace.editorjava.request.JsonEditSaveAndBuild message:' + message);
+	    		    						var toast = pop.toast;
+	    		    						Ext.fly(toast.body.dom).on('click', function () {
+	    		    							toast.doClose();
+	    		    							Workspace.editorjava.tool.Pop.info(message);
+	    		    						}, me);
+	    		    					}
+	    		    				},
+	    		    				params:{application:me.application}
+	    		    			});
+    						}
     					} else {
 	    					Ext.create('Workspace.common.window.WindowTextCompile', jsonData).show();
     					}
@@ -55,7 +57,7 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
     				params:{application:me.application,target:'compile',className:me.className}
     			});
     		}
-    		else {
+    		else if (config.autoDeploy == true) {
     			Ext.Ajax.request({
     				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonAutoDeployWebContent',
     				callback:function(opts, success, response) {
@@ -63,7 +65,7 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
     				},
     				params:{filename:filename}
     			});
-    		}
+			}
     	};
 
         Ext.apply(me, config);
