@@ -8,8 +8,8 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandCompletion',  {
 		    editor.commands.addCommand({
 		        name: 'Completion',
 		        bindKey: {win: 'Ctrl-Shift-space',  mac: 'Command-Option-space'},
-		        exec: function(editor) {
-					console.info('Workspace.editorjava.panel.center.function.AddTabAce editor.commands Ctrl-M');
+		        exec: function(container) {
+					console.info('Workspace.editorjava.aceeditor.command.CommandCompletion exec');
 	
 					var selection = editor.selection;
 					var col = selection.getCursor().column;

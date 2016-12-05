@@ -34,22 +34,17 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 				}
 				mainCenterPanel.setActiveTab(panelTab);
 				var editor = ace.edit(panelEditorId);
+				editor.id = panelEditorId;
+				editor.panelId = panelId;
 
 				if (initializeEditor) {
-				    editor.commands.addCommand({
-				        name: "showKeyboardShortcuts",
-				        bindKey: {win: "Ctrl-s", mac: "Command-s"},
-				        exec: function(editor) {
-//				            ace.config.loadModule("ace/ext/keybinding_menu", function(module) {
-//				                module.init(editor);
-//				                editor.showKeyboardShortcuts()
-//				            })
-				    		Workspace.editorjava.panel.center.function.AddTabSave.call(panelId, panelEditorId);
-				        }
-				    })
-//				    editor.execCommand("showKeyboardShortcuts")
+					Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandSave');
+				    Workspace.editorjava.aceeditor.command.CommandSave.addCommand(editor);
+
+				    Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandCompletion');
+				    Workspace.editorjava.aceeditor.command.CommandCompletion.addCommand(editor);
 				}
-				
+
 				editor.build = raw.build;
 				editor.autoDeploy = raw.autoDeploy;
 			    editor.focus();

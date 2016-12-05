@@ -53,9 +53,6 @@ Ext.define('Workspace.editorjava.request.JsonEditLoadFile',  {
 			    editor.focus();
 			    editor.scrollToLine(1, true, false, function(){});
 		    	editor.gotoLine(1, 0, true);
-
-				Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandCompletion');
-			    Workspace.editorjava.aceeditor.command.CommandCompletion.addCommand(editor);
 			},
 			failure: function ( result, request ) {
 				alert('failure');
