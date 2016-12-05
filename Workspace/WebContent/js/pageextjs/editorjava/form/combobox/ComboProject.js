@@ -1,7 +1,5 @@
 Ext.define('Workspace.editorjava.form.combobox.ComboProject', {
-	// REQUIRED
-	requiers: ['Workspace.editorjava.panel.center.function.AddTab']
-	,
+
 	extend: 'Workspace.common.form.combobox.ComboProjectExtjs4'
 	,
 	alias: 'widget.editorjavaComboProject',
@@ -9,9 +7,6 @@ Ext.define('Workspace.editorjava.form.combobox.ComboProject', {
 	,
     initComponent : function(){
 		var me = this;
-
-		// Explicit load required library (Mandatory for extending this class)
-		Ext.Loader.syncRequire('Workspace.editorjava.panel.center.function.AddTab');
 
 		Ext.apply(me, {
 			listeners: {
@@ -30,13 +25,13 @@ Ext.define('Workspace.editorjava.form.combobox.ComboProject', {
 							action:'read'
 						})
 					);
-
-					var raw = {contentType:'directory', id:'['+application+']', path:'', application:application};
-					Workspace.editorjava.panel.center.function.AddTab.call(raw);
 				}
 			}
 		});
 		me.callParent(arguments);
 	}
-
+	,
+	manageTab: function() {
+		
+	}
 }, function() {Workspace.tool.Log.defined('Workspace.editorjava.form.combobox.ComboProject');});
