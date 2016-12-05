@@ -43,6 +43,9 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 
 				    Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandCompletion');
 				    Workspace.editorjava.aceeditor.command.CommandCompletion.addCommand(editor);
+
+					Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandChangeTab');
+				    Workspace.editorjava.aceeditor.command.CommandChangeTab.addCommand(editor, mainCenterPanel);
 				}
 
 				editor.build = raw.build;

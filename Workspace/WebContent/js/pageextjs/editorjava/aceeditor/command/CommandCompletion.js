@@ -7,7 +7,7 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandCompletion',  {
 	    addCommand: function(editor) {
 		    editor.commands.addCommand({
 		        name: 'Completion',
-		        bindKey: {win: 'Ctrl-Shift-space',  mac: 'Command-Option-space'},
+		        bindKey: {win: 'Ctrl-Shift-.',  mac: 'Command-Option-.'},
 		        exec: function(container) {
 					console.info('Workspace.editorjava.aceeditor.command.CommandCompletion exec');
 	
