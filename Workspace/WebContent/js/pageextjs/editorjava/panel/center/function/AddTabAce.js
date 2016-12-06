@@ -19,16 +19,17 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 				var panelTab = Ext.getCmp(panelId);
 				if (!Ext.isDefined(panelTab)) {
 
-					mainCenterPanel.add(
-						Ext.create('Workspace.editorjava.panel.center.PanelCenterEditor', {
-							closable:true,
-							title: raw.text,
-							id: panelId,
-							panelEditorId: panelEditorId,
-							panelId: panelId,
-							autoDeploy: raw.autoDeploy
-						})
-					);
+					var panel = Ext.create('Workspace.editorjava.panel.center.PanelCenterEditor', {
+						closable:true,
+						title: raw.text,
+						id: panelId,
+						panelEditorId: panelEditorId,
+						panelId: panelId,
+						autoDeploy: raw.autoDeploy
+					});
+
+					mainCenterPanel.add(panel);
+
 					panelTab = Ext.getCmp(panelId);
 					initializeEditor = true;
 				}

@@ -14,8 +14,9 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 	,
 	elements: 'body,tbar',
 	layout: 'fit',
-	hideCollapseTool: true,
-	hideMode: 'display',
+	collapsed: false,
+//	hideCollapseTool: false,
+//	hideMode: 'visibility',
     tbar: Ext.create('Ext.toolbar.Toolbar', {
     	cls: 'x-panel-header',
     	height: 25,
@@ -39,20 +40,24 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
     ,
     initComponent : function(){
 		var me = this;
-	
+
+		var panel = Ext.create('Ext.panel.Panel', {
+			id: me.panelEditorId,
+			panelId: me.panelId
+		});
+
+		var loadRequest = Ext.create('Workspace.editorjava.request.JsonEditLoadFile', {
+			panelId: me.panelId,
+			panelEditorId: me.panelEditorId
+		});
+
 		Ext.apply(me, {
 		    items: [
-				Ext.create('Ext.panel.Panel', {
-					id: me.panelEditorId,
-					panelId: me.panelId
-				})
+		        panel
 		    ],
 		    listeners : {
 		    	'render': function() {
-					Ext.create('Workspace.editorjava.request.JsonEditLoadFile', {
-						panelId: me.panelId,
-						panelEditorId: me.panelEditorId
-					}).request();
+					loadRequest.request();
 		    	}
 		    }
 	    });

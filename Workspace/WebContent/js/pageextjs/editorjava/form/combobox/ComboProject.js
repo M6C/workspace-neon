@@ -50,28 +50,39 @@ Ext.define('Workspace.editorjava.form.combobox.ComboProject', {
 			return !(id.search('^\\[' + key + '\\]') == 0);
 		});
 
+		var tabShow = null;
 		listShow.each(function(tab) {
 //			tabPanel.add(tab);
 
+			tabPanel.setActiveTab(tab);
+			tabShow = tab;
+
 			tab.tab.show();
-			tab.expand(true);
+//			tab.expand(true);
 
 //			tab.ownerCt.setVisible(true);
 
-			tabPanel.setActiveTab(tab);
 			me.listTabHide.remove(tab);
 		});
 
+		var tabHide = null;
 		listHide.each(function(tab) {
 //			tabPanel.remove(tab, true);
 
+			tabHide = tab;
 			tab.tab.hide();
-			tab.collapse();
+//			tab.collapse();
 
 //			tab.ownerCt.setVisible(false);
 
 			me.listTabHide.add(tab);
 		});
+
+		if (tabShow != null) {
+			tabShow.expand();
+		} else if (tabHide != null) {
+			tabHide.collapse();
+		}
 	}
 	,
 	listTabHide: new Ext.util.MixedCollection()
