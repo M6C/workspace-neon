@@ -14,6 +14,29 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 	,
 	elements: 'body,tbar',
 	layout: 'fit',
+	hideCollapseTool: true,
+	hideMode: 'display',
+    tbar: Ext.create('Ext.toolbar.Toolbar', {
+    	cls: 'x-panel-header',
+    	height: 25,
+	        items: [
+//								    '<span style="color:#15428B; font-weight:bold">Title Here</span>',
+			    '->',
+			    {
+			    	text: 'Save', 
+			    	handler:  function(button, e) {
+			    		Workspace.editorjava.panel.center.function.AddTabSave.call()
+		    		}
+			    },
+	            {
+			    	text: 'Reload',
+			    	handler:  function(button, e) {
+			    		Workspace.editorjava.panel.center.function.AddTabReload.call()
+			    	}
+	            }
+	        ]
+    })
+    ,
     initComponent : function(){
 		var me = this;
 	
@@ -24,27 +47,6 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 					panelId: me.panelId
 				})
 		    ],
-		    tbar: Ext.create('Ext.toolbar.Toolbar', {
-		    	cls: 'x-panel-header',
-		    	height: 25,
-			        items: [
-	//								    '<span style="color:#15428B; font-weight:bold">Title Here</span>',
-					    '->',
-					    {
-					    	text: 'Save', 
-					    	handler:  function(button, e) {
-					    		Workspace.editorjava.panel.center.function.AddTabSave.call(me.panelId, me.panelEditorId)
-				    		}
-					    },
-			            {
-					    	text: 'Reload',
-					    	handler:  function(button, e) {
-					    		Workspace.editorjava.panel.center.function.AddTabReload.call(me.panelId, me.panelEditorId)
-					    	}
-			            }
-			        ]
-		    })
-		    ,
 		    listeners : {
 		    	'render': function() {
 					Ext.create('Workspace.editorjava.request.JsonEditLoadFile', {

@@ -5,11 +5,14 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabSave',  {
 	,
 	statics: {
 
-		call : function(panelId, panelEditorId) {
+		call : function() {
 		    console.info('Workspace.editorjava.panel.center.function.AddTabSave.call');
 
 			var application = Ext.getCmp('project').value;
-//			var mainCenterPanel=Ext.getCmp('mainCenterPanel');
+			var mainCenterPanel=Ext.getCmp('mainCenterPanel');
+            var tab = mainCenterPanel.getActiveTab();
+            var panelId = tab.id;
+            var panelEditorId = tab.panelEditorId;
 //		    var pnl = mainCenterPanel.getComponent(panelId);
 //			var pnlEdit = pnl.getComponent(panelEditorId);
 			var pnlEdit = ace.edit(panelEditorId);

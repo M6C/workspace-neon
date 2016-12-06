@@ -3,11 +3,12 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabReload',  {
 
 	statics: {
 
-		call : function(panelId, panelEditorId) {
+		call : function() {
 		    console.info('Workspace.editorjava.panel.center.function.AddTabReload.call');
-//			var mainCenterPanel=Ext.getCmp('mainCenterPanel');
-//			var pnl = mainCenterPanel.getComponent(panelId);
-//			var pnlEdit = pnl.getComponent(panelEditorId);
+			var mainCenterPanel=Ext.getCmp('mainCenterPanel');
+            var tab = mainCenterPanel.getActiveTab();
+            var panelId = tab.id;
+            var panelEditorId = tab.panelEditorId;
 			var pnlEdit = ace.edit(panelEditorId);
 			if (Ext.isDefined(pnlEdit.syncValue)) {
 				pnlEdit.syncValue();
