@@ -13,11 +13,11 @@ Ext.define('Workspace.filebrowser.menu.MenuCheck',  {
 		}
 		,
 		check : function(ret) {
+			var me = this;
 			if (!Ext.isDefined(ret)) {
 				ret = {};
 			}
 			ret.success = true;
-			var me = this;
 
 			if (!me.checkApplication(ret)) {
 				ret.success = false;

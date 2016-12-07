@@ -20,12 +20,11 @@ Ext.define('Workspace.editorjava.window.completion.tree.TreeCompletion', {
     constructor: function(config) {
 		console.info('Workspace.editorjava.windows.tree.TreeCompletion constructor');
 		var me = this;
-		var application = Ext.getCmp('project').value;
 		me.setLoading(true);
 		Ext.create('Workspace.editorjava.request.JsonEditSaveAndCompletion',
 		{
 			params:{filename:config.filename,content:config.txt,caretPos:config.pos},
-			application:application,
+			application:config.application,
 			callbackCompletion: function(opts, success, response) {
 				var vdata = response.responseText;
 				console.info('Workspace.editorjava.windows.tree.TreeCompletion constructor callbackCompletion data:' + vdata);

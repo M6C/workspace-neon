@@ -17,6 +17,7 @@ Ext.define('Workspace.editorjava.window.WindowCompletion', {
 		        		id:'treeCompletion',
 		        		pos: me.pos,
 		        		txt: me.txt,
+		        		application: me.application,
 		        		filename: me.filename,
 		        		onSubmitTree: me.callBackSubmit
 		        	}

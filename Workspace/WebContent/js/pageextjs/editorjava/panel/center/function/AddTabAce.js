@@ -10,8 +10,7 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 		call : function(raw) {
 		    console.info('Workspace.editorjava.panel.center.function.AddTab.call');
 			if (raw.contentType!='directory') {
-				//var panelId='['+comboRecord.data.project+']'+raw.id;
-				var panelId=raw.id;//'['+Ext.getCmp('project').value+']'+raw.id;
+				var panelId=raw.id;
 				var panelEditorId=panelId+'Editor';
 				var mainCenterPanel=Ext.getCmp('mainCenterPanel');
 
@@ -25,7 +24,8 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 						id: panelId,
 						panelEditorId: panelEditorId,
 						panelId: panelId,
-						autoDeploy: raw.autoDeploy
+						autoDeploy: raw.autoDeploy,
+						application: raw.application
 					});
 
 					mainCenterPanel.add(panel);

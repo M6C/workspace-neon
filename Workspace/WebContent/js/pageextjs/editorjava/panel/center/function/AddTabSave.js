@@ -8,7 +8,6 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabSave',  {
 		call : function() {
 		    console.info('Workspace.editorjava.panel.center.function.AddTabSave.call');
 
-			var application = Ext.getCmp('project').value;
 			var mainCenterPanel=Ext.getCmp('mainCenterPanel');
             var tab = mainCenterPanel.getActiveTab();
             var panelId = tab.id;
@@ -21,6 +20,7 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabSave',  {
 			}
 			var value=pnlEdit.getValue();//pnlEdit.getRawValue();
 			//value=value.replace(/&\w+;/g,"");
+			var application = pnlEdit.application;
 			var className=pnlEdit.className;
 			var autoDeploy = pnlEdit.autoDeploy;
 

@@ -34,7 +34,7 @@ Ext.define('Workspace.editorjava.window.classpath.tree.TreeClasspath', {
 	,
     root: {
 	    //nodeType: 'async',
-	    text: 'root',//Ext.getCmp('project').value,
+	    text: 'root',
 	    draggable: false,
 		expanded:true,
 	    id: 'root'

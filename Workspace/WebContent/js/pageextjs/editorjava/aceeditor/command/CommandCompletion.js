@@ -36,6 +36,7 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandCompletion',  {
 					var wndClasspathDetail = Ext.create('Workspace.editorjava.window.WindowCompletion', {
 						pos: pos,
 						txt: txt,
+						application: editor.application,
 						filename: editor.panelId,
 						callBackSubmit:fnOnSubmitTree
 						,

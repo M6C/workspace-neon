@@ -17,27 +17,6 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 	collapsed: false,
 //	hideCollapseTool: false,
 //	hideMode: 'visibility',
-    tbar: Ext.create('Ext.toolbar.Toolbar', {
-    	cls: 'x-panel-header',
-    	height: 25,
-	        items: [
-//								    '<span style="color:#15428B; font-weight:bold">Title Here</span>',
-			    '->',
-			    {
-			    	text: 'Save', 
-			    	handler:  function(button, e) {
-			    		Workspace.editorjava.panel.center.function.AddTabSave.call()
-		    		}
-			    },
-	            {
-			    	text: 'Reload',
-			    	handler:  function(button, e) {
-			    		Workspace.editorjava.panel.center.function.AddTabReload.call()
-			    	}
-	            }
-	        ]
-    })
-    ,
     initComponent : function(){
 		var me = this;
 
@@ -52,6 +31,27 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 		});
 
 		Ext.apply(me, {
+		    tbar: Ext.create('Ext.toolbar.Toolbar', {
+		    	cls: 'x-panel-header',
+		    	height: 25,
+			        items: [
+//										    '<span style="color:#15428B; font-weight:bold">Title Here</span>',
+					    '->',
+					    {
+					    	text: 'Save', 
+					    	handler:  function(button, e) {
+					    		Workspace.editorjava.panel.center.function.AddTabSave.call()
+				    		}
+					    },
+			            {
+					    	text: 'Reload',
+					    	handler:  function(button, e) {
+					    		Workspace.editorjava.panel.center.function.AddTabReload.call()
+					    	}
+			            }
+			        ]
+		    })
+		    ,
 		    items: [
 		        panel
 		    ],

@@ -19,7 +19,7 @@ Ext.define('Workspace.editorjava.form.combobox.ComboProject', {
 
 					var tree = Ext.getCmp("treeDirectory");
 					tree.getStore().getProxy().extraParams.path = '';
-					tree.getStore().getProxy().extraParams.application = application;//Ext.getCmp('project').value;//record.data.project;
+					tree.getStore().getProxy().extraParams.application = application;
 					tree.getStore().load(
 						new Ext.data.Operation({
 							action:'read',

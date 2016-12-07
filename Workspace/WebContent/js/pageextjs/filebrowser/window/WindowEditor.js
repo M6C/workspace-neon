@@ -12,7 +12,7 @@ Ext.define('Workspace.filebrowser.window.WindowEditor', {
 	initComponent : function(){
 		var me = this;
 
-		var panelId=me.panelId;//'['+Ext.getCmp('project').value+']'+raw.id;
+		var panelId=me.panelId;
 		var panelEditorId=panelId+'Editor';
 
 		var panel = Ext.create('Workspace.editorjava.panel.center.PanelCenterEditor', {
