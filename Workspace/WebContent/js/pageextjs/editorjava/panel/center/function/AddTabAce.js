@@ -27,9 +27,6 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 				var panelTab = Ext.getCmp(panelId);
 				if (!Ext.isDefined(panelTab)) {
 
-					// Add raw in Session state
-					Workspace.editorjava.tool.SessionState.addTab(raw);
-
 					var panel = Ext.create('Workspace.editorjava.panel.center.PanelCenterEditor', {
 						closable:true,
 						title: raw.text,

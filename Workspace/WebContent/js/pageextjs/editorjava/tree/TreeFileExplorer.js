@@ -20,13 +20,6 @@ Ext.define('Workspace.editorjava.tree.TreeFileExplorer', {
 							Ext.Loader.syncRequire('Workspace.editorjava.panel.center.function.AddTabAce');
 						
 							Workspace.editorjava.panel.center.function.AddTabAce.call(record.raw);
-
-//							Ext.Loader.syncRequire('Workspace.common.grid.data.StoreCenterTab');
-
-//							var model = Ext.create('Workspace.editorjava.model.Tab');
-//							model.raw = record.raw;
-//
-//							Ext.create('Workspace.editorjava.panel.center.data.StoreCenterTab').add(model);
 						}
 					});
 				}

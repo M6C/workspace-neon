@@ -3,20 +3,10 @@ Ext.define('Workspace.editorjava.view.ViewMain', {
 	requires: [ 'Workspace.editorjava.panel.PanelWest',
 		        'Workspace.editorjava.panel.PanelEst',
 		        'Workspace.editorjava.panel.PanelCenter',
-		        'Workspace.editorjava.panel.PanelSouth',
-			    'Workspace.editorjava.tool.SessionState'
+		        'Workspace.editorjava.panel.PanelSouth'
 		  ]
 	,
 	extend:'Workspace.common.view.ViewPortExtjs4'
-	,
-    initComponent : function(){
-		var me = this;
-
-		// Session State Initialization
-		Workspace.editorjava.tool.SessionState.initialize();
-
-		me.callParent(arguments);
-	}
 	,
 	items: [
     		{
