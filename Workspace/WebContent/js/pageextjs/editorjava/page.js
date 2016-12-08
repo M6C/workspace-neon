@@ -10,10 +10,9 @@ function init_page() {
 	    'Ext.data.*',
 	    'Ext.grid.*',
 	    'Ext.util.*',
-	    'Ext.ux.PagingMemoryProxy',
+//	    'Ext.ux.PagingMemoryProxy',
 	    'Ext.ux.ProgressBarPager'
 	]);
-
 
     var viewport = Ext.create('Workspace.editorjava.view.ViewMain', {
     	renderTo: Ext.getBody(),

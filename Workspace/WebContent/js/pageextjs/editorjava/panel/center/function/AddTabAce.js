@@ -7,6 +7,15 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 	,
 	statics: {
 
+		/**
+		 * raw properties :
+		 *  contentType
+		 *  application
+		 *  id
+		 *  text
+		 *  autoDeploy
+		 *  build
+		 */
 		call : function(raw) {
 		    console.info('Workspace.editorjava.panel.center.function.AddTab.call');
 			if (raw.contentType!='directory') {
@@ -18,6 +27,9 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 				var panelTab = Ext.getCmp(panelId);
 				if (!Ext.isDefined(panelTab)) {
 
+					// Add raw in Session state
+					Workspace.editorjava.tool.SessionState.addTab(raw);
+
 					var panel = Ext.create('Workspace.editorjava.panel.center.PanelCenterEditor', {
 						closable:true,
 						title: raw.text,
@@ -25,7 +37,8 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 						panelEditorId: panelEditorId,
 						panelId: panelId,
 						autoDeploy: raw.autoDeploy,
-						application: raw.application
+						application: raw.application,
+						raw: raw
 					});
 
 					mainCenterPanel.add(panel);
