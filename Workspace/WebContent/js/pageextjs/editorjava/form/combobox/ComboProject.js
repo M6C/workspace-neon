@@ -1,5 +1,8 @@
 Ext.define('Workspace.editorjava.form.combobox.ComboProject', {
-
+	requires: [
+  	     'Workspace.editorjava.form.combobox.function.ApplySessionStateProject'
+  	]
+  	,
 	extend: 'Workspace.common.form.combobox.ComboProjectExtjs4'
 	,
 	alias: 'widget.editorjavaComboProject',
@@ -31,6 +34,9 @@ Ext.define('Workspace.editorjava.form.combobox.ComboProject', {
 				}
 			}
 		});
+
+		Workspace.editorjava.form.combobox.function.ApplySessionStateProject.apply(me);
+
 		me.callParent(arguments);
 	}
 	,
