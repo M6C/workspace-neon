@@ -25,6 +25,8 @@ function init_loader() {
 	console.info('common.ini.init_loader Ext.Loader \'Ext.ux\' setted');
 	Ext.Loader.setPath('Workspace.common', DOMAIN_NAME_ROOT + '/js/commonextjs');
 	console.info('common.ini.init_loader Ext.Loader \'Workspace.common\' setted');
+	Ext.Loader.setPath('Workspace.widget', DOMAIN_NAME_ROOT + '/js/widget');
+	console.info('common.ini.init_loader Ext.Loader \'Workspace.widget\' setted');
 	Ext.Loader.setPath('Workspace.data', DOMAIN_NAME_ROOT + '/js/dataextjs');
 	console.info('common.ini.init_loader Ext.Loader \'Workspace.data\' setted');
 	Ext.Loader.setPath('Workspace.tool', DOMAIN_NAME_ROOT + '/js/toolextjs');

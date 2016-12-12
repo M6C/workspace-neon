@@ -9,13 +9,18 @@ Ext.define('Workspace.common.tree.TreeFileExplorerExtjs4', {
 	,
     initComponent : function(){
 		var me = this;
-		Ext.apply(me, {
-			store: Ext.create('Workspace.common.tree.data.StoreFileExplorerExtjs4')
-        });
+
+		me.applyStore(me);
 
 		me.applyDragAndDrop(me);
 
 		me.callParent(arguments);
+	}
+	,
+	applyStore: function(me) {
+		Ext.apply(me, {
+			store: Ext.create('Workspace.common.tree.data.StoreFileExplorerExtjs4')
+        });
 	}
 	,
 	applyDragAndDrop: function(me) {

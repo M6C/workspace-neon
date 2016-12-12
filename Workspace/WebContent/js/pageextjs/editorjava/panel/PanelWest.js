@@ -35,7 +35,7 @@ Ext.define('Workspace.editorjava.panel.PanelWest', {
 				        {
 				        	xtype: 'editorjavaComboProject'
 				        },
-  				        {	//Balise cachée
+  				        {	//Balise cachï¿½e
   						    xtype: 'hidden',
   						    id: 'project',
   						    name: 'project'
