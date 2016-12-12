@@ -15,6 +15,14 @@ Ext.define('Workspace.common.tree.data.StoreFileExplorerExtjs4', {
         }
     }
 	,
+	root: {
+	    nodeType: 'async',
+	    draggable: false,
+	    id: 'root',
+	    expanded: true,
+	    text: 'Current'
+	}
+	,
     listeners:{
 	    //scope: this, //yourScope
 	    'beforeload': function(store, operation, options) {
@@ -23,13 +31,14 @@ Ext.define('Workspace.common.tree.data.StoreFileExplorerExtjs4', {
 				store.getProxy().extraParams.path = operation.node.internalId;
 			}
 	    }
-	}
-	,
-	root: {
-        nodeType: 'async',
-        draggable: false,
-        id: 'root',
-	    expanded: true,
-	    text: 'Current'
+		,
+		'load': function(store, node, records, successful, options) {
+			var size = records.length;
+			for(var i=0 ; i<size ; i++) {
+				record = records[i];
+				Ext.apply(record.data, record.raw);
+			}
+	
+		}
 	}
 }, function() {Workspace.tool.Log.defined('Workspace.common.tree.data.StoreFileExplorerExtjs4');});

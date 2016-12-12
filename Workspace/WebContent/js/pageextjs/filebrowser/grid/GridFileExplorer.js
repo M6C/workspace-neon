@@ -66,8 +66,8 @@ Ext.define('Workspace.filebrowser.grid.GridFileExplorer', {
 		,
 		applyDragAndDrop: function(me) {
 			// Explicit load required library (Mandatory for extending this class)
-			Ext.Loader.syncRequire('Workspace.filebrowser.function.ApplyDragAndDropCopyMove');
-			Workspace.filebrowser.function.ApplyDragAndDropCopyMove.apply(me);
+			Ext.Loader.syncRequire('Workspace.common.draganddrop.ApplyDragAndDropCopyMove');
+			Workspace.common.draganddrop.ApplyDragAndDropCopyMove.apply(me);
 		}
 //		,
 //		getRowClass: function (view, record) {

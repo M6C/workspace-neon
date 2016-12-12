@@ -3,16 +3,16 @@ Ext.define('Workspace.common.tree.TreeDirectoryExplorerExtjs4', {
 	requiers: ['Workspace.common.tree.data.StoreDirectoryExplorer']
 	,
 	extend: 'Ext.tree.Panel'
-		,
-		alias: 'widget.CommonTreeDirectoryExplorer',
-		alternateClassName: 'WorkspaceCommonTreeDirectoryExplorer'
+	,
+	alias: 'widget.CommonTreeDirectoryExplorer',
+	alternateClassName: 'WorkspaceCommonTreeDirectoryExplorer'
 	,
 	initComponent : function(){
 		var me = this;
 		Ext.apply(me, {
 			store: Ext.create('Workspace.common.tree.data.StoreDirectoryExplorerExtjs4')
 	    });
-	
+
 		me.applyDragAndDrop(me);
 
 		me.callParent(arguments);
@@ -20,8 +20,8 @@ Ext.define('Workspace.common.tree.TreeDirectoryExplorerExtjs4', {
 	,
 	applyDragAndDrop: function(me) {
 		// Explicit load required library (Mandatory for extending this class)
-		Ext.Loader.syncRequire('Workspace.common.function.ApplyDragAndDrop');
-		Workspace.common.function.ApplyDragAndDrop.apply(me, me.onBeforeDrop, me.onDrop);
+		Ext.Loader.syncRequire('Workspace.common.draganddrop.ApplyDragAndDrop');
+		Workspace.common.draganddrop.ApplyDragAndDrop.apply(me, me.onBeforeDrop, me.onDrop);
 	}
 	,
 	useArrows: true,

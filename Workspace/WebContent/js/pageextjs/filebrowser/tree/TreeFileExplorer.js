@@ -7,9 +7,15 @@ Ext.define('Workspace.filebrowser.tree.TreeFileExplorer', {
 	alias: 'widget.filebrowserTreeFileExplorer',
 	alternateClassName: 'WorkspaceFilebrowserTreeFileExplorer'
 	,
+	applyDragAndDrop: function(me) {
+		// Explicit load required library (Mandatory for extending this class)
+		Ext.Loader.syncRequire('Workspace.common.draganddrop.ApplyDragAndDropCopyMove');
+		Workspace.common.draganddrop.ApplyDragAndDropCopyMove.apply(me);
+	}
+	,
     listeners: {
         //scope: this, //yourScope
-		'beforeitemdblclick' : function(view, record, item, index, event, eOpts ) {
+		'itemdblclick' : function(view, record, item, index, event, eOpts ) {
 			if (record.raw.contentType=='directory') {
 				// Explicit load required library (Mandatory for extending this class)
 				Ext.Loader.syncRequire('Workspace.filebrowser.panel.center.function.AddTab');

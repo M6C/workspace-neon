@@ -1,5 +1,5 @@
 Ext.define('Workspace.common.tree.TreeFileExplorerExtjs4', {
-	// REQUIRED
+
 	requiers: ['Workspace.common.tree.data.StoreFileExplorerExtjs4']
 	,
 	extend: 'Ext.tree.Panel'
@@ -12,7 +12,16 @@ Ext.define('Workspace.common.tree.TreeFileExplorerExtjs4', {
 		Ext.apply(me, {
 			store: Ext.create('Workspace.common.tree.data.StoreFileExplorerExtjs4')
         });
-	    me.callParent(arguments);
+
+		me.applyDragAndDrop(me);
+
+		me.callParent(arguments);
+	}
+	,
+	applyDragAndDrop: function(me) {
+		// Explicit load required library (Mandatory for extending this class)
+		Ext.Loader.syncRequire('Workspace.common.draganddrop.ApplyDragAndDrop');
+		Workspace.common.draganddrop.ApplyDragAndDrop.apply(me, me.onBeforeDrop, me.onDrop);
 	}
 	,
     useArrows: true,

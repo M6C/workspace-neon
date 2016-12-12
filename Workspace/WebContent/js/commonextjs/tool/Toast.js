@@ -4,7 +4,7 @@ Ext.define('Workspace.common.tool.Toast', {
 	statics: {
 
 		show : function(message, closeDelay = 4000) {
-		    console.info('Workspace.common.function.ApplyDragAndDrop apply');
+		    console.info('Workspace.common.tool.Toast apply');
 		    return Ext.create('widget.uxNotification', {
 				position: 'tr',
 				useXAxis: true,

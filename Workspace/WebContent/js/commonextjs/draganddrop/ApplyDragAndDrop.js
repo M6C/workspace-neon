@@ -1,8 +1,8 @@
-Ext.define('Workspace.common.function.ApplyDragAndDrop', {
+Ext.define('Workspace.common.draganddrop.ApplyDragAndDrop', {
 	statics: {
 
 		apply : function(cmp, onBeforeDrop, onDrop) {
-		    console.info('Workspace.common.function.ApplyDragAndDrop apply');
+		    console.info('Workspace.common.draganddrop.ApplyDragAndDrop apply');
 			Ext.apply(cmp, {
 				draggable: true,
 				viewConfig: {
@@ -21,19 +21,19 @@ Ext.define('Workspace.common.function.ApplyDragAndDrop', {
 				        stripeRows : true
 				        ,dropZone:{
 				        	isValidDropPoint:function(node, position, dragZone, e, data){
-				    		    console.info('Workspace.common.function.ApplyDragAndDrop dropZone isValidDropPoint');
+				    		    console.info('Workspace.common.draganddrop.ApplyDragAndDrop dropZone isValidDropPoint');
 				        	}
 				        }
 				    }
 					,
 					listeners: {
 					    beforedrop: function(nodeEl, data) {
-					    	Workspace.common.function.ApplyDragAndDrop.decorateNode(data);
+					    	Workspace.common.draganddrop.ApplyDragAndDrop.decorateNode(data);
 							return onBeforeDrop(this, nodeEl, data);
 						}
 						,
 						drop: function(nodeEl, data, overModel, dropPosition, eOpts) {
-//					    	Workspace.common.function.ApplyDragAndDrop.decorateNode(data);
+//					    	Workspace.common.draganddrop.ApplyDragAndDrop.decorateNode(data);
 							return onDrop(this, nodeEl, data, overModel, dropPosition, eOpts);
 						}
 					}
@@ -99,4 +99,4 @@ Ext.define('Workspace.common.function.ApplyDragAndDrop', {
 		}
 	}
 
-}, function() {Workspace.tool.Log.defined('Workspace.common.function.ApplyDragAndDrop');});
+}, function() {Workspace.tool.Log.defined('Workspace.common.draganddrop.ApplyDragAndDrop');});

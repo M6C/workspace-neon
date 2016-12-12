@@ -21,8 +21,8 @@ Ext.define('Workspace.common.grid.GridDragDropExtjs4', {
 	,
 	applyDragAndDrop: function(me) {
 		// Explicit load required library (Mandatory for extending this class)
-		Ext.Loader.syncRequire('Workspace.common.function.ApplyDragAndDrop');
-		Workspace.common.function.ApplyDragAndDrop.apply(me, me.onBeforeDrop, me.onDrop);
+		Ext.Loader.syncRequire('Workspace.common.draganddrop.ApplyDragAndDrop');
+		Workspace.common.draganddrop.ApplyDragAndDrop.apply(me, me.onBeforeDrop, me.onDrop);
 	}
 	,
 	hideHeaders : false

@@ -1,11 +1,11 @@
-Ext.define('Workspace.filebrowser.grid.fileexplorer.OnDropExplorer',  {
-	requires: ['Workspace.filebrowser.grid.fileexplorer.function.CopyMove']
+Ext.define('Workspace.common.draganddrop.event.OnDropExplorer',  {
+	requires: ['Workspace.common.draganddrop.function.CopyMove']
 	,
 	statics: {
 
 		call : function(grid, node, data, overModel, dropPosition, eOpts) {
-		    console.info('Workspace.filebrowser.grid.fileexplorer.OnDropExplorer.call OnDropExplorer');
-		    var me = Workspace.filebrowser.grid.fileexplorer.OnDropExplorer;
+		    console.info('Workspace.common.draganddrop.event.OnDropExplorer.call OnDropExplorer');
+		    var me = Workspace.common.draganddrop.event.OnDropExplorer;
 
 		    var nb = data.records.length;
 		    var itemPathSrc = nb + ' files';
@@ -16,7 +16,7 @@ Ext.define('Workspace.filebrowser.grid.fileexplorer.OnDropExplorer',  {
 			var dropAction = data.copy ? 'copy' : 'move';
         	Ext.Msg.confirm('Confirm', dropAction + ' ' + itemPathSrc + ' to:' + itemPathDst + ' ?', function(btn, text){
         	    if (btn == 'yes'){
-        		    Workspace.filebrowser.grid.fileexplorer.function.CopyMove.request(grid, node, data, me.callBackSuccess, me.callBackFailure);
+        		    Workspace.common.draganddrop.function.CopyMove.request(grid, node, data, me.callBackSuccess, me.callBackFailure);
         	    } else {
         	        me.callBackSuccess(grid, node, data);
         	        return false;
@@ -85,7 +85,7 @@ Ext.define('Workspace.filebrowser.grid.fileexplorer.OnDropExplorer',  {
 //		        var mainEstStore = mainEstGrid.store;
 //		        var dataModel = mainEstStore.data.getByKey(raw.id);
 //	
-//		        // Supprime une donn?e
+//		        // Supprime une donnee
 //		        //mainEstGrid.data.removeAtKey(raw.id);//item.getKey());
 //	        	// Raffaichissement du store et donc de la grid
 //	        	mainEstStore.remove(dataModel);
@@ -96,4 +96,4 @@ Ext.define('Workspace.filebrowser.grid.fileexplorer.OnDropExplorer',  {
 		}
 	}
 
-}, function() {Workspace.tool.Log.defined('Workspace.filebrowser.grid.fileexplorer.OnDropExplorer');});
+}, function() {Workspace.tool.Log.defined('Workspace.common.draganddrop.event.OnDropExplorer');});
