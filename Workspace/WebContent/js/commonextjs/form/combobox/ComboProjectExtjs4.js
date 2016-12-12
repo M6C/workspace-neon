@@ -23,6 +23,7 @@ Ext.define('Workspace.common.form.combobox.ComboProjectExtjs4', {
 	    me.callParent(arguments);
 	},
     displayField:'project',
-    emptyText:'Select a project...'
+    emptyText:'Select a project...',
+    editable: false
 
 }, function() {Workspace.tool.Log.defined('Workspace.common.form.combobox.ComboProjectExtjs4');});

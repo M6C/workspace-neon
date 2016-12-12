@@ -7,7 +7,7 @@ Ext.define('Workspace.common.panel.function.ApplySessionStateTabPanel', {
 		Ext.apply(panel, {
 			stateful: true,
 			stateId: stateId,
-			stateEvents: ['add'], 
+			stateEvents: ['add', 'remove'], 
 			stateData: undefined,
 		    getState: function() { 
 			    console.debug('Workspace.common.panel.function.ApplySessionStateTabPanel apply getState');
@@ -35,6 +35,7 @@ Ext.define('Workspace.common.panel.function.ApplySessionStateTabPanel', {
 		    			Workspace.editorjava.panel.center.function.AddTabAce.call(tab);
 		    		}
 				});
+				panel.stateData = undefined;
 			}
 		});
 	}

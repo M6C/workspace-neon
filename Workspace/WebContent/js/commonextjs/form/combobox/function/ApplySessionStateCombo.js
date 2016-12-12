@@ -7,7 +7,7 @@ Ext.define('Workspace.common.form.combobox.function.ApplySessionStateCombo', {
 		Ext.apply(combo, {
 			stateful: true,
 			stateId: stateId,
-			stateEvents: ['select'], 
+			stateEvents: ['select', 'change'], 
 			stateData: undefined,
 		    getState: function() { 
 			    console.debug('Workspace.common.form.combobox.function.ApplySessionStateCombo apply getState');
@@ -23,9 +23,19 @@ Ext.define('Workspace.common.form.combobox.function.ApplySessionStateCombo', {
 
 		combo.on('render', function(component, option) {
 		    console.debug('Workspace.common.form.combobox.function.ApplySessionStateCombo apply render');
-			if (Ext.isDefined(combo.stateData) && Ext.isDefined(combo.stateData.value)) {
-				combo.setValue(combo.stateData.value);
-			}
+
+			combo.getStore().on('load', function(store, records, successful, operation, option) {
+			    console.debug('Workspace.common.form.combobox.function.ApplySessionStateCombo apply load');
+			    var data = null;
+				if (Ext.isDefined(combo.stateData) && Ext.isDefined(combo.stateData.value)) {
+					var idx = store.find("project", combo.stateData.value);
+					if (idx >= 0) {
+						data = store.getAt(idx);
+					}
+					combo.stateData = undefined;
+				}
+				combo.select(data);
+			});
 		});
 	}
 }, function() {Workspace.tool.Log.defined('Workspace.common.form.combobox.function.ApplySessionStateCombo');});

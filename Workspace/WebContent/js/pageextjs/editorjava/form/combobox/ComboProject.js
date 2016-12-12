@@ -14,8 +14,10 @@ Ext.define('Workspace.editorjava.form.combobox.ComboProject', {
 		Ext.apply(me, {
 			listeners: {
 				//scope: this, //yourScope
-				'select': function (cmb, record, index){
-					var application = record[0].data.project;
+//				'select': function (cmb, record, index) {
+//					var application = record[0].data.project;
+				'change': function (cmb, newValue, oldValue, option) {
+					var application = newValue;
 					console.info('Workspace.editorjava.form.combobox.ComboProject select:'+application);
 
 					Ext.getCmp('project').value=application;
