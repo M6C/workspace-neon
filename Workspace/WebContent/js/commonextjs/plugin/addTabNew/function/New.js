@@ -1,32 +1,37 @@
 Ext.define('Workspace.common.plugin.addTabNew.function.New',  {
-	requires: ['Workspace.common.tool.Pop']
+	requires: [
+	     'Workspace.common.tool.Pop'
+	]
    	,
 	statics: {
 
 		call : function(typeNew) {
 		    console.info('Workspace.common.plugin.addTabNew.function.New.call');
 
+		    var me = this;
 		    var mainCenterPanel = Ext.getCmp('mainCenterPanel');
 		    var item = mainCenterPanel.getSelectedItem();
 
-		    if (!Ext.isDefined(item) || !Ext.isDefined(item.raw)) {
+		    if (!Ext.isDefined(item)) {
     	        var text = 'No item find.';
-		        Ext.getCmp('mainSouthPanel').log('Workspace.common.plugin.addTabNew.function.New', 'error', text);
-				Workspace.common.tool.Pop.info(text);
+				Workspace.common.tool.Pop.error(me, text);
 		        return;
 		    }
-        	if (item.raw.contentType != 'directory') {
+        	if (item.contentType != 'directory') {
     	        var text = 'Selected item is not a directory.';
-		        Ext.getCmp('mainSouthPanel').log('Workspace.common.plugin.addTabNew.function.New', 'error', text);
-				Workspace.common.tool.Pop.info(text);
+				Workspace.common.tool.Pop.error(me, text);
 		        return;
         	}
 
-	        var itemPathDst = item.raw.path;
+	        var itemPathDst = null;
+	        if (!Ext.isEmpty(item.path)) {
+	            itemPathDst = item.path;
+	        } else if (!Ext.isEmpty(item.application)) {
+	            itemPathDst = '[' + item.application + ']';
+	        }
             if (Ext.isEmpty(itemPathDst)) {
     	        var text = 'No destination panel find.';
-		        Ext.getCmp('mainSouthPanel').log('Workspace.common.plugin.addTabNew.function.New', 'error', text);
-				Workspace.common.tool.Pop.info(text);
+				Workspace.common.tool.Pop.error(me, text);
 		        return;
             }
 
@@ -38,7 +43,8 @@ Ext.define('Workspace.common.plugin.addTabNew.function.New',  {
     	  			   url: requestUrl,
     	  			   params: {type:typeNew, pathDst:itemPathDst, name:fileName},
     	  			   success: function(result, request){
-    	  				   Ext.getCmp('mainSouthPanel').log('Workspace.common.plugin.addTabNew.function.New', 'success', 'Success creating \''+text+'\' in \''+itemPathDst+'\'');
+    	  				   var text = 'Success creating \''+text+'\' in \''+itemPathDst+'\'';
+    	  				   Workspace.common.tool.Pop.success(me, text);
 
     	  				   // Rechargement de la grid
     	  				   var grid = mainCenterTab.items.items[0];
@@ -58,7 +64,8 @@ Ext.define('Workspace.common.plugin.addTabNew.function.New',  {
     	  			   failure: function (result, request) {
     		  			   var jsonData = Ext.decode(result.responseText);
     		  			   var message = jsonData.message;
-    	  				   Ext.getCmp('mainSouthPanel').log('Workspace.common.plugin.addTabNew.function.New', 'failure', 'Error creating \''+text+'\' reason:\''+message+'\'');
+    		  			   var text = 'Error creating reason:\''+message+'\''
+    						Workspace.common.tool.Pop.failure(me, text);
     	  			   }
     	  			});
         	    }

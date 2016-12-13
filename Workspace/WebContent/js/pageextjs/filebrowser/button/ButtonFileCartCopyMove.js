@@ -1,6 +1,9 @@
 Ext.define('Workspace.filebrowser.button.ButtonFileCartCopyMove', {
 	// REQUIRED
-	requires: [ 'Workspace.filebrowser.constant.ConstantImage']
+	requires: [
+	    'Workspace.common.tool.Pop',
+	    'Workspace.filebrowser.constant.ConstantImage'
+	]
 	,
 	extend: 'Ext.button.Button'
 	,
@@ -14,6 +17,7 @@ Ext.define('Workspace.filebrowser.button.ButtonFileCartCopyMove', {
 		});
 	},
     handler: function(button, e) {
+    	var me = this;
         var mainCenterPanel = Ext.getCmp('mainCenterPanel');
         var mainCenterTab = mainCenterPanel.getActiveTab();
 
@@ -21,7 +25,7 @@ Ext.define('Workspace.filebrowser.button.ButtonFileCartCopyMove', {
         var mainEstTab = mainEstPanel.getActiveTab();
 
         if (!Ext.isEmpty(mainCenterTab)) {
-        	// Cr�ation d'une nouvelle collection avec recopie des data
+        	// Creation d'une nouvelle collection avec recopie des data
         	var col = new Ext.util.MixedCollection(true, 
         		function(item) {
         			return item.id;//item.getKey();
@@ -44,7 +48,8 @@ Ext.define('Workspace.filebrowser.button.ButtonFileCartCopyMove', {
 	        		    },
 	        		    success: function(response){
 
-	        		        Ext.getCmp('mainSouthPanel').log('Workspace.filebrowser.button.ButtonFileCartCopyMove', 'success', 'Success move/copy to:'+itemPathDst+' item:'+itemPathSrc);
+	        		    	var text = 'Success move/copy to:'+itemPathDst+' item:'+itemPathSrc;
+	        		        Workspace.common.tool.Pop.success(me, text);
 
 	        		    	var mainEstPanel = Ext.getCmp('mainEstPanel');
 	        		        var mainEstTab = mainEstPanel.getActiveTab();
@@ -64,14 +69,14 @@ Ext.define('Workspace.filebrowser.button.ButtonFileCartCopyMove', {
 	        		    failure: function(response){
 	        		    	item.bodyStyle='background:#fcc;';
 
-	        		    	var text = response.responseText;
-	        		        Ext.getCmp('mainSouthPanel').log('Workspace.filebrowser.button.ButtonFileCartCopyMove', 'failure', 'failure  to:'+itemPathDst+' item:'+itemPathSrc+' cause:'+text);
+	        		    	var text = 'failure  to:'+itemPathDst+' item:'+itemPathSrc+' cause:'+response.responseText;
+	        		        Workspace.common.tool.Pop.failure(me, text);
 	        		    }
 	        		});
                 }
                 else {
     		        var text = 'No move/copy because destination path and source path can not be same. to:'+itemPathDst+' item:'+itemPathSrc;
-    		        Ext.getCmp('mainSouthPanel').log('Workspace.filebrowser.button.ButtonFileCartCopyMove', 'error', text);
+    		        Workspace.common.tool.Pop.error(me, text);
 //    		        var mainEstGrid = mainEstTab.items.items[0].panel;
 //    		        mainEstGrid.getView().getRow(index).style.color="#f30";
                 }
@@ -79,7 +84,7 @@ Ext.define('Workspace.filebrowser.button.ButtonFileCartCopyMove', {
         }
         else {
 	        var text = 'No move/copy because no destination panel find.';
-	        Ext.getCmp('mainSouthPanel').log('Workspace.filebrowser.button.ButtonFileCartCopyMove', 'error', text);
+	        Workspace.common.tool.Pop.error(me, text);
         }
     }
 

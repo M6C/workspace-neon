@@ -1,5 +1,8 @@
 Ext.define('Workspace.common.draganddrop.function.CopyMove',  {
-
+	requires: [
+  	     'Workspace.common.tool.Pop'
+  	]
+   	,
 	statics: {
 
 		call : function(grid, itemPathDst, data) {
@@ -38,14 +41,14 @@ Ext.define('Workspace.common.draganddrop.function.CopyMove',  {
 				    }
 				    else {
 				    	var text = 'No ' + dropAction + ' because destination path and source path can not be same. from:'+itemPathSrc + ' to:'+itemPathDst;
-				        Ext.getCmp('mainSouthPanel').log('Workspace.common.draganddrop.function.CopyMove.check', 'error', text);
+				        Workspace.common.tool.Pop.error('Workspace.common.draganddrop.function.CopyMove.check', text);
 				        ret = false;
 				    }
 				}
             }
             else {
 		        var text = 'No ' + dropAction + ' because ne destination panel find.';
-		        Ext.getCmp('mainSouthPanel').log('Workspace.common.draganddrop.function.CopyMove.check', 'error', text);
+		        Workspace.common.tool.Pop.error('Workspace.common.draganddrop.function.CopyMove.check', text);
             }
 	    	
 	    	return ret;
@@ -72,7 +75,8 @@ Ext.define('Workspace.common.draganddrop.function.CopyMove',  {
 	    		        	callBackSuccess(grid, node, data);
 	    		        }
 
-	    		        Ext.getCmp('mainSouthPanel').log('Workspace.common.draganddrop.function.CopyMove.request', 'success', 'Success ' + dropAction+' from:'+itemPathSrc + ' to:'+itemPathDst);
+	    		        var text = 'Success ' + dropAction+' from:'+itemPathSrc + ' to:'+itemPathDst;
+	    		        Workspace.common.tool.Pop.success('Workspace.common.draganddrop.function.CopyMove.request', text);
 	    		    },
 	    		    failure: function(response){
 	    		    	if (callBackSuccess != null) {
@@ -81,8 +85,8 @@ Ext.define('Workspace.common.draganddrop.function.CopyMove',  {
 
 	    		    	raw.bodyStyle='background:#fcc;';
 
-	    		    	var text = response.responseText;
-				        Ext.getCmp('mainSouthPanel').log('Workspace.common.draganddrop.function.CopyMove.request', 'failure', 'Failure ' + dropAction + ' item:'+raw.id+' cause:'+text);
+	    		    	var text = 'Failure ' + dropAction + ' item:'+raw.id+' cause:'+response.responseText;
+	    		        Workspace.common.tool.Pop.failure('Workspace.common.draganddrop.function.CopyMove.check', text);
 
 	    		    }
 	    		});

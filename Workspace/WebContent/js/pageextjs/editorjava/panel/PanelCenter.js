@@ -17,7 +17,7 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 	    var treeDirectory = Ext.getCmp('treeDirectory');
         var selection = treeDirectory.getSelectionModel().selected;
         if (selection.getCount() == 1) {
-        	ret = selection.get(0);
+        	ret = selection.get(0).raw;
         }
         return ret;
 	}

@@ -1,10 +1,13 @@
 Ext.define('Workspace.filebrowser.grid.fileexplorer.OnEditCompleteExplorer',  {
-	// REQUIRED
-
+	requires: [
+  	     'Workspace.common.tool.Pop'
+  	]
+   	,
 	statics: {
 
 		call : function(editor, value, startValue, eOpts) {
 		    console.info('Workspace.filebrowser.grid.fileexplorer.OnEditCompleteExplorer.call');
+		    var me = this;
     	 	if (value!=startValue) {
 	        	Ext.Msg.confirm('Renaming \''+startValue+'\' to \''+value+'\' ?', 'Rename', function(btn, text){
 	        	    if (btn == 'yes'){
@@ -17,7 +20,7 @@ Ext.define('Workspace.filebrowser.grid.fileexplorer.OnEditCompleteExplorer',  {
 			  			   url: requestUrl,
 			  			   params: {oldName:oldValue, newName:newValue},
 			  			   success: function(result, request){
-			  				   Ext.getCmp('mainSouthPanel').log('Workspace.filebrowser.grid.fileexplorer.OnEditCompleteExplorer', 'success', 'Success Renaming \''+oldValue+'\'->\''+newValue+'\'');
+			  				   Workspace.common.tool.Pop.success(me, 'Success Renaming \''+oldValue+'\'->\''+newValue+'\'');
 		
 			  				   // Rechargement de la grid
 			  				   var grid = mainCenterTab.items.items[0];
@@ -26,7 +29,7 @@ Ext.define('Workspace.filebrowser.grid.fileexplorer.OnEditCompleteExplorer',  {
 			  			   failure: function (result, request) {
 				  			   var jsonData = Ext.decode(result.responseText);
 				  			   var message = jsonData.message;
-			  				   Ext.getCmp('mainSouthPanel').log('Workspace.filebrowser.grid.fileexplorer.OnEditCompleteExplorer', 'failure', 'Error Renaming reason:\''+message+'\'');
+			  				   Workspace.common.tool.Pop.failure(me, 'failure', 'Error Renaming reason:\''+message+'\'');
 			  			   }
 			  			});
 	        	    }

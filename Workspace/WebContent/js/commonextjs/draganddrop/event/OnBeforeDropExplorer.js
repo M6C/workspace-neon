@@ -1,10 +1,14 @@
 Ext.define('Workspace.common.draganddrop.event.OnBeforeDropExplorer',  {
-	requires: ['Workspace.common.draganddrop.function.CopyMove']
+	requires: [
+	    'Workspace.common.tool.Pop',
+	    'Workspace.common.draganddrop.function.CopyMove'
+	]
 	,
 	statics: {
 
 		call : function(grid, nodeEl, data) {
 		    console.info('Workspace.common.draganddrop.event.OnBeforeDropExplorer.call OnBeforeDropExplorer');
+		    var me = this;
 
 		    if (!Ext.isDefined(nodeEl.viewRecordId)) {
 				nodeEl.viewRecordId = '[' + Ext.getCmp('project').value + ']';
@@ -19,15 +23,13 @@ Ext.define('Workspace.common.draganddrop.event.OnBeforeDropExplorer',  {
 			}
 			if (!Ext.isDefined(dataDst) || !Ext.isDefined(dataDst.data)) {
 		        var text = 'No move/copy Destination data defined.';
-		        Ext.getCmp('mainSouthPanel').log('Workspace.common.draganddrop.event.OnBeforeDropExplorer', 'error', text);
-		        console.info('Workspace.common.draganddrop.event.OnBeforeDropExplorer error:' + text);
+		        Workspace.common.tool.Pop.error(me, text);
 
 				return false;
 			}
 			if (dataDst.data.contentType != 'directory') {
 		        var text = 'No move/copy because destination is not a directory.';
-		        Ext.getCmp('mainSouthPanel').log('Workspace.common.draganddrop.event.OnBeforeDropExplorer', 'error', text);
-		        console.info('Workspace.common.draganddrop.event.OnBeforeDropExplorer error:' + text);
+		        Workspace.common.tool.Pop.error(me, text);
 
 				return false;
 			}

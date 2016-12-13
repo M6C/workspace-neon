@@ -1,10 +1,13 @@
 Ext.define('Workspace.filebrowser.grid.filecart.OnBeforeDropCart',  {
-	// REQUIRED
-
+	requires: [
+  	     'Workspace.common.tool.Pop'
+  	]
+ 	,
 	statics: {
 
 		call : function(grid, nodeEl, data) {
 		    console.info('Workspace.filebrowser.grid.filecart.OnBeforeDropCart.call OnBeforeDropCart');
+		    var me = this;
 		    var ret = true;
 
 		    if (!Ext.isDefined(grid.data)) {
@@ -30,9 +33,9 @@ Ext.define('Workspace.filebrowser.grid.filecart.OnBeforeDropCart',  {
 					data.copy = 'copy';
 	
 			        var text = 'Clipboard \''+itemPathSrc+'\'';
-			        Ext.getCmp('mainSouthPanel').log('Workspace.filebrowser.grid.filecart.OnBeforeDropCart.call', 'info', text);
-	
-				    // Initialisation des données
+	 		       	Workspace.common.tool.Pop.info(me, text);
+
+				    // Initialisation des donnees
 				    rec.data = recRaw;
 				    rec.data.dropAction = action;
 
@@ -41,7 +44,7 @@ Ext.define('Workspace.filebrowser.grid.filecart.OnBeforeDropCart',  {
             }
             else {
 		        var text = 'No move/copy because ne destination panel find.';
-		        Ext.getCmp('mainSouthPanel').log('Workspace.filebrowser.grid.filecart.OnBeforeDropCart.call', 'error', text);
+ 		       	Workspace.common.tool.Pop.error(me, text);
             }
 
 		    return ret;

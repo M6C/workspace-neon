@@ -1,6 +1,8 @@
 Ext.define('Workspace.filebrowser.button.ButtonFileCartDelete', {
-	// REQUIRED
-	requires: ['Workspace.filebrowser.constant.ConstantImage']
+	requires: [
+	     'Workspace.common.tool.Pop',
+	     'Workspace.filebrowser.constant.ConstantImage'
+	]
 	,
 	extend: 'Ext.button.Button'
 	,
@@ -18,6 +20,7 @@ Ext.define('Workspace.filebrowser.button.ButtonFileCartDelete', {
 		});
 	},
     handler: function(button, e) {
+    	var me = this;
         var mainCenterPanel = Ext.getCmp('mainCenterPanel');
         var mainCenterTab = mainCenterPanel.getActiveTab();
 
@@ -31,7 +34,7 @@ Ext.define('Workspace.filebrowser.button.ButtonFileCartDelete', {
 	        	Ext.Msg.confirm('Delete '+len+' item(s)', 'Delete', function(btn, text){
 	        	    if (btn == 'yes'){
 
-	                	// Cr�ation d'une nouvelle collection avec recopie des data
+	                	// Creation d'une nouvelle collection avec recopie des data
 	                	var col = new Ext.util.MixedCollection(true, 
 	                		function(item) {
 	                			return item.id;//item.getKey();
@@ -48,7 +51,7 @@ Ext.define('Workspace.filebrowser.button.ButtonFileCartDelete', {
 		    	  			   url: requestUrl,
 		    	  			   params: {fileName:fileName},
 		    	  			   success: function(result, request){
-		    	  				   Ext.getCmp('mainSouthPanel').log('Workspace.filebrowser.button.ButtonFileCartDelete', 'success', 'Success Deleting \''+text+'\'');
+		    	    		        Workspace.common.tool.Pop.success(me, 'Success Deleting \''+text+'\'');
 
 			        		    	var mainEstPanel = Ext.getCmp('mainEstPanel');
 			        		        var mainEstTab = mainEstPanel.getActiveTab();
@@ -68,7 +71,7 @@ Ext.define('Workspace.filebrowser.button.ButtonFileCartDelete', {
 		    	  			   failure: function (result, request) {
 		    		  			   var jsonData = Ext.decode(result.responseText);
 		    		  			   var message = jsonData.message;
-		    	  				   Ext.getCmp('mainSouthPanel').log('Workspace.filebrowser.button.ButtonFileCartDelete', 'failure', 'Error Deleting reason:\''+message+'\'');
+		    	    		       Workspace.common.tool.Pop.failure(me, 'Error Deleting reason:\''+message+'\'');
 		    	  			   }
 		    	  			});
 
@@ -79,12 +82,12 @@ Ext.define('Workspace.filebrowser.button.ButtonFileCartDelete', {
             }
             else {
     	        var text = 'No Deleting because no item to compress.';
-    	        Ext.getCmp('mainSouthPanel').log('Workspace.filebrowser.button.ButtonFileCartDelete', 'error', text);
+ 		       	Workspace.common.tool.Pop.error(me, text);
             }
         }
         else {
 	        var text = 'No Deleting because no destination panel find.';
-	        Ext.getCmp('mainSouthPanel').log('Workspace.filebrowser.button.ButtonFileCartDelete', 'error', text);
+	       	Workspace.common.tool.Pop.error(me, text);
         }
     }
 

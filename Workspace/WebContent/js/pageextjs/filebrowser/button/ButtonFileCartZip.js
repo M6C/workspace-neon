@@ -1,6 +1,8 @@
 Ext.define('Workspace.filebrowser.button.ButtonFileCartZip', {
-	// REQUIRED
-	requires: [ 'Workspace.filebrowser.constant.ConstantImage']
+	requires: [
+	     'Workspace.common.tool.Pop',
+	     'Workspace.filebrowser.constant.ConstantImage'
+	]
 	,
 	extend: 'Ext.button.Button'
 	,
@@ -14,6 +16,7 @@ Ext.define('Workspace.filebrowser.button.ButtonFileCartZip', {
 		});
 	},
     handler: function(button, e) {
+		var me = this;
         var mainCenterPanel = Ext.getCmp('mainCenterPanel');
         var mainCenterTab = mainCenterPanel.getActiveTab();
 
@@ -38,7 +41,7 @@ Ext.define('Workspace.filebrowser.button.ButtonFileCartZip', {
 	    	  			   url: requestUrl,
 	    	  			   params: {pathSrc:itemPathSrc,pathDst:itemPathDst,fileName:fileName},
 	    	  			   success: function(result, request){
-	    	  				   Ext.getCmp('mainSouthPanel').log('Workspace.filebrowser.button.ButtonFileCartZip', 'success', 'Success creating Zip \''+text+'\' in \''+itemPathDst+'\'');
+	    	  	 		       Workspace.common.tool.Pop.success(me, 'Success creating Zip \''+text+'\' in \''+itemPathDst+'\'');
 
 	    	  				   // Rechargement de la grid
 	    	  				   var grid = mainCenterTab.items.items[0];
@@ -47,7 +50,7 @@ Ext.define('Workspace.filebrowser.button.ButtonFileCartZip', {
 	    	  			   failure: function (result, request) {
 	    		  			   var jsonData = Ext.decode(result.responseText);
 	    		  			   var message = jsonData.message;
-	    	  				   Ext.getCmp('mainSouthPanel').log('Workspace.filebrowser.button.ButtonFileCartZip', 'failure', 'Error creating Zip reason:\''+message+'\'');
+	    	  	 		       Workspace.common.tool.Pop.failure(me, 'Error creating Zip reason:\''+message+'\'');
 	    	  			   }
 	    	  			});
 
@@ -56,12 +59,12 @@ Ext.define('Workspace.filebrowser.button.ButtonFileCartZip', {
             }
             else {
     	        var text = 'No Zip because no item to compress.';
-    	        Ext.getCmp('mainSouthPanel').log('Workspace.filebrowser.button.ButtonFileCartZip', 'error', text);
+ 		        Workspace.common.tool.Pop.error(me, text);
             }
         }
         else {
 	        var text = 'No Zip because no destination panel find.';
-	        Ext.getCmp('mainSouthPanel').log('Workspace.filebrowser.button.ButtonFileCartZip', 'error', text);
+	        Workspace.common.tool.Pop.error(me, text);
         }
     }
 
