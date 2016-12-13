@@ -19,6 +19,10 @@ function init_loader() {
 		    YearMonth: "F, Y"
 		};
 
+	// Session state initialization
+	Ext.state.Manager.setProvider(Ext.create('Ext.state.CookieProvider'));
+	console.info('State Manager \'CookieProvider\' setted');
+
 	Ext.Loader.setPath('Ext', DOMAIN_NAME_ROOT + '/jsFramework/ext-4.0.7');
 	console.info('common.ini.init_loader Ext.Loader \'Ext\' setted');
 	Ext.Loader.setPath('Ext.ux', DOMAIN_NAME_ROOT + '/jsFramework/ext-4.0.7/examples/ux');

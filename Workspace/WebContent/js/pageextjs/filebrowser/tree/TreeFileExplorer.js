@@ -1,12 +1,12 @@
 Ext.define('Workspace.filebrowser.tree.TreeFileExplorer', {
 
-	extend: 'Workspace.widget.TreeExplorer'
+	extend: 'Workspace.widget.tree.TreeExplorer'
 	,
 	alias: 'widget.filebrowserTreeFileExplorer',
 	alternateClassName: 'WorkspaceFilebrowserTreeFileExplorer'
 	,
 	// Override
-	onActionItem() {
+	onActionItem(view, record, item, index, event, eOpts) {
 		console.info('Workspace.filebrowser.tree.TreeFileExplorer actionItem');
 
 		// Explicit load required library (Mandatory for extending this class)

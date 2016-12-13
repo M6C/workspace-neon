@@ -13,9 +13,6 @@ function init_page() {
 	    'Ext.ux.ProgressBarPager'
 	]);
 
-	// Session state initialization
-	Ext.state.Manager.setProvider(Ext.create('Ext.state.CookieProvider'));
-
     var viewport = Ext.create('Workspace.editorjava.view.ViewMain', {
     	renderTo: Ext.getBody(),
     	id: 'mainView'

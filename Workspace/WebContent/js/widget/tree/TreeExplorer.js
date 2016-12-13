@@ -1,4 +1,4 @@
-Ext.define('Workspace.widget.TreeExplorer', {
+Ext.define('Workspace.widget.tree.TreeExplorer', {
 	
 	extend: 'Workspace.common.tree.TreeFileExplorerExtjs4'
 	,
@@ -6,8 +6,8 @@ Ext.define('Workspace.widget.TreeExplorer', {
 	alternateClassName: 'WorkspaceWidgetTreeExplorer'
 	,
 	// Must be override
-	onActionItem() {
-		console.info('Workspace.widget.TreeExplorer actionItem do nothing');
+	onActionItem(view, record, item, index, event, eOpts) {
+		console.info('Workspace.widget.tree.TreeExplorer actionItem do nothing');
 	}
 	,
 	applyDragAndDrop: function(me) {
@@ -29,19 +29,19 @@ Ext.define('Workspace.widget.TreeExplorer', {
 		}
 		,
 		'add' : function ( container, component, index, eOpts ) {
-			console.info('Workspace.widget.TreeExplorer add');
+			console.info('Workspace.widget.tree.TreeExplorer add');
 		    var me = this;
-			component.on('itemkeydown', function(view, record, item, index, e, eOpts) {
+			component.on('itemkeydown', function(view, record, item, index, event, eOpts) {
 				var key = e.keyCode;
 				if (key==Ext.EventObject.ENTER) {// code:13
-					me.actionItem();
+					me.onActionItem(view, record, item, index, event, eOpts);
 				}
 			});
 		}
 		,
-		'itemdblclick' : function(view, record, item, index, event, eOpts ) {
+		'itemdblclick' : function(view, record, item, index, event, eOpts) {
 		    var me = this;
-			me.actionItem();
+			me.onActionItem(view, record, item, index, event, eOpts);
 	    }
 	}
-}, function() {Workspace.tool.Log.defined('Workspace.widget.TreeExplorer');});
+}, function() {Workspace.tool.Log.defined('Workspace.widget.tree.TreeExplorer');});

@@ -1,45 +1,28 @@
 Ext.define('Workspace.editorjava.form.combobox.ComboProject', {
-	requires: [
-  	     'Workspace.editorjava.form.combobox.function.ApplySessionStateProject'
-  	]
-  	,
-	extend: 'Workspace.common.form.combobox.ComboProjectExtjs4'
+
+	extend: 'Workspace.widget.combobox.ComboProject'
 	,
 	alias: 'widget.editorjavaComboProject',
 	alternateClassName: 'WorkspaceEditorJavaComboProject'
 	,
-    initComponent : function(){
-		var me = this;
+	// Overrided
+	onActionItem: function(cmb, newValue, oldValue, option) {
+		var application = newValue;
+		console.info('Workspace.editorjava.form.combobox.ComboProject select:'+application);
 
-		Ext.apply(me, {
-			listeners: {
-				//scope: this, //yourScope
-//				'select': function (cmb, record, index) {
-//					var application = record[0].data.project;
-				'change': function (cmb, newValue, oldValue, option) {
-					var application = newValue;
-					console.info('Workspace.editorjava.form.combobox.ComboProject select:'+application);
+		Ext.getCmp('project').value=application;
 
-					Ext.getCmp('project').value=application;
-
-					var tree = Ext.getCmp("treeDirectory");
-					tree.getStore().getProxy().extraParams.path = '';
-					tree.getStore().getProxy().extraParams.application = application;
-					tree.getStore().load(
-						new Ext.data.Operation({
-							action:'read',
-							callback: function() {
-//							    me.manageTab(application);
-							}
-						})
-					);
+		var tree = Ext.getCmp("treeDirectory");
+		tree.getStore().getProxy().extraParams.path = '';
+		tree.getStore().getProxy().extraParams.application = application;
+		tree.getStore().load(
+			new Ext.data.Operation({
+				action:'read',
+				callback: function() {
+//				    me.manageTab(application);
 				}
-			}
-		});
-
-		Workspace.editorjava.form.combobox.function.ApplySessionStateProject.apply(me);
-
-		me.callParent(arguments);
+			})
+		);
 	}
 	,
 	manageTab: function(key) {

@@ -1,12 +1,12 @@
 Ext.define('Workspace.editorjava.tree.TreeFileExplorer', {
 	
-	extend: 'Workspace.widget.TreeExplorer'
+	extend: 'Workspace.widget.tree.TreeExplorer'
 	,
 	alias: 'widget.editorjavaTreeFileExplorer',
 	alternateClassName: 'WorkspaceEditorJavaTreeFileExplorer'
 	,
 	// Overrided
-	onActionItem() {
+	onActionItem(view, record, item, index, event, eOpts) {
 		console.info('Workspace.editorjava.tree.TreeFileExplorer actionItem');
 
 		// Explicit load required library (Mandatory for extending this class)
