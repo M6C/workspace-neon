@@ -32,7 +32,7 @@ Ext.define('Workspace.common.panel.function.ApplySessionStateTabPanel', {
 			if (Ext.isDefined(panel.stateData) && Ext.isDefined(panel.stateData.raw)) {
 		    	Ext.Array.each(panel.stateData.raw, function(tab) {
 		    		if (tab != null) {
-		    			Workspace.editorjava.panel.center.function.AddTabAce.call(tab);
+		    			panel.onAddTab(tab);
 		    		}
 				});
 				panel.stateData = undefined;

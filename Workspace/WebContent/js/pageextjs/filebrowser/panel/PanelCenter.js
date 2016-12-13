@@ -1,43 +1,26 @@
 Ext.define('Workspace.filebrowser.panel.PanelCenter', {
-	// REQUIRED
-	requires: ['Workspace.common.plugin.AddTabPluginExtjs4'],
-
-	extend: 'Ext.tab.Panel'
+	requires: [
+	     'Workspace.filebrowser.panel.center.function.AddTab'
+	]
+	,
+	extend: 'Workspace.widget.panel.PanelCenter'
 	,
 	alias: 'widget.panelCenter',
 	alternateClassName: 'PanelCenter'
 	,
-	id: 'mainCenterPanel',
-	region: 'center',
-	activeTab: 0
-	,
-    initComponent : function(){
-		var me = this;
-		Ext.apply(me, {
-			plugins: [ Ext.create('Workspace.filebrowser.plugin.AddTabPluginNew') ]
-			,
-			listeners: {
-				'tabchange' : function (tabPanel, newCard, oldCard, eOpts ) {
-					console.info('Workspace.filebrowser.panel.PanelCenter tabchange newCard:'+newCard.id+' oldCard:'+oldCard.id);
-					var gridStore = newCard.items.getByKey('gridFileExplorer_' + newCard.id).getStore();
-					gridStore.load(
-						new Ext.data.Operation({
-							action:'read'
-						})
-					);
-					gridStore.sync();
-				}
-			}
-	    });
-	    me.callParent(arguments);
+	// Must be override
+	onTabChange(combo, newCard, oldCard, option) {
+		console.info('Workspace.filebrowser.panel.PanelCenter tabchange newCard:'+newCard.id+' oldCard:'+oldCard.id);
+		var gridStore = newCard.items.getByKey('gridFileExplorer_' + newCard.id).getStore();
+		gridStore.load(
+			new Ext.data.Operation({
+				action:'read'
+			})
+		);
+		gridStore.sync();
 	},
-	onAddTabClick : function() {
-		this.setActiveTab(this.add(
-		{
-        	closable:true,
-            title: 'New Tab'
-        }
-		));
+	onAddTab(raw) {
+		Workspace.filebrowser.panel.center.function.AddTab.call(raw);
 	}
 
 }, function() {Workspace.tool.Log.defined('Workspace.filebrowser.panel.PanelCenter');});

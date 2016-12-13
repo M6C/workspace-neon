@@ -1,7 +1,7 @@
-Ext.define('Workspace.filebrowser.plugin.AddTabPluginNew', {
+Ext.define('Workspace.common.plugin.AddTabPluginNew', {
 	// REQUIRED
 	requires: ['Workspace.common.constant.ConstantImage',
-	           'Workspace.filebrowser.plugin.addTabNew.function.New']
+	           'Workspace.common.plugin.addTabNew.function.New']
 	,
     extend: 'Workspace.common.plugin.AddTabPluginExtjs4'
 	,
@@ -19,19 +19,13 @@ Ext.define('Workspace.filebrowser.plugin.AddTabPluginNew', {
 					    	icon: Workspace.common.constant.ConstantImage.ICON_FOLDER,
 					        text: 'Directory',
 					        handler: function(button, e) {
-				 				// Explicit load required library (Mandatory for extending this class)
-				 				Ext.Loader.syncRequire('Workspace.filebrowser.plugin.addTabNew.function.New');
-
-				 				Workspace.filebrowser.plugin.addTabNew.function.New.call('directory');
+				 				Workspace.common.plugin.addTabNew.function.New.call('directory');
 					    	}
 					    },{
 					    	icon: Workspace.common.constant.ConstantImage.ICON_FILE,
 					        text: 'File',
 					        handler: function(button, e) {
-				 				// Explicit load required library (Mandatory for extending this class)
-				 				Ext.Loader.syncRequire('Workspace.filebrowser.plugin.addTabNew.function.New');
-	
-				 				Workspace.filebrowser.plugin.addTabNew.function.New.call('file');
+				 				Workspace.common.plugin.addTabNew.function.New.call('file');
 					    	}
 					    }]
 					})
@@ -44,4 +38,4 @@ Ext.define('Workspace.filebrowser.plugin.AddTabPluginNew', {
 	initTab : function(tp, tab) {
 	}
 
-}, function() {Workspace.tool.Log.defined('Workspace.filebrowser.plugin.AddTabPluginNew');});
+}, function() {Workspace.tool.Log.defined('Workspace.common.plugin.AddTabPluginNew');});

@@ -7,7 +7,7 @@ Ext.define('Workspace.widget.tree.TreeExplorer', {
 	,
 	// Must be override
 	onActionItem(view, record, item, index, event, eOpts) {
-		console.info('Workspace.widget.tree.TreeExplorer actionItem do nothing');
+		console.info('Workspace.widget.tree.TreeExplorer onActionItem do nothing');
 	}
 	,
 	applyDragAndDrop: function(me) {

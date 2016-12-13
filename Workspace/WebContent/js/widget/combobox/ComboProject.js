@@ -9,8 +9,8 @@ Ext.define('Workspace.widget.combobox.ComboProject', {
 	alternateClassName: 'WorkspaceWidgetComboProject'
 	,
 	// Must be override
-	onActionItem(combo, newValue, oldValue, option) {
-		console.info('Workspace.widget.combobox.ComboProject actionItem do nothing');
+	onActionItem(tabPanel, newCard, oldCard, option) {
+		console.info('Workspace.widget.combobox.ComboProject onActionItem do nothing');
 	}
 	,
     initComponent : function(){

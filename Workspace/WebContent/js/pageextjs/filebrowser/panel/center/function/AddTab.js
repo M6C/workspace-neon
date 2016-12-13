@@ -40,12 +40,15 @@ Ext.define('Workspace.filebrowser.panel.center.function.AddTab',  {
 						defaults: { flex : 1 },//auto stretch
 					    items: [
 							grid
-					    ]
+					    ],
+						raw: raw
 					});
 
 					panel=mainCenterPanel.getComponent(panelId);
-					// Set close button visibility
-					panel.tab.closeEl.setVisible(closable);
+					if (Ext.isDefined(panel.tab.closeEl)) {
+						// Set close button visibility
+						panel.tab.closeEl.setVisible(closable);
+					}
 
 					// Chargement des donnees
 					var gridStore = grid.getStore();
