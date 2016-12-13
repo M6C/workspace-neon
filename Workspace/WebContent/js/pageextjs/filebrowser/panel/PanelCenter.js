@@ -20,7 +20,7 @@ Ext.define('Workspace.filebrowser.panel.PanelCenter', {
 		gridStore.sync();
 	},
 	onAddTab(raw) {
-		Workspace.filebrowser.panel.center.function.AddTab.call(raw);
+		Workspace.filebrowser.panel.center.function.AddTab.call(raw, 0, true, false, false);
 	},
 	getSelectedItem: function() {
 		var ret = null;

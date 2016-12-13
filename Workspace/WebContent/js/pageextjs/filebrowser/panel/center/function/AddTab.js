@@ -2,7 +2,7 @@ Ext.define('Workspace.filebrowser.panel.center.function.AddTab',  {
 
 	statics: {
 
-		call : function(raw, index = 0, closable = true) {
+		call : function(raw, index = 0, closable = true, setActiveTab = true, loadData = true) {
 		    console.info('Workspace.filebrowser.panel.center.function.AddTab.call');
 
 			if (raw.contentType=='directory') {
@@ -50,15 +50,19 @@ Ext.define('Workspace.filebrowser.panel.center.function.AddTab',  {
 						panel.tab.closeEl.setVisible(closable);
 					}
 
-					// Chargement des donnees
 					var gridStore = grid.getStore();
 					gridStore.getProxy().extraParams.path = raw.path;
 					gridStore.getProxy().extraParams.application = raw.application;
-					grid.refresh();
+					if (loadData) {
+						// Chargement des donnees
+						grid.refresh();
+					}
 				}
 				grid.root = !closable;
 
-				mainCenterPanel.setActiveTab(panel);
+				if (setActiveTab) {
+					mainCenterPanel.setActiveTab(panel);
+				}
 			}
 			else {
 			}
