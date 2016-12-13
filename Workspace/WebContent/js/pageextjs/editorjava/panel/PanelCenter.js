@@ -11,5 +11,14 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 	// Overrided
 	onAddTab(raw) {
 		Workspace.editorjava.panel.center.function.AddTabAce.call(raw);
+	},
+	getSelectedItem: function() {
+		var ret = null;
+	    var treeDirectory = Ext.getCmp('treeDirectory');
+        var selection = treeDirectory.getSelectionModel().selected;
+        if (selection.getCount() == 1) {
+        	ret = selection.get(0);
+        }
+        return ret;
 	}
 }, function() {Workspace.tool.Log.defined('Workspace.editorjava.panel.PanelCenter');});

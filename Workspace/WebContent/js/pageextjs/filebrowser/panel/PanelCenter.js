@@ -21,6 +21,15 @@ Ext.define('Workspace.filebrowser.panel.PanelCenter', {
 	},
 	onAddTab(raw) {
 		Workspace.filebrowser.panel.center.function.AddTab.call(raw);
+	},
+	getSelectedItem: function() {
+		var ret = null;
+	    var mainCenterPanel = Ext.getCmp('mainCenterPanel');
+        var mainCenterTab = mainCenterPanel.getActiveTab();
+        if (!Ext.isEmpty(mainCenterTab)) {
+            ret = mainCenterTab.raw;
+        }
+        return ret;
 	}
 
 }, function() {Workspace.tool.Log.defined('Workspace.filebrowser.panel.PanelCenter');});

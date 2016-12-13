@@ -13,11 +13,15 @@ Ext.define('Workspace.widget.panel.PanelCenter', {
 	activeTab: 0
 	,
 	// Must be override
-	onTabChange(tabPanel, newCard, oldCard, option) {
+	onTabChange: function(tabPanel, newCard, oldCard, option) {
 		console.info('Workspace.widget.panel.PanelCenter onTabChange do nothing');
 	},
-	onAddTab(raw) {
+	onAddTab: function(raw) {
 		console.info('Workspace.widget.panel.PanelCenter onAddTab do nothing');
+	},
+	getSelectedItem: function() {
+		console.info('Workspace.widget.panel.PanelCenter getSelectedItem do nothing');
+		return null;
 	}
 	,
     initComponent : function(){

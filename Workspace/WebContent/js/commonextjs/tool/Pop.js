@@ -1,4 +1,4 @@
-Ext.define('Workspace.editorjava.tool.Pop', {
+Ext.define('Workspace.common.tool.Pop', {
 	requires: ['Workspace.common.tool.Toast']
 	,
 	statics: {
@@ -12,4 +12,4 @@ Ext.define('Workspace.editorjava.tool.Pop', {
 		}
 	}
 
-}, function() {Workspace.tool.Log.defined('Workspace.editorjava.tool.Pop');});
+}, function() {Workspace.tool.Log.defined('Workspace.common.tool.Pop');});
