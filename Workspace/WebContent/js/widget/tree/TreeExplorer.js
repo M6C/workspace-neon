@@ -25,26 +25,6 @@ Ext.define('Workspace.widget.tree.TreeExplorer', {
 	,
     enableKeyEvents:true,
 	listeners: {
-// Example : Node keypress event catching
-//		keypress: {
-//			element: 'el', //bind to the underlying el property on the panel
-//			fn: function(e){ 
-//				alert('navi key ? ' +  e.isNavKeyPress() +  ' => keypress: '  + e.getCharCode()); 
-//				e.stopEvent();
-//				return false;
-//			}
-//		}
-//		,
-// Example : Node click event catching
-//		click: {
-//			element: 'el', //bind to the underlying el property on the panel
-//			fn: function(e) { 
-//				window.status = 'clicking ...' ; 
-//				e.stopEvent();
-//				return false;
-//			}
-//		}
-//		,
 		'load' : function(store, records, successful, operation, eOpts) {
 			if (successful) {
 				var view = this.getView();
