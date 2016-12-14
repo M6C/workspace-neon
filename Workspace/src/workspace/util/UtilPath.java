@@ -196,5 +196,16 @@ public class UtilPath
         return ret;
     }
 
+    public static String extractPathApplication(String path) {
+    	String ret = null;
+
+    	int iDeb = path.indexOf('[', 0);
+        int iFin = path.indexOf(']', iDeb);
+        if(iDeb >= 0 && iFin >= 0) {
+            ret = path.substring(iDeb + 1, iFin);
+        }
+
+    	return ret;
+    }
     private static UtilPath instance;
 }
