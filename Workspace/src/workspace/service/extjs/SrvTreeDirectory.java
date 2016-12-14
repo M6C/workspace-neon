@@ -75,9 +75,10 @@ public class SrvTreeDirectory extends SrvGenerique {
                         pathFormated = path;
                         FilenameFilter filter = null;
                         if (UtilString.isNotEmpty(nameFilter)) {
+                        	String str = nameFilter.trim().toLowerCase();
                             filter = new FilenameFilter() {
                                 public boolean accept(File file, String string) {
-                                    return string.toLowerCase().indexOf(nameFilter.toLowerCase()) >= 0;
+                                    return string.toLowerCase().indexOf(str) >= 0;
                                 }
                             };
                         }
@@ -130,7 +131,6 @@ public class SrvTreeDirectory extends SrvGenerique {
 	                                        jsonData = (new StringBuilder(String.valueOf(jsonData))).append(",").toString();
 	                                    String pathRoot = (new StringBuilder("[")).append(application).append("]").append(pathRelative).toString();
 	                                    jsonData += "{'text':'" + file.getName() + "',"
-//		                                    + "'internalId':'" + pathRoot + "',"
 		                                    + "'id':'" + pathRoot + "',"
 	                                        + "'application':'" + application + "',"
 	                                        + "'path':'" + pathRoot + "',"
