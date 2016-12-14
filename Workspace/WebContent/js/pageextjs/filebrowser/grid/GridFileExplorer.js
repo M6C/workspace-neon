@@ -4,6 +4,8 @@ Ext.define('Workspace.filebrowser.grid.GridFileExplorer', {
 	alias: 'widget.filebrowserGridFileExplorer',
 	alternateClassName: 'WorkspaceFilebrowserGridFileExplorer'
 	,
+    stateful:false
+	,
 	initComponent : function(){
 		var me = this;
 

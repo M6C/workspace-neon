@@ -13,7 +13,8 @@ Ext.define('Workspace.filebrowser.grid.GridFileCart', {
 	closable: true,
 	layout: 'fit',
     defaults: { flex : 1 },//auto stretch
-	hideHeaders: true
+	hideHeaders: true,
+    stateful:false
 	,
 	bodyStyle: 'background:#ffc;'
 	,

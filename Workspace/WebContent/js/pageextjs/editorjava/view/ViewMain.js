@@ -1,25 +1,29 @@
 Ext.define('Workspace.editorjava.view.ViewMain', {
-	// REQUIRED
-	requires: [ 'Workspace.editorjava.panel.PanelWest',
-		        'Workspace.editorjava.panel.PanelEst',
-		        'Workspace.editorjava.panel.PanelCenter',
-		        'Workspace.editorjava.panel.PanelSouth'
-		  ]
+	requires: [
+		'Workspace.editorjava.panel.PanelWest',
+		'Workspace.editorjava.panel.PanelEst',
+		'Workspace.editorjava.panel.PanelCenter',
+		'Workspace.editorjava.panel.PanelSouth'
+    ]
 	,
 	extend:'Workspace.common.view.ViewPortExtjs4'
 	,
+    stateful:false,
+	layout: 'border'
+    ,
 	items: [
     		{
   				region: 'north',
   				xtype: 'panel',
   				height: 38,
   				contentEl:'menuTable',
-  				bodyStyle:'background-color:#EFEFEF'
+  				bodyStyle:'background-color:#EFEFEF',
+  				stateful:false
   			}
     		,
 			{
-					xtype: 'panelWest',
-					items: []
+				xtype: 'panelWest',
+				items: []
 			}
     		,
 			{
@@ -37,7 +41,5 @@ Ext.define('Workspace.editorjava.view.ViewMain', {
 				items: []
 			}
     ]
-    ,
-	layout: 'border'
 
 }, function() {Workspace.tool.Log.defined('Workspace.editorjava.view.ViewMain');});

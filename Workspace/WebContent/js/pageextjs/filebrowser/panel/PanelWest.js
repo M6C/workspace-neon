@@ -1,9 +1,8 @@
 Ext.define('Workspace.filebrowser.panel.PanelWest', {
-	// REQUIRED
-	requires: ['Workspace.filebrowser.form.combobox.ComboProject'
-	           ,
-	           'Workspace.filebrowser.tree.TreeDirectoryExplorer'
-	           ]
+	requires: [
+	   'Workspace.filebrowser.form.combobox.ComboProject',
+       'Workspace.filebrowser.tree.TreeDirectoryExplorer'
+	]
 	,
 	extend: 'Workspace.common.panel.PanelCollapsible'
 	,
@@ -18,6 +17,9 @@ Ext.define('Workspace.filebrowser.panel.PanelWest', {
 	layout: 'border',
 	hideCollapseTool: true,
 	collapseMode: 'mini',
+    stateful:true,
+    stateId:'Workspace.filebrowser.panel.PanelWest'
+    ,
 	// private
     initComponent : function(){
 		var me = this;
@@ -35,7 +37,7 @@ Ext.define('Workspace.filebrowser.panel.PanelWest', {
 				        {
 				        	xtype: 'filebrowserComboProject'
 				        },
-  				        {	//Balise cach�e
+  				        {	//Balise cachee
   						    xtype: 'hidden',
   						    id: 'project',
   						    name: 'project'

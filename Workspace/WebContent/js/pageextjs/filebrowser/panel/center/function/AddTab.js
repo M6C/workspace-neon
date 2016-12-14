@@ -38,6 +38,7 @@ Ext.define('Workspace.filebrowser.panel.center.function.AddTab',  {
 						closable:true, // Always create close button. Closable will be set soon.
 						layout: 'fit',
 						defaults: { flex : 1 },//auto stretch
+						stateful:false,
 					    items: [
 							grid
 					    ],

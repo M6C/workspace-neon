@@ -24,6 +24,7 @@ Ext.define('Workspace.widget.tree.TreeExplorer', {
 	}
 	,
     enableKeyEvents:true,
+    stateful:false,
 	listeners: {
 		'load' : function(store, records, successful, operation, eOpts) {
 			if (successful) {

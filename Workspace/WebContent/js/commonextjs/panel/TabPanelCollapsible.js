@@ -11,6 +11,7 @@ Ext.define('Workspace.common.panel.TabPanelCollapsible', {
 //	collapsed: true,
 	collapsible: true,
 	titleCollapse: true,
-    autoScroll: true
+    autoScroll: true,
+    stateful:false
 
 }, function() {Workspace.tool.Log.defined('Workspace.common.panel.TabPanelCollapsible');});

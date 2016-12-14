@@ -11,7 +11,7 @@ Ext.define('Workspace.widget.panel.PanelCenter', {
 	region: 'center',
 	id: 'mainCenterPanel',
 	activeTab: 0
-	,
+    ,
 	// Must be override
 	onTabChange: function(tabPanel, newCard, oldCard, option) {
 		console.info('Workspace.widget.panel.PanelCenter onTabChange do nothing');

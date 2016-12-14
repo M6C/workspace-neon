@@ -6,6 +6,8 @@ Ext.define('Workspace.filebrowser.grid.GridFileCartZip', {
 	alias: 'widget.filebrowserGridFileCartZip',
 	alternateClassName: 'WorkspaceFilebrowserGridFileCartZip'
 	,
+    stateful:false
+	,
     initComponent : function(){
 		var me = this;
 

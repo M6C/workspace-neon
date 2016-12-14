@@ -18,6 +18,9 @@ Ext.define('Workspace.editorjava.panel.PanelWest', {
 	layout: 'border',
 	hideCollapseTool: true,
 	collapseMode: 'mini',
+    stateful:true,
+    stateId:'Workspace.editorjava.panel.PanelWest'
+    ,
 	// private
     initComponent : function(){
 		var me = this;

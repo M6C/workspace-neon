@@ -15,7 +15,8 @@ Ext.define('Workspace.filebrowser.panel.PanelSouth', {
 	hideCollapseTool: true,
 	collapseMode: 'mini',
 	collapsed: true,
-	maxHeight: 150
+	maxHeight: 150,
+    stateful:false
 	,
 	// private
     initComponent : function(){

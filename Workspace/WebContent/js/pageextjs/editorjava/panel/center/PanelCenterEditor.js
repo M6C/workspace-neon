@@ -15,6 +15,7 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 	elements: 'body,tbar',
 	layout: 'fit',
 	collapsed: false,
+    stateful:false,
 //	hideCollapseTool: false,
 //	hideMode: 'visibility',
     initComponent : function(){
@@ -22,7 +23,8 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 
 		var panel = Ext.create('Ext.panel.Panel', {
 			id: me.panelEditorId,
-			panelId: me.panelId
+			panelId: me.panelId,
+		    stateful:false
 		});
 
 		var loadRequest = Ext.create('Workspace.editorjava.request.JsonEditLoadFile', {

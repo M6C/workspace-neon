@@ -6,7 +6,8 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 	extend: 'Workspace.widget.panel.PanelCenter'
 	,
 	alias: 'widget.panelCenter',
-	alternateClassName: 'PanelCenter'
+	alternateClassName: 'PanelCenter',
+    stateful:false
 	,
 	// Overrided
 	onAddTab(raw) {

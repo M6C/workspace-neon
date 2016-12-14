@@ -19,7 +19,8 @@ Ext.define('Workspace.filebrowser.panel.PanelEst', {
 	activeTab: 0,
 	scroll: false,
 	autoscroll: false,
-	width: 200
+	width: 200,
+    stateful:false
 	,
     initComponent : function(){
 		var me = this;

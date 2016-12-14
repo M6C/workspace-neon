@@ -6,6 +6,8 @@ Ext.define('Workspace.filebrowser.grid.GridFileCartCopyMove', {
 	alias: 'widget.filebrowserGridFileCartCopyMove',
 	alternateClassName: 'WorkspaceFilebrowserGridFileCartCopyMove'
 	,
+    stateful:false
+	,
 	buildComponent : function(me){
 
 		me.callParent(arguments);

@@ -9,6 +9,7 @@ Ext.define('Workspace.editorjava.grid.GridTrace', {
 	,
 //	layout: 'fit',
 	hideHeaders: true,
+    stateful:false,
 //	maxHeight: 150
 //	,
     initComponent : function(){

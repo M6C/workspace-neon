@@ -6,6 +6,8 @@ Ext.define('Workspace.filebrowser.grid.GridFileCartDelete', {
 	alias: 'widget.filebrowserGridFileCartDelete',
 	alternateClassName: 'WorkspaceFilebrowserGridFileCartDelete'
 	,
+    stateful:false
+	,
     initComponent : function(){
 		var me = this;
 
