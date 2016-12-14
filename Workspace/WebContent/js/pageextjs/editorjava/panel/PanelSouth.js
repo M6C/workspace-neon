@@ -56,11 +56,5 @@ Ext.define('Workspace.editorjava.panel.PanelSouth', {
     	gridTrace.getSelectionModel().select(0);
     	gridTrace.doLayout();
     	this.doLayout();
-
-    	message = from + ' ' + message;
-    	if (type == 'failure')
-    		console.error(message);
-    	else
-    		console.info(message);
 	}
 }, function() {Workspace.tool.Log.defined('Workspace.editorjava.panel.PanelSouth');});
