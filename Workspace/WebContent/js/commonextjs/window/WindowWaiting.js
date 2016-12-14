@@ -56,7 +56,17 @@ Ext.define('Workspace.common.window.WindowWaiting',  {
 			wnd.wait(this.runningProcessMessage, this.pleaseWaitMessage);
 			return wnd;
 		},
-	
+		manageWindowWaiting : function(wndWait, message, index, count, grid) {
+			if (index < count) {
+				Workspace.common.window.WindowWaiting.updateWindowWaiting(wndWait, message);
+			} else {
+				Workspace.common.window.WindowWaiting.hideWindowWaiting(wndWait, message);
+				if (Ext.isDefined(grid) && Ext.isFunction(grid.refresh)) {
+					grid.refresh();
+				}
+			}
+		}
+		,
 		/**
 		 * TODO Finir la fonction pour affichier un messages sans barre de progression
 		 */ 

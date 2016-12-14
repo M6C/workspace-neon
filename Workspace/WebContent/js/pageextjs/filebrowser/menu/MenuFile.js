@@ -1,6 +1,8 @@
 Ext.define('Workspace.filebrowser.menu.MenuFile',  {
-	requires: ['Workspace.common.window.WindowWaiting',
-	           'Workspace.filebrowser.menu.MenuCheck'
+	requires: [
+	     'Workspace.common.window.WindowWaiting',
+	     'Workspace.filebrowser.menu.MenuCheck',
+	     'Workspace.common.tool.Delete'
 	],
 
 //	statics: {
@@ -12,26 +14,8 @@ Ext.define('Workspace.filebrowser.menu.MenuFile',  {
 			if (config.success == false) {
 				return;
 			}
-		
-			var msg = 'Confirm delete ' + config.sm.getCount() + ' element(s) ?';
-			Ext.Msg.confirm('Delete File', msg, function(btn, text) {
-		      if (btn == 'yes'){
-				var wndWait = Workspace.common.window.WindowWaiting.showWindowWaiting();
-		    	Ext.Array.each(config.sm.getSelection(), function(item, index, allItems) {
-		        	var requestUrl = DOMAIN_NAME_ROOT + '/action.servlet?event=EditorJavaPageDeleteValider';
-		    		Ext.Ajax.request({
-		    		   url: requestUrl,
-		    		   params: {fileName:item.internalId},
-		    		   success: function(result, request){
-		    			   Workspace.filebrowser.menu.MenuCheck.manageWindowWaiting(wndWait, 'Delete successfull.', index, allItems.length-1, config.grid);
-		    		   },
-		    		   failure: function (result, request) {
-		    			   Workspace.filebrowser.menu.MenuCheck.manageWindowWaiting(wndWait, 'Delete failed.', index, allItems.length-1, config.grid);
-		    		   }
-		    		});
-		    	});
-		      }
-		    });
+
+			Workspace.common.tool.Delete.doRequest(config.sm, config.grid);
 		}
 		,
 		archive : function (type) {
@@ -70,10 +54,10 @@ Ext.define('Workspace.filebrowser.menu.MenuFile',  {
 		    		   url: requestUrl,
 		    		   params: {pathSrc:pathSrc, pathDst:pathDst, fileName:fileName},
 		    		   success: function(result, request){
-		    			   Workspace.filebrowser.menu.MenuCheck.manageWindowWaiting(wndWait, 'Archive \'' + type + '\' successfull.', 1, 1, config.grid);
+		    			   Workspace.common.window.WindowWaiting.manageWindowWaiting(wndWait, 'Archive \'' + type + '\' successfull.', 1, 1, config.grid);
 		    		   },
 		    		   failure: function (result, request) {
-		    			   Workspace.filebrowser.menu.MenuCheck.manageWindowWaiting(wndWait, 'Archive \'' + type + '\' failed.', 1, 1, config.grid);
+		    			   Workspace.common.window.WindowWaiting.manageWindowWaiting(wndWait, 'Archive \'' + type + '\' failed.', 1, 1, config.grid);
 		    		   }
 		    		});
 				}

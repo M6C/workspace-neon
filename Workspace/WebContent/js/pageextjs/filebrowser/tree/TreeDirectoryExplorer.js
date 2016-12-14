@@ -8,7 +8,7 @@ Ext.define('Workspace.filebrowser.tree.TreeDirectoryExplorer', {
 	alternateClassName: 'WorkspaceFilebrowserTreeDirectoryExplorer'
 	,
 	// Overrided
-	onActionItem(view, record, item, index, event, eOpts) {
+	onActionOpen(view, record, item, index, event, eOpts) {
 		console.info('Workspace.editorjava.tree.TreeFileExplorer actionItem');
 
 		// Explicit load required library (Mandatory for extending this class)

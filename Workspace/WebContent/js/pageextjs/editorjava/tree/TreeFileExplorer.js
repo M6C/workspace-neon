@@ -6,7 +6,7 @@ Ext.define('Workspace.editorjava.tree.TreeFileExplorer', {
 	alternateClassName: 'WorkspaceEditorJavaTreeFileExplorer'
 	,
 	// Overrided
-	onActionItem(view, record, item, index, event, eOpts) {
+	onActionOpen(view, record, item, index, event, eOpts) {
 		console.info('Workspace.editorjava.tree.TreeFileExplorer actionItem');
 
 		// Explicit load required library (Mandatory for extending this class)
