@@ -2,6 +2,7 @@ package workspace.service.extjs;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Vector;
 
@@ -35,7 +36,9 @@ public class SrvTreeDirectory extends SrvGenerique {
         String withContentType = (String)bean.getParameterDataByName("contentType");
         String noContentType = (String)bean.getParameterDataByName("noContentType");
         String nameFilter = (String)bean.getParameterDataByName("nameFilter");
+        String contentFilter = (String)bean.getParameterDataByName("contentFilter");
         String recursive = (String)bean.getParameterDataByName("recursive");
+        String ignoreCase = (String)bean.getParameterDataByName("ignoreCase");
         String pathMain = null;
         String pathSrc = null;
         String jsonData = null;
@@ -53,6 +56,8 @@ public class SrvTreeDirectory extends SrvGenerique {
                 pathMain = AdpXmlApplication.getFormatedPathMain(context, dom, application);
                 pathSrc = AdpXmlApplication.getPathSource(context, dom, application);
 	            boolean isAutoDeploy = AdpXmlServer.isAutoDeploy(context, dom, application);
+                boolean bIgnoreCase = (recursive == null ? false : Boolean.valueOf(ignoreCase));
+                boolean bRecursive = (recursive == null ? false : Boolean.valueOf(recursive));
                 Trace.DEBUG(this, (new StringBuilder("execute pathMain:")).append(pathMain).toString());
                 Trace.DEBUG(this, (new StringBuilder("execute pathSrc:")).append(pathSrc).toString());
                 if(UtilString.isNotEmpty(pathMain)) {
@@ -74,15 +79,37 @@ public class SrvTreeDirectory extends SrvGenerique {
                         }
                         pathFormated = path;
                         FilenameFilter filter = null;
+
                         if (UtilString.isNotEmpty(nameFilter)) {
-                        	String str = nameFilter.trim().toLowerCase();
-                            filter = new FilenameFilter() {
-                                public boolean accept(File file, String string) {
-                                    return string.toLowerCase().indexOf(str) >= 0;
-                                }
-                            };
+                        	nameFilter = nameFilter.trim();
                         }
-                        boolean bRecursive = (recursive == null ? false : Boolean.valueOf(recursive));
+                    	final String strName = (nameFilter == null ? null : (bIgnoreCase ? nameFilter.toLowerCase() : nameFilter));
+
+                    	if (UtilString.isNotEmpty(contentFilter)) {
+                        	contentFilter = contentFilter.trim();
+                        }
+                    	final String strContent = (contentFilter == null ? null : (bIgnoreCase ? contentFilter.toLowerCase() : contentFilter));
+
+                    	if (strName != null || strContent != null) {
+	                        filter = new FilenameFilter() {
+	                            public boolean accept(File file, String string) {
+	                            	boolean ret = true;
+	                            	if (strName != null) {
+		                            	string = (bIgnoreCase ? string.toLowerCase() : string);
+		                            	ret = string.indexOf(strName) >= 0;
+	                            	}
+	                            	if (ret && strContent != null) {
+										try {
+											ret = (UtilFile.findText(file, strContent) >= 0);
+										} catch (IOException ex) {
+								            Trace.ERROR(this, ex);
+										}
+	                            	}
+	                                return ret;
+	                            }
+	                        };
+                    	}
+
                         Vector vListFile = UtilFile.dirFile(path, bRecursive, filter, false, true, true);
                         if(vListFile != null && vListFile.size() > 0)
                         {
@@ -156,9 +183,7 @@ public class SrvTreeDirectory extends SrvGenerique {
                     }
                 }
             }
-        }
-        catch(Exception ex)
-        {
+        } catch(Exception ex) {
             Trace.ERROR(this, ex);
         }
         Trace.DEBUG(this, (new StringBuilder("execute application:")).append(application).append(" path:").append(path).append(" pathFormated:").append(pathFormated).toString());
