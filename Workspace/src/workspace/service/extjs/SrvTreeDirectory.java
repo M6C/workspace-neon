@@ -39,6 +39,7 @@ public class SrvTreeDirectory extends SrvGenerique {
         String contentFilter = (String)bean.getParameterDataByName("contentFilter");
         String recursive = (String)bean.getParameterDataByName("recursive");
         String ignoreCase = (String)bean.getParameterDataByName("ignoreCase");
+        String withSubDirectory = (String)bean.getParameterDataByName("withSubDirectory");
         String pathMain = null;
         String pathSrc = null;
         String jsonData = null;
@@ -58,8 +59,10 @@ public class SrvTreeDirectory extends SrvGenerique {
 	            boolean isAutoDeploy = AdpXmlServer.isAutoDeploy(context, dom, application);
                 boolean bIgnoreCase = (recursive == null ? false : Boolean.valueOf(ignoreCase));
                 boolean bRecursive = (recursive == null ? false : Boolean.valueOf(recursive));
-                Trace.DEBUG(this, (new StringBuilder("execute pathMain:")).append(pathMain).toString());
-                Trace.DEBUG(this, (new StringBuilder("execute pathSrc:")).append(pathSrc).toString());
+                boolean bWithSubDirectory = (withSubDirectory == null ? true : Boolean.valueOf(withSubDirectory));
+                Trace.DEBUG(this, new StringBuilder("execute pathMain:").append(pathMain).toString());
+                Trace.DEBUG(this, new StringBuilder("execute pathSrc:").append(pathSrc).toString());
+                Trace.DEBUG(this, new StringBuilder("execute ignoreCase:").append(bIgnoreCase).append(" recursive:").append(bRecursive).append(" withSubDirectory:").append(bWithSubDirectory).toString());
                 if(UtilString.isNotEmpty(pathMain)) {
                     if(pathMain.toUpperCase().startsWith("FTP://"))
                     {
@@ -90,9 +93,12 @@ public class SrvTreeDirectory extends SrvGenerique {
                         }
                     	final String strContent = (contentFilter == null ? null : (bIgnoreCase ? contentFilter.toLowerCase() : contentFilter));
 
-                    	if (strName != null || strContent != null) {
+                    	if (UtilString.isNotEmpty(strName) || UtilString.isNotEmpty(strContent)) {
 	                        filter = new FilenameFilter() {
 	                            public boolean accept(File file, String string) {
+	                            	if (new File(file, string).isDirectory()) {
+	                            		return true;
+	                            	}
 	                            	boolean ret = true;
 	                            	if (strName != null) {
 		                            	string = (bIgnoreCase ? string.toLowerCase() : string);
@@ -110,7 +116,7 @@ public class SrvTreeDirectory extends SrvGenerique {
 	                        };
                     	}
 
-                        Vector vListFile = UtilFile.dirFile(path, bRecursive, filter, false, true, true);
+                        Vector vListFile = UtilFile.dirFile(path, bRecursive, filter, false, bWithSubDirectory, true);
                         if(vListFile != null && vListFile.size() > 0)
                         {
                             int j = vListFile.size();

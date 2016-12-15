@@ -307,6 +307,7 @@
             <PARAM Name="nameFilter" Type="STRING"/>
             <PARAM Name="recursive" Type="STRING" Default="false"/>
             <PARAM Name="ignoreCase" Type="STRING" Default="false"/>
+            <PARAM Name="withSubDirectory" Type="STRING" Default="true"/>
         </BEAN>
     </SERVLET>
     <SERVLET Name="FileBrowserCopyMove" Target="" TargetError="">
