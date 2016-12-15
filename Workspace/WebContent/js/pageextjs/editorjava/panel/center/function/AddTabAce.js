@@ -57,6 +57,9 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 
 					Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandChangeTab');
 				    Workspace.editorjava.aceeditor.command.CommandChangeTab.addCommand(editor, mainCenterPanel);
+
+					Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandFindResource');
+				    Workspace.editorjava.aceeditor.command.CommandFindResource.addCommand(editor, mainCenterPanel);
 				}
 
 				editor.build = raw.build;
