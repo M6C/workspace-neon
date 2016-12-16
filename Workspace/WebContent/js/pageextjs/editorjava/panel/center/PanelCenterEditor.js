@@ -68,7 +68,7 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 					var field = 'text';
 					var separator = '\\';
 
-					var combo = Ext.getCmp('comboProject');
+					var comboStore = Ext.getCmp('comboProject').getStore();
 					var tree = Ext.getCmp('treeDirectory');
 					var current = tree.getRootNode();
 					var application;
@@ -77,7 +77,7 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 					var delayedFnTree = function(){
 				        if(current.isLoading() && (cnt-- > 0)) {
 							// Waiting...
-							console.debug('Workspace.editorjava.panel.center.PanelCenterEditor Waiting... ('+field+':'+current.get(field)+',cnt:'+cnt+',loading:'+current.isLoading()+')');
+							console.debug('Workspace.editorjava.panel.center.PanelCenterEditor tab \''+me.panelId+'\' Waiting... ('+field+':'+current.get(field)+',cnt:'+cnt+',loading:'+current.isLoading()+')');
 							task.delay(500, delayedFnTree);
 				        } else {
 							var path = separator + tab.raw.path;
@@ -87,9 +87,9 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 					};
 
 					var delayedFnCombo = function(){
-				        if(combo.getStore().isLoading() && (cnt-- > 0)) {
+				        if(comboStore.isLoading() && (cnt-- > 0)) {
 							// Waiting...
-							console.debug('Workspace.editorjava.panel.center.PanelCenterEditor Waiting... ('+field+':'+current.get(field)+',cnt:'+cnt+',loading:'+current.isLoading()+')');
+							console.debug('Workspace.editorjava.panel.center.PanelCenterEditor tab \''+me.panelId+'\' Waiting... (Combo Project Loading - Tab project:\'' + tab.raw.application + '\',cnt:'+cnt+',loading:'+comboStore.isLoading()+')');
 							task.delay(500, delayedFnCombo);
 				        } else {
 				        	application = Ext.getCmp('project').value;

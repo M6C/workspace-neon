@@ -72,6 +72,10 @@ Ext.define('Workspace.widget.tree.TreeExplorer', {
 	            };
 
 	            current.expand(false, expander);
+	            if (current.isLeaf()) {
+	            	// TODO No Effect
+	            	me.getView().focusRow(current);
+	            }
 	        }
 		};
         var task = new Ext.util.DelayedTask(delayedFn);
