@@ -61,6 +61,21 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 		    	'render': function() {
 					loadRequest.request();
 		    	}
+				,
+				'added': function(tab, container, position, option) {
+					new Ext.util.DelayedTask(function(){
+					    console.debug('Workspace.editorjava.panel.center.PanelCenterEditor added DelayedTask');
+						var application = Ext.getCmp('project').value;
+						var tree = Ext.getCmp('treeDirectory');
+						if (tab.raw.application == application) {
+							var field = 'text';
+							var separator = '\\';
+							var path = separator + tab.raw.path;
+
+							tree.expandPath(path, field, separator);
+						}
+					}).delay(500);
+				}
 		    }
 	    });
 		me.callParent(arguments);

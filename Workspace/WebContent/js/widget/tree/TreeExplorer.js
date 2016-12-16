@@ -24,7 +24,60 @@ Ext.define('Workspace.widget.tree.TreeExplorer', {
 	}
 	,
     enableKeyEvents:true,
-    stateful:false,
+    stateful:false
+    ,
+    // Overide of 'Ext.tree.Panel'
+    expandPath: function(path, field, separator, callback, scope) {
+        var me = this,
+            current = me.getRootNode(),
+            index = 1,
+            view = me.getView(),
+            keys;
+
+        field = field || me.getRootNode().idProperty;
+        separator = separator || '/';
+
+        if (Ext.isEmpty(path)) {
+            Ext.callback(callback, scope || me, [false, null]);
+            return;
+        }
+
+        keys = path.split(separator);
+        if (current.get(field) != keys[1]) {
+            // invalid root
+            Ext.callback(callback, scope || me, [false, current]);
+            return;
+        }
+
+        var cnt = 10;
+        var delayedFn = function(){
+	        if(current.isLoading() && (cnt-- > 0)) {
+				// Waiting...
+				console.debug('Workspace.widget.tree.TreeExplorer expandPath Waiting... ('+field+':'+current.get(field)+',cnt:'+cnt+',loading:'+current.isLoading()+')');
+				task.delay(500);
+	        } else {
+	            var expander = function(){
+	                if (++index === keys.length) {
+	                    Ext.callback(callback, scope || me, [true, current]);
+	                    return;
+	                }
+	                var node = current.findChild(field, keys[index]);
+	                if (!node) {
+	                    Ext.callback(callback, scope || me, [false, current]);
+	                    return;
+	                }
+	                current = node;
+	                cnt = 10;
+	                task.delay(0);
+	            };
+
+	            current.expand(false, expander);
+	        }
+		};
+        var task = new Ext.util.DelayedTask(delayedFn);
+		task.delay(0);
+    }
+    ,
 	listeners: {
 		'load' : function(store, records, successful, operation, eOpts) {
 			if (successful) {

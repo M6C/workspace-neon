@@ -38,6 +38,7 @@ Ext.define('Workspace.filebrowser.form.combobox.ComboProject', {
 			Ext.getCmp('project').value=application;
 	
 			var tree = Ext.getCmp("treeDirectory");
+			tree.getRootNode().set('text', '[' + application + ']');
 			tree.getStore().getProxy().extraParams.path = '';
 			tree.getStore().getProxy().extraParams.application = application;
 			tree.getStore().load(
