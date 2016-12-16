@@ -84,7 +84,7 @@ Ext.define('Workspace.common.window.WindowWaiting',  {
 	
 		hideWindowWaiting : function (wnd, msg, sec) {
 		   wnd.updateProgress(1, '', msg);
-		   // Fermeture de la fen�tre apr�s x sec seconde
+		   // Fermeture de la fen?tre apr?s x sec seconde
 		   var x = window.setInterval(function() {wnd.hide();/*wnd.clearInterval(x);*/}, sec*1000);
 		},
 	

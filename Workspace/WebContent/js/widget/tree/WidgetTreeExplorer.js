@@ -1,6 +1,7 @@
 Ext.define('Workspace.widget.tree.WidgetTreeExplorer', {
-	requires: [
-  	     'Workspace.common.tool.Delete'
+	requires: [,
+  	     'Workspace.common.tool.Delete',
+  	     'Workspace.common.tool.Rename'
   	],
 	extend: 'Workspace.common.tree.TreeFileExplorerExtjs4'
 	,
@@ -14,7 +15,12 @@ Ext.define('Workspace.widget.tree.WidgetTreeExplorer', {
 	// Can be overrided
 	onActionDelete(view, record, item, index, event, eOpts) {
 		console.info('Workspace.widget.tree.WidgetTreeExplorer onActionDelete');
-		Workspace.common.tool.Delete.doRequest(view.getSelectionModel());
+		Workspace.common.tool.Delete.doRequest(view.getSelectionModel(), view);
+	},
+	// Can be overrided
+	onActionRename(view, record, item, index, event, eOpts) {
+		console.info('Workspace.widget.tree.WidgetTreeExplorer onActionRename');
+		Workspace.common.tool.Rename.doRequest(view.getSelectionModel(), view);
 	},
 	// Can be overrided
 	applyDragAndDrop: function(me) {
@@ -107,6 +113,10 @@ Ext.define('Workspace.widget.tree.WidgetTreeExplorer', {
 					case Ext.EventObject.DELETE: 	// code:46
 					case Ext.EventObject.BACKSPACE: // code:8
 						me.onActionDelete(view, record, item, index, event, eOpts);
+						break;
+
+					case Ext.EventObject.F2:        // code:113
+						me.onActionRename(view, record, item, index, event, eOpts);
 						break;
 
 					default:
