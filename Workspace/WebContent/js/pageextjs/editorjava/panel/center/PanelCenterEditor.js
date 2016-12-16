@@ -58,8 +58,30 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 		        panel
 		    ],
 		    listeners : {
-		    	'render': function() {
-					loadRequest.request();
+		    	'show': function() {
+
+					var editor = ace.edit(me.panelEditorId);
+
+					var callBackSuccess = function() {
+					    editor.focus();
+					    var cursorRow = (Ext.isDefined(editor.cursorRow) ? editor.cursorRow : 0);
+					    var cursorCol = (Ext.isDefined(editor.cursorCol) ? editor.cursorCol : 0);
+
+					    editor.scrollToLine(cursorRow+1, true, false, function(){});
+						editor.gotoLine(cursorRow+1, cursorCol, false);
+
+					    var scrollTop = (Ext.isDefined(editor.changeScrollTop) ? editor.changeScrollTop : 0);
+					    var scrollLeft = (Ext.isDefined(editor.changeScrollLeft) ? editor.changeScrollLeft : 0);
+	
+						editor.getSession().setScrollTop(scrollTop);
+						editor.getSession().setScrollLeft(scrollLeft);
+					}
+
+					if (!editor.dirty) {
+						loadRequest.request(callBackSuccess);
+					} else {
+						callBackSuccess();
+					}
 		    	}
 				,
 				'added': function(tab, container, position, option) {

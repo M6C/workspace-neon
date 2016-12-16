@@ -13,7 +13,7 @@ Ext.define('Workspace.editorjava.request.JsonEditLoadFile',  {
         me.callParent();
     },
 
-    request: function() {
+    request: function(callBackSuccess) {
         var me = this;
 		Ext.Ajax.request({
 			url : DOMAIN_NAME_ROOT + '/action.servlet?event=JsonEditLoadFile',
@@ -49,10 +49,30 @@ Ext.define('Workspace.editorjava.request.JsonEditLoadFile',  {
 			        enableSnippets: true,
 			        enableLiveAutocompletion: false
 			    });
+
+		        editor.doListenerChange = false;
 				editor.setValue(resultMessage);
-			    editor.focus();
-			    editor.scrollToLine(1, true, false, function(){});
-		    	editor.gotoLine(1, 0, true);
+
+		    	editor.dirty = false;
+		    	editor.getSession().on('change', function(){editor.dirty = true});
+		    	editor.getSession().on('changeScrollTop', function(number){
+		    		if (!editor.doListenerChange) {return;}
+		    		editor.changeScrollTop = number;
+		    	});
+		    	editor.getSession().on('changeScrollLeft', function(number){
+		    		if (!editor.doListenerChange) {return;}
+		    		editor.changeScrollLeft = number;
+		    	});
+		    	editor.getSelection().on('changeCursor', function(number){
+		    		if (!editor.doListenerChange) {return;}
+					var cursor = editor.selection.getCursor();
+					editor.cursorCol = cursor.column;
+					editor.cursorRow = cursor.row;
+		    	});
+		    	if (Ext.isDefined(callBackSuccess)) {
+		    		callBackSuccess();
+		    	}
+		    	editor.doListenerChange = true;
 			},
 			failure: function ( result, request ) {
 				alert('failure');
