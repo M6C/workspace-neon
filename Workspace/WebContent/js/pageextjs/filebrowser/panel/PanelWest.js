@@ -35,7 +35,8 @@ Ext.define('Workspace.filebrowser.panel.PanelWest', {
 					,
 					items: [
 				        {
-				        	xtype: 'filebrowserComboProject'
+				        	xtype: 'filebrowserComboProject',
+  						    id: 'comboProject'
 				        },
   				        {	//Balise cachee
   						    xtype: 'hidden',

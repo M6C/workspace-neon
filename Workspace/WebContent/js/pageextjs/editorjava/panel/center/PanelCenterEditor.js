@@ -63,18 +63,47 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 		    	}
 				,
 				'added': function(tab, container, position, option) {
-					new Ext.util.DelayedTask(function(){
-					    console.debug('Workspace.editorjava.panel.center.PanelCenterEditor added DelayedTask');
-						var application = Ext.getCmp('project').value;
-						var tree = Ext.getCmp('treeDirectory');
-						if (tab.raw.application == application) {
-							var field = 'text';
-							var separator = '\\';
+					console.debug('Workspace.editorjava.panel.center.PanelCenterEditor added DelayedTask');
+					var cnt = 10;
+					var field = 'text';
+					var separator = '\\';
+
+					var combo = Ext.getCmp('comboProject');
+					var tree = Ext.getCmp('treeDirectory');
+					var current = tree.getRootNode();
+					var application;
+					var task;
+
+					var delayedFnTree = function(){
+				        if(current.isLoading() && (cnt-- > 0)) {
+							// Waiting...
+							console.debug('Workspace.editorjava.panel.center.PanelCenterEditor Waiting... ('+field+':'+current.get(field)+',cnt:'+cnt+',loading:'+current.isLoading()+')');
+							task.delay(500, delayedFnTree);
+				        } else {
 							var path = separator + tab.raw.path;
 
 							tree.expandPath(path, field, separator);
-						}
-					}).delay(500);
+				        }
+					};
+
+					var delayedFnCombo = function(){
+				        if(combo.getStore().isLoading() && (cnt-- > 0)) {
+							// Waiting...
+							console.debug('Workspace.editorjava.panel.center.PanelCenterEditor Waiting... ('+field+':'+current.get(field)+',cnt:'+cnt+',loading:'+current.isLoading()+')');
+							task.delay(500, delayedFnCombo);
+				        } else {
+				        	application = Ext.getCmp('project').value;
+							if (tab.raw.application != application) {
+								console.debug('Workspace.editorjava.panel.center.PanelCenterEditor tab \''+me.panelId+'\' is not on current project ! Tab project:\'' + tab.raw.application + '\' Current project:\'' + application + '\'');
+								return true;
+							} else {
+								task.delay(0, delayedFnTree);
+							}
+				        }
+					};
+
+					task = new Ext.util.DelayedTask();
+					task.delay(0, delayedFnCombo);
 				}
 		    }
 	    });

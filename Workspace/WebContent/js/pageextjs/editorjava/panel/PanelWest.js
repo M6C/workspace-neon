@@ -36,7 +36,8 @@ Ext.define('Workspace.editorjava.panel.PanelWest', {
 					,
 					items: [
 				        {
-				        	xtype: 'editorjavaComboProject'
+				        	xtype: 'editorjavaComboProject',
+  						    id: 'comboProject'
 				        },
   				        {	//Balise cach�e
   						    xtype: 'hidden',
