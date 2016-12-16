@@ -1,20 +1,32 @@
 Ext.define('Workspace.editorjava.panel.center.function.AddTabReload',  {
-	// REQUIRED
-
+	requires: [
+	  'Workspace.common.tool.Pop',
+	  'Workspace.editorjava.request.JsonEditLoadFile'
+	]
+	,
 	statics: {
 
 		call : function() {
 		    console.info('Workspace.editorjava.panel.center.function.AddTabReload.call');
+		    var me = this;
 			var mainCenterPanel=Ext.getCmp('mainCenterPanel');
             var tab = mainCenterPanel.getActiveTab();
-            var panelId = tab.id;
-            var panelEditorId = tab.panelEditorId;
-			var pnlEdit = ace.edit(panelEditorId);
-			if (Ext.isDefined(pnlEdit.syncValue)) {
-				pnlEdit.syncValue();
+
+			var editor = ace.edit(me.panelEditorId);
+
+			var callBackSuccess = function() {
+
+			    editor.focus();
+			    editor.scrollToLine(1, true, false, function(){});
+				editor.gotoLine(1, 0, false);
+
+			    Workspace.common.tool.Pop.info(me, 'Reload success');
 			}
-			var value=pnlEdit.getPosition();
-			console.info('Reload pnlEdit.getPosition(true):'+pnlEdit.getPosition(true)+' pnlEdit.getPosition(false):'+pnlEdit.getPosition(false));
+
+    		var loadRequest = Ext.create('Workspace.editorjava.request.JsonEditLoadFile', {
+    			panelId: tab.panelId,
+    			panelEditorId: tab.panelEditorId
+    		}).request(callBackSuccess);
 		}
 	}
 
