@@ -1,6 +1,6 @@
 Ext.define('Workspace.filebrowser.tree.TreeFileExplorer', {
 
-	extend: 'Workspace.widget.tree.TreeExplorer'
+	extend: 'Workspace.widget.tree.WidgetTreeExplorer'
 	,
 	alias: 'widget.filebrowserTreeFileExplorer',
 	alternateClassName: 'WorkspaceFilebrowserTreeFileExplorer'

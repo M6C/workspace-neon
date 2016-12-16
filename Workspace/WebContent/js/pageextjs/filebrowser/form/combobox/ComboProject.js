@@ -1,6 +1,6 @@
 Ext.define('Workspace.filebrowser.form.combobox.ComboProject', {
 
-	extend: 'Workspace.widget.combobox.ComboProject'
+	extend: 'Workspace.widget.combobox.WidgetComboProject'
 	,
 	alias: 'widget.filebrowserComboProject',
 	alternateClassName: 'WorkspaceFileBrowserComboProject'

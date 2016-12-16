@@ -1,4 +1,4 @@
-Ext.define('Workspace.widget.tree.TreeExplorer', {
+Ext.define('Workspace.widget.tree.WidgetTreeExplorer', {
 	requires: [
   	     'Workspace.common.tool.Delete'
   	],
@@ -9,11 +9,11 @@ Ext.define('Workspace.widget.tree.TreeExplorer', {
 	,
 	// Must be overrided
 	onActionOpen(view, record, item, index, event, eOpts) {
-		console.info('Workspace.widget.tree.TreeExplorer onActionOpen do nothing');
+		console.info('Workspace.widget.tree.WidgetTreeExplorer onActionOpen do nothing');
 	},
 	// Can be overrided
 	onActionDelete(view, record, item, index, event, eOpts) {
-		console.info('Workspace.widget.tree.TreeExplorer onActionDelete');
+		console.info('Workspace.widget.tree.WidgetTreeExplorer onActionDelete');
 		Workspace.common.tool.Delete.doRequest(view.getSelectionModel());
 	},
 	// Can be overrided
@@ -53,7 +53,7 @@ Ext.define('Workspace.widget.tree.TreeExplorer', {
         var delayedFn = function(){
 	        if(current.isLoading() && (cnt-- > 0)) {
 				// Waiting...
-				console.debug('Workspace.widget.tree.TreeExplorer expandPath Waiting... ('+field+':'+current.get(field)+',cnt:'+cnt+',loading:'+current.isLoading()+')');
+				console.debug('Workspace.widget.tree.WidgetTreeExplorer expandPath Waiting... ('+field+':'+current.get(field)+',cnt:'+cnt+',loading:'+current.isLoading()+')');
 				task.delay(500);
 	        } else {
 	            var expander = function(){
@@ -95,7 +95,7 @@ Ext.define('Workspace.widget.tree.TreeExplorer', {
 		}
 		,
 		'add' : function ( container, component, index, eOpts ) {
-			console.info('Workspace.widget.tree.TreeExplorer add');
+			console.info('Workspace.widget.tree.WidgetTreeExplorer add');
 		    var me = this;
 			component.on('itemkeydown', function(view, record, item, index, event, eOpts) {
 				var key = event.keyCode;
@@ -120,4 +120,4 @@ Ext.define('Workspace.widget.tree.TreeExplorer', {
 			me.onActionOpen(view, record, item, index, event, eOpts);
 	    }
 	}
-}, function() {Workspace.tool.Log.defined('Workspace.widget.tree.TreeExplorer');});
+}, function() {Workspace.tool.Log.defined('Workspace.widget.tree.WidgetTreeExplorer');});

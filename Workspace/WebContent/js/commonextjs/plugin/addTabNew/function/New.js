@@ -12,7 +12,7 @@ Ext.define('Workspace.common.plugin.addTabNew.function.New',  {
 		    var mainCenterPanel = Ext.getCmp('mainCenterPanel');
 		    var item = mainCenterPanel.getSelectedItem();
 
-		    if (!Ext.isDefined(item)) {
+		    if (Ext.isEmpty(item)) {
     	        var text = 'No item find.';
 				Workspace.common.tool.Pop.error(me, text);
 		        return;
@@ -50,10 +50,27 @@ Ext.define('Workspace.common.plugin.addTabNew.function.New',  {
 	    	  				   var text = 'Success creating \''+fileName+'\' in \''+itemPathDst+'\'';
 	    	  				   Workspace.common.tool.Pop.success(me, text);
 	
+	                            if (typeNew == 'file') {
+	                                var path = Ext.String.escape(itemPathDst + '\\' + fileName);
+                                    var raw = Ext.JSON.decode('{' + 
+                                        '\'text\':\'' + fileName + '\',' +
+                                        '\'id\':\'' + path + '\',' +
+                                        '\'application\':\'' + item.application + '\',' +
+                                        '\'path\':\'' + path + '\',' +
+                                        '\'className\':\'\',' +
+                                        '\'contentType\':\'' + typeNew + '\',' +
+                                        '\'build\':\'false\',' +
+                                        '\'leaf\':true,' +
+                                        '\'autoDeploy\':' + item.autoDeploy +
+                                    '}');
+
+                                    mainCenterPanel.onAddTab(raw);
+	                            }
+/*
 	    	  				   // Rechargement de la grid
-	    	  				   var grid = mainCenterTab.items.items[0];
+	    	  				   var grid = mainCenterPanel.items.items[0];
 	    	  				   grid.refresh();
-	
+*/	
 	    	  				   // Rechargement du tree si besoin
 	    	  				   var application = Ext.getCmp('project').value;
 	    	  				   if ('['+application+']'==itemPathDst) {

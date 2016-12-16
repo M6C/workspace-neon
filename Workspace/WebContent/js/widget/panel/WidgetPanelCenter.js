@@ -1,4 +1,4 @@
-Ext.define('Workspace.widget.panel.PanelCenter', {
+Ext.define('Workspace.widget.panel.WidgetPanelCenter', {
 	requires: [
 	     'Workspace.common.panel.function.ApplySessionStateTabPanel'
 	]
@@ -6,7 +6,7 @@ Ext.define('Workspace.widget.panel.PanelCenter', {
 	extend: 'Ext.tab.Panel'
 	,
 	alias: 'widget.panelCenter',
-	alternateClassName: 'PanelCenter'
+	alternateClassName: 'WorkspaceWidgetPanelCenter'
 	,
 	region: 'center',
 	id: 'mainCenterPanel',
@@ -14,13 +14,13 @@ Ext.define('Workspace.widget.panel.PanelCenter', {
     ,
 	// Must be override
 	onTabChange: function(tabPanel, newCard, oldCard, option) {
-		console.info('Workspace.widget.panel.PanelCenter onTabChange do nothing');
+		console.info('Workspace.widget.panel.WidgetPanelCenter onTabChange do nothing');
 	},
 	onAddTab: function(raw) {
-		console.info('Workspace.widget.panel.PanelCenter onAddTab do nothing');
+		console.info('Workspace.widget.panel.WidgetPanelCenter onAddTab do nothing');
 	},
 	getSelectedItem: function() {
-		console.info('Workspace.widget.panel.PanelCenter getSelectedItem do nothing');
+		console.info('Workspace.widget.panel.WidgetPanelCenter getSelectedItem do nothing');
 		return null;
 	}
 	,
@@ -50,4 +50,4 @@ Ext.define('Workspace.widget.panel.PanelCenter', {
 		));
 	}
 
-}, function() {Workspace.tool.Log.defined('Workspace.widget.panel.PanelCenter');});
+}, function() {Workspace.tool.Log.defined('Workspace.widget.panel.WidgetPanelCenter');});

@@ -72,7 +72,7 @@ public class SrvEditLoadFile extends SrvGenerique
         if(jsonData != null)
             jsonData = (new StringBuilder(String.valueOf(jsonData))).append("]}").toString();
         else
-            jsonData = (new StringBuilder(String.valueOf(jsonData))).append("{results:0,data:[]}").toString();
+            jsonData = "{results:0,data:[]}";
         Trace.DEBUG(this, (new StringBuilder("SrvEditLoadFile execute filename:")).append(filename).append(" filenameFormated:").append(filenameFormated).toString());
         Trace.DEBUG(this, (new StringBuilder("SrvEditLoadFile execute jsonData:")).append(jsonData).toString());
         OutputStream os = response.getOutputStream();

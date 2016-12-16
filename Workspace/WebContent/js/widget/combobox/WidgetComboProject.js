@@ -1,4 +1,4 @@
-Ext.define('Workspace.widget.combobox.ComboProject', {
+Ext.define('Workspace.widget.combobox.WidgetComboProject', {
 	requires: [
   	     'Workspace.common.form.combobox.function.ApplySessionStateCombo'
   	]
@@ -10,7 +10,7 @@ Ext.define('Workspace.widget.combobox.ComboProject', {
 	,
 	// Must be override
 	onActionItem(tabPanel, newCard, oldCard, option) {
-		console.info('Workspace.widget.combobox.ComboProject onActionItem do nothing');
+		console.info('Workspace.widget.combobox.WidgetComboProject onActionItem do nothing');
 	}
 	,
     initComponent : function(){
@@ -29,4 +29,4 @@ Ext.define('Workspace.widget.combobox.ComboProject', {
 
 		me.callParent(arguments);
 	}
-}, function() {Workspace.tool.Log.defined('Workspace.widget.combobox.ComboProject');});
+}, function() {Workspace.tool.Log.defined('Workspace.widget.combobox.WidgetComboProject');});

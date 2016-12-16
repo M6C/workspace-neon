@@ -3,7 +3,7 @@ Ext.define('Workspace.filebrowser.panel.PanelCenter', {
 	     'Workspace.filebrowser.panel.center.function.AddTab'
 	]
 	,
-	extend: 'Workspace.widget.panel.PanelCenter'
+	extend: 'Workspace.widget.panel.WidgetPanelCenter'
 	,
 	alias: 'widget.panelCenter',
 	alternateClassName: 'PanelCenter'

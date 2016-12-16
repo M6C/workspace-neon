@@ -1,6 +1,6 @@
 Ext.define('Workspace.editorjava.tree.TreeFileExplorer', {
 	
-	extend: 'Workspace.widget.tree.TreeExplorer'
+	extend: 'Workspace.widget.tree.WidgetTreeExplorer'
 	,
 	alias: 'widget.editorjavaTreeFileExplorer',
 	alternateClassName: 'WorkspaceEditorJavaTreeFileExplorer'

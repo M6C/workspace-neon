@@ -1,6 +1,6 @@
 Ext.define('Workspace.editorjava.form.combobox.ComboProject', {
 
-	extend: 'Workspace.widget.combobox.ComboProject'
+	extend: 'Workspace.widget.combobox.WidgetComboProject'
 	,
 	alias: 'widget.editorjavaComboProject',
 	alternateClassName: 'WorkspaceEditorJavaComboProject'

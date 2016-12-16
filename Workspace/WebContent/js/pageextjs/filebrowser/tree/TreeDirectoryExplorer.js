@@ -2,7 +2,7 @@ Ext.define('Workspace.filebrowser.tree.TreeDirectoryExplorer', {
 
 	requiers: ['Workspace.common.tree.data.StoreDirectoryExplorerExtjs4']
 	,
-	extend: 'Workspace.widget.tree.TreeExplorer'
+	extend: 'Workspace.widget.tree.WidgetTreeExplorer'
 	,
 	alias: 'widget.filebrowserTreeDirectoryExplorer',
 	alternateClassName: 'WorkspaceFilebrowserTreeDirectoryExplorer'

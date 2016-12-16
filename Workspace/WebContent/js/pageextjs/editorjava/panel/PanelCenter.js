@@ -3,7 +3,7 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
   	     'Workspace.editorjava.panel.center.function.AddTabAce'
   	]
   	,
-	extend: 'Workspace.widget.panel.PanelCenter'
+	extend: 'Workspace.widget.panel.WidgetPanelCenter'
 	,
 	alias: 'widget.panelCenter',
 	alternateClassName: 'PanelCenter',
