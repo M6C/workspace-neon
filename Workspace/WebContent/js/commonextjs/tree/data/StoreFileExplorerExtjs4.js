@@ -38,7 +38,6 @@ Ext.define('Workspace.common.tree.data.StoreFileExplorerExtjs4', {
 				record = records[i];
 				Ext.apply(record.data, record.raw);
 			}
-	
 		}
 	}
 }, function() {Workspace.tool.Log.defined('Workspace.common.tree.data.StoreFileExplorerExtjs4');});

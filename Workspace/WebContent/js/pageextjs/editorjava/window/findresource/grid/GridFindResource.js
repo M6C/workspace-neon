@@ -27,12 +27,13 @@ Ext.define('Workspace.editorjava.window.findresource.grid.GridFindResource', {
 		});
 
 		var store = Ext.create('Workspace.editorjava.window.findresource.grid.data.StoreFindResource', {
-	    	fields:['contentType', 'path'], application: me.application, nameFilter: me.nameFilter
-//	    	,
-//	    	sorters: [
-//	    	    {sorterFn: me.sort},
-//	    	    {property: 'text', direction : 'ASC' }
-//	    	]
+	    	fields:['contentType', 'path'],
+	    	application: me.application,
+	    	nameFilter: me.nameFilter
+	    	,
+	    	sorters: [
+	    	    {property: 'path', direction : 'ASC' }
+	    	]
 	    	,
 			listeners: {
 				'beforeload': function(store, operation, option) {
