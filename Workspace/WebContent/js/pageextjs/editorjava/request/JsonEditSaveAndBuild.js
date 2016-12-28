@@ -30,23 +30,7 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
     						if (config.autoDeploy == true) {
 	    		    			Ext.Ajax.request({
 	    		    				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonAutoDeployBuild',
-	    		    				callback:function(opts, success, response) {
-	    		    					var jsonData = Ext.JSON.decode(response.responseText);
-	    		    					var pop = Workspace.common.tool.Pop.info(me, 'AutoDeploy complete ' + jsonData.results + ' file(s).');
-	    		    					if (jsonData.results > 0) {
-	    		    						var message = 'AutoDeploy complete<br>';
-	    		    						for(var i=0 ; i<jsonData.results ; i++) {
-	    		    							data = jsonData.autodeploy[i];
-	    		    							message += data.src + "=>" +  data.dst + "<br>";
-	    		    						}
-	    		    						console.info('Workspace.editorjava.request.JsonEditSaveAndBuild message:' + message);
-	    		    						var toast = pop.toast;
-	    		    						Ext.fly(toast.body.dom).on('click', function () {
-	    		    							toast.doClose();
-	    		    							Workspace.common.tool.Pop.info(me, message);
-	    		    						}, me);
-	    		    					}
-	    		    				},
+	    		    				callback:me.callbackAutoDeploy,
 	    		    				params:{application:me.application}
 	    		    			});
     						}
@@ -60,9 +44,7 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
     		else if (config.autoDeploy == true) {
     			Ext.Ajax.request({
     				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonAutoDeployWebContent',
-    				callback:function(opts, success, response) {
-    					Workspace.common.tool.Pop.info(me, "AutoDeploy complete '" + filename + "'.");
-    				},
+    				callback:me.callbackAutoDeploy,
     				params:{filename:filename}
     			});
 			}
@@ -71,5 +53,43 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
         Ext.apply(me, config);
 
         me.callParent();
-    }
+    },
+    callbackAutoDeploy: function(opts, success, response) {
+        var me = Workspace.editorjava.request.JsonEditSaveAndBuild;
+		var jsonData = Ext.JSON.decode(response.responseText);
+		if (jsonData.results > 0) {
+			var cntSuccess = 0, cntFailed = 0;
+			var messageSuccess = 'AutoDeploy Success<br>';
+			var messageFailure = 'AutoDeploy Failed<br>';
+			for(var i=0 ; i<jsonData.results ; i++) {
+				data = jsonData.autodeploy[i];
+				if (data.success == false) {
+					cntFailure++;
+					Workspace.common.tool.Pop.error(me, data.msg, false, true);
+					messageFailure += data.msg + "<br>";
+				} else {
+					cntSuccess++;
+					messageSuccess += data.src + "=>" +  data.dst + "<br>";
+				}
+			}
+			me.showMessage('success', cntSuccess, messageSuccess);
+			me.showMessage('failure', cntFailure, messageFailure);
+		} else {
+			Workspace.common.tool.Pop.info(me, 'AutoDeploy No file deployed.');
+		}
+	},
+	statics: {
+		showMessage: function(type, cnt, message) {
+			var me = this;
+			if (cnt > 0) {
+				console.info('Workspace.editorjava.request.JsonEditSaveAndBuild message ' + type + ':' + message);
+				var pop = Workspace.common.tool.Pop.show(type, me, 'AutoDeploy ' + type + ' ' + cnt + ' file(s).');
+				var toast = pop.toast;
+				Ext.fly(toast.body.dom).on('click', function () {
+					toast.doClose();
+					Workspace.common.tool.Pop.show(type, me, message);
+				}, me);
+			}
+		}
+	}
 }, function() {Workspace.tool.Log.defined('Workspace.editorjava.request.JsonEditSaveAndBuild');});

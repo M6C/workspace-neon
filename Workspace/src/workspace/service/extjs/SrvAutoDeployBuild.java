@@ -89,16 +89,20 @@ public class SrvAutoDeployBuild extends SrvGenerique {
 	            		dirDst.mkdirs();
 	            	}
 
+	            	String src = UtilEncoder.encodeHTMLEntities("[" + application + "]" + classname.substring(pathClassLen));
+	            	String dst = UtilEncoder.encodeHTMLEntities("[DEPLOYED_SERVER]" + classnameDst.substring(serverDeployLen));
+	            	src = UtilString.replaceAll(src, "\\", "\\\\");
+	            	dst = UtilString.replaceAll(dst, "\\", "\\\\");
+
 	            	if (!fileDst.exists() || fileSrc.lastModified() > fileDst.lastModified()) {
 		            	UtilFile.copyFile(fileSrc, fileDst);
-		            	String src = UtilEncoder.encodeHTMLEntities("[" + application + "]" + classname.substring(pathClassLen));
-		            	String dst = UtilEncoder.encodeHTMLEntities("[DEPLOYED_SERVER]" + classnameDst.substring(serverDeployLen));
-		            	src = UtilString.replaceAll(src, "\\", "\\\\");
-		            	dst = UtilString.replaceAll(dst, "\\", "\\\\");
-		            	json.add("{src:'" + src + "', dst:'" + dst + "'}");
-		            	Trace.DEBUG(this, "Success autoDeploy '" + classname + "' copied to '"+classnameDst+"'");
+		            	String msg = "Success autoDeploy '" + classname + "' copied to '"+classnameDst+"'";
+		            	Trace.DEBUG(this, msg);
+		            	json.add("{success:true, src:'" + src + "', dst:'" + dst + "', msg:'" + formatJsonMessage(msg) + "'}");
 	            	} else {
-		            	Trace.DEBUG(this, "No autoDeploy '" + classname + "' fileSrc.lastModified:"+fileSrc.lastModified()+" fileDst.lastModified:" + fileDst.lastModified());
+	            		String msg = "No autoDeploy '" + classname + "' fileSrc.lastModified:"+fileSrc.lastModified()+" fileDst.lastModified:" + fileDst.lastModified();
+	            		Trace.DEBUG(this, msg);
+		            	json.add("{success:false, src:'" + src + "', dst:'" + dst + "', msg:'" + formatJsonMessage(msg) + "'}");
 	            	}
 	        	}
 	    	}
@@ -110,5 +114,9 @@ public class SrvAutoDeployBuild extends SrvGenerique {
             Trace.ERROR(this, ex);
         }
 		return json;
+    }
+
+    private String formatJsonMessage(String msg) {
+    	return UtilString.replaceAll(msg, "\\", "\\\\").replaceAll("'", "\\\\'");
     }
 }

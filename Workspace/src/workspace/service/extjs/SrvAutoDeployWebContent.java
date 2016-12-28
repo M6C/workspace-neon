@@ -1,5 +1,7 @@
 package workspace.service.extjs;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.w3c.dom.Document;
 
 import framework.beandata.BeanGenerique;
+import framework.ressource.util.UtilEncoder;
 import framework.ressource.util.UtilFile;
 import framework.ressource.util.UtilString;
 import framework.ressource.util.UtilVector;
@@ -18,11 +21,24 @@ import framework.service.SrvGenerique;
 import framework.trace.Trace;
 import workspace.adaptateur.application.AdpXmlApplication;
 import workspace.adaptateur.application.AdpXmlServer;
+import workspace.util.UtilExtjs;
 import workspace.util.UtilPath;
 
 public class SrvAutoDeployWebContent extends SrvGenerique {
 
+
     public void execute(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean) throws Exception {
+		List<String> list = autoDeploy(request, bean);
+
+		String json = "";
+    	for(int i=0 ; i<list.size() ; json += (i>0 ? "," : "") + list.get(i++));
+
+    	String jsonData = "{results:"+list.size()+",autodeploy:["+json+"]}";
+        UtilExtjs.sendJson(jsonData, response);
+    }
+
+    private List<String> autoDeploy(HttpServletRequest request, BeanGenerique bean) throws IOException {
+    	List<String> json = new ArrayList<>();
     	String filename = (String)bean.getParameterDataByName("filename");
     	try {
             HttpSession session = request.getSession();
@@ -32,20 +48,26 @@ public class SrvAutoDeployWebContent extends SrvGenerique {
 
 	        int idx = filename.indexOf('.');
 	    	if (idx<0) {
-	            Trace.DEBUG(this, "No autoDeploy '" + filename + "' - No Extension");
-	    		return;
+	    		String msg = "No autoDeploy '" + filename + "' - No Extension";
+	            Trace.DEBUG(this, msg);
+	        	json.add("{success:false, src:'" + filename + "', dst:'', msg:'" + formatJsonMessage(msg) + "'}");
+	    		return json;
 	    	}
 	
 	    	String extention = filename.substring(idx+1);
 	    	if (UtilVector.isContainsString(forbiddenExtension, extention)) {
-	            Trace.DEBUG(this, "No autoDeploy '" + filename + "' - Forbidden Extension '" + extention + "'");
-	    		return;
+	    		String msg = "No autoDeploy '" + filename + "' - Forbidden Extension '" + extention + "'";
+	            Trace.DEBUG(this, msg);
+	        	json.add("{success:false, src:'" + filename + "', dst:'', msg:'" + formatJsonMessage(msg) + "'}");
+	    		return json;
 	    	}
 	
 	        String application = getApplication(bean, filename);
 	    	if (UtilString.isEmpty(application)) {
-	            Trace.DEBUG(this, "No autoDeploy '" + filename + "' - application not found");
-	    		return;
+	    		String msg = "No autoDeploy '" + filename + "' - application not found";
+	            Trace.DEBUG(this, msg);
+	        	json.add("{success:false, src:'" + filename + "', dst:'', msg:'" + formatJsonMessage(msg) + "'}");
+	    		return json;
 	    	}
 	    	filename = UtilPath.formatPath(dom, application, filename);
 
@@ -58,27 +80,41 @@ public class SrvAutoDeployWebContent extends SrvGenerique {
 
 	        String pathWebRoot = AdpXmlApplication.getPathByName(context, dom, application, "WebContent");
         	if (UtilString.isEmpty(pathWebRoot)) {
-                Trace.DEBUG(this, "No autoDeploy '" + filename + "' - path 'WebRoot' not found");
-        		return;
+                String msg = "No autoDeploy '" + filename + "' - path 'WebContent' not found";
+	            Trace.DEBUG(this, msg);
+	        	json.add("{success:false, src:'" + filename + "', dst:'', msg:'" + formatJsonMessage(msg) + "'}");
+	    		return json;
         	}
         	pathWebRoot = UtilPath.formatPath(dom, application, pathWebRoot);
 
         	if (!UtilFile.isPathAbsolute(autoDeploy) && !UtilFile.isPathAbsolute(serverDeploy)) {
-                Trace.DEBUG(this, "No autoDeploy Relative path autoDeploy '" + autoDeploy + "' and Relative path serverDeploy '" + serverDeploy + "'");
-        		return;
+        		String msg = "No autoDeploy Relative path autoDeploy '" + autoDeploy + "' and Relative path serverDeploy '" + serverDeploy + "'";
+	            Trace.DEBUG(this, msg);
+	        	json.add("{success:false, src:'" + filename + "', dst:'', msg:'" + formatJsonMessage(msg) + "'}");
+	    		return json;
         	}
         	if (!UtilFile.isPathAbsolute(autoDeploy)) {
         		autoDeploy = UtilFile.formatPath(serverDeploy, autoDeploy);
         	}
 
         	if (!filename.startsWith(pathWebRoot+"\\")) {
-                Trace.DEBUG(this, "No autoDeploy '" + filename + "' - not in WebRoot directory '" + pathWebRoot + "'");
-        		return;
+        		String msg = "No autoDeploy '" + filename + "' - not in WebRoot directory '" + pathWebRoot + "'";
+	            Trace.DEBUG(this, msg);
+	        	json.add("{success:false, src:'" + filename + "', dst:'', msg:'" + formatJsonMessage(msg) + "'}");
+	    		return json;
         	}
+
         	String filenameDst = UtilFile.formatPath(autoDeploy, filename.substring(pathWebRoot.length()));
 
         	UtilFile.copyFile(filename, filenameDst);
-            Trace.DEBUG(this, "Success autoDeploy '" + filename + "' copied to '"+filenameDst+"'");
+            String msg = "Success autoDeploy '" + filename + "' copied to '"+filenameDst+"'";
+            Trace.DEBUG(this, msg);
+
+            String src = filename;
+            String dst = UtilEncoder.encodeHTMLEntities("[DEPLOYED_SERVER]" + filenameDst.substring(serverDeploy.length()));
+        	src = UtilString.replaceAll(src, "\\", "\\\\");
+        	dst = UtilString.replaceAll(dst, "\\", "\\\\");
+        	json.add("{success:true, src:'" + src + "', dst:'" + dst + "', msg:'" + formatJsonMessage(msg) + "'}");
         }
         catch (IllegalArgumentException ex) {
             Trace.DEBUG(this, "No autoDeploy '" + filename + "' - " + ex.getMessage());
@@ -86,6 +122,11 @@ public class SrvAutoDeployWebContent extends SrvGenerique {
         catch (Exception ex) {
             Trace.ERROR(this, ex);
         }
+		return json;
+    }
+
+    private String formatJsonMessage(String msg) {
+    	return UtilString.replaceAll(msg, "\\", "\\\\").replaceAll("'", "\\\\'");
     }
 
     private String getApplication(BeanGenerique bean, String path) {

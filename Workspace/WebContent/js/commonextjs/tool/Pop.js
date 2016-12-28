@@ -3,6 +3,10 @@ Ext.define('Workspace.common.tool.Pop', {
 	,
 	statics: {
 
+		show : function(type, from, message, toast = true, panelSouth = true, console = true) {
+			return this.doPop(type, from, message, toast, panelSouth);
+		}
+		,
 		info : function(from, message, toast = true, panelSouth = true, console = true) {
 			return this.doPop('info', from, message, toast, panelSouth);
 		}
