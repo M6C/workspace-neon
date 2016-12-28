@@ -58,7 +58,7 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
         var me = Workspace.editorjava.request.JsonEditSaveAndBuild;
 		var jsonData = Ext.JSON.decode(response.responseText);
 		if (jsonData.results > 0) {
-			var cntSuccess = 0, cntFailed = 0;
+			var cntSuccess = 0, cntFailure = 0;
 			var messageSuccess = 'AutoDeploy Success<br>';
 			var messageFailure = 'AutoDeploy Failed<br>';
 			for(var i=0 ; i<jsonData.results ; i++) {
