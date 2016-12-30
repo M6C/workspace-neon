@@ -3,8 +3,20 @@
 <channel>
 <title>To Do</title>
 <description>RSS stream to do</description>
-<pubDate>01/01/2009</pubDate>
+<pubDate>28/12/2016</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+<item>
+<title>Editeur Java</title>
+<description>Fusionner les classes SrvAutoDeployWebContent et SrvAutoDeployBuild pour deployer toujours toutes les nouvelles class et les nouveaux fichier de WebContent.</description>
+<pubDate>28/12/2016</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
+<item>
+<title>Editeur Java</title>
+<description>Pouvoir utiliser les racourcis de l'éditeur même si aucun fichier n'est ouvert.</description>
+<pubDate>18/12/2016</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
 <item>
 <title>Editeur Java : FTP</title>
 <description>Dans l'editeur Java : Faire en sorte que l'on puisse travailler avec des chemins FTP au lieu de chemins locaux.</description>

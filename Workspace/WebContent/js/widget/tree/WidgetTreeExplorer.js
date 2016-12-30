@@ -1,5 +1,5 @@
 Ext.define('Workspace.widget.tree.WidgetTreeExplorer', {
-	requires: [,
+	requires: [
   	     'Workspace.common.tool.Delete',
   	     'Workspace.common.tool.Rename'
   	],
@@ -21,6 +21,28 @@ Ext.define('Workspace.widget.tree.WidgetTreeExplorer', {
 	onActionRename(view, record, item, index, event, eOpts) {
 		console.info('Workspace.widget.tree.WidgetTreeExplorer onActionRename');
 		Workspace.common.tool.Rename.doRequest(view.getSelectionModel(), view);
+	},
+	// Can be overrided
+	onItemKeyDown: function(view, record, item, index, event, eOpts) {
+		console.info('Workspace.widget.tree.WidgetTreeExplorer onItemKeyDown');
+		var key = event.keyCode;
+		switch (key) {
+			case Ext.EventObject.ENTER: 	// code:13
+				me.onActionOpen(view, record, item, index, event, eOpts);
+				break;
+
+			case Ext.EventObject.DELETE: 	// code:46
+			case Ext.EventObject.BACKSPACE: // code:8
+				me.onActionDelete(view, record, item, index, event, eOpts);
+				break;
+
+			case Ext.EventObject.F2:        // code:113
+				me.onActionRename(view, record, item, index, event, eOpts);
+				break;
+
+			default:
+				break;
+		}
 	},
 	// Can be overrided
 	applyDragAndDrop: function(me) {
@@ -103,26 +125,7 @@ Ext.define('Workspace.widget.tree.WidgetTreeExplorer', {
 		'add' : function ( container, component, index, eOpts ) {
 			console.info('Workspace.widget.tree.WidgetTreeExplorer add');
 		    var me = this;
-			component.on('itemkeydown', function(view, record, item, index, event, eOpts) {
-				var key = event.keyCode;
-				switch (key) {
-					case Ext.EventObject.ENTER: 	// code:13
-						me.onActionOpen(view, record, item, index, event, eOpts);
-						break;
-	
-					case Ext.EventObject.DELETE: 	// code:46
-					case Ext.EventObject.BACKSPACE: // code:8
-						me.onActionDelete(view, record, item, index, event, eOpts);
-						break;
-
-					case Ext.EventObject.F2:        // code:113
-						me.onActionRename(view, record, item, index, event, eOpts);
-						break;
-
-					default:
-						break;
-				}
-			});
+			component.on('itemkeydown', me.onItemKeyDown);
 		}
 		,
 		'itemdblclick' : function(view, record, item, index, event, eOpts) {

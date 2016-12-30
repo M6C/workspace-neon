@@ -1,10 +1,16 @@
 Ext.define('Workspace.editorjava.form.combobox.ComboProject', {
-
+	requires: [
+  	     'Workspace.editorjava.aceeditor.command.CommandFindResource'
+  	]
+  	,
 	extend: 'Workspace.widget.combobox.WidgetComboProject'
 	,
 	alias: 'widget.editorjavaComboProject',
 	alternateClassName: 'WorkspaceEditorJavaComboProject'
 	,
+    enableKeyEvents: true,
+    editable: false
+ 	,
 	// Overrided
 	onActionItem: function(cmb, newValue, oldValue, option) {
 		var application = newValue;
@@ -24,6 +30,14 @@ Ext.define('Workspace.editorjava.form.combobox.ComboProject', {
 				}
 			})
 		);
+	}
+	,
+    initComponent : function(){
+		var me = this;
+
+        Workspace.editorjava.aceeditor.command.CommandFindResource.addListener(me);
+
+		me.callParent(arguments);
 	}
 	,
 	manageTab: function(key) {
