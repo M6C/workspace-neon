@@ -19,6 +19,8 @@ Ext.define('Workspace.editorjava.window.findresource.grid.data.StoreFindResource
 	        extraParams: {
 	        	application: config.application,
 	        	nameFilter: config.nameFilter,
+	        	contentFilter: config.contentFilter,
+	        	extentionFilter: config.extentionFilter,
 	        	recursive: 'true',
 	        	withSubDirectory: 'false'
 	        }

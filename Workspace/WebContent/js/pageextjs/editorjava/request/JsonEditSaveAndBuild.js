@@ -19,6 +19,9 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
 		Workspace.common.tool.Pop.info(me, "Saving complete '" + filename + "'.");
         config.callback = function(options, success, response) { 
 
+			var editor = ace.edit(config.panelEditorId);
+			editor.dirty = !success;
+
     		if (config.build == 'true') {
     			Ext.Ajax.request({
     				method:'POST',

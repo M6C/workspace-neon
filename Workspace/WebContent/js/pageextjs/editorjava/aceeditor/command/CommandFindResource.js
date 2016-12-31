@@ -6,30 +6,61 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandFindResource',  {
 	statics: {
 	    addCommand: function(editor, panelTab) {
 			var me = this;
-		    editor.commands.addCommand({
-		        name: 'FindResource',
-		        bindKey: {win: 'Ctrl-Shift-R',  mac: 'Command-Option-R'},
-		        exec: me.openFindResource,
-		        readOnly: true // false if this command should not apply in readOnly mode
-		    });
+			var commands = editor.commands;
+		    commands.addCommand(
+                {
+    		        name: 'FindResourceName',
+    		        bindKey: {win: 'Ctrl-Shift-R',  mac: 'Command-Option-R'},
+    		        exec: me.openFindResourceNameFilter,
+    		        readOnly: true // false if this command should not apply in readOnly mode
+    		    }
+		    );
+		    commands.addCommand(
+		        {
+    		        name: 'FindResourceContent',
+    		        bindKey: {win: 'Ctrl-Shift-F',  mac: 'Command-Option-F'},
+    		        exec: me.openFindResourceContentFilter,
+    		        readOnly: true // false if this command should not apply in readOnly mode
+    		    }
+            );
 	    }
 	    ,
 	    addListener: function(component) {
 			var me = this;
 		    component.on('keypress', function (field, event) {
-    	        if (event.ctrlKey && event.shiftKey && event.charCode == Ext.EventObject.R) {
-		            me.openFindResource();
+    	        if (event.ctrlKey && event.shiftKey) {
+            		var key = event.keyCode;//event.charCode
+            		switch (key) {
+            			case Ext.EventObject.R:
+    		                me.openFindResourceNameFilter();
+            				break;
+            
+            			case Ext.EventObject.F:
+    		                me.openFindResourceContentFilter();
+            				break;
+            
+            			default:
+            				break;
+            		}
 		        }
 		    });
 /*		    component.on('specialkey', function(field, event) {
     	        if (event.ctrlKey && event.shiftKey && event.charCode == Ext.EventObject.R) {
-    	            me.openFindResource();
+    	            me.openFindResourceNameFilter();
                 }
             });
 */	    }
 	    ,
+	    openFindResourceNameFilter: function(container) {
+	        Workspace.editorjava.aceeditor.command.CommandFindResource.openFindResource(container, true, false);
+	    }
+	    ,
+	    openFindResourceContentFilter: function(container) {
+	        Workspace.editorjava.aceeditor.command.CommandFindResource.openFindResource(container, false, true);
+	    }
+	    ,
 	    // Private
-	    openFindResource: function(container) {
+	    openFindResource: function(container, nameFilter, contentFilter) {
 			console.info('Workspace.editorjava.aceeditor.command.CommandFindResource exec');
 
 			var me = this;
@@ -46,7 +77,13 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandFindResource',  {
 
 //					editor.selection.selectWord();
 
-			var text=escape(editor.getSelectedText());
+			var text=editor.getSelectedText();
+			var textName = '', textContent = '';
+			if (contentFilter) {
+			    textContent = text;
+			} else {
+			    textName = text;
+			}
 			var fnOnSubmitTree = function(view, record, item, index, event, eOpts) {
 				var sm = view.getSelectionModel();
 				if (sm.getSelection().length>0) {
@@ -57,7 +94,10 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandFindResource',  {
 			};
 
 			Ext.create('Workspace.editorjava.window.WindowFindResource', {
-				nameFilter: text,
+				nameFilter: textName,
+				contentFilter: textContent,
+				showNameFilter:nameFilter,
+				showContentFilter:contentFilter,
 				application: application,
 				onSubmit:fnOnSubmitTree
 				,

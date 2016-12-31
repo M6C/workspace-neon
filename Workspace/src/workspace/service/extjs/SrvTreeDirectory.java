@@ -37,6 +37,7 @@ public class SrvTreeDirectory extends SrvGenerique {
         String noContentType = (String)bean.getParameterDataByName("noContentType");
         String nameFilter = (String)bean.getParameterDataByName("nameFilter");
         String contentFilter = (String)bean.getParameterDataByName("contentFilter");
+        String extentionFilter = (String)bean.getParameterDataByName("extentionFilter");
         String recursive = (String)bean.getParameterDataByName("recursive");
         String ignoreCase = (String)bean.getParameterDataByName("ignoreCase");
         String withSubDirectory = (String)bean.getParameterDataByName("withSubDirectory");
@@ -92,22 +93,32 @@ public class SrvTreeDirectory extends SrvGenerique {
                         	contentFilter = contentFilter.trim();
                         }
                     	final String strContent = (contentFilter == null ? null : (bIgnoreCase ? contentFilter.toLowerCase() : contentFilter));
+                    	final String strExtention = (extentionFilter == null ? null : (bIgnoreCase ? extentionFilter.toLowerCase() : extentionFilter));
 
-                    	if (UtilString.isNotEmpty(strName) || UtilString.isNotEmpty(strContent)) {
+                    	if (UtilString.isNotEmpty(strName) || UtilString.isNotEmpty(strContent) || UtilString.isNotEmpty(strExtention)) {
 	                        filter = new FilenameFilter() {
-	                            public boolean accept(File file, String string) {
-	                            	if (new File(file, string).isDirectory()) {
+	                            public boolean accept(File directory, String string) {
+	                            	File file = new File(directory, string);
+	                            	boolean isFile = file.isFile();
+	                            	if (!isFile) {
 	                            		return true;
 	                            	}
 	                            	boolean ret = true;
-	                            	if (strName != null) {
-		                            	string = (bIgnoreCase ? string.toLowerCase() : string);
+	                            	string = (bIgnoreCase ? string.toLowerCase() : string);
+	                            	if (!UtilString.isEmpty(strName)) {
 		                            	ret = string.indexOf(strName) >= 0;
 	                            	}
-	                            	if (ret && strContent != null) {
+	                            	if (isFile && ret && !UtilString.isEmpty(strContent)) {
 										try {
 											ret = (UtilFile.findText(file, strContent) >= 0);
 										} catch (IOException ex) {
+								            Trace.ERROR(this, ex);
+										}
+	                            	}
+	                            	if (isFile && ret && !UtilString.isEmpty(strExtention)) {
+										try {
+                                            ret = UtilString.isEmpty(strExtention) || UtilFile.isExtFile(string, strExtention);
+										} catch (Exception ex) {
 								            Trace.ERROR(this, ex);
 										}
 	                            	}

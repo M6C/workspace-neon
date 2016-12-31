@@ -12,8 +12,16 @@ Ext.define('Workspace.editorjava.window.WindowFindResource', {
 	initComponent : function(){
 		var me = this;
 
+        var gridHeight = 100;
+		if(!Ext.isDefined(me.showNameFilter) || me.showNameFilter == true) {
+		    gridHeight -= 10;
+		}
+	    if(!Ext.isDefined(me.showContentFilter) || me.showContentFilter == true) {
+		    gridHeight -= 20;
+	    }
+
 		var grid = Ext.create('Workspace.editorjava.window.findresource.grid.GridFindResource', {
-		    anchor: '100% 90%',
+		    anchor: '100% ' + gridHeight + '%',
     		id:'gridFindResource',
     		nameFilter: me.nameFilter,
     		application: me.application,
@@ -35,24 +43,40 @@ Ext.define('Workspace.editorjava.window.WindowFindResource', {
 				    fieldLabel: '',
 				    allowBlank: false,
 				    enableKeyEvents: true,
+				    emptyText: 'Name Filter',
 				    value: me.nameFilter,
 				    listeners: {
-				    	keypress : function (field, event, option) {
-				    		var key = event.getKey();
-				    		if (key == event.ENTER) {
-				    			var store = grid.getStore();
-				    			if (store.isLoading()) {
-				    				Workspace.common.tool.Pop.info(me, 'Find resource loading in progress.');
-				    			} else {
-									grid.getStore().load(new Ext.data.Operation({
-							    		action : 'read',
-							    		params: {
-							    			nameFilter: field.getValue()
-							    		}
-							    	}));
-				    			}
-				    		}
-				    	}
+				    	keypress : me.onKeyPress
+				    }
+				}
+				,
+				{
+				    anchor: '100% 10%',
+					xtype: 'textfield',
+				    id: 'contentFilter',
+				    name: 'contentFilter',
+				    fieldLabel: '',
+				    allowBlank: false,
+				    enableKeyEvents: true,
+				    emptyText: 'Content Filter',
+				    value: me.contentFilter,
+				    listeners: {
+				    	keypress : me.onKeyPress
+				    }
+				}
+				,
+				{
+				    anchor: '100% 10%',
+					xtype: 'textfield',
+				    id: 'extentionFilter',
+				    name: 'extentionFilter',
+				    fieldLabel: '',
+				    allowBlank: true,
+				    enableKeyEvents: true,
+				    emptyText: 'Extention Filter (Separator=\';\')',
+				    value: me.extentionFilter,
+				    listeners: {
+				    	keypress : me.onKeyPress
 				    }
 				}
 				,
@@ -61,8 +85,16 @@ Ext.define('Workspace.editorjava.window.WindowFindResource', {
 			,
 			listeners : {
 				'show' : function (wnd) {
-					console.info('Workspace.editorjava.window.WindowFindResource activate');
-					Ext.getCmp('nameFilter').focus(false, 200);
+					console.info('Workspace.editorjava.window.WindowFindResource show');
+					if (me.showContentFilter) {
+					    Ext.getCmp('contentFilter').focus(false, 200);
+					} else if (me.showNameFilter) {
+					    Ext.getCmp('nameFilter').focus(false, 200);
+					}
+
+				    Ext.getCmp('nameFilter').setVisible(!Ext.isDefined(me.showNameFilter) || me.showNameFilter == true);
+				    Ext.getCmp('contentFilter').setVisible(!Ext.isDefined(me.showContentFilter) || me.showContentFilter == true);
+				    Ext.getCmp('extentionFilter').setVisible(!Ext.isDefined(me.showContentFilter) || me.showContentFilter == true);
 				}
 				,
 				'destroy' : me.listeners.destroy
@@ -72,11 +104,34 @@ Ext.define('Workspace.editorjava.window.WindowFindResource', {
 		me.callParent(arguments);
 	}
 	,
+	onKeyPress: function (field, event, option) {
+		var key = event.getKey();
+		if (key == event.ENTER) {
+		    var nameFilter = Ext.getCmp('nameFilter').getValue();
+		    var contentFilter = Ext.getCmp('contentFilter').getValue();
+		    var extentionFilter = Ext.getCmp('extentionFilter').getValue();
+			var grid=Ext.getCmp('gridFindResource');
+			var store = grid.getStore();
+			if (store.isLoading()) {
+				Workspace.common.tool.Pop.info(me, 'Find resource loading in progress.');
+			} else {
+				grid.getStore().load(new Ext.data.Operation({
+		    		action : 'read',
+		    		params: {
+		    			nameFilter: nameFilter,
+		    			contentFilter: contentFilter,
+		    			extentionFilter: extentionFilter
+		    		}
+		    	}));
+			}
+		}
+	}
+	,
 	title: 'Find Resource',
 	layout:'fit',
 	width:730,
 	height:300,
-	//autoHeight: true,        //hauteur de la fen�tre
+	//autoHeight: true,        //hauteur de la fen?tre
 	modal: true
 	/*,             //Grise automatiquement le fond de la page
 	closeAction:'hide',

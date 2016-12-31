@@ -39,9 +39,9 @@ Ext.define('Workspace.editorjava.window.findresource.grid.GridFindResource', {
 				'beforeload': function(store, operation, option) {
 					var ret = false;
 					if (!Ext.isDefined(operation.params)) {
-						ret = !Ext.isEmpty(store.getProxy().extraParams.nameFilter);
+						ret = !Ext.isEmpty(store.getProxy().extraParams.nameFilter) || !Ext.isEmpty(store.getProxy().extraParams.contentFilter);
 					} else {
-						ret = !Ext.isEmpty(operation.params.nameFilter);
+						ret = !Ext.isEmpty(operation.params.nameFilter) || !Ext.isEmpty(operation.params.contentFilter);
 					}
 					return ret;
 				}

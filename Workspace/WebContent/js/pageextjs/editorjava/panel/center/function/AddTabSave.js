@@ -35,7 +35,8 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabSave',  {
 				application:application,
 				build:pnlEdit.build,
 				className:className,
-				autoDeploy:autoDeploy
+				autoDeploy:autoDeploy,
+				panelEditorId:panelEditorId
 			}).request();
 		}
 	}
