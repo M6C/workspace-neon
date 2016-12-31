@@ -115,7 +115,7 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 							task.delay(500, delayedFnCombo);
 				        } else {
 				        	application = Ext.getCmp('project').value;
-							if (tab.raw.application != application) {
+							if (Ext.isDefined(tab.raw) && tab.raw.application != application) {
 								console.debug('Workspace.editorjava.panel.center.PanelCenterEditor tab \''+me.panelId+'\' is not on current project ! Tab project:\'' + tab.raw.application + '\' Current project:\'' + application + '\'');
 								return true;
 							} else {
