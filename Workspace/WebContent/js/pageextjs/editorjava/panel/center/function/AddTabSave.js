@@ -1,12 +1,13 @@
 Ext.define('Workspace.editorjava.panel.center.function.AddTabSave',  {
-	// REQUIRED
 	requires: [
+	    'Workspace.common.tool.Pop',
 	    'Workspace.editorjava.request.JsonEditSaveAndBuild']
 	,
 	statics: {
 
 		call : function() {
 		    console.info('Workspace.editorjava.panel.center.function.AddTabSave.call');
+		    var me = this;
 
 			var mainCenterPanel=Ext.getCmp('mainCenterPanel');
             var tab = mainCenterPanel.getActiveTab();
@@ -15,6 +16,10 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabSave',  {
 //		    var pnl = mainCenterPanel.getComponent(panelId);
 //			var pnlEdit = pnl.getComponent(panelEditorId);
 			var pnlEdit = ace.edit(panelEditorId);
+			if (!pnlEdit.dirty) {
+			    Workspace.common.tool.Pop.info(me, 'No&nbsp;need&nbsp;Save ' + panelId);
+				return;
+			}
 			if (Ext.isDefined(pnlEdit.syncValue)) {
 				pnlEdit.syncValue();
 			}
