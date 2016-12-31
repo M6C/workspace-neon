@@ -13,27 +13,27 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabSave',  {
             var tab = mainCenterPanel.getActiveTab();
             var panelId = tab.id;
             var panelEditorId = tab.panelEditorId;
-//		    var pnl = mainCenterPanel.getComponent(panelId);
+		    var pnl = mainCenterPanel.getComponent(panelId);
 //			var pnlEdit = pnl.getComponent(panelEditorId);
-			var pnlEdit = ace.edit(panelEditorId);
-			if (!pnlEdit.dirty) {
+			var editor = ace.edit(panelEditorId);
+			if (!editor.dirty) {
 			    Workspace.common.tool.Pop.info(me, 'No&nbsp;need&nbsp;Save ' + panelId);
 				return;
 			}
-			if (Ext.isDefined(pnlEdit.syncValue)) {
-				pnlEdit.syncValue();
+			if (Ext.isDefined(editor.syncValue)) {
+				editor.syncValue();
 			}
-			var value=pnlEdit.getValue();//pnlEdit.getRawValue();
+			var value=editor.getValue();//pnlEdit.getRawValue();
 			//value=value.replace(/&\w+;/g,"");
-			var application = pnlEdit.application;
-			var className=pnlEdit.className;
-			var autoDeploy = pnlEdit.autoDeploy;
+			var application = pnl.application;
+			var className = editor.className;
+			var autoDeploy = editor.autoDeploy;
 
 			Ext.create('Workspace.editorjava.request.JsonEditSaveAndBuild',
 			{
 				params:{filename:panelId,content:value},
 				application:application,
-				build:pnlEdit.build,
+				build:editor.build,
 				className:className,
 				autoDeploy:autoDeploy,
 				panelEditorId:panelEditorId

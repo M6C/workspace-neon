@@ -1,10 +1,6 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   UtilPath.java
-
 package workspace.util;
 
+import framework.beandata.BeanGenerique;
 import framework.ressource.util.*;
 import framework.trace.Trace;
 import java.io.File;
@@ -14,12 +10,8 @@ import javax.servlet.ServletContext;
 import org.w3c.dom.Document;
 import workspace.adaptateur.application.AdpXmlApplication;
 
-public class UtilPath
-{
-
-    public UtilPath()
-    {
-    }
+public class UtilPath {
+    private static UtilPath instance;
 
     public static UtilPath getInstance()
     {
@@ -28,99 +20,67 @@ public class UtilPath
         return instance;
     }
 
-    public static String formatPath(Document dom, String pathSrc)
-        throws IOException
-    {
+    public static String formatPath(Document dom, String pathSrc) throws IOException {
         return formatPath(dom, ((String) (null)), new Hashtable(), pathSrc, ';');
     }
 
-    public static String formatPath(Document dom, String pathSrc, char separator)
-        throws IOException
-    {
+    public static String formatPath(Document dom, String pathSrc, char separator) throws IOException {
         return formatPath(dom, ((String) (null)), new Hashtable(), pathSrc, separator);
     }
 
-    public static String formatPath(Document dom, Hashtable hash, String pathSrc)
-        throws IOException
-    {
+    public static String formatPath(Document dom, Hashtable hash, String pathSrc) throws IOException {
         return formatPath(dom, ((String) (null)), hash, pathSrc, ';');
     }
 
-    public static String formatPath(Document dom, Hashtable hash, String pathSrc, char separator)
-        throws IOException
-    {
+    public static String formatPath(Document dom, Hashtable hash, String pathSrc, char separator) throws IOException {
         return formatPath(dom, ((String) (null)), hash, pathSrc, separator);
     }
 
-    public static String formatPath(Document dom, String application, String pathSrc)
-        throws IOException
-    {
+    public static String formatPath(Document dom, String application, String pathSrc) throws IOException {
         return formatPath(dom, application, new Hashtable(), pathSrc, ';');
     }
 
-    public static String formatPath(Document dom, String application, String pathSrc, char separator)
-        throws IOException
-    {
+    public static String formatPath(Document dom, String application, String pathSrc, char separator) throws IOException {
         return formatPath(dom, application, new Hashtable(), pathSrc, separator);
     }
 
-    public static String formatPath(Document dom, String application, Hashtable hash, String pathSrc)
-        throws IOException
-    {
+    public static String formatPath(Document dom, String application, Hashtable hash, String pathSrc) throws IOException {
         return formatPath(dom, application, hash, pathSrc, ';');
     }
 
-    public static String formatPath(Document dom, String application, Hashtable hash, String pathSrc, char separator)
-        throws IOException
-    {
+    public static String formatPath(Document dom, String application, Hashtable hash, String pathSrc, char separator) throws IOException {
         return formatPath(null, dom, application, hash, pathSrc, separator);
     }
 
-    public static String formatPath(ServletContext context, Document dom, String pathSrc)
-        throws IOException
-    {
+    public static String formatPath(ServletContext context, Document dom, String pathSrc) throws IOException {
         return formatPath(context, dom, null, new Hashtable(), pathSrc, ';');
     }
 
-    public static String formatPath(ServletContext context, Document dom, String pathSrc, char separator)
-        throws IOException
-    {
+    public static String formatPath(ServletContext context, Document dom, String pathSrc, char separator) throws IOException {
         return formatPath(context, dom, null, new Hashtable(), pathSrc, separator);
     }
 
-    public static String formatPath(ServletContext context, Document dom, Hashtable hash, String pathSrc)
-        throws IOException
-    {
+    public static String formatPath(ServletContext context, Document dom, Hashtable hash, String pathSrc) throws IOException {
         return formatPath(context, dom, null, hash, pathSrc, ';');
     }
 
-    public static String formatPath(ServletContext context, Document dom, Hashtable hash, String pathSrc, char separator)
-        throws IOException
-    {
+    public static String formatPath(ServletContext context, Document dom, Hashtable hash, String pathSrc, char separator) throws IOException {
         return formatPath(context, dom, null, hash, pathSrc, separator);
     }
 
-    public static String formatPath(ServletContext context, Document dom, String application, String pathSrc)
-        throws IOException
-    {
+    public static String formatPath(ServletContext context, Document dom, String application, String pathSrc) throws IOException {
         return formatPath(context, dom, application, new Hashtable(), pathSrc, ';');
     }
 
-    public static String formatPath(ServletContext context, Document dom, String application, String pathSrc, char separator)
-        throws IOException
-    {
+    public static String formatPath(ServletContext context, Document dom, String application, String pathSrc, char separator) throws IOException {
         return formatPath(context, dom, application, new Hashtable(), pathSrc, separator);
     }
 
-    public static String formatPath(ServletContext context, Document dom, String application, Hashtable hash, String pathSrc)
-        throws IOException
-    {
+    public static String formatPath(ServletContext context, Document dom, String application, Hashtable hash, String pathSrc) throws IOException {
         return formatPath(context, dom, application, hash, pathSrc, ';');
     }
 
-    public static String formatPath(ServletContext context, Document dom, String application, Hashtable hash, String pathSrc, char separator)
-        throws IOException
-    {
+    public static String formatPath(ServletContext context, Document dom, String application, Hashtable hash, String pathSrc, char separator) throws IOException {
         Trace.DEBUG(getInstance(), (new StringBuilder("formatPath context:")).append(context).append(" dom:").append(dom).append(" application:").append(application).append(" hash:").append(hash).append(" pathSrc:").append(pathSrc).append(" separator:").append(separator).toString());
         String ret = null;
         try
@@ -207,5 +167,12 @@ public class UtilPath
 
     	return ret;
     }
-    private static UtilPath instance;
+
+    public static String getApplication(BeanGenerique bean, String path) {
+    	String ret = extractPathApplication(path);
+        if (ret == null) {
+        	ret = (String)bean.getParameterDataByName("application");
+        }
+    	return ret;
+    }
 }

@@ -62,7 +62,7 @@ public class SrvAutoDeployWebContent extends SrvGenerique {
 	    		return json;
 	    	}
 	
-	        String application = getApplication(bean, filename);
+	        String application = UtilPath.getApplication(bean, filename);
 	    	if (UtilString.isEmpty(application)) {
 	    		String msg = "No autoDeploy '" + filename + "' - application not found";
 	            Trace.DEBUG(this, msg);
@@ -127,17 +127,5 @@ public class SrvAutoDeployWebContent extends SrvGenerique {
 
     private String formatJsonMessage(String msg) {
     	return UtilString.replaceAll(msg, "\\", "\\\\").replaceAll("'", "\\\\'");
-    }
-
-    private String getApplication(BeanGenerique bean, String path) {
-    	String ret = null;
-        int iDeb = path.indexOf('[', 0);
-        int iFin = path.indexOf(']', iDeb);
-        if(iDeb >= 0 && iFin >= 0) {
-        	ret = path.substring(iDeb + 1, iFin);
-        } else {
-        	ret = (String)bean.getParameterDataByName("application");
-        }
-    	return ret;
     }
 }

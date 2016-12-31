@@ -99,10 +99,10 @@ public class SrvAutoDeployBuild extends SrvGenerique {
 		            	String msg = "Success autoDeploy '" + classname + "' copied to '"+classnameDst+"'";
 		            	Trace.DEBUG(this, msg);
 		            	json.add("{success:true, src:'" + src + "', dst:'" + dst + "', msg:'" + formatJsonMessage(msg) + "'}");
-	            	} else {
-	            		String msg = "No autoDeploy '" + classname + "' fileSrc.lastModified:"+fileSrc.lastModified()+" fileDst.lastModified:" + fileDst.lastModified();
-	            		Trace.DEBUG(this, msg);
-		            	json.add("{success:false, src:'" + src + "', dst:'" + dst + "', msg:'" + formatJsonMessage(msg) + "'}");
+	           // 	} else {
+	           // 		String msg = "No autoDeploy '" + classname + "' fileSrc.lastModified:"+fileSrc.lastModified()+" fileDst.lastModified:" + fileDst.lastModified();
+	           // 		Trace.DEBUG(this, msg);
+		          //  	json.add("{success:false, src:'" + src + "', dst:'" + dst + "', msg:'" + formatJsonMessage(msg) + "'}");
 	            	}
 	        	}
 	    	}
