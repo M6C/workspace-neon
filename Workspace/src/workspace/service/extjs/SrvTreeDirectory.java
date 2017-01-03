@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.Vector;
 
 import javax.activation.MimetypesFileTypeMap;
@@ -109,8 +110,11 @@ public class SrvTreeDirectory extends SrvGenerique {
 		                            	ret = string.indexOf(strName) >= 0;
 	                            	}
 	                            	if (isFile && ret && !UtilString.isEmpty(strContent)) {
+	                            	    ret = isTextFile(file);
 										try {
-											ret = (UtilFile.findText(file, strContent) >= 0);
+        	                            	if (ret) {
+    											ret = (UtilFile.findText(file, strContent) >= 0);
+        	                            	}
 										} catch (IOException ex) {
 								            Trace.ERROR(this, ex);
 										}
@@ -123,6 +127,23 @@ public class SrvTreeDirectory extends SrvGenerique {
 										}
 	                            	}
 	                                return ret;
+	                            }
+
+	                            private boolean isTextFile(File f) {
+	                                try {
+                                        String type = Files.probeContentType(f.toPath());
+                                        if (type == null) {
+                                            //type couldn't be determined, assume binary
+                                            return false;
+                                        } else if (type.startsWith("text")) {
+                                            return true;
+                                        } else {
+                                            //type isn't text
+                                            return false;
+                                        }
+	                                } catch(Exception ex) {
+	                                    return false;
+	                                }
 	                            }
 	                        };
                     	}
