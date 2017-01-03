@@ -210,7 +210,12 @@
             <PARAM Name="source" Type="STRING"/>
             <PARAM Name="caretPos" Type="STRING"/>
             <PARAM Name="deleteFile" Type="STRING"/>
-
+        </BEAN>
+    </SERVLET>
+    <SERVLET Name="JsonAutoDeploy" Target="" TargetError="">
+        <BEAN Name="BeanAutoDeploy" Scope="request" Service="workspace.service.extjs.SrvAutoDeploy">
+            <PARAM Name="application" Type="STRING"/>
+            <PARAM Name="filename" Type="STRING"/>
         </BEAN>
     </SERVLET>
     <SERVLET Name="JsonAutoDeployBuild" Target="" TargetError="">

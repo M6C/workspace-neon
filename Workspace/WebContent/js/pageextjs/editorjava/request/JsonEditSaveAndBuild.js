@@ -16,8 +16,14 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
         var me = this;
         var filename = config.params.filename;
 
-		Workspace.common.tool.Pop.info(me, "Saving complete '" + filename + "'.");
-        config.callback = function(options, success, response) { 
+        var msg = "Saving complete '" + filename + "'.";
+        if (config.build == 'true') {
+            msg += "<br>Waiting for building project complet."
+        } else if (config.autoDeploy == true) {
+            msg += "<br>Waiting for deploy complet."
+        }
+		Workspace.common.tool.Pop.info(me, msg);
+        config.callback = function(options, success, response) {
 
 			var editor = ace.edit(config.panelEditorId);
 			editor.dirty = !success;
@@ -27,12 +33,16 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
     				method:'POST',
     				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonEditCompileProject',
     				callback:function(options, success, responseCompile) {
-    					Workspace.common.tool.Pop.info(me, "Building complete.");
     					var jsonData = Ext.JSON.decode(responseCompile.responseText);
+                        var msg = "Building complete.";
+    					if (jsonData.success && config.autoDeploy == true) {
+                            msg += "<br>Waiting for deploy complet."
+    					}
+    					Workspace.common.tool.Pop.info(me, msg);
     					if (jsonData.success) {
     						if (config.autoDeploy == true) {
 	    		    			Ext.Ajax.request({
-	    		    				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonAutoDeployBuild',
+	    		    				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonAutoDeploy',
 	    		    				callback:me.callbackAutoDeploy,
 	    		    				params:{application:me.application}
 	    		    			});
@@ -46,7 +56,7 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
     		}
     		else if (config.autoDeploy == true) {
     			Ext.Ajax.request({
-    				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonAutoDeployWebContent',
+    				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonAutoDeploy',
     				callback:me.callbackAutoDeploy,
     				params:{filename:filename}
     			});

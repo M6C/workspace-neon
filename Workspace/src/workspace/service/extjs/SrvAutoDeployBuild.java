@@ -27,7 +27,7 @@ import workspace.util.UtilPath;
 public class SrvAutoDeployBuild extends SrvGenerique {
 
     public void execute(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean) throws Exception {
-		List<String> list = autoDeploy(request, bean);
+        List<String> list = doAutoDeploy(request, bean);
 
 		String json = "";
     	for(int i=0 ; i<list.size() ; json += (i>0 ? "," : "") + list.get(i++));
@@ -36,7 +36,25 @@ public class SrvAutoDeployBuild extends SrvGenerique {
         UtilExtjs.sendJson(jsonData, response);
     }
 
-    private List<String> autoDeploy(HttpServletRequest request, BeanGenerique bean) throws IOException {
+    protected List<String> doAutoDeploy(HttpServletRequest request, BeanGenerique bean) throws Exception {
+        String application = (String)bean.getParameterDataByName("application");
+
+    	return doAutoDeployBuild(request, application);
+    }
+
+    protected List<String> doAutoDeployBuild(HttpServletRequest request, String application) throws Exception {
+        HttpSession session = request.getSession();
+        ServletContext context = session.getServletContext();
+        Document dom = (Document)session.getAttribute("resultDom");
+
+        // if no Class path defined this call throw an IllegalArgumentException
+        String pathFrom = AdpXmlApplication.getPathByName(context, dom, application, "Class");
+        String pathTo = "WEB-INF" + File.separator + "classes";
+        
+        return autoDeployPath(request, application, pathFrom, pathTo);
+    }
+
+    protected List<String> autoDeployPath(HttpServletRequest request, String application, String pathFrom, String pathTo) throws IOException {
     	List<String> json = new ArrayList<>();
     	try
         {
@@ -44,10 +62,20 @@ public class SrvAutoDeployBuild extends SrvGenerique {
             ServletContext context = session.getServletContext();
             Document dom = (Document)session.getAttribute("resultDom");
 
-            String application = (String)bean.getParameterDataByName("application");
 	    	if (UtilString.isEmpty(application)) {
-	            Trace.DEBUG(this, "No autoDeploy - application not found");
+	    		String msg = "No autoDeploy - application not found";
+	            Trace.DEBUG(this, msg);
+	        	json.add("{success:false, src:'', dst:'', msg:'" + formatJsonMessage(msg) + "'}");
+	    		return json;
 	    	} else {
+
+		    	// if no Main path defined this call throw an IllegalArgumentException
+	            String szPathMain = AdpXmlApplication.getPathByName(context, dom, application, "Main");
+	            szPathMain = UtilPath.formatPath(dom, szPathMain);
+	
+	        	if (!UtilFile.isPathAbsolute(pathFrom)) {
+	                pathFrom = UtilFile.formatPath(szPathMain, pathFrom);
+	        	}
 
 		    	// if no AutoDeploy defined this call throw an IllegalArgumentException
 		        String autoDeploy = AdpXmlServer.getCommandByName(context, dom, application, "WebApplication", "AutoDeploy");
@@ -55,56 +83,19 @@ public class SrvAutoDeployBuild extends SrvGenerique {
 		    	// if no RootDeploy defined this call throw an IllegalArgumentException
 		        String serverDeploy = AdpXmlServer.getPathByName(context, dom, application, "WebApplication", "RootDeploy");
 	        	serverDeploy = UtilPath.formatPath(dom, serverDeploy);
-	        	int serverDeployLen = serverDeploy.length();
-	
-		    	// if no Main path defined this call throw an IllegalArgumentException
-	            String szPathMain = AdpXmlApplication.getPathByName(context, dom, application, "Main");
-	            szPathMain = UtilPath.formatPath(dom, szPathMain);
-	
-		    	// if no Class path defined this call throw an IllegalArgumentException
-	            String szPathClass = AdpXmlApplication.getPathByName(context, dom, application, "Class");
-	        	if (!UtilFile.isPathAbsolute(szPathClass)) {
-	                szPathClass = UtilFile.formatPath(szPathMain, szPathClass);
-	        	}
 
+	        	if (!UtilFile.isPathAbsolute(autoDeploy) && !UtilFile.isPathAbsolute(serverDeploy)) {
+	        		String msg = "No autoDeploy Relative path autoDeploy '" + autoDeploy + "' and Relative path serverDeploy '" + serverDeploy + "'";
+		            Trace.DEBUG(this, msg);
+		        	json.add("{success:false, src:'', dst:'', msg:'" + formatJsonMessage(msg) + "'}");
+		    		return json;
+	        	}
 	        	if (!UtilFile.isPathAbsolute(autoDeploy)) {
 	        		autoDeploy = UtilFile.formatPath(serverDeploy, autoDeploy);
 	        	}
 	
-            	String filenameDst = UtilFile.formatPath(autoDeploy, "WEB-INF" + File.separator + "classes");
-	        	int pathClassLen = szPathClass.length();
-	        	List<?> list = UtilFile.dir(szPathClass, true, (FilenameFilter)null, false, true);
-	        	for(int i=0 ; i<list.size() ; i++) {
-	        		String classname = (String) list.get(i);
-	            	String classnameDst = UtilFile.formatPath(filenameDst, classname.substring(pathClassLen));
-	            	
-	            	File fileDst = new File(classnameDst);
-	            	if (fileDst.isDirectory())
-	            		continue;
-
-	            	File fileSrc = new File(classname);
-
-	            	File dirDst = fileDst.getParentFile();//new File(filenameDst.substring(filenameDst.lastIndexOf(File.separator)));
-	            	if (!dirDst.exists()) {
-	            		dirDst.mkdirs();
-	            	}
-
-	            	String src = UtilEncoder.encodeHTMLEntities("[" + application + "]" + classname.substring(pathClassLen));
-	            	String dst = UtilEncoder.encodeHTMLEntities("[DEPLOYED_SERVER]" + classnameDst.substring(serverDeployLen));
-	            	src = UtilString.replaceAll(src, "\\", "\\\\");
-	            	dst = UtilString.replaceAll(dst, "\\", "\\\\");
-
-	            	if (!fileDst.exists() || fileSrc.lastModified() > fileDst.lastModified()) {
-		            	UtilFile.copyFile(fileSrc, fileDst);
-		            	String msg = "Success autoDeploy '" + classname + "' copied to '"+classnameDst+"'";
-		            	Trace.DEBUG(this, msg);
-		            	json.add("{success:true, src:'" + src + "', dst:'" + dst + "', msg:'" + formatJsonMessage(msg) + "'}");
-	           // 	} else {
-	           // 		String msg = "No autoDeploy '" + classname + "' fileSrc.lastModified:"+fileSrc.lastModified()+" fileDst.lastModified:" + fileDst.lastModified();
-	           // 		Trace.DEBUG(this, msg);
-		          //  	json.add("{success:false, src:'" + src + "', dst:'" + dst + "', msg:'" + formatJsonMessage(msg) + "'}");
-	            	}
-	        	}
+            	String filenameDst = UtilFile.formatPath(autoDeploy, pathTo);
+	        	deploy(json, application, serverDeploy, pathFrom, filenameDst);
 	    	}
         }
         catch (IllegalArgumentException ex) {
@@ -116,7 +107,44 @@ public class SrvAutoDeployBuild extends SrvGenerique {
 		return json;
     }
 
-    private String formatJsonMessage(String msg) {
+	private void deploy(List<String> json, String application, String serverDeploy, String pathFrom, String pathTo) throws IOException, Exception {
+    	int serverDeployLen = serverDeploy.length();
+		int pathClassLen = pathFrom.length();
+		List<?> list = UtilFile.dir(pathFrom, true, (FilenameFilter)null, false, true);
+		for(int i=0 ; i<list.size() ; i++) {
+			String classname = (String) list.get(i);
+			String classnameDst = UtilFile.formatPath(pathTo, classname.substring(pathClassLen));
+			
+			File fileDst = new File(classnameDst);
+			if (fileDst.isDirectory())
+				continue;
+
+			File fileSrc = new File(classname);
+
+			File dirDst = fileDst.getParentFile();//new File(filenameDst.substring(filenameDst.lastIndexOf(File.separator)));
+			if (!dirDst.exists()) {
+				dirDst.mkdirs();
+			}
+
+			String src = UtilEncoder.encodeHTMLEntities("[" + application + "]" + classname.substring(pathClassLen));
+			String dst = UtilEncoder.encodeHTMLEntities("[DEPLOYED_SERVER]" + classnameDst.substring(serverDeployLen));
+			src = UtilString.replaceAll(src, "\\", "\\\\");
+			dst = UtilString.replaceAll(dst, "\\", "\\\\");
+
+			if (!fileDst.exists() || fileSrc.lastModified() > fileDst.lastModified()) {
+		    	UtilFile.copyFile(fileSrc, fileDst);
+		    	String msg = "Success autoDeploy '" + classname + "' copied to '"+classnameDst+"'";
+		    	Trace.DEBUG(this, msg);
+		    	json.add("{success:true, src:'" + src + "', dst:'" + dst + "', msg:'" + formatJsonMessage(msg) + "'}");
+         // 	} else {
+         // 		String msg = "No autoDeploy '" + classname + "' fileSrc.lastModified:"+fileSrc.lastModified()+" fileDst.lastModified:" + fileDst.lastModified();
+         // 		Trace.DEBUG(this, msg);
+		  //  	json.add("{success:false, src:'" + src + "', dst:'" + dst + "', msg:'" + formatJsonMessage(msg) + "'}");
+			}
+		}
+	}
+
+    protected String formatJsonMessage(String msg) {
     	return UtilString.replaceAll(msg, "\\", "\\\\").replaceAll("'", "\\\\'");
     }
 }
