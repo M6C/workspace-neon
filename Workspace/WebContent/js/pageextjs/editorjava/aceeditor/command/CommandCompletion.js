@@ -10,7 +10,13 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandCompletion',  {
 		        bindKey: {win: 'Ctrl-Shift-.',  mac: 'Command-Option-.'},
 		        exec: function(container) {
 					console.info('Workspace.editorjava.aceeditor.command.CommandCompletion exec');
-	
+
+    				var filename = editor.panelId.toLowerCase();
+	                if (!filename.endsWith('.java')) {
+					    console.info('Workspace.editorjava.aceeditor.command.CommandCompletion no java file');
+	                    return;
+	                }
+
 					var selection = editor.selection;
 					var col = selection.getCursor().column;
 					var row = selection.getCursor().row;
