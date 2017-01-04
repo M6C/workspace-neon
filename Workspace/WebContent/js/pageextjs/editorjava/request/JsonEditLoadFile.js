@@ -35,6 +35,8 @@ Ext.define('Workspace.editorjava.request.JsonEditLoadFile',  {
 					mode = 'javascript';
 				} else if (filename.endsWith('.htm') || filename.endsWith('.xhtml')) {
 					mode = 'html';
+				} else if (filename.endsWith('.pxhtml')) {
+					mode = 'php';
 				} else if (filename.endsWith('.dtd') || filename.endsWith('.xsd') || filename.endsWith('.xsl')) {
 					mode = 'xml';
 				} else {
