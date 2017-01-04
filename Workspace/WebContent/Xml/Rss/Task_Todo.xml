@@ -3,18 +3,42 @@
 <channel>
 <title>To Do</title>
 <description>RSS stream to do</description>
-<pubDate>30/12/2016</pubDate>
+<pubDate>03/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+<item>
+<title>Editeur Java : Colonne date-heure du log</title>
+<description>Panel South ajout d'une colonne date-heure du log.</description>
+<pubDate>04/01/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
+<item>
+<title>Explorateur de Fichier : Bug Modification fichier</title>
+<description>Corriger le bug de d'edition d'un fichier.</description>
+<pubDate>03/01/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
+<item>
+<title>Editeur Java : Bug Scroll Tree Explorer File</title>
+<description>Corriger le bug de scrolling Tree Explorer File.</description>
+<pubDate>03/01/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
+<item>
+<title>Editeur Java : Bug View Port South</title>
+<description>Corriger le bug de redimentionnement du View Port quand on ajoute les infos dans la partie South qui bouffe la partie Center.</description>
+<pubDate>03/01/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
+<item>
+<title>Editeur Java : Debug</title>
+<description>Prendre en charge le debug.</description>
+<pubDate>03/01/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
 <item>
 <title>Editeur Java : Git</title>
 <description>Prendre en charge Git.</description>
 <pubDate>30/12/2016</pubDate>
-<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
-</item>
-<item>
-<title>Editeur Java : SrvAutoDeployWebContent et SrvAutoDeployBuild</title>
-<description>Fusionner les classes SrvAutoDeployWebContent et SrvAutoDeployBuild pour deployer toujours toutes les nouvelles class et les nouveaux fichier de WebContent.</description>
-<pubDate>28/12/2016</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 </item>
 <item>
