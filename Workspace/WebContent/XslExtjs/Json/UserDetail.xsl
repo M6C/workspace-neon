@@ -2,7 +2,10 @@
 <xsl:stylesheet version="1.0" 
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xalan="http://xml.apache.org/xalan"
+                xmlns:regexp="http://exslt.org/regular-expressions"
                 exclude-result-prefixes="xalan">
+
+<xsl:import href="/Xsl/Tool/UtilString.xsl"/>
 
 <xsl:output method="text" encoding="ISO-8859-1" indent="no"/>
 
@@ -19,7 +22,12 @@
           <xsl:apply-templates select="*"/>
 	   </xsl:if>
 	   <xsl:if test="count(child::*) = 0">
-	   {'id':'<xsl:value-of select="concat(name(), 'VALUE', generate-id())"/>', 'text':'<xsl:value-of select="normalize-space(.)"/>', 'leaf':'true'}
+        <xsl:variable name="lText">
+            <xsl:call-template name="escape-path-caractere">
+              <xsl:with-param name="text" select="normalize-space(.)"/>
+            </xsl:call-template>
+        </xsl:variable>
+	   {'id':'<xsl:value-of select="concat(name(), 'VALUE', generate-id())"/>', 'text':'<xsl:value-of select="$lText"/>', 'leaf':'true'}
 	   </xsl:if>
     ]
     }

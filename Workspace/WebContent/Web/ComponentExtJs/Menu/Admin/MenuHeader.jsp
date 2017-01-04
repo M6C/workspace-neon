@@ -1,3 +1,4 @@
+<%String DOMAIN_NAME_ROOT = "/Workspace";%>
 <%@ taglib uri="Framework_Taglib_Html.tld" prefix="html" %>
 <%@ taglib uri="Workspace_Taglib_Versionning.tld" prefix="versionning" %>
 
