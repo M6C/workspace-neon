@@ -3,8 +3,20 @@
 <channel>
 <title>Resolved</title>
 <description>RSS stream resolved</description>
-<pubDate>03/01/2017</pubDate>
+<pubDate>04/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+<item>
+<title>Editeur Java : Conditionner la Completion Java</title>
+<description>Conditionner la Completion sur sur les fichiers d'extention java.</description>
+<pubDate>04/01/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
+<item>
+<title>Editeur Java : Colonne date-heure du log</title>
+<description>Panel South ajout d'une colonne date-heure du log.</description>
+<pubDate>04/01/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
 <item>
 <title>Administration : User Detail</title>
 <description>Correction du probleme d'affichage des chemins dans la popup detail de l'utilisateur.</description>
