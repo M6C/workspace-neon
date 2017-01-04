@@ -25,11 +25,15 @@ Ext.define('Workspace.editorjava.grid.GridTrace', {
 				  ,
 				  renderer:Workspace.editorjava.grid.trace.OnRendererColumnImage.call
 			  }),
+	          Ext.create('Ext.grid.column.Column', {dataIndex: 'date',
+	            width: 115,
+	            renderer: Ext.util.Format.dateRenderer('Y-m-d G:i:s')
+	          }),
 	          Ext.create('Ext.grid.column.Column', {dataIndex: 'text', flex: 1})
 		  	]
 			,
 			store: Ext.create('Ext.data.ArrayStore', {
-				fields: ['image', 'text']
+				fields: ['image', 'date', 'text']
 				,
 			    proxy: {
 			        type: 'memory',
