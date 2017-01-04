@@ -6,7 +6,6 @@
  */
 package workspace.service;
 
-import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
 
@@ -17,18 +16,11 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.xpath.XPathEvaluator;
-import org.w3c.dom.xpath.XPathNSResolver;
-import org.w3c.dom.xpath.XPathResult;
 import org.xml.sax.InputSource;
-
-import com.sun.org.apache.xpath.internal.domapi.XPathEvaluatorImpl;
 
 import framework.action.ActionServlet;
 import framework.beandata.BeanGenerique;
