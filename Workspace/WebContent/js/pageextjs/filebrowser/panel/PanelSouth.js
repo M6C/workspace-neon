@@ -52,8 +52,9 @@ Ext.define('Workspace.filebrowser.panel.PanelSouth', {
 		if (this.collapsed)
 			this.expand(true);
 
+    	var date = new Date();
     	var gridTrace = this.getChildByElement('filebrowserGridTrace');
-    	gridTrace.store.insert(0, {'image':type, 'text':message});
+    	gridTrace.store.insert(0, {'image':type, 'date':date, 'text':message});
     	gridTrace.getSelectionModel().select(0);
     	gridTrace.doLayout();
     	this.doLayout();
