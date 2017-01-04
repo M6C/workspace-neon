@@ -6,6 +6,18 @@
 <pubDate>04/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 <item>
+<title>Editeur Java : Afficher chemin des fichiers dans les Onglets</title>
+<description>Afficher chemin des fichiers dans les Onglets ouvert.</description>
+<pubDate>04/01/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
+<item>
+<title>File Explorer : Afficher chemin des Onglets ouvert</title>
+<description>Afficher chemin des fichiers dans les Onglets ouvert. Avec pour chaque repertoire du chemin la possiblités de cliquer dessus pour y naviger.</description>
+<pubDate>04/01/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
+<item>
 <title>Editeur Java : Ctrl+Shift+S</title>
 <description>Ajouter un raccourci Ctrl+Shift+S pour savegarder tous les fichiers modifies. Lancer le build si necessaire. Et redeployer les fichiers modifie qu'une seule fois.</description>
 <pubDate>04/01/2017</pubDate>
