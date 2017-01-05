@@ -75,6 +75,8 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 	
 						editor.getSession().setScrollTop(scrollTop);
 						editor.getSession().setScrollLeft(scrollLeft);
+
+				        me.tab.setTooltip('encoding:' + editor.raw.encoding);
 					}
 
 					if (!editor.dirty) {

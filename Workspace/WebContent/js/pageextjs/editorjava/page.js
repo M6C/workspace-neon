@@ -17,4 +17,6 @@ function init_page() {
     	renderTo: Ext.getBody(),
     	id: 'mainView'
     });
+
+    Ext.QuickTips.init();
 }

@@ -3,7 +3,7 @@
 <channel>
 <title>To Do</title>
 <description>RSS stream to do</description>
-<pubDate>04/01/2017</pubDate>
+<pubDate>05/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 <item>
 <title>Editeur Java : Afficher chemin des fichiers dans les Onglets</title>
@@ -32,12 +32,6 @@
 <item>
 <title>Editeur Java : Optimisation des imports pour les fichiers java</title>
 <description>Faire l'optimisation des imports Ctrl+Shift+O comme sur Eclipse.</description>
-<pubDate>04/01/2017</pubDate>
-<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
-</item>
-<item>
-<title>Editeur Java : Bug Sauvegarde de fichier</title>
-<description>Corriger la sauvegarde de fichier avec des caracteres accentues qui ne se passe pas bien.</description>
 <pubDate>04/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 </item>

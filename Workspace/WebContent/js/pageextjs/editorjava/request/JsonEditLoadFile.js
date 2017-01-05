@@ -17,6 +17,7 @@ Ext.define('Workspace.editorjava.request.JsonEditLoadFile',  {
         var me = this;
 		Ext.Ajax.request({
 			url : DOMAIN_NAME_ROOT + '/action.servlet?event=JsonEditLoadFile',
+			headers: {'Content-Type': 'application/json; charset=UTF-8'},
 			method: 'GET',
 			params :{filename:me.panelId},
 			success: function (result, request) {
@@ -24,7 +25,7 @@ Ext.define('Workspace.editorjava.request.JsonEditLoadFile',  {
 				var results = jsonData.results;
 				var resultMessage = '';
 				for(i=0 ; i<results ; i++) {
-					resultMessage += jsonData.data[i].text + '\r\n';
+					resultMessage += me.decodeUtf8(jsonData.data[i].text) + '\r\n';
 				}
 
 				var filename = me.panelId.toLowerCase();
@@ -54,6 +55,9 @@ Ext.define('Workspace.editorjava.request.JsonEditLoadFile',  {
 
 		        editor.doListenerChange = false;
 				editor.setValue(resultMessage);
+				editor.raw = {
+				    encoding: jsonData.encoding
+				};
 
 		    	editor.dirty = false;
 		    	editor.getSession().on('change', function(){editor.dirty = true});
@@ -80,5 +84,33 @@ Ext.define('Workspace.editorjava.request.JsonEditLoadFile',  {
 				alert('failure');
 			}
 		});
+    }
+    ,
+    decodeUtf8: function(str) {
+        var ret = '';
+        var cTmp = 0;
+        for (var i = 0; i < str.length; i++) {
+        	var char = str.charCodeAt(i);
+        	if (char == 0x25) { //'%'
+            	var c = str.substr(++i, 2);
+                if (c == "C3") { // For UTF-8
+	            	cTmp = 64;
+                } else {
+                	ret += String.fromCharCode(parseInt(c, 16) + cTmp);
+                }
+                i++;
+            }
+            else {
+            	cTmp = 0;
+            	if (char == 43) { //'+' => ' '
+	            	ret += ' ';
+	            }
+	            else {
+//	            	ret += decodeURIComponent(String.fromCharCode(char));
+	            	ret += String.fromCharCode(char);
+	            }
+            }
+    	}
+        return ret;
     }
 }, function() {Workspace.tool.Log.defined('Workspace.editorjava.request.JsonEditLoadFile');});

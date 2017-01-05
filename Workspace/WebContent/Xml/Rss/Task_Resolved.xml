@@ -3,8 +3,14 @@
 <channel>
 <title>Resolved</title>
 <description>RSS stream resolved</description>
-<pubDate>04/01/2017</pubDate>
+<pubDate>05/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+<item>
+<title>Editeur Java : Bug Sauvegarde de fichier</title>
+<description>Corriger la sauvegarde de fichier avec des caracteres accentues qui ne se passe pas bien.</description>
+<pubDate>05/01/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
 <item>
 <title>Editeur Java : Conditionner la Completion Java</title>
 <description>Conditionner la Completion sur sur les fichiers d'extention java.</description>
