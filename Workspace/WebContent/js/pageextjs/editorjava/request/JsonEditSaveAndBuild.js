@@ -14,59 +14,56 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
     constructor: function(config) {
 		console.info('Workspace.editorjava.request.JsonEditSaveAndBuild constructor');
         var me = this;
-        var filename = config.params.filename;
 
-        var msg = "Saving complete '" + filename + "'.";
-        if (config.build == 'true') {
-            msg += "<br>Waiting for building project complet."
-        } else if (config.autoDeploy == true) {
-            msg += "<br>Waiting for deploy complet."
-        }
-		Workspace.common.tool.Pop.info(me, msg);
-        config.callback = function(options, success, response) {
-
-			var editor = ace.edit(config.panelEditorId);
-			editor.dirty = !success;
-
-    		if (config.build == 'true') {
-    			Ext.Ajax.request({
-    				method:'POST',
-    				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonEditCompileProject',
-    				callback:function(options, success, responseCompile) {
-    					var jsonData = Ext.JSON.decode(responseCompile.responseText);
-                        var msg = "Building complete.";
-    					if (jsonData.success && config.autoDeploy == true) {
-                            msg += "<br>Waiting for deploy complet."
-    					}
-    					Workspace.common.tool.Pop.info(me, msg);
-    					if (jsonData.success) {
-    						if (config.autoDeploy == true) {
-	    		    			Ext.Ajax.request({
-	    		    				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonAutoDeploy',
-	    		    				callback:me.callbackAutoDeploy,
-	    		    				params:{application:me.application}
-	    		    			});
-    						}
-    					} else {
-	    					Ext.create('Workspace.common.window.WindowTextCompile', jsonData).show();
-    					}
-    				},
-    				params:{application:me.application,target:'compile',className:me.className}
-    			});
-    		}
-    		else if (config.autoDeploy == true) {
-    			Ext.Ajax.request({
-    				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonAutoDeploy',
-    				callback:me.callbackAutoDeploy,
-    				params:{filename:filename}
-    			});
-			}
-    	};
+        config.callback = Ext.Function.createSequence (me.callback, me.callbackBuild);
 
         Ext.apply(me, config);
 
         me.callParent();
     },
+    callbackBuild: function(options, success, response) {
+    	var me = this;
+
+        if (Ext.isDefined(me.panelEditorId)) {
+    		var editor = ace.edit(me.panelEditorId);
+    		editor.dirty = !success;
+        }
+
+		if (me.build == 'true') {
+			Ext.Ajax.request({
+				method:'POST',
+				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonEditCompileProject',
+				callback:function(options, success, responseCompile) {
+					var jsonData = Ext.JSON.decode(responseCompile.responseText);
+                    var msg = "Building complete.";
+					if (jsonData.success && me.autoDeploy == true) {
+                        msg += "<br>Waiting for deploy complet."
+					}
+					Workspace.common.tool.Pop.info(me, msg);
+					if (jsonData.success) {
+						if (me.autoDeploy == true) {
+    		    			Ext.Ajax.request({
+    		    				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonAutoDeploy',
+    		    				callback:me.callbackAutoDeploy,
+    		    				params:{application:me.application}
+    		    			});
+						}
+					} else {
+    					Ext.create('Workspace.common.window.WindowTextCompile', jsonData).show();
+					}
+				},
+				params:{application:me.application,target:'compile',className:me.className}
+			});
+		}
+		else if (me.autoDeploy == true) {
+			var filename = options.params.filename;
+			Ext.Ajax.request({
+				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonAutoDeploy',
+				callback:me.callbackAutoDeploy,
+				params:{filename:filename}
+			});
+		}
+	},
     callbackAutoDeploy: function(opts, success, response) {
         var me = Workspace.editorjava.request.JsonEditSaveAndBuild;
 		var jsonData = Ext.JSON.decode(response.responseText);

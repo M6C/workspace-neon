@@ -184,6 +184,22 @@ function showToolXmlXsl() {
 	wndToolXmlXsl.show();
 }
 
+function autoDeploy() {
+	Ext.Msg.confirm('Confirm', 'Auto Deploy ?', function(btn, text) {
+      if (btn == 'yes'){
+    	var application = Ext.getCmp('project').value;
+
+		Ext.create('Workspace.editorjava.request.JsonEditSaveAndBuild',
+		{
+			application:application,
+			build:true,
+			autoDeploy:true,
+			panelEditorId:panelEditorId,
+		}).callbackBuild(undefined, true, undefined);
+      }
+    });
+}
+
 //function formatFont(str) {
 //   var fontStart = "";
 //   var fontEnd = "";
