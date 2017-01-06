@@ -1,5 +1,6 @@
 Ext.require([
-	'Workspace.common.window.WindowText'
+	'Workspace.common.window.WindowText',
+	'Workspace.common.tool.Pop'
 ]);
 
 var pleaseWaitMessage = 'Please Wait ...';
@@ -185,16 +186,17 @@ function showToolXmlXsl() {
 }
 
 function autoDeploy() {
+	var me = this;
 	Ext.Msg.confirm('Confirm', 'Auto Deploy ?', function(btn, text) {
       if (btn == 'yes'){
     	var application = Ext.getCmp('project').value;
 
+		Workspace.common.tool.Pop.info(me, 'AutoDeploy in progress.<br>Waiting to building complet.');
 		Ext.create('Workspace.editorjava.request.JsonEditSaveAndBuild',
 		{
 			application:application,
-			build:true,
-			autoDeploy:true,
-			panelEditorId:panelEditorId,
+			build:'true',
+			autoDeploy:true
 		}).callbackBuild(undefined, true, undefined);
       }
     });
