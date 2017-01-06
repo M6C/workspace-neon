@@ -60,6 +60,9 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 
 					Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandFindResource');
 				    Workspace.editorjava.aceeditor.command.CommandFindResource.addCommand(editor, mainCenterPanel);
+
+					Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandOptimizeImport');
+				    Workspace.editorjava.aceeditor.command.CommandOptimizeImport.addCommand(editor);
 				}
 
 				editor.build = raw.build;

@@ -39,20 +39,28 @@ public class SrvOptimizeImport extends SrvGenerique {
 
         String pathClass = BusinessClasspath.getClassPath(context, application, domXml);
 
+        String ext = ".class";
+        int extLen = ext.length();
         List<String> classList = new ArrayList<String>();
         String[] listPath = pathClass.split(";");
         int size = listPath.length;
         for(int i=0 ; i<size ; i++) {
             String path = listPath[i];
             File file = new File(path);
+            Trace.DEBUG("SrvOptimizeImport file[" + i + "/" + size + "]:" + file.getAbsolutePath());
             if (file.isFile()) {
                 ZipEntry[] entries = UtilPackageResource.getZipEntries(file);
-                for(int j=0;j<entries.length;j++) {
+                int entriesLen = entries.length;
+                for(int j=0;j<entriesLen;j++) {
                     ZipEntry entry = entries[j];
                     if (!entry.isDirectory()) {
                         String entryName=entry.getName();
-                        if (entryName.lastIndexOf('/')<0) //no separator
-                            classList.add(entryName.substring(0,entryName.lastIndexOf('.')));
+                        String entryNameLow = entryName.toLowerCase();
+                        if (entryNameLow.endsWith(ext) && entryNameLow.indexOf('$') < 0) {
+                        	String className = entryName.replaceAll("/", ".").substring(0, entryName.length()-extLen);
+                        	Trace.DEBUG("SrvOptimizeImport file[" + j + "/" + entriesLen + "] className:" + className);
+                            classList.add(className);
+                        }
                     }
                 }
             }
