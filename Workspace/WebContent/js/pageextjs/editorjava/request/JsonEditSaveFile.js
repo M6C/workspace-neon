@@ -34,8 +34,7 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveFile',  {
 
     request: function() {
         var me = this;
-//        me.wnd = Workspace.common.window.WindowWaiting.showWindowWaiting();
-//		Workspace.common.window.WindowWaiting.updateWindowWaiting(me.wnd, 'Saving...');
+		Workspace.common.tool.Pop.info(me, 'Saving in progress \'' + me.params.filename + '\'.');
         Ext.Ajax.request({
             success: me.success,
             failure: me.failure,
@@ -45,6 +44,5 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveFile',  {
             callback: me.callback,
             scope: me
         });
-//        me.callback(null, true, null);
     }
 }, function() {Workspace.tool.Log.defined('Workspace.editorjava.request.JsonEditSaveFile');});
