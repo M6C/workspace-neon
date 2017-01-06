@@ -1,5 +1,7 @@
 Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
-
+	requires: [
+	    'Workspace.common.constant.ConstantJava'
+	],
 	statics: {
 	    addCommand: function(editor) {
 			var me = this;
@@ -20,47 +22,6 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
                 return;
             }
 
-            //https://ace.c9.io/tool/mode_creator.html
-            //http://docs.oracle.com/javase/tutorial/java/nutsandbolts/_keywords.html
-            var keywords = (
-                "abstract|continue|for|new|switch|" +
-                "assert|default|goto|package|synchronized|" +
-                "boolean|do|if|private|this|" +
-                "break|double|implements|protected|throw|" +
-                "byte|else|import|public|throws|" +
-                "case|enum|instanceof|return|transient|" +
-                "catch|extends|int|short|try|" +
-                "char|final|interface|static|void|" +
-                "class|finally|long|strictfp|volatile|" +
-                "const|float|native|super|while"
-            );
-            var langClasses = (
-                "AbstractMethodError|AssertionError|ClassCircularityError|"+
-                "ClassFormatError|Deprecated|EnumConstantNotPresentException|"+
-                "ExceptionInInitializerError|IllegalAccessError|"+
-                "IllegalThreadStateException|InstantiationError|InternalError|"+
-                "NegativeArraySizeException|NoSuchFieldError|Override|Process|"+
-                "ProcessBuilder|SecurityManager|StringIndexOutOfBoundsException|"+
-                "SuppressWarnings|TypeNotPresentException|UnknownError|"+
-                "UnsatisfiedLinkError|UnsupportedClassVersionError|VerifyError|"+
-                "InstantiationException|IndexOutOfBoundsException|"+
-                "ArrayIndexOutOfBoundsException|CloneNotSupportedException|"+
-                "NoSuchFieldException|IllegalArgumentException|NumberFormatException|"+
-                "SecurityException|Void|InheritableThreadLocal|IllegalStateException|"+
-                "InterruptedException|NoSuchMethodException|IllegalAccessException|"+
-                "UnsupportedOperationException|Enum|StrictMath|Package|Compiler|"+
-                "Readable|Runtime|StringBuilder|Math|IncompatibleClassChangeError|"+
-                "NoSuchMethodError|ThreadLocal|RuntimePermission|ArithmeticException|"+
-                "NullPointerException|Long|Integer|Short|Byte|Double|Number|Float|"+
-                "Character|Boolean|StackTraceElement|Appendable|StringBuffer|"+
-                "Iterable|ThreadGroup|Runnable|Thread|IllegalMonitorStateException|"+
-                "StackOverflowError|OutOfMemoryError|VirtualMachineError|"+
-                "ArrayStoreException|ClassCastException|LinkageError|"+
-                "NoClassDefFoundError|ClassNotFoundException|RuntimeException|"+
-                "Exception|ThreadDeath|Error|Throwable|System|ClassLoader|"+
-                "Cloneable|Class|CharSequence|Comparable|String|Object"
-            );
-
             //https://regex101.com/r/gN4sS0/2
             // var regex ="/([;{}]+)(\s+)(\w+)([\s|\W])/ig";
 
@@ -70,13 +31,22 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
 
 			//http://docs.sencha.com/extjs/4.0.7/#!/api/RegExp
 			var value=editor.getValue();
-            var reg = /([;{}]+)(\s+)(\w+)([\s|\W])/ig;
+
+            // RegEx Import
+            var regImport = /(\bimport\b)(\s*)([\w|.]+)(\s*)(;)/g
+
+			// RegEx Classname
+            // var reg = /([;{}]+)(\s+)(\w+)([\s|\W])/ig;
+            var reg = /(([\,(;{}]+)|(\bnew\b|\bthrows\b))(\s*)([A-Z]{1}[A-Za-z0-9]+)/g;
+
             var result;
             var cnt = 0;
             var find = "";
+            var keywords = Workspace.common.constant.ConstantJava.KEYWORDS;
+            var langClasses = Workspace.common.constant.ConstantJava.LANG_CLASSES;
             while ((result = reg.exec(value)) != null) {
-                var str = result[3];
-                if ((find.indexOf(str + "|") <0) && (keywords.indexOf(str.toLowerCase() + "|") <0) && (langClasses.indexOf(str + "|") <0)) {
+                var str = result[5];
+                if ((find.indexOf(str + "|") <0) && (keywords.indexOf(str.toLowerCase()) <0) && (langClasses.indexOf(str) <0)) {
                     find += str + "|";
                     cnt++;
                 }
