@@ -3,8 +3,20 @@
 <channel>
 <title>To Do</title>
 <description>RSS stream to do</description>
-<pubDate>05/01/2017</pubDate>
+<pubDate>06/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+<item>
+<title>Editeur Java : Auto deploy que sur 'Ctrl+Shift+S' et non plus sur 'Ctrl+S'</title>
+<description>Auto deploy que sur 'Ctrl+Shift+S' et non plus sur 'Ctrl+S'. A essayer, pour voir si c'est bien à l'utilisation. [!] Attention que l'on risque de sauvegarder et et deployer des modifications que l'on ne voudrait pas forcement sauvegarder.</description>
+<pubDate>06/01/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
+<item>
+<title>Editeur Java : Optimisation Completion via RegEx</title>
+<description>Rechercher directement dans Ace.Editor en montant à partir du curseur la déclaration. Via une regex (Mot après les caractères ';', '{', '}' et suivi d'espaces puis le nom de la variable que l'on cherche). Rechercher l'import correspondant dans Ace.Editor via une regex (Ligne commencant par 'import' puis des espaces et terminant par le nom de la class que l'on cherche puis ';') Faire attention au espace ou non en début ou fin de ligne.</description>
+<pubDate>06/01/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
 <item>
 <title>Editeur Java : Afficher chemin des fichiers dans les Onglets</title>
 <description>Afficher chemin des fichiers dans les Onglets ouvert.</description>
