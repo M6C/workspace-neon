@@ -5,6 +5,8 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 import java.util.zip.ZipEntry;
 
@@ -36,9 +38,38 @@ public class SrvOptimizeImport extends SrvGenerique {
 
         Document domXml = (Document)session.getAttribute("resultDom");
         String application = (String)bean.getParameterDataByName("application");
+        String classname = (String)bean.getParameterDataByName("classname");
 
-        String pathClass = BusinessClasspath.getClassPath(context, application, domXml);
+        String classpath = BusinessClasspath.getClassPath(context, application, domXml);
 
+        Map<String, List<String>> mapListClass = new HashMap<String, List<String>>();
+        String[] classnameList = classname.split(";");
+        List<String> classpathList = getClassList(classpath);
+        for(String classnameItem : classnameList) {
+            for(String classpathItem : classpathList) {
+                if (classpathItem.endsWith("." + classnameItem)) {
+                    List list = mapListClass.get(classnameItem);
+                    if (list == null) {
+                        list = new ArrayList<String>();
+                        mapListClass.put(classnameItem, list);
+                    }
+                    list.add(classpathItem);
+                }
+            }
+        }
+
+        List<String> classpathJson = new ArrayList<String>();
+        for(String classnameItem : mapListClass.keySet()) {
+            List<String> list = mapListClass.get(classnameItem);
+            classpathJson.add("{classname: '" + classnameItem + "', ['" + String.join("','", list) + "']}");
+        }
+        String json = "[" + String.join(",", classpathJson) + "]";
+
+    	String jsonData = "{results:"+classpathJson.size()+",import:["+json+"]}";
+        UtilExtjs.sendJson(jsonData, response);
+    }
+
+    private List<String> getClassList(String pathClass) {
         String ext = ".class";
         int extLen = ext.length();
         List<String> classList = new ArrayList<String>();
@@ -65,5 +96,6 @@ public class SrvOptimizeImport extends SrvGenerique {
                 }
             }
         }
+        return classList;
     }
 }

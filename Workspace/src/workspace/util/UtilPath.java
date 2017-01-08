@@ -3,6 +3,7 @@ package workspace.util;
 import framework.beandata.BeanGenerique;
 import framework.ressource.util.*;
 import framework.trace.Trace;
+import framework.ressource.util.UtilFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;

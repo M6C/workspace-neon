@@ -215,6 +215,7 @@
     <SERVLET Name="JsonOptimizeImport">
         <BEAN Name="BeanOptimizeImport" Scope="request" Service="workspace.service.extjs.SrvOptimizeImport">
             <PARAM Name="application" Type="STRING"/>
+            <PARAM Name="classname" Type="STRING"/>
         </BEAN>
     </SERVLET>
     <SERVLET Name="JsonAutoDeploy" Target="" TargetError="">
