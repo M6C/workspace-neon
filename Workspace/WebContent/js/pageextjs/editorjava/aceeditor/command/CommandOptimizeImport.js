@@ -3,6 +3,19 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
 	    'Workspace.common.constant.ConstantJava'
 	],
 	statics: {
+        regExtractImport: /(\bimport\b)(\s*)([\w|.]+)(\s*)(;)/g
+        ,
+        regExtractClass: /(([\,(;{}]+)|(\bnew\b|\bthrows\b|\bextends\b|\bimplements\b))(\s*)([A-Z]{1}[A-Za-z0-9]+)/g
+        ,
+        regDeleteImport: function(strImport) {
+            var strReg = "(\\bimport\\b)(\\s*)(\\b"+strImport+"\\b)(\\s*)(;)";
+    		return new RegExp(strReg);
+        }
+        ,
+        regFindClass: function(strClass) {
+            return new RegExp("\\b."+strClass+"\\b$");
+        }
+        ,
 	    addCommand: function(editor) {
 			var me = this;
 		    editor.commands.addCommand({
@@ -14,7 +27,6 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
 	    ,
 	    optimizeImport: function(editor) {
 			var me = Workspace.editorjava.aceeditor.command.CommandOptimizeImport;
-			var application = Ext.getCmp('project').value;
 
 			var filename = editor.panelId.toLowerCase();
             if (!filename.endsWith('.java')) {
@@ -25,6 +37,7 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
     		var selection = editor.selection;
     		var col = selection.getCursor().column;
     		var row = selection.getCursor().row;
+    		var position = {column:col,row:row};
 
             //https://regex101.com/r/gN4sS0/2
             // var regex ="/([;{}]+)(\s+)(\w+)([\s|\W])/ig";
@@ -37,46 +50,30 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
 			var value=editor.getValue();
 
             var listClass = me.extractClass(value);
+ 			// Workspace.common.tool.Pop.info(me, "Workspace.editorjava.aceeditor.command.CommandOptimizeImport exractClass cnt:" + listClass.length + "<br>ret:" + listClass.join(","), false);
             var listImport = me.extractImport(value);
+ 			// Workspace.common.tool.Pop.info(me, "Workspace.editorjava.aceeditor.command.CommandOptimizeImport exractImport cnt:" + listImport.length + "<br>ret:" + listImport.join(","), false);
 
             var listClassWithOutImport = me.getClassWithOutImport(listImport, listClass);
-
-            if (listClassWithOutImport.length > 0) {
-                var classname = listClassWithOutImport.join("");
-
-    			Ext.Ajax.request({
-    				method:'GET',
-    				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonOptimizeImport',
-    				callback:function(options, success, responseCompile) {
-    				    // var jsonData = Ext.JSON.decode(responseCompile.responseText);
-    					Workspace.common.tool.Pop.info(me, "Optimize Import complete.");
-    				},
-    				params:{application:application, classname: classname}
-    			});
-            }
+			Workspace.common.tool.Pop.info(me, "Workspace.editorjava.aceeditor.command.CommandOptimizeImport getClassWithOutImport cnt:" + listClassWithOutImport.length + "<br>ret:" + listClassWithOutImport.join(","), false);
 
             var listImportUnused = me.getImportUnused(listImport, listClass);
+// 			Workspace.common.tool.Pop.info(me, "Workspace.editorjava.aceeditor.command.CommandOptimizeImport getImportUnused cnt:" + listImportUnused.length + "<br>ret:" + listImportUnused.join(","), false);
             var listImportUsed = me.removeImportUnused(listImport, listImportUnused);
+// 			Workspace.common.tool.Pop.info(me, "Workspace.editorjava.aceeditor.command.CommandOptimizeImport getImportUsed cnt:" + listImportUsed.length + "<br>ret:" + listImportUsed.join(","), false);
 
-            var generatedImport = me.generateImport(listImportUsed);
-
-            // value = me.deleteImportUnused(editor, listImportUnused);
-            value = me.replaceImport(value, generatedImport);
-
-            editor.setValue(value);
-
-			selection.selectToPosition({column:col,row:row});
+            me.doOptimizeImport(editor, position, value, listImportUsed, listClassWithOutImport);
         }
         ,
         deleteImportUnused: function(editor, listImportUnused) {
+			var me = Workspace.editorjava.aceeditor.command.CommandOptimizeImport;
 			var selection = editor.selection;
 			var col = selection.getCursor().column;
 			var row = selection.getCursor().row;
             var value = editor.getValue();
 
             Ext.Array.each(listImportUnused, function(strImport, index, importItSelf) {
-                var strReg = "(\\bimport\\b)(\\s*)(\\b"+strImport+"\\b)(\\s*)(;)";
-				var reg = new RegExp(strReg);
+				var reg = me.regDeleteImport(strImport);
 				value = value.replace(reg, "");
             });
 
@@ -84,11 +81,46 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
 			return value;
         }
         ,
-        replaceImport: function(value, generatedImport) {
+        doOptimizeImport: function(editor, position, value, listImportUsed, listClassWithOutImport) {
 			var me = Workspace.editorjava.aceeditor.command.CommandOptimizeImport;
 
+            if (listClassWithOutImport.length > 0) {
+			    var application = Ext.getCmp('project').value;
+                var classname = listClassWithOutImport.join(";");
+
+    			Ext.Ajax.request({
+    				method:'GET',
+    				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonOptimizeImport',
+    				callback:function(options, success, responseCompile) {
+    					Workspace.common.tool.Pop.info(me, "Optimize Import complete." + responseCompile.responseText);
+    				    var jsonData = Ext.JSON.decode(responseCompile.responseText);
+                        Ext.Array.each(jsonData.import, function(objImport, index, importItSelf) {
+                            var classname = objImport.classname;
+                            var list = objImport.list;
+                            if (list.length == 1) {
+                                listImportUsed.push(list[0]);  
+                            } else {
+			                    Workspace.common.tool.Pop.info(me, "Workspace.editorjava.aceeditor.command.CommandOptimizeImport classname:" + classname + "<br>ret:" + list.join(","));
+                            }
+                        });
+
+                        me.replaceImport(editor, position, value, listImportUsed);
+				    },
+    				params:{application:application, classname: classname}
+    			});
+            } else {
+                me.replaceImport(editor, position, value, listImportUsed);
+            }
+        }
+        ,
+        replaceImport: function(editor, position, value, listImportUsed) {
+			var me = Workspace.editorjava.aceeditor.command.CommandOptimizeImport;
+
+            // value = me.deleteImportUnused(editor, listImportUnused);
+            var generatedImport = me.generateImport(listImportUsed);
+
             // RegEx Import
-            var reg = /(\bimport\b)(\s*)([\w|.]+)(\s*)(;)/g
+            var reg = me.regExtractImport
 
             var idxStart = -1, idxEnd = -1;
             var result;
@@ -103,8 +135,11 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
             if (idxStart > -1) {
                 value = value.substring(0, idxStart) + generatedImport + value.substring(idxEnd);
             }
-// 			Workspace.common.tool.Pop.info(me, "Workspace.editorjava.aceeditor.command.CommandOptimizeImport exractImport cnt:" + ret.length + "<br>find:" + ret.join(","));
-			return value;
+
+            editor.setValue(value);
+
+			var selection = editor.selection;
+			selection.selectToPosition(position);
         }
         ,
         generateImport: function(listImport) {
@@ -116,15 +151,22 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
                 return 0;
             });
 
+            var rootPackage = undefined;
             Ext.Array.each(listImport, function(strImport, index, importItSelf) {
+                var idx = strImport.indexOf(".");
+                if (idx > 0 && (!Ext.isDefined(rootPackage) || (strImport.indexOf(rootPackage) != 0))) {
+                    ret += "\r\n";
+                    rootPackage = strImport.substring(0, idx+1);
+                }
                 ret += "import " + strImport + ";\r\n";
             });
-            return ret;
+
+            return ret.trim();
         }
         ,
         removeImportUnused: function(listImport, listImportUnused) {
             return listImport.filter(function(strImport, index, array) {
-                return (listImportUnused.indexOf(strImport) >= 0);
+                return (listImportUnused.indexOf(strImport) < 0);
             });
         }
         ,
@@ -137,7 +179,7 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
                 Ext.Array.each(listImport, function(strImport, index, importItSelf) {
                     var idx = strImport.lastIndexOf(".");
 
-    				var reg = new RegExp("\\b."+strClass+"\\b$");
+    				var reg = me.regFindClass(strClass);
                     if (!Ext.isEmpty(strImport.match(reg))) {
                         find = true;
                     }
@@ -148,7 +190,6 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
                 }
             });
 
-			Workspace.common.tool.Pop.info(me, "Workspace.editorjava.aceeditor.command.CommandOptimizeImport getClassWithOutImport cnt:" + ret.length + "<br>ret:" + ret.join(","));
             return ret;
         }
         ,
@@ -164,7 +205,6 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
                 }
             });
 
-			Workspace.common.tool.Pop.info(me, "Workspace.editorjava.aceeditor.command.CommandOptimizeImport getImportUnused cnt:" + ret.length + "<br>ret:" + ret.join(","));
             return ret;
         }
         ,
@@ -173,7 +213,7 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
             var ret = [];
 
 			// RegEx Classname
-            var reg = /(([\,(;{}]+)|(\bnew\b|\bthrows\b))(\s*)([A-Z]{1}[A-Za-z0-9]+)/g;
+            var reg = me.regExtractClass
 
             var result;
             var keywords = Workspace.common.constant.ConstantJava.KEYWORDS;
@@ -184,7 +224,7 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
                     ret.push(str);
                 }
             }
-// 			Workspace.common.tool.Pop.info(me, "Workspace.editorjava.aceeditor.command.CommandOptimizeImport exractClass cnt:" + ret.length + "<br>ret:" + ret.join(","));
+
 			return ret;
         }
         ,
@@ -193,7 +233,7 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
             var ret = [];
 
             // RegEx Import
-            var reg = /(\bimport\b)(\s*)([\w|.]+)(\s*)(;)/g
+            var reg = me.regExtractImport
 
             var result;
             var ret = [];
@@ -203,7 +243,7 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
                     ret.push(str);
                 }
             }
-// 			Workspace.common.tool.Pop.info(me, "Workspace.editorjava.aceeditor.command.CommandOptimizeImport exractImport cnt:" + ret.length + "<br>find:" + ret.join(","));
+
 			return ret;
         }
 	}

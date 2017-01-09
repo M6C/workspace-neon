@@ -61,11 +61,11 @@ public class SrvOptimizeImport extends SrvGenerique {
         List<String> classpathJson = new ArrayList<String>();
         for(String classnameItem : mapListClass.keySet()) {
             List<String> list = mapListClass.get(classnameItem);
-            classpathJson.add("{classname: '" + classnameItem + "', ['" + String.join("','", list) + "']}");
+            classpathJson.add("{classname: '" + classnameItem + "', list:['" + String.join("','", list) + "']}");
         }
-        String json = "[" + String.join(",", classpathJson) + "]";
+        String jsonImport = String.join(",", classpathJson);
 
-    	String jsonData = "{results:"+classpathJson.size()+",import:["+json+"]}";
+    	String jsonData = "{results:"+classpathJson.size()+",import:["+jsonImport+"]}";
         UtilExtjs.sendJson(jsonData, response);
     }
 
