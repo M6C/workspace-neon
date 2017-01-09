@@ -12,6 +12,12 @@
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 </item>
 <item>
+<title>Editeur Java : Bug Ctrl+Shift+R</title>
+<description>Ne fonctionne plus ou pas tout le temps.</description>
+<pubDate>09/01/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
+<item>
 <title>Editeur Java : Bug Affichage de la trace d'erreur de compilation de class</title>
 <description>Corriger l'affichage de la trace d'erreur de compilation de class.</description>
 <pubDate>09/01/2017</pubDate>
