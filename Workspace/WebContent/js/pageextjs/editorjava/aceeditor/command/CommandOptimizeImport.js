@@ -94,17 +94,34 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
     				callback:function(options, success, responseCompile) {
     					Workspace.common.tool.Pop.info(me, "Optimize Import complete." + responseCompile.responseText);
     				    var jsonData = Ext.JSON.decode(responseCompile.responseText);
-                        Ext.Array.each(jsonData.import, function(objImport, index, importItSelf) {
-                            var classname = objImport.classname;
-                            var list = objImport.list;
-                            if (list.length == 1) {
-                                listImportUsed.push(list[0]);  
-                            } else {
-			                    Workspace.common.tool.Pop.info(me, "Workspace.editorjava.aceeditor.command.CommandOptimizeImport classname:" + classname + "<br>ret:" + list.join(","));
-                            }
-                        });
-
-                        me.replaceImport(editor, position, value, listImportUsed);
+    				    if (Ext.isArray(jsonData.import) && !Ext.isEmpty(jsonData.import)) {
+                            var cnt = jsonData.import.length;
+                            var importList = jsonData.import;
+                            Ext.Array.each(importList, function(objImport, index, importItSelf) {
+                                var classname = objImport.classname;
+                                var list = objImport.list;
+                                if (list.length == 1) {
+                                    listImportUsed.push(list[0]);  
+                                    me.replaceImport(editor, position, value, listImportUsed);
+                                } else {
+                                    // Do Replace Import on 1st Window because WindowCombo is ASYNCHRONOUS and the 1st Window will be the last showing window
+        			                var doReplaceImport = (index == 0);
+        			                var msgbox = Ext.create('Workspace.common.window.WindowCombo', {value: list, doReplaceImport: doReplaceImport});
+        			                msgbox.prompt("Optimize Import", classname,
+                                        function (btn, text, option) {
+                                            if (btn == 'ok') {
+                                                listImportUsed.push(text);
+                                            }
+                                            if (this.doReplaceImport) {
+                                                me.replaceImport(editor, position, value, listImportUsed);
+                                            }
+                                        }
+                                    , msgbox);
+                                }
+                            });
+    				    } else {
+                            me.replaceImport(editor, position, value, listImportUsed);
+    				    }
 				    },
     				params:{application:application, classname: classname}
     			});
