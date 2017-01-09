@@ -55,12 +55,12 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
  			// Workspace.common.tool.Pop.info(me, "Workspace.editorjava.aceeditor.command.CommandOptimizeImport exractImport cnt:" + listImport.length + "<br>ret:" + listImport.join(","), false);
 
             var listClassWithOutImport = me.getClassWithOutImport(listImport, listClass);
-			Workspace.common.tool.Pop.info(me, "Workspace.editorjava.aceeditor.command.CommandOptimizeImport getClassWithOutImport cnt:" + listClassWithOutImport.length + "<br>ret:" + listClassWithOutImport.join(","), false);
+			// Workspace.common.tool.Pop.info(me, "Workspace.editorjava.aceeditor.command.CommandOptimizeImport getClassWithOutImport cnt:" + listClassWithOutImport.length + "<br>ret:" + listClassWithOutImport.join(","), false);
 
             var listImportUnused = me.getImportUnused(listImport, listClass);
-// 			Workspace.common.tool.Pop.info(me, "Workspace.editorjava.aceeditor.command.CommandOptimizeImport getImportUnused cnt:" + listImportUnused.length + "<br>ret:" + listImportUnused.join(","), false);
+			// Workspace.common.tool.Pop.info(me, "Workspace.editorjava.aceeditor.command.CommandOptimizeImport getImportUnused cnt:" + listImportUnused.length + "<br>ret:" + listImportUnused.join(","), false);
             var listImportUsed = me.removeImportUnused(listImport, listImportUnused);
-// 			Workspace.common.tool.Pop.info(me, "Workspace.editorjava.aceeditor.command.CommandOptimizeImport getImportUsed cnt:" + listImportUsed.length + "<br>ret:" + listImportUsed.join(","), false);
+			// Workspace.common.tool.Pop.info(me, "Workspace.editorjava.aceeditor.command.CommandOptimizeImport getImportUsed cnt:" + listImportUsed.length + "<br>ret:" + listImportUsed.join(","), false);
 
             me.doOptimizeImport(editor, position, value, listImportUsed, listClassWithOutImport);
         }
@@ -155,8 +155,12 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
 
             editor.setValue(value);
 
-			var selection = editor.selection;
-			selection.selectToPosition(position);
+		    editor.focus();
+		    var cursorRow = position.row;//(Ext.isDefined(editor.cursorRow) ? editor.cursorRow : 0);
+		    var cursorCol = position.column;//(Ext.isDefined(editor.cursorCol) ? editor.cursorCol : 0);
+
+		    editor.scrollToLine(cursorRow+1, true, false, function(){});
+			editor.gotoLine(cursorRow+1, cursorCol, false);
         }
         ,
         generateImport: function(listImport) {
