@@ -3,8 +3,26 @@
 <channel>
 <title>To Do</title>
 <description>RSS stream to do</description>
-<pubDate>06/01/2017</pubDate>
+<pubDate>09/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+<item>
+<title>Editeur Java : Focus après restitution de l'état de l'écran avec ouverture des onglets déjà ouvert précedement</title>
+<description>Donner le focus à l'éditeur de l'onglet actif. Après restitution de l'état de l'écran avec ouverture des onglets déjà ouvert précedement</description>
+<pubDate>09/01/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
+<item>
+<title>Editeur Java : Bug Affichage de la trace d'erreur de compilation de class</title>
+<description>Corriger l'affichage de la trace d'erreur de compilation de class.</description>
+<pubDate>09/01/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
+<item>
+<title>Editeur Java : Optimisation des imports Serialiser le contenu des jar du classpath</title>
+<description>Serialiser le contenu des jar du classpath pour ne pas parcourir le classpath à chaque demande d'optimisation d'import. Stocker aussi les date/poid des jar pour ne raffechir que ceux qui ont été modifié. A la demande de l'utilisateur ou periodiquement. Deserialiser au changement de projet et socker dans le BeanGenerique de session.</description>
+<pubDate>09/01/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
 <item>
 <title>Editeur Java : Auto deploy que sur 'Ctrl+Shift+S' et non plus sur 'Ctrl+S'</title>
 <description>Auto deploy que sur 'Ctrl+Shift+S' et non plus sur 'Ctrl+S'. A essayer, pour voir si c'est bien à l'utilisation. [!] Attention que l'on risque de sauvegarder et et deployer des modifications que l'on ne voudrait pas forcement sauvegarder.</description>
