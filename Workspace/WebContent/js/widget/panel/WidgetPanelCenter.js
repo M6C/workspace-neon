@@ -10,7 +10,8 @@ Ext.define('Workspace.widget.panel.WidgetPanelCenter', {
 	,
 	region: 'center',
 	id: 'mainCenterPanel',
-	activeTab: 0
+	activeTab: 0,
+	tabRemovedStack: []
     ,
 	// Must be override
 	onTabChange: function(tabPanel, newCard, oldCard, option) {

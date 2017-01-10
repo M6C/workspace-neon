@@ -47,8 +47,9 @@ Ext.define('Workspace.common.plugin.addTabNew.function.New',  {
 	    	  			   url: requestUrl,
 	    	  			   params: {type:typeNew, pathDst:itemPathDst, name:fileName},
 	    	  			   success: function(result, request){
-	    	  				   var text = 'Success creating \''+fileName+'\' in \''+itemPathDst+'\'';
-	    	  				   Workspace.common.tool.Pop.success(me, text);
+	    	  				   var text = 'Success creating.'
+	    	  				   var detail = '\''+fileName+'\' in \''+itemPathDst+'\'';
+	    	  				   Workspace.common.tool.Pop.success(me, text, {detail:detail});
 	
 	                            if (typeNew == 'file') {
 	                                var path = Ext.String.escape(itemPathDst + '\\' + fileName);
@@ -85,8 +86,9 @@ Ext.define('Workspace.common.plugin.addTabNew.function.New',  {
 	    	  			   failure: function (result, request) {
 	    		  			   var jsonData = Ext.decode(result.responseText);
 	    		  			   var message = jsonData.message;
-	    		  			   var text = 'Error creating \''+fileName+'\' reason:\''+message+'\''
-	    						Workspace.common.tool.Pop.failure(me, text);
+	    		  			   var text = 'Error creating.';
+	    		  			   var detail = '\''+fileName+'\' reason:\''+message+'\'';
+	    						Workspace.common.tool.Pop.failure(me, text, {detail:detail});
 	    	  			   }
 	    	  			});
 	        	    }

@@ -132,6 +132,17 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 
 					task = new Ext.util.DelayedTask();
 					task.delay(0, delayedFnCombo);
+				},
+				removed: function(tab, container, option) {
+			        // Return 
+			        // true:if each method have running to the end (id not find)
+			        // integer value (0...): index where id is find
+			        var notFind = Ext.each(container.tabRemovedStack, function(item) {
+				        return item.id != tab.raw.id;
+				    });
+				    if (notFind === true) {
+    				    container.tabRemovedStack.push(tab.raw);
+				    }
 				}
 		    }
 	    });
