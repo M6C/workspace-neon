@@ -17,7 +17,7 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabSave',  {
 //			var pnlEdit = pnl.getComponent(panelEditorId);
 			var editor = ace.edit(panelEditorId);
 			if (!editor.dirty) {
-			    Workspace.common.tool.Pop.info(me, 'No&nbsp;need&nbsp;Save ' + panelId);
+			    Workspace.common.tool.Pop.info(me, 'No&nbsp;need&nbsp;Save', {detail:panelId});
 				return;
 			}
 			if (Ext.isDefined(editor.syncValue)) {

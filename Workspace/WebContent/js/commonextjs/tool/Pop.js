@@ -3,46 +3,70 @@ Ext.define('Workspace.common.tool.Pop', {
 	,
 	statics: {
 
-		show : function(type, from, message, toast = true, panelSouth = true, console = true) {
-			return this.doPop(type, from, message, toast, panelSouth);
+		show : function(type, from, message, option) {
+			return this.doPop(type, from, message, option);
 		}
 		,
-		info : function(from, message, toast = true, panelSouth = true, console = true) {
-			return this.doPop('info', from, message, toast, panelSouth);
+		info : function(from, message, option) {
+			return this.doPop('info', from, message, option);
 		}
 		,
-		success : function(from, message, toast = true, panelSouth = true, console = true) {
-			return this.doPop('success', from, message, toast, panelSouth);
+		success : function(from, message, option) {
+			return this.doPop('success', from, message, option);
 		}
 		,
-		error : function(from, message, toast = true, panelSouth = true, console = true) {
-			return this.doPop('error', from, message, toast, panelSouth);
+		error : function(from, message, option) {
+			return this.doPop('error', from, message, option);
 		}
 		,
-		failure : function(from, message, toast = true, panelSouth = true, console = true) {
-			return this.doPop('failure', from, message, toast, panelSouth);
+		failure : function(from, message, option) {
+			return this.doPop('failure', from, message, option);
 		}
 		,
 		// Private
-		doPop : function(type, from, message, toast = true, panelSouth = true, logConsole = true) {
+		doPop : function(type, from, message, option) {
 			var ret = {};
+			var opt = {toast: true, panelSouth: true, console: true}
+
+			if (Ext.isDefined(option)) {
+			    Ext.apply(opt, option);
+			}
 
 			var className = from;
 			if (!Ext.isString(from)) {
 				className = Ext.getClassName(from);
 			}
 
-			if (toast) {
+			if (opt.toast) {
 				ret.toast = Workspace.common.tool.Toast.show(Ext.util.Format.htmlDecode(message));
+    			if (Ext.isDefined(opt.detail)) {
+			        var msg = message + "<br>" + opt.detail;
+				    var toast = ret.toast;
+    				Ext.fly(toast.body.dom).on('click', function () {
+    					toast.doClose();
+    					Workspace.common.tool.Pop.show(type, from, msg, {toast: true, panelSouth: false, console: false});
+    				}, from);
+    			}
 			}
-			if (panelSouth) {
-				Ext.getCmp('mainSouthPanel').log(className, type, message);
+
+			if (opt.panelSouth) {
+			    var msg = message;
+    			if (Ext.isDefined(opt.detail)) {
+				    msg += "<br>" + opt.detail;
+    			}
+				Ext.getCmp('mainSouthPanel').log(className, type, msg);
 				ret.panelSouth = true;
 			}
-			if (logConsole) {
-		        console.info(className + ' ' + type + ':' + message);
+
+			if (opt.logConsole) {
+			    var msg = message;
+    			if (Ext.isDefined(opt.detail)) {
+				    msg += "<br>" + opt.detail;
+    			}
+		        console.info(className + ' ' + type + ':' + msg);
 				ret.logConsole = true;
 			}
+
 			return ret;
 		}
 	}

@@ -69,8 +69,8 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
 		var jsonData = Ext.JSON.decode(response.responseText);
 		if (jsonData.results > 0) {
 			var cntSuccess = 0, cntFailure = 0;
-			var messageSuccess = 'AutoDeploy Success<br>';
-			var messageFailure = 'AutoDeploy Failed<br>';
+			var messageSuccess = '';
+			var messageFailure = '';
 			for(var i=0 ; i<jsonData.results ; i++) {
 				data = jsonData.autodeploy[i];
 				if (data.success == false) {
@@ -92,13 +92,7 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
 		showMessage: function(type, cnt, message) {
 			var me = this;
 			if (cnt > 0) {
-				console.info('Workspace.editorjava.request.JsonEditSaveAndBuild message ' + type + ':' + message);
-				var pop = Workspace.common.tool.Pop.show(type, me, 'AutoDeploy ' + type + ' ' + cnt + ' file(s).');
-				var toast = pop.toast;
-				Ext.fly(toast.body.dom).on('click', function () {
-					toast.doClose();
-					Workspace.common.tool.Pop.show(type, me, message);
-				}, me);
+				Workspace.common.tool.Pop.show(type, me, 'AutoDeploy ' + type + ' ' + cnt + ' file(s).', {detail:message});
 			}
 		}
 	}
