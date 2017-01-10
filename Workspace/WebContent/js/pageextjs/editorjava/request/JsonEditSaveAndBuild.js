@@ -87,14 +87,14 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
 		}
 	    me.modifyDirty(!success);
 	},
-	modifyDirty: function(dirty) {
-        var me = Workspace.editorjava.request.JsonEditSaveAndBuild;
-        if (Ext.isDefined(me.panelEditorId)) {
-    		var editor = ace.edit(me.panelEditorId);
-    		editor.dirty = dirty;
-        }
-	},
 	statics: {
+    	modifyDirty: function(dirty) {
+            var me = Workspace.editorjava.request.JsonEditSaveAndBuild;
+            if (Ext.isDefined(me.panelEditorId)) {
+        		var editor = ace.edit(me.panelEditorId);
+        		editor.dirty = dirty;
+            }
+    	},
 		showMessage: function(type, cnt, message) {
 			var me = this;
 			if (cnt > 0) {

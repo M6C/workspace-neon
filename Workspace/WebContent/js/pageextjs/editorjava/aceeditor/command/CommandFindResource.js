@@ -86,11 +86,10 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandFindResource',  {
 			}
 			var fnOnSubmitTree = function(view, record, item, index, event, eOpts) {
 				var sm = view.getSelectionModel();
-				if (sm.getSelection().length>0) {
-					var node = sm.getSelection()[0];
+			    Ext.each(sm.getSelection(), function (node) {
 					panelTab.onAddTab(node.raw);
-					this.ownerCt.close();
-				}
+			    });
+				this.ownerCt.close();
 			};
 
 			Ext.create('Workspace.editorjava.window.WindowFindResource', {
