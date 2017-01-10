@@ -52,14 +52,14 @@ Ext.define('Workspace.common.window.WindowTextCompile', {
 			}
 	}
 	,
-	title: 'Message',        //titre de la fenï¿½tre
+	title: 'Message',        //titre de la fenêtre
 	// el = id du div dans le code html de la page qui contiendra la popup
 	//el:windowEl,        
 	layout:'fit',
 	width:850,
 	height:450,
-//	autoHeight: true,        //hauteur de la fenï¿½tre
+//	autoHeight: true,        //hauteur de la fenêtre
 	modal: true,             //Grise automatiquement le fond de la page
-	closeAction:'hide',
+	closeAction:'destroy',
 	plain: true
 }, function() {Workspace.tool.Log.defined('Workspace.common.window.WindowTextCompile');});
