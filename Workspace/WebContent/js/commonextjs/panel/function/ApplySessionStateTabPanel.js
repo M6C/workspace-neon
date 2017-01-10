@@ -7,11 +7,14 @@ Ext.define('Workspace.common.panel.function.ApplySessionStateTabPanel', {
 		Ext.apply(panel, {
 			stateful: true,
 			stateId: stateId,
-			stateEvents: ['add', 'remove'], 
+			stateEvents: ['add', 'remove', 'tabchange'], 
 			stateData: undefined,
 		    getState: function() { 
 			    console.debug('Workspace.common.panel.function.ApplySessionStateTabPanel apply getState');
 		        var s = {raw: []}; 
+		        if (Ext.isDefined(panel.getActiveTab())) {
+					s.activeTab = panel.getActiveTab().raw;
+		        }
 		        if (Ext.isDefined(panel.items)) {
 					var i = 0;
 			        panel.items.each(function(tab) {
@@ -29,13 +32,21 @@ Ext.define('Workspace.common.panel.function.ApplySessionStateTabPanel', {
 
 		panel.on('render', function(component, option) {
 		    console.debug('Workspace.common.panel.function.ApplySessionStateTabPanel apply render');
-			if (Ext.isDefined(panel.stateData) && Ext.isDefined(panel.stateData.raw)) {
-		    	Ext.Array.each(panel.stateData.raw, function(tab) {
-		    		if (tab != null) {
-		    			panel.onAddTab(tab);
-		    		}
-				});
-				panel.stateData = undefined;
+		    var stateData = panel.stateData;
+			if (Ext.isDefined(stateData)) {
+			    if(Ext.isDefined(stateData.raw)) {
+    		    	Ext.Array.each(stateData.raw, function(tab) {
+    		    		if (tab != null) {
+    		    			panel.onAddTab(tab);
+    		    		}
+    				});
+    			}
+
+			    if(Ext.isDefined(stateData.activeTab)) {
+			        panel.setActiveTab(stateData.activeTab.id);
+			    }
+
+    			panel.stateData = undefined;
 			}
 		});
 
