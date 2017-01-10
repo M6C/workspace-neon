@@ -10,9 +10,10 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndCompletion',  {
    	,
 	extend: 'Workspace.editorjava.request.JsonEditSaveFile'
 	,
-    constructor: function(config) {
+	constructor: function(config) {
 		console.info('Workspace.editorjava.request.JsonEditSaveAndCompletion constructor');
         var me = this;
+        me.showMessage = false;
 
         config.params.filename += "." + Date.now() + ".tmp";
         config.callback = function(options, success, response) {
