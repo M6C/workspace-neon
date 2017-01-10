@@ -92,7 +92,7 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
     				method:'GET',
     				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonOptimizeImport',
     				callback:function(options, success, responseCompile) {
-    					Workspace.common.tool.Pop.info(me, "Optimize Import complete." + responseCompile.responseText);
+    				// 	Workspace.common.tool.Pop.info(me, "Optimize Import complete." + responseCompile.responseText);
     				    var jsonData = Ext.JSON.decode(responseCompile.responseText);
     				    if (Ext.isArray(jsonData.import) && !Ext.isEmpty(jsonData.import)) {
                             var cnt = jsonData.import.length;
