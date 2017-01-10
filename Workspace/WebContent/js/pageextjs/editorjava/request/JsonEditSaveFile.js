@@ -11,7 +11,7 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveFile',  {
         var me = this;
         var filename = me.params.filename;
 
-        if (!Ext.isDefine(me.showMessage) || Ext.isDefine(me.showMessage) == true) {
+        if (!Ext.isDefined(me.showMessage) || me.showMessage == true) {
             var msg = "Saving complete.";
             if (me.build == 'true') {
                 msg += " Waiting for building project complet."
@@ -36,7 +36,7 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveFile',  {
 
     request: function() {
         var me = this;
-        if (!Ext.isDefine(me.showMessage) || Ext.isDefine(me.showMessage) == true) {
+        if (!Ext.isDefined(me.showMessage) || me.showMessage == true) {
 		    Workspace.common.tool.Pop.info(me, "Saving in progress", {detail:"'" + me.params.filename + "'"});
         }
         Ext.Ajax.request({
