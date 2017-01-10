@@ -3,12 +3,12 @@
 <channel>
 <title>To Do</title>
 <description>RSS stream to do</description>
-<pubDate>09/01/2017</pubDate>
+<pubDate>10/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 <item>
-<title>Editeur Java : Focus après restitution de l'état de l'écran avec ouverture des onglets déjà ouvert précedement</title>
-<description>Donner le focus à l'éditeur de l'onglet actif. Après restitution de l'état de l'écran avec ouverture des onglets déjà ouvert précedement</description>
-<pubDate>09/01/2017</pubDate>
+<title>Editeur Java : Etendre TreeFileExplorer quand on selectionne un onglet deja ouvert</title>
+<description>Etendre TreeFileExplorer quand on selectionne un onglet deja ouvert. Et selectionner le dernier noeud.</description>
+<pubDate>10/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 </item>
 <item>
@@ -66,12 +66,6 @@
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 </item>
 <item>
-<title>Editeur Java : Optimisation des imports pour les fichiers java</title>
-<description>Faire l'optimisation des imports Ctrl+Shift+O comme sur Eclipse.</description>
-<pubDate>04/01/2017</pubDate>
-<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
-</item>
-<item>
 <title>Editeur Java : Bug Ctrl+Shift+R</title>
 <description>Faire en sorte que le raccourci Ctrl+Shift+R fonctionne tout le temps.</description>
 <pubDate>04/01/2017</pubDate>
@@ -81,12 +75,6 @@
 <title>Editeur Java : Reload Tree File Explorer</title>
 <description>Etendre les chemins des onglets ouverts au changement de projet. Meme principe qu'a la recuperation de l'etat a l'ouverture de la page</description>
 <pubDate>04/01/2017</pubDate>
-<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
-</item>
-<item>
-<title>Explorateur de Fichier : Bug Modification fichier</title>
-<description>Corriger le bug de d'edition d'un fichier.</description>
-<pubDate>03/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 </item>
 <item>
