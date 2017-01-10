@@ -106,7 +106,11 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 				        } else {
 							var path = separator + tab.raw.path;
 
-							tree.expandPath(path, field, separator);
+							tree.expandPath(path, field, separator, function(success, node) {
+                				var editor = ace.edit(tab.panelEditorId);
+    			                editor.focus();
+    			                tab.focus();
+							});
 				        }
 					};
 

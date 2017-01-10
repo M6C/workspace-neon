@@ -99,11 +99,11 @@ Ext.define('Workspace.widget.tree.WidgetTreeExplorer', {
 	                task.delay(0);
 	            };
 
-	            current.expand(false, expander);
 	            if (current.isLeaf()) {
 	            	// TODO No Effect
 	            	me.getView().focusRow(current);
 	            }
+	            current.expand(false, expander);
 	        }
 		};
         var task = new Ext.util.DelayedTask(delayedFn);
