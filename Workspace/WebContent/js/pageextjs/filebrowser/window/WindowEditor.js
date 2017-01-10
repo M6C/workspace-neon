@@ -12,12 +12,17 @@ Ext.define('Workspace.filebrowser.window.WindowEditor', {
 	initComponent : function(){
 		var me = this;
 
+        var raw = me.raw;
 		var panelId=me.panelId;
 		var panelEditorId=panelId+'Editor';
 
 		var panel = Ext.create('Workspace.editorjava.panel.center.PanelCenterEditor', {
 			panelEditorId: panelEditorId,
-			panelId: panelId
+			panelId: panelId,
+			application: raw.application,
+			build: raw.build,
+			autoDeploy: raw.autoDeploy,
+			raw: raw
 		});
 
 		Ext.apply(me, {
@@ -27,8 +32,7 @@ Ext.define('Workspace.filebrowser.window.WindowEditor', {
 			,
 			listeners : {
 				'show' : function (wnd) {
-					console.info('Workspace.filebrowser.window.WindowEditor activate');
-//					Ext.getCmp('treeCompletion').focus();
+                    panel.fireEvent('show');
 				}
 			}
 		});
@@ -40,6 +44,8 @@ Ext.define('Workspace.filebrowser.window.WindowEditor', {
 	layout:'fit',
 	width:400,
 	height:300,
-	modal: true
+	modal: true,             //Grise automatiquement le fond de la page
+	closeAction:'destroy',
+	plain: true
 
 }, function() {Workspace.tool.Log.defined('Workspace.filebrowser.window.WindowEditor');});

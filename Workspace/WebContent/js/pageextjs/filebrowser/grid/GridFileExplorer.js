@@ -76,6 +76,7 @@ Ext.define('Workspace.filebrowser.grid.GridFileExplorer', {
 				panelId:raw.path,
 				width:1000,
 				height:600,
+				raw:raw
 			}).show();
 		} else {
 			if (me.root) {

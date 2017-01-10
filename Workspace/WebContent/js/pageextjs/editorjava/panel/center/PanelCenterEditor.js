@@ -22,9 +22,7 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 		var me = this;
 
 		var panel = Ext.create('Ext.panel.Panel', {
-			id: me.panelEditorId,
-			panelId: me.panelId,
-		    stateful:false
+			id: me.panelEditorId
 		});
 
 		var loadRequest = Ext.create('Workspace.editorjava.request.JsonEditLoadFile', {
@@ -42,13 +40,15 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 					    {
 					    	text: 'Save', 
 					    	handler:  function(button, e) {
-					    		Workspace.editorjava.panel.center.function.AddTabSave.call()
+					            var editor = ace.edit(me.panelEditorId);
+					    		Workspace.editorjava.panel.center.function.AddTabSave.call(editor)
 				    		}
 					    },
 			            {
 					    	text: 'Reload',
 					    	handler:  function(button, e) {
-					    		Workspace.editorjava.panel.center.function.AddTabReload.call()
+					            var editor = ace.edit(me.panelEditorId);
+					    		Workspace.editorjava.panel.center.function.AddTabReload.call(editor)
 					    	}
 			            }
 			        ]
@@ -61,6 +61,24 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 		    	'show': function() {
 
 					var editor = ace.edit(me.panelEditorId);
+					Ext.apply(editor, {
+					    id: me.panelEditorId,
+            			panelId: me.panelId,
+						panelEditorId: me.panelEditorId,
+            			application: me.application,
+						build: me.build,
+						autoDeploy: me.autoDeploy,
+            		    stateful:false
+					});
+
+					Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandSave');
+				    Workspace.editorjava.aceeditor.command.CommandSave.addCommand(editor);
+
+				    Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandCompletion');
+				    Workspace.editorjava.aceeditor.command.CommandCompletion.addCommand(editor);
+
+					Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandOptimizeImport');
+				    Workspace.editorjava.aceeditor.command.CommandOptimizeImport.addCommand(editor);
 
 					var callBackSuccess = function() {
 					    editor.focus();
@@ -76,7 +94,9 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 						editor.getSession().setScrollTop(scrollTop);
 						editor.getSession().setScrollLeft(scrollLeft);
 
-				        me.tab.setTooltip('encoding:' + editor.raw.encoding);
+                        if (Ext.isDefined(me.tab)) {
+				            me.tab.setTooltip('encoding:' + editor.raw.encoding);
+                        }
 					}
 
 					if (!editor.dirty) {
@@ -137,12 +157,14 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 			        // Return 
 			        // true:if each method have running to the end (id not find)
 			        // integer value (0...): index where id is find
-			        var notFind = Ext.each(container.tabRemovedStack, function(item) {
-				        return item.id != tab.raw.id;
-				    });
-				    if (notFind === true) {
-    				    container.tabRemovedStack.push(tab.raw);
-				    }
+			        if (Ext.isDefined(container.tabRemovedStack)) {
+    			        var notFind = Ext.each(container.tabRemovedStack, function(item) {
+    				        return item.id != tab.raw.id;
+    				    });
+    				    if (notFind === true) {
+        				    container.tabRemovedStack.push(tab.raw);
+    				    }
+			        }
 				}
 		    }
 	    });

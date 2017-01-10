@@ -5,17 +5,11 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabSave',  {
 	,
 	statics: {
 
-		call : function() {
+		call : function(editor) {
 		    console.info('Workspace.editorjava.panel.center.function.AddTabSave.call');
 		    var me = this;
 
-			var mainCenterPanel=Ext.getCmp('mainCenterPanel');
-            var tab = mainCenterPanel.getActiveTab();
-            var panelId = tab.id;
-            var panelEditorId = tab.panelEditorId;
-		    var pnl = mainCenterPanel.getComponent(panelId);
-//			var pnlEdit = pnl.getComponent(panelEditorId);
-			var editor = ace.edit(panelEditorId);
+            var panelId = editor.panelId;
 			if (!editor.dirty) {
 			    Workspace.common.tool.Pop.info(me, 'No&nbsp;need&nbsp;Save', {detail:panelId});
 				return;
@@ -25,7 +19,8 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabSave',  {
 			}
 			var value=editor.getValue();//pnlEdit.getRawValue();
 			//value=value.replace(/&\w+;/g,"");
-			var application = pnl.application;
+            var panelEditorId = editor.id;
+			var application = editor.application;
 			var className = editor.className;
 			var autoDeploy = editor.autoDeploy;
 

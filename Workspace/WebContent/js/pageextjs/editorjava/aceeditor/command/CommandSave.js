@@ -13,7 +13,7 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandSave',  {
 //		                module.init(editor);
 //		                editor.showKeyboardShortcuts()
 //		            })
-		    		Workspace.editorjava.panel.center.function.AddTabSave.call();
+		    		Workspace.editorjava.panel.center.function.AddTabSave.call(editor);
 		        }
 		    });
 //		    editor.execCommand("editorSave");

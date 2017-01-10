@@ -49,20 +49,12 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 				editor.panelId = panelId;
 
 				if (initializeEditor) {
-					Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandSave');
-				    Workspace.editorjava.aceeditor.command.CommandSave.addCommand(editor);
-
-				    Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandCompletion');
-				    Workspace.editorjava.aceeditor.command.CommandCompletion.addCommand(editor);
 
 					Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandChangeTab');
 				    Workspace.editorjava.aceeditor.command.CommandChangeTab.addCommand(editor, mainCenterPanel);
 
 					Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandFindResource');
 				    Workspace.editorjava.aceeditor.command.CommandFindResource.addCommand(editor, mainCenterPanel);
-
-					Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandOptimizeImport');
-				    Workspace.editorjava.aceeditor.command.CommandOptimizeImport.addCommand(editor);
 
 					Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandReopenLastTab');
 				    Workspace.editorjava.aceeditor.command.CommandReopenLastTab.addCommand(editor);
