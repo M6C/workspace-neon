@@ -149,7 +149,9 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
                 idxEnd = result.index + str.length;
             }
 
+            var oldImport = "";
             if (idxStart > -1) {
+                oldImport = value.substring(idxStart, idxEnd);
                 value = value.substring(0, idxStart) + generatedImport + value.substring(idxEnd);
             }
 
@@ -158,6 +160,8 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
 		    editor.focus();
 		    var cursorRow = position.row;//(Ext.isDefined(editor.cursorRow) ? editor.cursorRow : 0);
 		    var cursorCol = position.column;//(Ext.isDefined(editor.cursorCol) ? editor.cursorCol : 0);
+
+            cursorRow = cursorRow - oldImport.match(/\r/g).length + generatedImport.match(/\r/g).length;
 
 		    editor.scrollToLine(cursorRow+1, true, false, function(){});
 			editor.gotoLine(cursorRow+1, cursorCol, false);

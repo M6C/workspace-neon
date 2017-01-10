@@ -8,6 +8,7 @@ Ext.define('Workspace.common.window.WindowCombo', {
             var index = me.promptContainer.items.indexOf(me.textField);
             me.promptContainer.remove(me.textField); 
             me.textField = me._createComboBoxField();
+            me.textField.msgButtons = me.msgButtons;
             me.promptContainer.insert(index, me.textField);
     },
     _createComboBoxField: function () {
@@ -30,7 +31,23 @@ Ext.define('Workspace.common.window.WindowCombo', {
             store: store,
             autoSelect: true,
             minChars: 1,
-            enableKeyEvents: true
+            enableKeyEvents: true,
+            editable: false,
+            listeners: {
+                specialkey: function(field, e) {
+                    var val = field.getValue();
+                    if (e.getKey() === e.ENTER && !Ext.isEmpty(val)) {
+                        var element = field.msgButtons.ok;
+                        element.fireEvent('click',element.fireHandler());
+                        e.stopEvent();
+                    } else if (e.getKey() === e.ESC) {
+                        var element = field.msgButtons.cancel;
+                        element.fireEvent('click',element.fireHandler());
+                        e.stopEvent();
+                    }
+                }
+            },
+            callback: me.callback
         });
 
         if (Ext.isDefined(me.comboConfig)) {
