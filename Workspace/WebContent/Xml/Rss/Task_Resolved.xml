@@ -6,6 +6,12 @@
 <pubDate>10/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 <item>
+<title>Editeur Java : Recherche de resources. Possibilité d'ouvrir plusieurs Resouces</title>
+<description>Corriger le bug de d'edition d'un fichier.</description>
+<pubDate>10/01/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
+<item>
 <title>Explorateur de Fichier : Bug Modification fichier</title>
 <description>Corriger le bug de d'edition d'un fichier.</description>
 <pubDate>10/01/2017</pubDate>
