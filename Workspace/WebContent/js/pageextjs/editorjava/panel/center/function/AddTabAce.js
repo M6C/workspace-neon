@@ -31,10 +31,11 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 						closable:true,
 						title: raw.text,
 						id: panelId,
+						application: raw.application,
 						panelEditorId: panelEditorId,
 						panelId: panelId,
+						build: raw.build,
 						autoDeploy: raw.autoDeploy,
-						application: raw.application,
 						raw: raw
 					});
 
