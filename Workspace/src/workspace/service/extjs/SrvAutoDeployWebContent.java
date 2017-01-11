@@ -30,9 +30,6 @@ public class SrvAutoDeployWebContent extends SrvAutoDeployBuild {
     protected List<String> doAutoDeployWeb(HttpServletRequest request, BeanGenerique bean) throws Exception {
     	List<String> json = new ArrayList<>();
 
-    	HttpSession session = request.getSession();
-        Document dom = (Document)session.getAttribute("resultDom");
-
     	String filename = (String)bean.getParameterDataByName("filename");
     	String application = UtilPath.getApplication(bean, filename);
 
@@ -43,7 +40,6 @@ public class SrvAutoDeployWebContent extends SrvAutoDeployBuild {
     		return json;
     	} else {
     		// Deploy Single File
-    		filename = UtilPath.formatPath(dom, application, filename);
     		json.addAll(autoDeployFile(request, application, filename));
     	}
         
@@ -100,23 +96,26 @@ public class SrvAutoDeployWebContent extends SrvAutoDeployBuild {
         	}
         	pathWebRoot = UtilPath.formatPath(dom, application, pathWebRoot);
 
-        	if (!filename.startsWith(pathWebRoot+"\\")) {
+    		String filenameSrc = UtilPath.formatPath(dom, application, filename);
+
+        	if (!filenameSrc.startsWith(pathWebRoot+"\\")) {
         		String msg = "No autoDeploy '" + filename + "' - not in WebRoot directory '" + pathWebRoot + "'";
 	            Trace.DEBUG(this, msg);
 	        	json.add("{success:false, src:'" + filename + "', dst:'', msg:'" + formatJsonMessage(msg) + "'}");
 	    		return json;
         	}
 
-        	String filenameDst = UtilFile.formatPath(autoDeploy, filename.substring(pathWebRoot.length()));
+        	String filenameDst = UtilFile.formatPath(autoDeploy, filenameSrc.substring(pathWebRoot.length()));
 
-        	UtilFile.copyFile(filename, filenameDst);
-            String msg = "Success autoDeploy '" + filename + "' copied to '"+filenameDst+"'";
+        	UtilFile.copyFile(filenameSrc, filenameDst);
+            String msg = "Success autoDeploy '" + filenameSrc + "' copied to '"+filenameDst+"'";
             Trace.DEBUG(this, msg);
 
             String src = filename;
             String dst = UtilEncoder.encodeHTMLEntities("[DEPLOYED_SERVER]" + filenameDst.substring(serverDeploy.length()));
         	src = UtilString.replaceAll(src, "\\", "\\\\");
         	dst = UtilString.replaceAll(dst, "\\", "\\\\");
+            msg = "Success autoDeploy '" + src + "' copied to '"+dst+"'";
         	json.add("{success:true, src:'" + src + "', dst:'" + dst + "', msg:'" + formatJsonMessage(msg) + "'}");
         }
         catch (IllegalArgumentException ex) {
