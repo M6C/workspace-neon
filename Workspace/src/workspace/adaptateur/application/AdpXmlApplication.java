@@ -1,8 +1,3 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   AdpXmlApplication.java
-
 package workspace.adaptateur.application;
 
 import framework.ressource.util.UtilString;
@@ -22,130 +17,151 @@ import org.xml.sax.SAXException;
 // Referenced classes of package workspace.adaptateur.application:
 //            AdpXml
 
-public class AdpXmlApplication extends AdpXml
-{
+public class AdpXmlApplication extends AdpXml {
 
-    private AdpXmlApplication()
-    {
+    public static String getLocalDirectory(Document dom, String application) {
+        return getLocalDirectory(dom, application, true);
     }
 
-    public static String getLocalDirectory(Document dom, String application)
-    {
+    public static String getLocalDirectory(Document dom, String application, boolean throwException) {
         String ret = null;
         checkDocument(dom);
         checkApplication(application);
         String xpath = "//ROOT/USER/PROFILES/PROFILE/APPLICATIONS/APPLICATION[@Name = '" + application + "']/VERSIONNING/LOCAL_DIRECTORY";
         ret = UtilXML.getXPathStringValue(dom, xpath);
-        if(ret == null)
+        if(ret == null && throwException)
             throw new IllegalArgumentException((new StringBuilder("XPath [")).append(xpath).append("] value not found in document").toString());
         else
             return ret;
     }
 
-    public static String getModuleName(Document dom, String application)
-    {
+    public static String getModuleName(Document dom, String application) {
+        return getModuleName(dom, application, true);
+    }
+
+    public static String getModuleName(Document dom, String application, boolean throwException) {
         String ret = null;
         checkDocument(dom);
         checkApplication(application);
         String xpath = "//ROOT/USER/PROFILES/PROFILE/APPLICATIONS/APPLICATION[@Name = '" + application + "']/VERSIONNING/MODULE_NAME";
         ret = UtilXML.getXPathStringValue(dom, xpath);
-        if(ret == null)
+        if(ret == null && throwException)
             throw new IllegalArgumentException((new StringBuilder("XPath [")).append(xpath).append("] value not found in document").toString());
         else
             return ret;
     }
 
-    public static String getServerHostName(Document dom, String application)
-    {
+    public static String getServerHostName(Document dom, String application) {
+        return getServerHostName(dom, application, true);
+    }
+
+    public static String getServerHostName(Document dom, String application, boolean throwException) {
         String ret = null;
         checkDocument(dom);
         checkApplication(application);
         String xpath = "//ROOT/USER/PROFILES/PROFILE/APPLICATIONS/APPLICATION[@Name = '" + application + "']/VERSIONNING/SERVER_HOSTNAME";
         ret = UtilXML.getXPathStringValue(dom, xpath);
-        if(ret == null)
+        if(ret == null && throwException)
             throw new IllegalArgumentException((new StringBuilder("XPath [")).append(xpath).append("] value not found in document").toString());
         else
             return ret;
     }
 
-    public static String getServerPort(Document dom, String application)
-    {
+    public static String getServerPort(Document dom, String application) {
+        return getServerPort(dom, application, true);
+    }
+
+    public static String getServerPort(Document dom, String application, boolean throwException) {
         String ret = null;
         checkDocument(dom);
         checkApplication(application);
         String xpath = "//ROOT/USER/PROFILES/PROFILE/APPLICATIONS/APPLICATION[@Name = '" + application + "']/VERSIONNING/SERVER_PORT";
         ret = UtilXML.getXPathStringValue(dom, xpath);
-        if(ret == null)
+        if(ret == null && throwException)
             throw new IllegalArgumentException((new StringBuilder("XPath [")).append(xpath).append("] value not found in document").toString());
         else
             return ret;
     }
 
-    public static String getServerRepository(Document dom, String application)
-    {
+    public static String getServerRepository(Document dom, String application) {
+        return getServerRepository(dom, application, true);
+    }
+
+    public static String getServerRepository(Document dom, String application, boolean throwException) {
         String ret = null;
         checkDocument(dom);
         checkApplication(application);
         String xpath = "//ROOT/USER/PROFILES/PROFILE/APPLICATIONS/APPLICATION[@Name = '" + application + "']/VERSIONNING/SERVER_REPOSITORY";
         ret = UtilXML.getXPathStringValue(dom, xpath);
-        if(ret == null)
+        if(ret == null && throwException)
             throw new IllegalArgumentException((new StringBuilder("XPath [")).append(xpath).append("] value not found in document").toString());
         else
             return ret;
     }
 
-    public static String getUserName(Document dom, String application)
-    {
+    public static String getUserName(Document dom, String application) {
+        return getUserName(dom, application, true);
+    }
+
+    public static String getUserName(Document dom, String application, boolean throwException) {
         String ret = null;
         checkDocument(dom);
         checkApplication(application);
         String xpath = "//ROOT/USER/PROFILES/PROFILE/APPLICATIONS/APPLICATION[@Name = '" + application + "']/VERSIONNING/USER";
         ret = UtilXML.getXPathStringValue(dom, xpath);
-        if(ret == null)
+        if(ret == null && throwException)
             throw new IllegalArgumentException((new StringBuilder("XPath [")).append(xpath).append("] value not found in document").toString());
         else
             return ret;
     }
 
-    public static String getPassword(Document dom, String application)
-    {
+    public static String getPassword(Document dom, String application) {
+        return getPassword(dom, application, true);
+    }
+
+    public static String getPassword(Document dom, String application, boolean throwException) {
         String ret = null;
         checkDocument(dom);
         checkApplication(application);
         String xpath = "//ROOT/USER/PROFILES/PROFILE/APPLICATIONS/APPLICATION[@Name = '" + application + "']/VERSIONNING/PASSWORD";
         ret = UtilXML.getXPathStringValue(dom, xpath);
-        if(ret == null)
+        if(ret == null && throwException)
             throw new IllegalArgumentException((new StringBuilder("XPath [")).append(xpath).append("] value not found in document").toString());
         else
             return ret;
     }
 
-    public static String getPathMain(Document dom, String application)
-    {
+    public static String getPathMain(Document dom, String application) {
+        return getPathMain(dom, application, true);
+    }
+
+    public static String getPathMain(Document dom, String application, boolean throwException) {
         String ret = null;
         checkDocument(dom);
         checkApplication(application);
         String xpath = "//ROOT/USER/PROFILES/PROFILE/APPLICATIONS/APPLICATION[@Name = '" + application + "']/PATHS/PATH[@Name = 'Main']";
         String szXPathMain = UtilXML.getXPathStringValue(dom, xpath);
-        if(szXPathMain == null)
-        {
+        if(szXPathMain == null && throwException) {
             throw new IllegalArgumentException((new StringBuilder("XPath [")).append(xpath).append("] value not found in document").toString());
-        } else
-        {
+        } else {
             ret = szXPathMain;
             return ret;
         }
     }
 
-    public static String getFormatedPathMain(ServletContext context, Document dom, String application)
-        throws TransformerException
-    {
-        return getFormatedPathByName(context, dom, application, "Main");
+    public static String getFormatedPathMain(ServletContext context, Document dom, String application) throws TransformerException {
+        return getFormatedPathMain(context, dom, application, true);
     }
 
-    public static String getFormatedPathByName(ServletContext context, Document dom, String application, String name)
-        throws TransformerException
-    {
+    public static String getFormatedPathMain(ServletContext context, Document dom, String application, boolean throwException) throws TransformerException {
+        return getFormatedPathByName(context, dom, application, "Main", throwException);
+    }
+
+    public static String getFormatedPathByName(ServletContext context, Document dom, String application, String name) throws TransformerException {
+        return getFormatedPathByName(context, dom, application, name, true);
+    }
+
+    public static String getFormatedPathByName(ServletContext context, Document dom, String application, String name, boolean throwException) throws TransformerException {
         String ret = null;
         checkDocument(dom);
         checkApplication(application);
@@ -154,8 +170,7 @@ public class AdpXmlApplication extends AdpXml
         dictionary.put("pApplication", application);
         dictionary.put("pPath", name);
         StringWriter strWriter = new StringWriter();
-        try
-        {
+        try {
             final ServletContext ctx = context;
             URIResolver uriResolver = new URIResolver() {
 
@@ -168,29 +183,30 @@ public class AdpXmlApplication extends AdpXml
             UtilXML.tranformeXmlWithXsl(dom, context.getResourceAsStream(szXsl), strWriter, dictionary, uriResolver);
             ret = strWriter.toString();
         }
-        catch(IllegalArgumentException e)
-        {
+        catch(IllegalArgumentException e) {
             throw new IllegalArgumentException((new StringBuilder("Package '")).append(name).append("' not found in application '").append(application).append("'").toString());
         }
-        if(UtilString.isEmpty(ret))
-        {
+        if(UtilString.isEmpty(ret) && throwException) {
             throw new IllegalArgumentException((new StringBuilder("Path '")).append(name).append("' not found in application '").append(application).append("'").toString());
-        } else
-        {
+        } else {
             ret = ret.trim();
             return ret;
         }
     }
 
-    public static String getPathSource(ServletContext context, Document dom, String application)
-        throws TransformerException
-    {
+    public static String getPathSource(ServletContext context, Document dom, String application) throws TransformerException {
+        return getPathSource(context, dom, application, true);
+    }
+
+    public static String getPathSource(ServletContext context, Document dom, String application, boolean throwException) throws TransformerException {
         return getPathByName(context, dom, application, "Source");
     }
 
-    public static String getPackageFileNameByName(ServletContext context, Document dom, String application, String type, String name)
-        throws TransformerException
-    {
+    public static String getPackageFileNameByName(ServletContext context, Document dom, String application, String type, String name) throws TransformerException {
+        return getPackageFileNameByName(context, dom, application, type, name, true);
+    }
+
+    public static String getPackageFileNameByName(ServletContext context, Document dom, String application, String type, String name, boolean throwException) throws TransformerException {
         String ret = null;
         checkDocument(dom);
         checkApplication(application);
@@ -202,19 +218,15 @@ public class AdpXmlApplication extends AdpXml
         StringWriter strWriter = new StringWriter();
         UtilXML.tranformeXmlWithXsl(dom, context.getResourceAsStream(szXsl), strWriter, dictionary);
         ret = strWriter.toString();
-        if(UtilString.isEmpty(ret))
-        {
+        if(UtilString.isEmpty(ret) && throwException) {
             throw new IllegalArgumentException((new StringBuilder("Package '")).append(name).append("' not found in application '").append(application).append("'").toString());
-        } else
-        {
+        } else {
             ret = ret.trim();
             return ret;
         }
     }
 
-    public static Document getPackageXmlByName(ServletContext context, Document dom, String application, String type, String name)
-        throws TransformerException
-    {
+    public static Document getPackageXmlByName(ServletContext context, Document dom, String application, String type, String name) throws TransformerException {
         Document ret = null;
         checkDocument(dom);
         checkApplication(application);
@@ -255,9 +267,7 @@ public class AdpXmlApplication extends AdpXml
         return ret;
     }
 
-    public static String getPathByName(ServletContext context, Document dom, String application, String name)
-        throws TransformerException
-    {
+    public static String getPathByName(ServletContext context, Document dom, String application, String name) throws TransformerException {
         String ret = null;
         checkDocument(dom);
         checkApplication(application);
@@ -287,9 +297,7 @@ public class AdpXmlApplication extends AdpXml
         return ret;
     }
 
-    public static String getClassPathAll(ServletContext context, Document dom, String application)
-        throws TransformerException
-    {
+    public static String getClassPathAll(ServletContext context, Document dom, String application) throws TransformerException {
         String ret = null;
         checkDocument(dom);
         checkApplication(application);
@@ -318,9 +326,7 @@ public class AdpXmlApplication extends AdpXml
         return ret;
     }
 
-    public static String getJdkPathByName(ServletContext context, Document dom, String application, String name)
-        throws TransformerException
-    {
+    public static String getJdkPathByName(ServletContext context, Document dom, String application, String name) throws TransformerException {
         String ret = null;
         checkDocument(dom);
         checkApplication(application);
@@ -350,9 +356,7 @@ public class AdpXmlApplication extends AdpXml
         return ret;
     }
 
-    public static String getJdkJrePathByName(ServletContext context, Document dom, String application, String name)
-        throws TransformerException
-    {
+    public static String getJdkJrePathByName(ServletContext context, Document dom, String application, String name) throws TransformerException {
         String ret = null;
         checkDocument(dom);
         checkApplication(application);
