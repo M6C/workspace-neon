@@ -99,30 +99,30 @@ public class SrvTreeDirectory extends SrvGenerique {
                     	if (UtilString.isNotEmpty(strName) || UtilString.isNotEmpty(strContent) || UtilString.isNotEmpty(strExtention)) {
 	                        filter = new FilenameFilter() {
 	                            public boolean accept(File directory, String string) {
+	                            	boolean ret = true;
 	                            	File file = new File(directory, string);
 	                            	boolean isFile = file.isFile();
 	                            	if (!isFile) {
-	                            		return true;
+	                            		return ret;
 	                            	}
-	                            	boolean ret = true;
 	                            	string = (bIgnoreCase ? string.toLowerCase() : string);
 	                            	if (!UtilString.isEmpty(strName)) {
 		                            	ret = string.indexOf(strName) >= 0;
 	                            	}
-	                            	if (isFile && ret && !UtilString.isEmpty(strContent)) {
-	                            	    ret = isTextFile(file);
+	                            	if (ret && !UtilString.isEmpty(strExtention)) {
 										try {
+                                            ret = UtilString.isEmpty(strExtention) || UtilFile.isExtFile(string, strExtention);
+										} catch (Exception ex) {
+								            Trace.ERROR(this, ex);
+										}
+	                            	}
+                            	    if (ret && !UtilString.isEmpty(strContent)) {
+										try {
+	                            	        ret = isTextFile(file);
         	                            	if (ret) {
     											ret = (UtilFile.findText(file, strContent) >= 0);
         	                            	}
 										} catch (IOException ex) {
-								            Trace.ERROR(this, ex);
-										}
-	                            	}
-	                            	if (isFile && ret && !UtilString.isEmpty(strExtention)) {
-										try {
-                                            ret = UtilString.isEmpty(strExtention) || UtilFile.isExtFile(string, strExtention);
-										} catch (Exception ex) {
 								            Trace.ERROR(this, ex);
 										}
 	                            	}
