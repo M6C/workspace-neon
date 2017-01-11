@@ -5,7 +5,7 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
 	statics: {
         regExtractImport: /(\bimport\b)(\s*)([\w|.]+)(\s*)(;)/g
         ,
-        regExtractClass: /(([\,(;{}]+)|(\bnew\b|\bthrows\b|\bextends\b|\bimplements\b))(\s*)([A-Z]{1}[A-Za-z0-9]+)/g
+        regExtractClass: /(([\,(;{}=]+)|(\bnew\b|\bthrows\b|\bextends\b|\bimplements\b))(\s*)([A-Z]{1}[A-Za-z0-9]+)/g
         ,
         regDeleteImport: function(strImport) {
             var strReg = "(\\bimport\\b)(\\s*)(\\b"+strImport+"\\b)(\\s*)(;)";
