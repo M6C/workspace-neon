@@ -118,7 +118,9 @@ public class SrvTreeDirectory extends SrvGenerique {
 	                            	}
                             	    if (ret && !UtilString.isEmpty(strContent)) {
 										try {
-	                            	        ret = isTextFile(file);
+			                            	if (UtilString.isEmpty(strExtention)) {
+			                            		ret = isTextFile(file);
+			                            	}
         	                            	if (ret) {
     											ret = (UtilFile.findText(file, strContent) >= 0);
         	                            	}
