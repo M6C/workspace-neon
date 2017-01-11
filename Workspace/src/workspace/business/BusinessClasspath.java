@@ -1,10 +1,7 @@
 package workspace.business;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintStream;
-import java.util.Hashtable;
 import java.util.Vector;
 
 import javax.servlet.ServletContext;
@@ -67,12 +64,12 @@ public class BusinessClasspath {
 	}
 
 
-    private static void addJarToClassPath(String path, StringBuffer classpath) throws IOException
-    {
+    private static void addJarToClassPath(String path, StringBuffer classpath) throws IOException {
         Vector listJar = UtilFile.dir(path, true, ".jar");
         int max = UtilVector.safeSize(listJar);
-        for(int i = 0; i < max; i++)
+        for(int i = 0; i < max; i++) {
             classpath.append(";").append((String)UtilVector.safeGetElementAt(listJar, i));
+        }
 
     }
 }

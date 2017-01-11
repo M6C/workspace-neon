@@ -1,13 +1,19 @@
 package workspace.service.extjs;
 
+import framework.beandata.BeanGenerique;
+import framework.ressource.util.UtilFile;
+import framework.ressource.util.UtilPackageResource;
+import framework.ressource.util.UtilVector;
+import framework.service.SrvGenerique;
+import framework.trace.Trace;
+
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
-
+import java.util.Vector;
 import java.util.zip.ZipEntry;
 
 import javax.servlet.ServletContext;
@@ -17,18 +23,8 @@ import javax.servlet.http.HttpSession;
 
 import org.w3c.dom.Document;
 
-import framework.beandata.BeanGenerique;
-import framework.ressource.util.UtilEncoder;
-import framework.ressource.util.UtilFile;
-import framework.ressource.util.UtilString;
-import framework.service.SrvGenerique;
-import framework.trace.Trace;
-import framework.ressource.util.UtilPackageResource;
-import workspace.adaptateur.application.AdpXmlApplication;
-import workspace.adaptateur.application.AdpXmlServer;
 import workspace.business.BusinessClasspath;
 import workspace.util.UtilExtjs;
-import workspace.util.UtilPath;
 
 public class SrvOptimizeImport extends SrvGenerique {
 
@@ -84,7 +80,21 @@ public class SrvOptimizeImport extends SrvGenerique {
                 int entriesLen = entries.length;
                 for(int j=0;j<entriesLen;j++) {
                     ZipEntry entry = entries[j];
-                    if (!entry.isDirectory()) {
+                    if (entry.isDirectory()) {
+                        try {
+							Vector listClass = UtilFile.dir(path, true, ext, true);
+					        int max = UtilVector.safeSize(listClass);
+					        for(int k = 0; k < max; k++) {
+	                        	String className = (String)UtilVector.safeGetElementAt(listClass, k);
+	                            if (className.indexOf('$') < 0) {
+		                        	className = className.replaceAll("/", ".").substring(0, className.length()-extLen);
+		                            classList.add(className);
+	                            }
+					        }
+						} catch (IOException e) {
+							Trace.ERROR(this, e);
+						}
+                    } else {
                         String entryName=entry.getName();
                         String entryNameLow = entryName.toLowerCase();
                         if (entryNameLow.endsWith(ext) && entryNameLow.indexOf('$') < 0) {
