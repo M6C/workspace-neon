@@ -3,8 +3,14 @@
 <channel>
 <title>To Do</title>
 <description>RSS stream to do</description>
-<pubDate>10/01/2017</pubDate>
+<pubDate>11/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+<item>
+<title>Editeur Java : Bug Optimize Import</title>
+<description>Bug Optimize Import Inclure les classes du /web-inf/classes.</description>
+<pubDate>11/01/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
 <item>
 <title>Editeur Java : Etendre TreeFileExplorer quand on selectionne un onglet deja ouvert</title>
 <description>Etendre TreeFileExplorer quand on selectionne un onglet deja ouvert. Et selectionner le dernier noeud.</description>
