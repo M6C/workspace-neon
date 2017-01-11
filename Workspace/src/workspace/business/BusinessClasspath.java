@@ -35,6 +35,9 @@ public class BusinessClasspath {
 
 		StringBuffer pathClass = new StringBuffer();
 		if(UtilString.isNotEmpty(szAppClasspath)) {
+        	if (!UtilFile.isPathAbsolute(szAppClasspath)) {
+                szAppClasspath = UtilPath.formatPath(domXml, application, szAppClasspath);
+        	}
 		    pathClass.append(szAppClasspath).append(";");
 		}
 		pathClass.append(szClasspath);
