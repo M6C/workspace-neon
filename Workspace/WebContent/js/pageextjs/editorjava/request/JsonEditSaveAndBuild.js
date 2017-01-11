@@ -23,6 +23,7 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
     },
     callbackBuild: function(options, success, response) {
     	var me = this;
+        var me_static = Workspace.editorjava.request.JsonEditSaveAndBuild;
 
 		if (me.build == 'true') {
 			Ext.Ajax.request({
@@ -44,7 +45,7 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
     		    			});
 						}
 					} else {
-		                me.modifyDirty(false);
+		                me_static.modifyDirty(false);
     					Ext.create('Workspace.common.window.WindowTextCompile', jsonData).show();
 					}
 				},
@@ -59,7 +60,7 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
 				params:{filename:filename}
 			});
 		} else {
-		    me.modifyDirty(!success);
+		    me_static.modifyDirty(!success);
 		}
 	},
     callbackAutoDeploy: function(opts, success, response) {
