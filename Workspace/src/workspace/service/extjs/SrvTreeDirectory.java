@@ -1,7 +1,6 @@
 package workspace.service.extjs;
 
 import framework.beandata.BeanGenerique;
-import framework.ressource.util.UtilFile;
 import framework.ressource.util.UtilString;
 import framework.service.SrvGenerique;
 import framework.trace.Trace;
@@ -10,10 +9,8 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.file.Files;
 import java.util.Vector;
 
-import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,6 +20,7 @@ import org.w3c.dom.Document;
 
 import workspace.adaptateur.application.AdpXmlApplication;
 import workspace.adaptateur.application.AdpXmlServer;
+import workspace.util.UtilFile;
 import workspace.util.UtilPath;
 
 public class SrvTreeDirectory extends SrvGenerique {
@@ -131,20 +129,6 @@ public class SrvTreeDirectory extends SrvGenerique {
 	                            	}
 	                                return ret;
 	                            }
-
-	                            private boolean isTextFile(File file) {
-	                                try {
-                                        String type = Files.probeContentType(file.toPath());
-                                        if (type.startsWith("text")) {
-                                            return true;
-                                        } else {
-                                            //type isn't text
-                                            return false;
-                                        }
-	                                } catch(Exception ex) {
-	                                    return false;
-	                                }
-	                            }
 	                        };
                     	}
 
@@ -163,7 +147,7 @@ public class SrvTreeDirectory extends SrvGenerique {
 	                                String leaf = file.isFile() ? "true" : "false";
 	                                String contentType = "directory";
 	                                if(file.isFile())
-	                                    contentType = getTypeByExtension(file);
+	                                    contentType = UtilFile.getTypeByExtension(file);
 	                                boolean bAddJson = true;
 	                                if(UtilString.isNotEmpty(withContentType))
 	                                	bAddJson = withContentType.equals(contentType);
@@ -228,61 +212,17 @@ public class SrvTreeDirectory extends SrvGenerique {
         Trace.DEBUG(this, (new StringBuilder("execute jsonData:")).append(jsonData).toString());
     }
 
-    // http://www.programcreek.com/java-api-examples/index.php?class=java.nio.file.Files&method=probeContentType
-    // http://www.java-forums.org/advanced-java/82143-how-check-if-file-plain-text-binary.html
-    // http://stackoverflow.com/questions/3093580/how-to-check-whether-the-file-is-binary
-    // * More elegant solution Register FileTypeDetector Service
-    // http://stackoverflow.com/questions/29880198/how-to-write-a-filetypedetector-for-zip-archives
-    private String getTypeByExtension(File file) throws IOException {
-        String type = Files.probeContentType(file.toPath());
-        if (UtilString.isNotEmpty(type)) {
-            return type;
+    private boolean isTextFile(File file) {
+        try {
+            String type = UtilFile.getTypeByExtension(file);
+            if (type.startsWith("text")) {
+                return true;
+            } else {
+                //type isn't text
+                return false;
+            }
+        } catch(Exception ex) {
+            return false;
         }
-        String path = file.getAbsolutePath();
-        int index = path.lastIndexOf('.');
-        if(index > -1) {
-            String extension = path.substring(index + 1);
-            switch (extension.toLowerCase()){
-                case "java":
-                    return "text/java";
-                case "php":
-                    return "text/php";
-                case "json":
-                    return "text/json";
-                case "css":
-                    return "text/css";
-                case "js":
-                    return "text/javascript";
-                case "html":
-                    return "text/html";
-                case "txt":
-                    return "text/plain";
-                case "xml":
-                    return "text/xml";
-                case "png":
-                    return "image/png";
-                case "jpeg":
-                    return "image/jpeg";
-                case "jpg":
-                    return "image/jpeg";
-                case "gif":
-                    return "image/gif";
-                case "mp4":
-                    return "video/mp4";
-                case "mp3":
-                    return "audio/mpeg";
-                case "ogg":
-                    return "audio/ogg";
-                case "wav":
-                    return "audio/vnd.wave";
-                case "zip":
-                    return "application/zip";
-                case "gzip":
-                    return "application/gzip";
-                case "exe":
-                    return "application/octet-stream";
-             }
-        }                            
-        return new MimetypesFileTypeMap().getContentType(file);//"unknown";
     }
 }

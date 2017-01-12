@@ -1,5 +1,9 @@
 package workspace.util;
 
+import com.glaforge.i18n.io.CharsetToolkit;
+
+import framework.ressource.util.UtilString;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -9,14 +13,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URLEncoder;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.glaforge.i18n.io.CharsetToolkit;
+import javax.activation.MimetypesFileTypeMap;
 
-import framework.trace.Trace;
-
-public class UtilFile {
+public class UtilFile extends framework.ressource.util.UtilFile {
 
     public static String[] read(File file, String charset) throws FileNotFoundException, IOException {
     	InputStream input = new FileInputStream(file);
@@ -76,5 +79,63 @@ public class UtilFile {
 	    		input.close();
 			}
 		}
+    }
+
+    // http://www.programcreek.com/java-api-examples/index.php?class=java.nio.file.Files&method=probeContentType
+    // http://www.java-forums.org/advanced-java/82143-how-check-if-file-plain-text-binary.html
+    // http://stackoverflow.com/questions/3093580/how-to-check-whether-the-file-is-binary
+    // * More elegant solution Register FileTypeDetector Service
+    // http://stackoverflow.com/questions/29880198/how-to-write-a-filetypedetector-for-zip-archives
+    public static String getTypeByExtension(File file) throws IOException {
+        String type = Files.probeContentType(file.toPath());
+        if (UtilString.isNotEmpty(type)) {
+            return type;
+        }
+        String path = file.getAbsolutePath();
+        int index = path.lastIndexOf('.');
+        if(index > -1) {
+            String extension = path.substring(index + 1);
+            switch (extension.toLowerCase()){
+                case "java":
+                    return "text/java";
+                case "php":
+                    return "text/php";
+                case "json":
+                    return "text/json";
+                case "css":
+                    return "text/css";
+                case "js":
+                    return "text/javascript";
+                case "html":
+                    return "text/html";
+                case "txt":
+                    return "text/plain";
+                case "xml":
+                    return "text/xml";
+                case "png":
+                    return "image/png";
+                case "jpeg":
+                    return "image/jpeg";
+                case "jpg":
+                    return "image/jpeg";
+                case "gif":
+                    return "image/gif";
+                case "mp4":
+                    return "video/mp4";
+                case "mp3":
+                    return "audio/mpeg";
+                case "ogg":
+                    return "audio/ogg";
+                case "wav":
+                    return "audio/vnd.wave";
+                case "zip":
+                    return "application/zip";
+                case "gzip":
+                    return "application/gzip";
+                case "exe":
+                    return "application/octet-stream";
+             }
+        }                            
+        return new MimetypesFileTypeMap().getContentType(file);//"unknown";
     }
 }
