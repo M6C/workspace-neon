@@ -1,7 +1,14 @@
 package workspace.business;
 
+import framework.ressource.util.UtilFile;
+import framework.ressource.util.UtilPackage;
+import framework.ressource.util.UtilString;
+import framework.ressource.util.UtilVector;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import javax.servlet.ServletContext;
@@ -9,16 +16,17 @@ import javax.xml.transform.TransformerException;
 
 import org.w3c.dom.Document;
 
-import framework.ressource.util.UtilFile;
-import framework.ressource.util.UtilPackage;
-import framework.ressource.util.UtilString;
-import framework.ressource.util.UtilVector;
 import workspace.adaptateur.application.AdpXmlApplication;
 import workspace.util.UtilPath;
 
 public class BusinessClasspath {
 
 	public static String getClassPath(ServletContext context, String application, Document domXml) throws TransformerException, IOException {
+		List<String> list = getClassPathList(context, application, domXml);
+		return String.join(";", list);
+	}
+
+	public static List<String> getClassPathList(ServletContext context, String application, Document domXml) throws TransformerException, IOException {
 		//Recuperation du ClassPath
         String szClasspath = AdpXmlApplication.getClassPathAll(context, domXml, application);
         szClasspath = (szClasspath == null) ? szClasspath : UtilPath.formatPath(domXml, szClasspath);
@@ -30,16 +38,16 @@ public class BusinessClasspath {
 		// Recuperation du repertoire home de la jre
 		String szJreHome = AdpXmlApplication.getJdkJrePathByName(context, domXml, application, "Home");
 
-		StringBuffer pathClass = new StringBuffer();
+		List<String> pathClass = new ArrayList<String>();
 //		if(UtilString.isNotEmpty(szAppClasspath)) {
 //        	if (!UtilFile.isPathAbsolute(szAppClasspath)) {
 //                szAppClasspath = UtilPath.formatPath(domXml, application, szAppClasspath);
 //        	}
-//		    pathClass.append(szAppClasspath).append(";");
+//		    pathClass.add(szAppClasspath);
 //		}
-		pathClass.append(szClasspath);
+		pathClass.add(szClasspath);
 		addJarToClassPath(context.getRealPath("WEB-INF"), pathClass);
-		pathClass.append(";").append(UtilPackage.getPackageClassPath());
+		pathClass.add(UtilPackage.getPackageClassPath());
 		if(UtilString.isNotEmpty(szJdkpath)) {
 		    File jdkPath = new File(szJdkpath);
 		    if(jdkPath.exists()) {
@@ -60,15 +68,15 @@ public class BusinessClasspath {
 		        }
 		    }
 		}
-		return pathClass.toString();
+		return pathClass;
 	}
 
 
-    private static void addJarToClassPath(String path, StringBuffer classpath) throws IOException {
+    private static void addJarToClassPath(String path, List<String> classpath) throws IOException {
         Vector listJar = UtilFile.dir(path, true, ".jar");
         int max = UtilVector.safeSize(listJar);
         for(int i = 0; i < max; i++) {
-            classpath.append(";").append((String)UtilVector.safeGetElementAt(listJar, i));
+            classpath.add((String)UtilVector.safeGetElementAt(listJar, i));
         }
 
     }

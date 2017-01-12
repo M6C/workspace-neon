@@ -104,13 +104,27 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
                                     listImportUsed.push(list[0]);  
                                     me.replaceImport(editor, position, value, listImportUsed);
                                 } else {
+                                	var textConverter = function(value, record) {
+                                        return record.raw.classname;
+                                    };
+                                	var dataConverter = function(value, record) {
+                                        return record.raw.classname + ';' + record.raw.path;
+                                    };
+
                                     // Do Replace Import on 1st Window because WindowCombo is ASYNCHRONOUS and the 1st Window will be the last showing window
         			                var doReplaceImport = (index == 0);
-        			                var msgbox = Ext.create('Workspace.common.window.WindowCombo', {value: list, doReplaceImport: doReplaceImport});
+        			                var msgbox = Ext.create('Workspace.common.window.WindowCombo', {value: list, doReplaceImport: doReplaceImport, textConverter: textConverter, dataConverter: dataConverter, width:1600});
+        			                msgbox.textField.on('select', function(combo, records, option) {
+        			                	if (records.length == 1) {
+	        			                	var path = records[0].data.data.split(";")[1];
+        			                	}
+        			                	msgbox.setTitle(path);
+        			                });
         			                msgbox.prompt("Optimize Import", classname,
                                         function (btn, text, option) {
                                             if (btn == 'ok') {
-                                                listImportUsed.push(text);
+                			                	var classname = text.split(";")[0];
+                                                listImportUsed.push(classname);
                                             }
                                             if (this.doReplaceImport) {
                                                 me.replaceImport(editor, position, value, listImportUsed);

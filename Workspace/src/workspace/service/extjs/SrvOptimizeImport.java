@@ -41,27 +41,32 @@ public class SrvOptimizeImport extends SrvGenerique {
 	        String application = (String)bean.getParameterDataByName("application");
 	        String classname = (String)bean.getParameterDataByName("classname");
 	
-	        String classpath = BusinessClasspath.getClassPath(context, application, domXml);
+	        List<String> classpath = BusinessClasspath.getClassPathList(context, application, domXml);
 	
 	        Map<String, List<String>> mapListClass = new HashMap<String, List<String>>();
 	        String[] classnameList = classname.split(";");
-	        List<String> classpathList = getClassList(classpath);
-	        for(String classnameItem : classnameList) {
-	            for(String classpathItem : classpathList) {
-	                if (classpathItem.endsWith("." + classnameItem)) {
-	                    List list = mapListClass.get(classnameItem);
-	                    if (list == null) {
-	                        list = new ArrayList<String>();
-	                        mapListClass.put(classnameItem, list);
-	                    }
-	                    list.add(classpathItem);
-	                }
-	            }
+	        Map<String, List<String>> mapPathClass = getClassList(classpath);
+	        for(String pathKey : mapPathClass.keySet()) {
+	        	List<String> classpathList = mapPathClass.get(pathKey);
+		        for(String classnameItem : classnameList) {
+		            for(String classpathItem : classpathList) {
+		                if (classpathItem.endsWith("." + classnameItem)) {
+		                    List list = mapListClass.get(classnameItem);
+		                    if (list == null) {
+		                        list = new ArrayList<String>();
+		                        mapListClass.put(classnameItem, list);
+		                    }
+		                    String path = pathKey.replaceAll("\\\\", "\\\\\\\\");
+		                    String jsonClasspathItem = "{classname:'" + classpathItem + "', path:'" + path + "'}";
+		                    list.add(jsonClasspathItem);
+		                }
+		            }
+		        }
 	        }
 	
 	        for(String classnameItem : mapListClass.keySet()) {
 	            List<String> list = mapListClass.get(classnameItem);
-	            classpathJson.add("{classname: '" + classnameItem + "', list:['" + String.join("','", list) + "']}");
+	            classpathJson.add("{classname: '" + classnameItem + "', list:[" + String.join(",", list) + "]}");
 	        }
 	        jsonImport = String.join(",", classpathJson);
 
@@ -73,14 +78,10 @@ public class SrvOptimizeImport extends SrvGenerique {
 		}
     }
 
-    private List<String> getClassList(String pathClass) throws IOException {
+    private Map<String, List<String>> getClassList(List<String> listPath) throws IOException {
         String ext = ".class";
         int extLen = ext.length();
-        List<String> classList = new ArrayList<String>();
-        List<String> listPath = new ArrayList<String>();
-
-        String[] splited = pathClass.split(";");
-        for(int i=0 ; i<splited.length ; listPath.add(splited[i++]));
+        Map<String, List<String>> mapPathClass = new HashMap<String, List<String>>();
 
         int size = listPath.size();
         for(int i=0 ; i<size ; i++) {
@@ -102,7 +103,7 @@ public class SrvOptimizeImport extends SrvGenerique {
                 	String className = (String)UtilVector.safeGetElementAt(listClass, k);
                     if (className.endsWith(ext) && className.indexOf('$') < 0) {
                     	className = className.replaceAll("[/\\\\]", ".").substring(0, className.length()-extLen);
-                        classList.add(className);
+                        addClass(mapPathClass, path, className);
                     } else if (className.endsWith(".jar")) {
                     	listPath.add(new File(new File(path), className).getAbsolutePath());
                     	size++;
@@ -123,12 +124,21 @@ public class SrvOptimizeImport extends SrvGenerique {
                         if (entryNameLow.endsWith(ext) && entryNameLow.indexOf('$') < 0) {
                         	String className = entryName.replaceAll("[/\\\\]", ".").substring(0, entryName.length()-extLen);
                         	Trace.DEBUG("SrvOptimizeImport file[" + j + "/" + entriesLen + "] className:" + className);
-                            classList.add(className);
+                            addClass(mapPathClass, path, className);
                         }
                     }
                 }
             }
         }
-        return classList;
+        return mapPathClass;
+    }
+
+    private void addClass(Map<String, List<String>> mapPathClass, String path, String className) {
+        List<String> list = mapPathClass.get(path);
+        if (list == null) {
+            list = new ArrayList<String>();
+            mapPathClass.put(path, list);
+        }
+        list.add(className);
     }
 }

@@ -15,10 +15,20 @@ Ext.define('Workspace.common.window.WindowCombo', {
         var me = this;
         var data = me.value;
 
-        var store = Ext.create('Ext.data.ArrayStore', {
-            fields: [{name: 'text',  convert: function(value, record) {
+        var textConverter = me.textConverter;
+        if (!Ext.isDefined(textConverter)) {
+        	textConverter = function(value, record) {
                 return record.raw;
-            }}],
+            };
+        }
+        var dataConverter = me.dataConverter;
+        if (!Ext.isDefined(dataConverter)) {
+        	dataConverter = function(value, record) {
+                return record.raw;
+            };
+        }
+        var store = Ext.create('Ext.data.ArrayStore', {
+            fields: [{name: 'text',  convert: textConverter}, {name: 'data',  convert: dataConverter}],
             data: data
         });
 
@@ -27,7 +37,7 @@ Ext.define('Workspace.common.window.WindowCombo', {
             typeAhead: true,
     		width:230,
             displayField: 'text',
-            valueField: 'text',
+            valueField: 'data',
             store: store,
             autoSelect: true,
             minChars: 1,
