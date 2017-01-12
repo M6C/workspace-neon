@@ -22,7 +22,7 @@ public class BusinessClasspath {
 		//Recuperation du ClassPath
         String szClasspath = AdpXmlApplication.getClassPathAll(context, domXml, application);
         szClasspath = (szClasspath == null) ? szClasspath : UtilPath.formatPath(domXml, szClasspath);
-        String szAppClasspath = AdpXmlApplication.getPathByName(context, domXml, application, "Class");//, false);
+//        String szAppClasspath = AdpXmlApplication.getPathByName(context, domXml, application, "Class");//, false);
 		//Recuperation de la home du jdk
 		String szJdkpath = AdpXmlApplication.getJdkPathByName(context, domXml, application, "Home");
 		// Recuperation du repertoire lib du jdk
@@ -31,12 +31,12 @@ public class BusinessClasspath {
 		String szJreHome = AdpXmlApplication.getJdkJrePathByName(context, domXml, application, "Home");
 
 		StringBuffer pathClass = new StringBuffer();
-		if(UtilString.isNotEmpty(szAppClasspath)) {
-        	if (!UtilFile.isPathAbsolute(szAppClasspath)) {
-                szAppClasspath = UtilPath.formatPath(domXml, application, szAppClasspath);
-        	}
-		    pathClass.append(szAppClasspath).append(";");
-		}
+//		if(UtilString.isNotEmpty(szAppClasspath)) {
+//        	if (!UtilFile.isPathAbsolute(szAppClasspath)) {
+//                szAppClasspath = UtilPath.formatPath(domXml, application, szAppClasspath);
+//        	}
+//		    pathClass.append(szAppClasspath).append(";");
+//		}
 		pathClass.append(szClasspath);
 		addJarToClassPath(context.getRealPath("WEB-INF"), pathClass);
 		pathClass.append(";").append(UtilPackage.getPackageClassPath());
