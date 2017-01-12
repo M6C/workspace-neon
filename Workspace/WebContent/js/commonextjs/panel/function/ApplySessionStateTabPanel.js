@@ -12,10 +12,10 @@ Ext.define('Workspace.common.panel.function.ApplySessionStateTabPanel', {
 		    getState: function() { 
 			    console.debug('Workspace.common.panel.function.ApplySessionStateTabPanel apply getState');
 		        var s = {raw: []}; 
-		        if (Ext.isDefined(panel.getActiveTab())) {
+		        if (!Ext.isEmpty(panel.getActiveTab())) {
 					s.activeTab = panel.getActiveTab().raw;
 		        }
-		        if (Ext.isDefined(panel.items)) {
+		        if (!Ext.isEmpty(panel.items)) {
 					var i = 0;
 			        panel.items.each(function(tab) {
 						s.raw[i++] = tab.raw;
@@ -33,8 +33,8 @@ Ext.define('Workspace.common.panel.function.ApplySessionStateTabPanel', {
 		panel.on('render', function(component, option) {
 		    console.debug('Workspace.common.panel.function.ApplySessionStateTabPanel apply render');
 		    var stateData = panel.stateData;
-			if (Ext.isDefined(stateData)) {
-			    if(Ext.isDefined(stateData.raw)) {
+			if (!Ext.isEmpty(stateData)) {
+			    if(!Ext.isEmpty(stateData.raw)) {
     		    	Ext.Array.each(stateData.raw, function(tab) {
     		    		if (tab != null) {
     		    			panel.onAddTab(tab);
@@ -42,7 +42,7 @@ Ext.define('Workspace.common.panel.function.ApplySessionStateTabPanel', {
     				});
     			}
 
-			    if(Ext.isDefined(stateData.activeTab)) {
+			    if(!Ext.isEmpty(stateData.activeTab)) {
 			        panel.setActiveTab(stateData.activeTab.id);
 			    }
 
