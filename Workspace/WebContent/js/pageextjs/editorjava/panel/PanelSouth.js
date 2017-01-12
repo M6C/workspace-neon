@@ -58,5 +58,13 @@ Ext.define('Workspace.editorjava.panel.PanelSouth', {
     	gridTrace.getSelectionModel().select(0);
     	gridTrace.doLayout();
     	this.doLayout();
+    	this.up('viewport').doLayout();
+
+		var mainCenterPanel=Ext.getCmp('mainCenterPanel');
+		var tab = mainCenterPanel.getActiveTab();
+		tab.doLayout();
+
+        var editor = ace.edit(tab.panelEditorId);//tab.getComponent(tab.panelEditorId);
+        editor.resize(true);
 	}
 }, function() {Workspace.tool.Log.defined('Workspace.editorjava.panel.PanelSouth');});
