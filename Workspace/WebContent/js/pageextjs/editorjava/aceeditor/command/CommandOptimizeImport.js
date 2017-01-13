@@ -107,23 +107,38 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
                                 	var textConverter = function(value, record) {
                                         return record.raw.classname;
                                     };
-                                	var dataConverter = function(value, record) {
-                                        return record.raw.classname + ';' + record.raw.path;
-                                    };
 
                                     // Do Replace Import on 1st Window because WindowCombo is ASYNCHRONOUS and the 1st Window will be the last showing window
         			                var doReplaceImport = (index == 0);
-        			                var msgbox = Ext.create('Workspace.common.window.WindowCombo', {value: list, doReplaceImport: doReplaceImport, textConverter: textConverter, dataConverter: dataConverter, width:1600});
+        			                var msgbox = Ext.create('Workspace.common.window.WindowCombo', {value: list, doReplaceImport: doReplaceImport, textConverter: textConverter, width:1600, resizable:true});
+
         			                msgbox.textField.on('select', function(combo, records, option) {
+        			                	var path = '';
         			                	if (records.length == 1) {
-	        			                	var path = records[0].data.data.split(";")[1];
+	        			                	path = records[0].data.data.classname;//path;
         			                	}
         			                	msgbox.setTitle(path);
         			                });
+
+        			                var onSpecialkey = function (field, e) {
+        			                	var key = e.getKey();
+        			                	if (key == e.UP || key == e.DOWN) {
+
+        			                    	var idx = field.idxFocus;
+	        			                    if (Ext.isDefined(idx) && idx >= 0) {
+	        			                		var path = field.store.data.items[idx].data.data.classname;//path;
+		        			                    msgbox.setTitle(path);
+	        			                    }
+        			                	}
+        			                };
+
+        			                // Add listener no need to use Ext.Function.createSequence. Because old listener is not removed.
+        			                msgbox.textField.on('specialkey', onSpecialkey);
+
         			                msgbox.prompt("Optimize Import", classname,
                                         function (btn, text, option) {
                                             if (btn == 'ok') {
-                			                	var classname = text.split(";")[0];
+                			                	var classname = text.classname;
                                                 listImportUsed.push(classname);
                                             }
                                             if (this.doReplaceImport) {

@@ -10,6 +10,15 @@ Ext.define('Workspace.tool.Log', {
 			var textOut = Ext.Date.format(dt, Workspace.tool.Log.currentPattern)+' '+text;
 			console.info(textOut);
 		}
+		,
+		logAllEvent: function(component, logFn) {
+			if (!Ext.isDefined(logFn)) {
+				logFn = function(evname) {
+		        	console.log(evname, arguments);
+		        }
+			}
+	        Ext.util.Observable.capture(component, logFn);
+		}
 	}
 
 }, function() {console.info(Ext.Date.format(new Date(), Workspace.tool.Log.currentPattern)+' Workspace.tool.Log');});
