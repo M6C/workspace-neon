@@ -58,7 +58,7 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 		        panel
 		    ],
 		    listeners : {
-		    	'show': function() {
+		    	'show': function(tab, option) {
 
 					var editor = ace.edit(me.panelEditorId);
 					Ext.apply(editor, {
@@ -80,23 +80,13 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 					Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandOptimizeImport');
 				    Workspace.editorjava.aceeditor.command.CommandOptimizeImport.addCommand(editor);
 
+                    if (Ext.isDefined(me.tab) && Ext.isDefined(editor.raw)) {
+    		            me.tab.setTooltip('encoding:' + editor.raw.encoding);
+                    }
+
 					var callBackSuccess = function() {
-					    editor.focus();
-					    var cursorRow = (Ext.isDefined(editor.cursorRow) ? editor.cursorRow : 0);
-					    var cursorCol = (Ext.isDefined(editor.cursorCol) ? editor.cursorCol : 0);
-
-					    editor.scrollToLine(cursorRow+1, true, false, function(){});
-						editor.gotoLine(cursorRow+1, cursorCol, false);
-
-					    var scrollTop = (Ext.isDefined(editor.changeScrollTop) ? editor.changeScrollTop : 0);
-					    var scrollLeft = (Ext.isDefined(editor.changeScrollLeft) ? editor.changeScrollLeft : 0);
-	
-						editor.getSession().setScrollTop(scrollTop);
-						editor.getSession().setScrollLeft(scrollLeft);
-
-                        if (Ext.isDefined(me.tab)) {
-				            me.tab.setTooltip('encoding:' + editor.raw.encoding);
-                        }
+					    me.editorFocusAndScroll(me);
+					    me.expandTree(tab);
 					}
 
 					if (!editor.dirty) {
@@ -106,53 +96,6 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 					}
 		    	}
 				,
-				'added': function(tab, container, position, option) {
-					console.debug('Workspace.editorjava.panel.center.PanelCenterEditor added DelayedTask');
-					var cnt = 10;
-					var field = 'text';
-					var separator = '\\';
-
-					var comboStore = Ext.getCmp('comboProject').getStore();
-					var tree = Ext.getCmp('treeDirectory');
-					var current = tree.getRootNode();
-					var application;
-					var task;
-
-					var delayedFnTree = function(){
-				        if(current.isLoading() && (cnt-- > 0)) {
-							// Waiting...
-							console.debug('Workspace.editorjava.panel.center.PanelCenterEditor tab \''+me.panelId+'\' Waiting... ('+field+':'+current.get(field)+',cnt:'+cnt+',loading:'+current.isLoading()+')');
-							task.delay(500, delayedFnTree);
-				        } else {
-							var path = separator + tab.raw.path;
-
-							tree.expandPath(path, field, separator, function(success, node) {
-                				var editor = ace.edit(tab.panelEditorId);
-    			                editor.focus();
-    			                tab.focus();
-							});
-				        }
-					};
-
-					var delayedFnCombo = function(){
-				        if(comboStore.isLoading() && (cnt-- > 0)) {
-							// Waiting...
-							console.debug('Workspace.editorjava.panel.center.PanelCenterEditor tab \''+me.panelId+'\' Waiting... (Combo Project Loading - Tab project:\'' + tab.raw.application + '\',cnt:'+cnt+',loading:'+comboStore.isLoading()+')');
-							task.delay(500, delayedFnCombo);
-				        } else {
-				        	application = Ext.getCmp('project').value;
-							if (Ext.isDefined(tab.raw) && tab.raw.application != application) {
-								console.debug('Workspace.editorjava.panel.center.PanelCenterEditor tab \''+me.panelId+'\' is not on current project ! Tab project:\'' + tab.raw.application + '\' Current project:\'' + application + '\'');
-								return true;
-							} else {
-								task.delay(0, delayedFnTree);
-							}
-				        }
-					};
-
-					task = new Ext.util.DelayedTask();
-					task.delay(0, delayedFnCombo);
-				},
 				removed: function(tab, container, option) {
 			        // Return 
 			        // true:if each method have running to the end (id not find)
@@ -169,5 +112,70 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 		    }
 	    });
 		me.callParent(arguments);
+	}
+	,
+	expandTree: function(tab) {
+		console.debug('Workspace.editorjava.panel.center.PanelCenterEditor expandTree');
+		var me = this;
+		var cnt = 10;
+		var field = 'text';
+		var separator = '\\';
+
+		var comboStore = Ext.getCmp('comboProject').getStore();
+		var tree = Ext.getCmp('treeDirectory');
+		var current = tree.getRootNode();
+		var application;
+		var task;
+
+		var delayedFnTree = function(){
+	        if(current.isLoading() && (cnt-- > 0)) {
+				// Waiting...
+				console.debug('Workspace.editorjava.panel.center.PanelCenterEditor tab \''+me.panelId+'\' Waiting... ('+field+':'+current.get(field)+',cnt:'+cnt+',loading:'+current.isLoading()+')');
+				task.delay(500, delayedFnTree);
+	        } else {
+				var path = separator + tab.raw.path;
+
+				tree.expandPath(path, field, separator, function(success, node) {
+    				var editor = ace.edit(tab.panelEditorId);
+	                editor.focus();
+	                tab.focus();
+				});
+	        }
+		};
+
+		var delayedFnCombo = function(){
+	        if(comboStore.isLoading() && (cnt-- > 0)) {
+				// Waiting...
+				console.debug('Workspace.editorjava.panel.center.PanelCenterEditor tab \''+me.panelId+'\' Waiting... (Combo Project Loading - Tab project:\'' + tab.raw.application + '\',cnt:'+cnt+',loading:'+comboStore.isLoading()+')');
+				task.delay(500, delayedFnCombo);
+	        } else {
+	        	application = Ext.getCmp('project').value;
+				if (Ext.isDefined(tab.raw) && tab.raw.application != application) {
+					console.debug('Workspace.editorjava.panel.center.PanelCenterEditor tab \''+me.panelId+'\' is not on current project ! Tab project:\'' + tab.raw.application + '\' Current project:\'' + application + '\'');
+					return true;
+				} else {
+					task.delay(0, delayedFnTree);
+				}
+	        }
+		};
+
+		task = new Ext.util.DelayedTask();
+		task.delay(0, delayedFnCombo);
+	}
+	,
+	editorFocusAndScroll: function(me) {
+		var editor = ace.edit(me.panelEditorId);
+	    editor.focus();
+	    var cursorRow = (Ext.isDefined(editor.cursorRow) ? editor.cursorRow : 0);
+	    var cursorCol = (Ext.isDefined(editor.cursorCol) ? editor.cursorCol : 0);
+
+	    editor.scrollToLine(cursorRow+1, true, false, function(){});
+		editor.gotoLine(cursorRow+1, cursorCol, false);
+
+	    var scrollTop = (Ext.isDefined(editor.changeScrollTop) ? editor.changeScrollTop : 0);
+	    var scrollLeft = (Ext.isDefined(editor.changeScrollLeft) ? editor.changeScrollLeft : 0);
+
+		editor.getSession().setScrollTop(scrollTop);
+		editor.getSession().setScrollLeft(scrollLeft);
 	}
 }, function() {Workspace.tool.Log.defined('Workspace.editorjava.panel.center.PanelCenterEditor');});

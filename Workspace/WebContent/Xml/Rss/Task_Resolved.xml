@@ -3,8 +3,14 @@
 <channel>
 <title>Resolved</title>
 <description>RSS stream resolved</description>
-<pubDate>12/01/2017</pubDate>
+<pubDate>15/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+<item>
+<title>Editeur Java : Etendre TreeFileExplorer quand on selectionne un onglet deja ouvert</title>
+<description>Etendre TreeFileExplorer quand on selectionne un onglet deja ouvert. Et selectionner le dernier noeud.</description>
+<pubDate>15/01/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
 <item>
 <title>Editeur Java : Bug Affichage de la trace d'erreur de compilation de class</title>
 <description>Corriger l'affichage de la trace d'erreur de compilation de class.</description>
@@ -57,6 +63,12 @@
 <title>Editeur Java : Optimisation des imports pour les fichiers java</title>
 <description>Faire l'optimisation des imports Ctrl+Shift+O comme sur Eclipse.</description>
 <pubDate>10/01/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
+<item>
+<title>Editeur Java : Bug View Port South</title>
+<description>Corriger le bug de redimentionnement du View Port quand on ajoute les infos dans la partie South qui bouffe la partie Center.</description>
+<pubDate>06/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 </item>
 <item>

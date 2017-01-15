@@ -30,12 +30,6 @@
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 </item>
 <item>
-<title>Editeur Java : Etendre TreeFileExplorer quand on selectionne un onglet deja ouvert</title>
-<description>Etendre TreeFileExplorer quand on selectionne un onglet deja ouvert. Et selectionner le dernier noeud.</description>
-<pubDate>10/01/2017</pubDate>
-<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
-</item>
-<item>
 <title>Editeur Java : Bug Ctrl+Shift+R</title>
 <description>Ne fonctionne plus ou pas tout le temps.</description>
 <pubDate>09/01/2017</pubDate>
@@ -98,12 +92,6 @@
 <item>
 <title>Editeur Java : Bug Scroll Tree Explorer File</title>
 <description>Corriger le bug de scrolling Tree Explorer File.</description>
-<pubDate>03/01/2017</pubDate>
-<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
-</item>
-<item>
-<title>Editeur Java : Bug View Port South</title>
-<description>Corriger le bug de redimentionnement du View Port quand on ajoute les infos dans la partie South qui bouffe la partie Center.</description>
 <pubDate>03/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 </item>
