@@ -54,20 +54,17 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabSaveAll',  {
                     /**
                      * Execute Save file
                      */
-                    // var callback = Ext.Function.createSequence (requestSave.callback, function(options, success, response) {
-                    var callback = function(options, success, response) {
-            			console.debug('Workspace.editorjava.panel.center.function.AddTabSaveAll tab \''+filename+'\' Saved.');
-                        fileSavedList.push(filename);
-    			        list.push(filename);
-                    };
-                    // });
         			var requestSave = Ext.create('Workspace.editorjava.request.JsonEditSaveFile', {
         				params:{filename:filename,content:value},
         				panelEditorId:panelEditorId,
-        				showMessage: false,
-        				callback: callback
+        				showMessage: false
         			});
-                    // Ext.apply(requestSave, {callback: callback});
+                    var callback = Ext.Function.createSequence (requestSave.callback, function(options, success, response) {
+            			console.debug('Workspace.editorjava.panel.center.function.AddTabSaveAll tab \''+filename+'\' Saved.');
+                        fileSavedList.push(filename);
+    			        list.push(filename);
+                    });
+                    Ext.apply(requestSave, {callback: callback});
 
                     requestSave.request();
     			} else {
@@ -84,14 +81,14 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabSaveAll',  {
                     var reqValue = Ext.Object.getValues(requestList);
                     var filSize = fileSavedList.length;
                     var reqSize = reqValue.length;
-        
+
                     /**
                      * Show Message
                      */
                     var msg = "Saving complete. " + filSize + " file" + (filSize > 1 ? "s" : "") + ".";
                     var detail = undefined;
                     if (reqSize > 0) {
-                        detail = "Waiting for building/deploy " + reqSize + " project" + (reqSize > 1 ? "s" : "") + " complet.";
+                        msg += "<br>Waiting for build/deploy " + reqSize + " project" + (reqSize > 1 ? "s" : "") + " complet.";
                     }
             		Workspace.common.tool.Pop.info(me, msg, {detail:detail});
 

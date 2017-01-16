@@ -51,9 +51,9 @@ public class SrvAutoDeploy extends SrvAutoDeployWebContent {
 	        // Deploy modified Web Content
 	        String pathWebRoot = AdpXmlApplication.getPathByName(context, dom, application, "WebContent");
         	if (UtilString.isEmpty(pathWebRoot)) {
-                String msg = "No autoDeploy '" + filename + "' - path 'WebContent' not found";
+                String msg = "No autoDeploy '" + application + "' - path 'WebContent' not found";
 	            Trace.DEBUG(this, msg);
-	        	json.add("{success:false, src:'" + filename + "', dst:'', msg:'" + formatJsonMessage(msg) + "'}");
+	        	json.add("{success:false, src:'" + application + "', dst:'', msg:'" + formatJsonMessage(msg) + "'}");
 	    		return json;
         	}
         	pathWebRoot = UtilPath.formatPath(dom, application, pathWebRoot);

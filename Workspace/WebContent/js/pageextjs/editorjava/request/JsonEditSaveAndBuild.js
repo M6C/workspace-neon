@@ -51,11 +51,17 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
 			});
 		}
 		else if (me.autoDeploy == true) {
-			var filename = Ext.isDefined(options) && Ext.isDefined(options.params) ? options.params.filename : undefined;
+		    var params= {};
+			if (Ext.isDefined(options) && Ext.isDefined(options.params)) {
+			    params['filename'] = options.params.filename;
+			}
+			if (Ext.isDefined(me.application)) {
+			    params['application'] = me.application;
+			}
 			Ext.Ajax.request({
 				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonAutoDeploy',
 				callback:me.callbackAutoDeploy,
-				params:{filename:filename}
+				params:params
 			});
 		}
 	},
