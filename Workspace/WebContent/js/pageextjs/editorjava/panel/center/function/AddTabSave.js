@@ -24,13 +24,10 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabSave',  {
 			var className = editor.className;
 			var autoDeploy = editor.autoDeploy;
 
-			Ext.create('Workspace.editorjava.request.JsonEditSaveAndBuild',
+			Ext.create('Workspace.editorjava.request.JsonEditSaveFile',
 			{
 				params:{filename:panelId,content:value},
 				application:application,
-				build:editor.build,
-				className:className,
-				autoDeploy:autoDeploy,
 				panelEditorId:panelEditorId
 			}).request();
 		}
