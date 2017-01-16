@@ -54,12 +54,6 @@
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 </item>
 <item>
-<title>Editeur Java : Ctrl+Shift+S</title>
-<description>Ajouter un raccourci Ctrl+Shift+S pour savegarder tous les fichiers modifies. Lancer le build si necessaire. Et redeployer les fichiers modifie qu'une seule fois.</description>
-<pubDate>04/01/2017</pubDate>
-<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
-</item>
-<item>
 <title>Editeur Java : Deployement automatique</title>
 <description>Revenir sur la fonctionnalites de deployement automatique. Pour un fichier Web a deployer, deployer que le fichier avec un Toast pour dire qu'il a ?t? bien deployer et en attendre de deployement des autres fichiers. Puis tenter de redeployer tous les fichiers du projets comme actuellement avec un Toast pour dire le nombre de fichier deploye.</description>
 <pubDate>04/01/2017</pubDate>
