@@ -6,6 +6,12 @@
 <pubDate>15/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 <item>
+<title>Editeur Java : Afficher chemin des fichiers dans les Onglets</title>
+<description>Afficher chemin des fichiers dans les Onglets ouvert.</description>
+<pubDate>15/01/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
+<item>
 <title>Editeur Java : Auto deploy que sur 'Ctrl+Shift+S' et non plus sur 'Ctrl+S'</title>
 <description>Auto deploy que sur 'Ctrl+Shift+S' et non plus sur 'Ctrl+S'. A essayer, pour voir si c'est bien à l'utilisation. [!] Attention que l'on risque de sauvegarder et et deployer des modifications que l'on ne voudrait pas forcement sauvegarder.</description>
 <pubDate>15/01/2017</pubDate>
@@ -26,6 +32,12 @@
 <item>
 <title>Editeur Java : Warning à la fermeture des onglets Dirty.</title>
 <description>Afficher un Warning à la fermeture des onglets Dirty.</description>
+<pubDate>15/01/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
+<item>
+<title>Editeur Java : Reload Tree File Explorer</title>
+<description>Etendre les chemins des onglets ouverts au changement de projet. Meme principe qu'a la recuperation de l'etat a l'ouverture de la page</description>
 <pubDate>15/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 </item>

@@ -3,7 +3,7 @@
 <channel>
 <title>To Do</title>
 <description>RSS stream to do</description>
-<pubDate>12/01/2017</pubDate>
+<pubDate>15/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 <item>
 <title>Editeur Java : Mode tablette/smartphone.</title>
@@ -36,12 +36,6 @@
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 </item>
 <item>
-<title>Editeur Java : Afficher chemin des fichiers dans les Onglets</title>
-<description>Afficher chemin des fichiers dans les Onglets ouvert.</description>
-<pubDate>04/01/2017</pubDate>
-<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
-</item>
-<item>
 <title>File Explorer : Afficher chemin des Onglets ouvert</title>
 <description>Afficher chemin des fichiers dans les Onglets ouvert. Avec pour chaque repertoire du chemin la possiblités de cliquer dessus pour y naviger.</description>
 <pubDate>04/01/2017</pubDate>
@@ -56,12 +50,6 @@
 <item>
 <title>Editeur Java : Bug Ctrl+Shift+R</title>
 <description>Faire en sorte que le raccourci Ctrl+Shift+R fonctionne tout le temps.</description>
-<pubDate>04/01/2017</pubDate>
-<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
-</item>
-<item>
-<title>Editeur Java : Reload Tree File Explorer</title>
-<description>Etendre les chemins des onglets ouverts au changement de projet. Meme principe qu'a la recuperation de l'etat a l'ouverture de la page</description>
 <pubDate>04/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 </item>
