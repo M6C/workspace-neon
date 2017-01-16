@@ -13,9 +13,9 @@ Ext.define('Workspace.editorjava.request.JsonEditLoadFile',  {
         me.callParent();
     },
 
-    request: function(callBackSuccess) {
+    request: function(callBackSuccess) { 
         var me = this;
-		Ext.Ajax.request({
+		Ext.Ajax.request({  
 			url : DOMAIN_NAME_ROOT + '/action.servlet?event=JsonEditLoadFile',
 			headers: {'Content-Type': 'application/json; charset=UTF-8'},
 			method: 'GET',
@@ -60,7 +60,15 @@ Ext.define('Workspace.editorjava.request.JsonEditLoadFile',  {
 				};
 
 		    	editor.dirty = false;
-		    	editor.getSession().on('change', function(){editor.dirty = true});
+		    	editor.getSession().on('change', function(e){
+		    	        if (editor.doListenerChange) {
+        			        if (!editor.dirty) {
+        					    var panelTab = Ext.getCmp(editor.panelId);
+        					    panelTab.setTitle('*' + panelTab.title);
+        		    	    }
+        		    	    editor.dirty = true
+		    	        }
+		    	});
 		    	editor.getSession().on('changeScrollTop', function(number){
 		    		if (!editor.doListenerChange) {return;}
 		    		editor.changeScrollTop = number;

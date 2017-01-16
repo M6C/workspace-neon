@@ -11,6 +11,8 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveFile',  {
         var me = this;
         var filename = me.params.filename;
 
+	    me.modifyDirty(!success);
+
         if (!Ext.isDefined(me.showMessage) || me.showMessage == true) {
             var msg = "Saving complete.";
             if (me.build == 'true') {
@@ -49,4 +51,17 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveFile',  {
             scope: me
         });
     }
+    ,
+	modifyDirty: function(dirty) {
+        var me = this;
+        if (Ext.isDefined(me.panelEditorId)) {
+    		var editor = ace.edit(me.panelEditorId);
+    	    if (editor.dirty != dirty) {
+			    var panelTab = Ext.getCmp(editor.panelId);
+			    var title = (dirty ? '*' : '') + panelTab.raw.text;
+		        panelTab.setTitle(title);
+    	    }
+    		editor.dirty = dirty;
+        }
+	}
 }, function() {Workspace.tool.Log.defined('Workspace.editorjava.request.JsonEditSaveFile');});
