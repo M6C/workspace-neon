@@ -36,7 +36,7 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 		    	cls: 'x-panel-header',
 		    	height: 25,
 			        items: [
-//										    '<span style="color:#15428B; font-weight:bold">Title Here</span>',
+						'<span style="color:#4067B3">' + me.panelId + '</span>',
 					    '->',
 					    {
 					    	text: 'Save', 
