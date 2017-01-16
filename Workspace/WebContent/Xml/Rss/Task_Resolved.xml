@@ -6,6 +6,12 @@
 <pubDate>15/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 <item>
+<title>Editeur Java : Auto deploy que sur 'Ctrl+Shift+S' et non plus sur 'Ctrl+S'</title>
+<description>Auto deploy que sur 'Ctrl+Shift+S' et non plus sur 'Ctrl+S'. A essayer, pour voir si c'est bien à l'utilisation. [!] Attention que l'on risque de sauvegarder et et deployer des modifications que l'on ne voudrait pas forcement sauvegarder.</description>
+<pubDate>15/01/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
+<item>
 <title>Editeur Java : Ctrl+Shift+S</title>
 <description>Ajouter un raccourci Ctrl+Shift+S pour savegarder tous les fichiers modifies. Lancer le build si necessaire. Et redeployer les fichiers modifie qu'une seule fois.</description>
 <pubDate>15/01/2017</pubDate>
