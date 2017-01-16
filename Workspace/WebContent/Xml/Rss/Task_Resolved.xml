@@ -6,6 +6,18 @@
 <pubDate>15/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 <item>
+<title>Editeur Java : Afficher les onglets Dirty.</title>
+<description>Gerer l'affichage des onglets Dirty par un marquer dans le titre de l'onglet.</description>
+<pubDate>15/01/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
+<item>
+<title>Editeur Java : Warning à la fermeture des onglets Dirty.</title>
+<description>Afficher un Warning à la fermeture des onglets Dirty.</description>
+<pubDate>15/01/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
+<item>
 <title>Editeur Java : Etendre TreeFileExplorer quand on selectionne un onglet deja ouvert</title>
 <description>Etendre TreeFileExplorer quand on selectionne un onglet deja ouvert. Et selectionner le dernier noeud.</description>
 <pubDate>15/01/2017</pubDate>
