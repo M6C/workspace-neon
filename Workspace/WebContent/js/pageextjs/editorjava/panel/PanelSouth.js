@@ -62,7 +62,9 @@ Ext.define('Workspace.editorjava.panel.PanelSouth', {
 
 		var mainCenterPanel=Ext.getCmp('mainCenterPanel');
 		var tab = mainCenterPanel.getActiveTab();
-		tab.doLayout();
+		if (Ext.isDefined(tab)) {
+		    tab.doLayout();
+		}
 
         var editor = ace.edit(tab.panelEditorId);//tab.getComponent(tab.panelEditorId);
         editor.resize(true);

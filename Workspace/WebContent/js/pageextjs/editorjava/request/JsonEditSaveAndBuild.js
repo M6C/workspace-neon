@@ -30,19 +30,21 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
 				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonEditCompileProject',
 				callback:function(options, success, responseCompile) {
 					var jsonData = Ext.JSON.decode(responseCompile.responseText);
-                    var msg = "Building complete.";
-					if (jsonData.success && me.autoDeploy == true) {
-                        msg += "<br>Waiting for deploy complet."
+					if (!Ext.isDefined(jsonData)) {
+    					Workspace.common.tool.Pop.info(me, "Building data not found.");
+    					return;
 					}
-					Workspace.common.tool.Pop.info(me, msg);
 					if (jsonData.success) {
+                        var msg = "Building complete.";
 						if (me.autoDeploy == true) {
+                            msg += "<br>Waiting for deploy complet."
     		    			Ext.Ajax.request({
     		    				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonAutoDeploy',
     		    				callback:me.callbackAutoDeploy,
     		    				params:{application:me.application}
     		    			});
 						}
+    					Workspace.common.tool.Pop.info(me, msg);
 					} else {
     					Ext.create('Workspace.common.window.WindowTextCompile', jsonData).show();
 					}
