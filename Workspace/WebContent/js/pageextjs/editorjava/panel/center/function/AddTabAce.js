@@ -1,6 +1,6 @@
 Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 	// REQUIRED
-	requires: [
+	requires: [ 
 	     'Workspace.editorjava.panel.center.function.AddTabSave',
 	     'Workspace.editorjava.panel.center.function.AddTabReload'
 	]

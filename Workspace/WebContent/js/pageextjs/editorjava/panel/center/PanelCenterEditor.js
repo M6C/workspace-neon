@@ -3,6 +3,7 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 	requires: [
       // Explicit load required library (Mandatory for extending this class)
 	  'Workspace.editorjava.panel.center.function.AddTabSave',
+	  'Workspace.editorjava.panel.center.function.AddTabSaveAll',
 	  'Workspace.editorjava.panel.center.function.AddTabReload',
 	  'Workspace.editorjava.request.JsonEditLoadFile'
 	]
@@ -73,6 +74,9 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 
 					Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandSave');
 				    Workspace.editorjava.aceeditor.command.CommandSave.addCommand(editor);
+
+					Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandSaveAll');
+				    Workspace.editorjava.aceeditor.command.CommandSaveAll.addCommand(editor);
 
 				    Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandCompletion');
 				    Workspace.editorjava.aceeditor.command.CommandCompletion.addCommand(editor);

@@ -1,7 +1,6 @@
 //Parameters :
 // - callback
 // - params
-// - application
 Ext.define('Workspace.editorjava.request.JsonEditSaveFile',  {
 
 	method:'POST',

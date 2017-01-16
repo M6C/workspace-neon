@@ -51,7 +51,7 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
 			});
 		}
 		else if (me.autoDeploy == true) {
-			var filename = options.params.filename;
+			var filename = Ext.isDefined(options) && Ext.isDefined(options.params) ? options.params.filename : undefined;
 			Ext.Ajax.request({
 				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonAutoDeploy',
 				callback:me.callbackAutoDeploy,
