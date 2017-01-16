@@ -96,6 +96,22 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 					}
 		    	}
 				,
+				beforeclose: function(tab, option) {
+					var editor = ace.edit(tab.panelEditorId);
+					if (editor.dirty) {
+        	        	Ext.Msg.confirm('Close', 'This file has been modified.<br>Confirm close ?', function(btn, text){
+				            var mainCenterPanel=tab.up('tabpanel');
+        	        	    if (btn == 'yes') {
+        	        	        editor.dirty = false;
+				                mainCenterPanel.remove(tab);
+        	        	    } else {
+				                mainCenterPanel.setActiveTab(tab);
+        	        	    }
+        	        	});
+					}
+				    return !editor.dirty;
+		    	}
+				,
 				removed: function(tab, container, option) {
 			        // Return 
 			        // true:if each method have running to the end (id not find)
