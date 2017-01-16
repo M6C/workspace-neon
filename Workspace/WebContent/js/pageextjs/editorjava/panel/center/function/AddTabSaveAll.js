@@ -16,6 +16,7 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabSaveAll',  {
 	        var fileSavedList = [];
 	        var list = [];
 
+		    Workspace.common.tool.Pop.info(me, 'Saving all modified files.');
              mainCenterPanel.items.each(function(tab, index, len) {
 				var editor = ace.edit(tab.panelEditorId);
                 var panelId = editor.panelId;
