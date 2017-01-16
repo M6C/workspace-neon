@@ -78,8 +78,12 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabSaveAll',  {
     				console.debug('Workspace.editorjava.panel.center.function.AddTabSaveAll all tab \''+list.length+'\' Save in progress. Waiting...');
 			        task.delay(500);
                 } else {
-                    var reqValue = Ext.Object.getValues(requestList);
                     var filSize = fileSavedList.length;
+        			if (filSize == 0) {
+        			    Workspace.common.tool.Pop.info(me, 'No&nbsp;need&nbsp;Save');
+        				return;
+        			}
+                    var reqValue = Ext.Object.getValues(requestList);
                     var reqSize = reqValue.length;
 
                     /**
