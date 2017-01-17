@@ -5,6 +5,8 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
 	statics: {
         regExtractImport: /(\bimport\b)(\s*)([\w|.]+)(\s*)(;)/g
         ,
+        regExtractPackage: /(\bpackage\b)(\s*)([\w|.]+)(\s*)(;)/g
+        ,
         regExtractClass: /(([\,(;{}=]+)|(\bnew\b|\bthrows\b|\bextends\b|\bimplements\b))(\s*)([A-Z]{1}[A-Za-z0-9]+)/g
         ,
         regDeleteImport: function(strImport) {
@@ -91,6 +93,7 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
     			Ext.Ajax.request({
     				method:'GET',
     				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonOptimizeImport',
+    				params:{application:application, classname: classname},
     				callback:function(options, success, responseCompile) {
     				// 	Workspace.common.tool.Pop.info(me, "Optimize Import complete." + responseCompile.responseText);
     				    var jsonData = Ext.JSON.decode(responseCompile.responseText);
@@ -170,8 +173,7 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
     				    } else {
                             me.replaceImport(editor, position, value, listImportUsed);
     				    }
-				    },
-    				params:{application:application, classname: classname}
+				    }
     			});
             } else {
                 me.replaceImport(editor, position, value, listImportUsed);
@@ -185,7 +187,7 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
             var generatedImport = me.generateImport(listImportUsed);
 
             // RegEx Import
-            var reg = me.regExtractImport
+            var reg = me.regExtractImport;
 
             var idxStart = -1, idxEnd = -1;
             var result;
@@ -200,16 +202,25 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
             var oldImport = "";
             if (idxStart > -1) {
                 oldImport = value.substring(idxStart, idxEnd);
-                value = value.substring(0, idxStart) + generatedImport + value.substring(idxEnd);
+            } else {
+                reg = me.regExtractPackage;
+                if ((result = reg.exec(value)) != null) {
+                    var str = result[0];
+                    idxStart = result.index + str.length;
+                    idxEnd = idxStart;
+                }
             }
+            var valueResult = value.substring(0, idxStart) + generatedImport + value.substring(idxEnd);
 
-            editor.setValue(value);
+            editor.setValue(valueResult);
 
 		    editor.focus();
 		    var cursorRow = position.row;//(Ext.isDefined(editor.cursorRow) ? editor.cursorRow : 0);
 		    var cursorCol = position.column;//(Ext.isDefined(editor.cursorCol) ? editor.cursorCol : 0);
 
-            cursorRow = cursorRow - oldImport.match(/\r/g).length + generatedImport.match(/\r/g).length;
+            if (!Ext.isEmpty(oldImport)) {
+                cursorRow = cursorRow - oldImport.match(/\r/g).length + generatedImport.match(/\r/g).length;
+            }
 
 		    editor.scrollToLine(cursorRow+1, true, false, function(){});
 			editor.gotoLine(cursorRow+1, cursorCol, false);
@@ -219,6 +230,8 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
             var ret = "";
 
             listImport = listImport.sort(function(a, b){
+                a = a.classname;
+                b = b.classname;
                 if (a < b) return -1;
                 if (a > b) return 1;
                 return 0;
@@ -226,12 +239,13 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
 
             var rootPackage = undefined;
             Ext.Array.each(listImport, function(strImport, index, importItSelf) {
-                var idx = strImport.indexOf(".");
-                if (idx > 0 && (!Ext.isDefined(rootPackage) || (strImport.indexOf(rootPackage) != 0))) {
+                var classname = strImport.classname;
+                var idx = classname.indexOf(".");
+                if (idx > 0 && (!Ext.isDefined(rootPackage) || (classname.indexOf(rootPackage) != 0))) {
                     ret += "\r\n";
-                    rootPackage = strImport.substring(0, idx+1);
+                    rootPackage = classname.substring(0, idx+1);
                 }
-                ret += "import " + strImport + ";\r\n";
+                ret += "import " + classname + ";\r\n";
             });
 
             return ret.trim();
@@ -239,7 +253,8 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
         ,
         removeImportUnused: function(listImport, listImportUnused) {
             return listImport.filter(function(strImport, index, array) {
-                return (listImportUnused.indexOf(strImport) < 0);
+                var classname = strImport.classname;
+                return (listImportUnused.indexOf(classname) < 0);
             });
         }
         ,
@@ -250,10 +265,11 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
             Ext.Array.each(listClass, function(strClass, index, importItSelf) {
                 var find = false;
                 Ext.Array.each(listImport, function(strImport, index, importItSelf) {
-                    var idx = strImport.lastIndexOf(".");
+                    var classname = strImport.classname;
+                    var idx = classname.lastIndexOf(".");
 
     				var reg = me.regFindClass(strClass);
-                    if (!Ext.isEmpty(strImport.match(reg))) {
+                    if (!Ext.isEmpty(classname.match(reg))) {
                         find = true;
                     }
                     return !find;
@@ -271,10 +287,11 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
             var ret = [];
 
             Ext.Array.each(listImport, function(strImport, index, importItSelf) {
-                var idx = strImport.lastIndexOf(".");
+                var classname = strImport.classname;
+                var idx = classname.lastIndexOf(".");
 
-                if ((idx <= 0) || (listClass.indexOf(strImport.substring(idx+1)) < 0)) {
-                    ret.push(strImport);
+                if ((idx <= 0) || (listClass.indexOf(classname.substring(idx+1)) < 0)) {
+                    ret.push(classname);
                 }
             });
 
