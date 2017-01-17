@@ -95,7 +95,7 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
 		showMessage: function(type, cnt, message) {
 			var me = this;
 			if (cnt > 0) {
-				Workspace.common.tool.Pop.show(type, me, 'AutoDeploy ' + type + ' ' + cnt + ' file(s).', {detail:message});
+				Workspace.common.tool.Pop.show(type, me, 'AutoDeploy ' + type + ' ' + cnt + ' file'+(cnt > 1 ? 's' : '')+'.', {detail:message});
 			}
 		}
 	}

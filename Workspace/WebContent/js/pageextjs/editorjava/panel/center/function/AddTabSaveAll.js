@@ -90,8 +90,8 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabSaveAll',  {
                     /**
                      * Show Message
                      */
-                    var msg = "Saving complete. " + filSize + " file" + (filSize > 1 ? "s" : "") + ".";
-                    var detail = undefined;
+                    var msg = "Saving all complete. " + filSize + " file" + (filSize > 1 ? "s" : "") + ".";
+                    var detail = (filSize > 0) ? fileSavedList.join('<br>') : undefined;
                     if (reqSize > 0) {
                         msg += "<br>Waiting for build/deploy " + reqSize + " project" + (reqSize > 1 ? "s" : "") + " complet.";
                     }

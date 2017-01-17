@@ -84,6 +84,9 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 					Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandOptimizeImport');
 				    Workspace.editorjava.aceeditor.command.CommandOptimizeImport.addCommand(editor);
 
+					Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandCloseTab');
+				    Workspace.editorjava.aceeditor.command.CommandCloseTab.addCommand(editor);
+
                     if (Ext.isDefined(me.tab) && Ext.isDefined(editor.raw)) {
     		            me.tab.setTooltip('encoding:' + editor.raw.encoding);
                     }
@@ -110,6 +113,7 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 				                mainCenterPanel.remove(tab);
         	        	    } else {
 				                mainCenterPanel.setActiveTab(tab);
+				                editor.focus();
         	        	    }
         	        	});
 					}
