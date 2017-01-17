@@ -110,14 +110,33 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
 
                                     // Do Replace Import on 1st Window because WindowCombo is ASYNCHRONOUS and the 1st Window will be the last showing window
         			                var doReplaceImport = (index == 0);
-        			                var msgbox = Ext.create('Workspace.common.window.WindowCombo', {value: list, doReplaceImport: doReplaceImport, textConverter: textConverter, width:1600, resizable:true});
+        			                var msgbox = Ext.create('Workspace.common.window.WindowCombo',  {
+        			                    value: list, 
+        			                    doReplaceImport: doReplaceImport, 
+        			                    textConverter: textConverter, 
+        			                    minPromptWidth:420,
+        			                    resizable:true
+        			                    ,
+        			                    comboConfig: {
+        			                        width: 390
+        			                    }
+                                    });
 
-        			                msgbox.textField.on('select', function(combo, records, option) {
-        			                	var path = '';
-        			                	if (records.length == 1) {
-	        			                	path = records[0].data.data.classname;//path;
+                                    var maxLenTitle = 60;
+                                    var getTitle = function(data) {
+        			                	var path = data.path;//classname;
+        			                	var len = path.length;
+        			                	if (len > maxLenTitle) {
+        			                	    path = "..." + path.substring(len - maxLenTitle)
         			                	}
-        			                	msgbox.setTitle(path);
+        			                	return path;
+                                    }
+        			                msgbox.textField.on('select', function(combo, records, option) {
+        			                	var title = '';
+        			                	if (records.length == 1) {
+	        			                	title = getTitle(records[0].data.data);
+        			                	}
+        			                	msgbox.setTitle(title);
         			                });
 
         			                var onSpecialkey = function (field, e) {
@@ -126,8 +145,8 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
 
         			                    	var idx = field.idxFocus;
 	        			                    if (Ext.isDefined(idx) && idx >= 0) {
-	        			                		var path = field.store.data.items[idx].data.data.classname;//path;
-		        			                    msgbox.setTitle(path);
+	        			                	    var title = getTitle(field.store.data.items[idx].data.data);
+		        			                    msgbox.setTitle(title);
 	        			                    }
         			                	}
         			                };
