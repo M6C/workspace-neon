@@ -12,12 +12,6 @@
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 </item>
 <item>
-<title>Editeur Java : Optimize Import afficher dans le titre de la fenêtre le chemin du Jar ou repertoire dont on souhaite l'import.</title>
-<description>Optimize Import afficher dans le titre de la fenêtre le chemin du Jar ou repertoire dont on souhaite l'import. Au changement d'element selectionné dans la combo.</description>
-<pubDate>12/01/2017</pubDate>
-<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
-</item>
-<item>
 <title>Editeur Java : Bug Ctrl+Shift+R</title>
 <description>Ne fonctionne plus ou pas tout le temps.</description>
 <pubDate>09/01/2017</pubDate>
@@ -44,12 +38,6 @@
 <item>
 <title>Editeur Java : Deployement automatique</title>
 <description>Revenir sur la fonctionnalites de deployement automatique. Pour un fichier Web a deployer, deployer que le fichier avec un Toast pour dire qu'il a ?t? bien deployer et en attendre de deployement des autres fichiers. Puis tenter de redeployer tous les fichiers du projets comme actuellement avec un Toast pour dire le nombre de fichier deploye.</description>
-<pubDate>04/01/2017</pubDate>
-<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
-</item>
-<item>
-<title>Editeur Java : Bug Ctrl+Shift+R</title>
-<description>Faire en sorte que le raccourci Ctrl+Shift+R fonctionne tout le temps.</description>
 <pubDate>04/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 </item>

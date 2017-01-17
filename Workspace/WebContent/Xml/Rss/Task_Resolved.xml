@@ -3,12 +3,18 @@
 <channel>
 <title>Resolved</title>
 <description>RSS stream resolved</description>
+<pubDate>17/01/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+<item>
+<title>Editeur Java : Ctrl+Shift+F4</title>
+<description>Ajouter un raccourci Ctrl+Shift+F4 pour fermer l'onglet actif.</description>
 <pubDate>15/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
 <item>
 <title>Editeur Java : Afficher chemin des fichiers dans les Onglets</title>
 <description>Afficher chemin des fichiers dans les Onglets ouvert.</description>
-<pubDate>15/01/2017</pubDate>
+<pubDate>16/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 </item>
 <item>
@@ -45,6 +51,12 @@
 <title>Editeur Java : Etendre TreeFileExplorer quand on selectionne un onglet deja ouvert</title>
 <description>Etendre TreeFileExplorer quand on selectionne un onglet deja ouvert. Et selectionner le dernier noeud.</description>
 <pubDate>15/01/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
+<item>
+<title>Editeur Java : Optimize Import afficher dans le titre de la fenêtre le chemin du Jar ou repertoire dont on souhaite l'import.</title>
+<description>Optimize Import afficher dans le titre de la fenêtre le chemin du Jar ou repertoire dont on souhaite l'import. Au changement d'element selectionné dans la combo.</description>
+<pubDate>14/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 </item>
 <item>
