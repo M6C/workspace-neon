@@ -58,7 +58,9 @@ public class BusinessClasspath {
     //        	}
     //		    pathClass.add(szAppClasspath);
     //		}
-    		pathClass.addAll(Arrays.asList(szClasspath.split(";")));
+            if (szClasspath != null) {
+    		    pathClass.addAll(Arrays.asList(szClasspath.split(";")));
+            }
     		addJarToClassPath(context.getRealPath("WEB-INF"), pathClass);
     		pathClass.add(UtilPackage.getPackageClassPath());
     		if(UtilString.isNotEmpty(szJdkpath)) {

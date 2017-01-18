@@ -10,13 +10,12 @@ import framework.ressource.util.UtilString;
 import workspace.service.ant.SrvAntTargetExecute;
 import workspace.util.UtilExtjs;
 
-public class SrvCompileProject extends SrvAntTargetExecute
-{
+public class SrvCompileProject extends SrvAntTargetExecute {
 
     protected void doResponse(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean, ByteArrayOutputStream streamLog) throws Exception {
         System.out.println(streamLog.toString());
-        String content = streamLog.toString();
-    	String jsonSuccess = "success:" + (UtilString.isEmpty(content) || (content.indexOf("error") < 0));
+        String content = streamLog.toLowerCase().toString();
+    	String jsonSuccess = "success:" + (UtilString.isEmpty(content) || ((content.indexOf("error") < 0) && (content.indexOf("exception") < 0)));
         UtilExtjs.splitAndSendJson(content, jsonSuccess, response);
     }
 }
