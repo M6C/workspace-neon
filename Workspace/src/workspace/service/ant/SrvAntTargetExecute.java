@@ -57,7 +57,7 @@ public class SrvAntTargetExecute extends SrvGenerique {
 	            szPathClass = (szPathClass == null) ? szPathClass : UtilPath.formatPath(domXml, szPathClass);
 	            szPathClass = (new File(szPathMain, szPathClass)).getCanonicalPath();
 	            //Recuperation des classpath de l'application
-	            String pathClass = BusinessClasspath.getClassPath(context, application, domXml);
+	            String pathClass = BusinessClasspath.getClassPath(request, application, domXml);
 
 	            File buildXml = new File(context.getRealPath("/Xml/Ant/Task/CompileProject.xml"));
 	            Project p = new Project();

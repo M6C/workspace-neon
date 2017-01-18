@@ -7,68 +7,82 @@ import framework.ressource.util.UtilVector;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.xml.transform.TransformerException;
 
 import org.w3c.dom.Document;
 
 import workspace.adaptateur.application.AdpXmlApplication;
+import workspace.business.BusinessWorkspace;
 import workspace.util.UtilPath;
 
 public class BusinessClasspath {
 
-	public static String getClassPath(ServletContext context, String application, Document domXml) throws TransformerException, IOException {
-		List<String> list = getClassPathList(context, application, domXml);
-		return String.join(";", list);
+	public static String getClassPath(HttpServletRequest request, String application, Document domXml) throws TransformerException, IOException {
+        String ret = BusinessWorkspace.getClassPath(request, application);
+        if (ret == null) {
+            List<String> list = getClassPathList(request, application, domXml); 
+            ret = String.join(";", list);
+            BusinessWorkspace.setClassPath(request, application, ret);
+        }
+
+		return ret;
 	}
 
-	public static List<String> getClassPathList(ServletContext context, String application, Document domXml) throws TransformerException, IOException {
-		//Recuperation du ClassPath
-        String szClasspath = AdpXmlApplication.getClassPathAll(context, domXml, application);
-        szClasspath = (szClasspath == null) ? szClasspath : UtilPath.formatPath(domXml, szClasspath);
-//        String szAppClasspath = AdpXmlApplication.getPathByName(context, domXml, application, "Class");//, false);
-		//Recuperation de la home du jdk
-		String szJdkpath = AdpXmlApplication.getJdkPathByName(context, domXml, application, "Home");
-		// Recuperation du repertoire lib du jdk
-		String szJdkLib = AdpXmlApplication.getJdkJrePathByName(context, domXml, application, "Lib");
-		// Recuperation du repertoire home de la jre
-		String szJreHome = AdpXmlApplication.getJdkJrePathByName(context, domXml, application, "Home");
+	public static List<String> getClassPathList(HttpServletRequest request, String application, Document domXml) throws TransformerException, IOException {
+        HttpSession session = request.getSession();
+        ServletContext context = session.getServletContext();
 
-		List<String> pathClass = new ArrayList<String>();
-//		if(UtilString.isNotEmpty(szAppClasspath)) {
-//        	if (!UtilFile.isPathAbsolute(szAppClasspath)) {
-//                szAppClasspath = UtilPath.formatPath(domXml, application, szAppClasspath);
-//        	}
-//		    pathClass.add(szAppClasspath);
-//		}
-		pathClass.addAll(Arrays.asList(szClasspath.split(";")));
-		addJarToClassPath(context.getRealPath("WEB-INF"), pathClass);
-		pathClass.add(UtilPackage.getPackageClassPath());
-		if(UtilString.isNotEmpty(szJdkpath)) {
-		    File jdkPath = new File(szJdkpath);
-		    if(jdkPath.exists()) {
-		        if(UtilString.isNotEmpty(szJreHome)) {
-		        	File jreHome = szJreHome.indexOf(':') <= 0 ? new File(jdkPath, szJreHome) : new File(szJreHome);
-		        	if (jreHome.exists()) {
-		            	File jreLib = new File(jreHome, "lib");
-		                if (jreLib.exists()) {
-		                    addJarToClassPath(jreLib.getCanonicalPath(), pathClass);
-		                }
-		        	}
-		        }
-		        if(UtilString.isNotEmpty(szJdkLib)) {
-		        	File jreLib = szJdkLib.indexOf(':') <= 0 ? new File(jdkPath, szJdkLib) : new File(szJdkLib);
-		            if(jreLib.exists()) {
-		                addJarToClassPath(jreLib.getCanonicalPath(), pathClass);
-		            }
-		        }
-		    }
-		}
+		List<String> pathClass = BusinessWorkspace.getClassPathList(request, application);
+        if (pathClass == null) {
+    		//Recuperation du ClassPath
+            String szClasspath = AdpXmlApplication.getClassPathAll(context, domXml, application);
+            szClasspath = (szClasspath == null) ? szClasspath : UtilPath.formatPath(domXml, szClasspath);
+    //        String szAppClasspath = AdpXmlApplication.getPathByName(context, domXml, application, "Class");//, false);
+    		//Recuperation de la home du jdk
+    		String szJdkpath = AdpXmlApplication.getJdkPathByName(context, domXml, application, "Home");
+    		// Recuperation du repertoire lib du jdk
+    		String szJdkLib = AdpXmlApplication.getJdkJrePathByName(context, domXml, application, "Lib");
+    		// Recuperation du repertoire home de la jre
+    		String szJreHome = AdpXmlApplication.getJdkJrePathByName(context, domXml, application, "Home");
+    
+    //		if(UtilString.isNotEmpty(szAppClasspath)) {
+    //        	if (!UtilFile.isPathAbsolute(szAppClasspath)) {
+    //                szAppClasspath = UtilPath.formatPath(domXml, application, szAppClasspath);
+    //        	}
+    //		    pathClass.add(szAppClasspath);
+    //		}
+    		pathClass.addAll(Arrays.asList(szClasspath.split(";")));
+    		addJarToClassPath(context.getRealPath("WEB-INF"), pathClass);
+    		pathClass.add(UtilPackage.getPackageClassPath());
+    		if(UtilString.isNotEmpty(szJdkpath)) {
+    		    File jdkPath = new File(szJdkpath);
+    		    if(jdkPath.exists()) {
+    		        if(UtilString.isNotEmpty(szJreHome)) {
+    		        	File jreHome = szJreHome.indexOf(':') <= 0 ? new File(jdkPath, szJreHome) : new File(szJreHome);
+    		        	if (jreHome.exists()) {
+    		            	File jreLib = new File(jreHome, "lib");
+    		                if (jreLib.exists()) {
+    		                    addJarToClassPath(jreLib.getCanonicalPath(), pathClass);
+    		                }
+    		        	}
+    		        }
+    		        if(UtilString.isNotEmpty(szJdkLib)) {
+    		        	File jreLib = szJdkLib.indexOf(':') <= 0 ? new File(jdkPath, szJdkLib) : new File(szJdkLib);
+    		            if(jreLib.exists()) {
+    		                addJarToClassPath(jreLib.getCanonicalPath(), pathClass);
+    		            }
+    		        }
+    		    }
+    		}
+            BusinessWorkspace.setClassPathList(request, application, pathClass);
+        }
 		return pathClass;
 	}
 

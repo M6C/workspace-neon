@@ -234,6 +234,11 @@
             <PARAM Name="filename" Type="STRING"/>
         </BEAN>
     </SERVLET>
+    <SERVLET Name="JsonInitializeProject" Target="" TargetError="">
+        <BEAN Name="BeanInitializeProject" Scope="request" Service="workspace.service.extjs.SrvInitializeProject">
+            <PARAM Name="application" Type="STRING"/>
+        </BEAN>
+    </SERVLET>
     <SERVLET Name="AjaxSVNTestCommit" Target="" TargetError="">
         <BEAN Name="BeanTestCommit" Scope="request" Service="workspace.service.versioning.svn.TestCommit"/>
     </SERVLET>
