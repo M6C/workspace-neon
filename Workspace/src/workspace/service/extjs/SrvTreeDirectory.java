@@ -82,6 +82,11 @@ public class SrvTreeDirectory extends SrvGenerique {
                             path = pathMain;
                         }
                         pathFormated = path;
+                        if (pathFormated.indexOf("/") >= 0 && !"/".equals(File.separator)) {
+                            pathFormated = path.replaceAll("/", "\\\\");
+                        } else if (pathFormated.indexOf("\\") >= 0 && !"\\".equals(File.separator)) {
+                            pathFormated = path.replaceAll("\\\\", File.separator);
+                        }
                         FilenameFilter filter = null;
 
                         if (UtilString.isNotEmpty(nameFilter)) {
