@@ -37,6 +37,7 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
 			    console.info('Workspace.editorjava.aceeditor.command.CommandOptimizeImport no java file');
                 return;
             }
+		    Workspace.common.tool.Pop.info(me, 'Optimize Import waiting complete.', {detail: filename});
 
     		var selection = editor.selection;
     		var col = selection.getCursor().column;
@@ -188,6 +189,7 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
         ,
         replaceImport: function(editor, position, value, listImportUsed) {
 			var me = Workspace.editorjava.aceeditor.command.CommandOptimizeImport;
+			var filename = editor.panelId.toLowerCase();
 
             // value = me.deleteImportUnused(editor, listImportUnused);
             var generatedImport = me.generateImport(listImportUsed);
@@ -240,6 +242,7 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
 
 		    editor.scrollToLine(cursorRow+1, true, false, function(){});
 			editor.gotoLine(cursorRow+1, cursorCol, false);
+		    Workspace.common.tool.Pop.info(me, 'Optimize Import complete.', {detail: filename});
         }
         ,
         generateImport: function(listImport) {
