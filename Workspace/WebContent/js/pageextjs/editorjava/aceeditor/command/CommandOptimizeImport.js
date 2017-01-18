@@ -101,9 +101,14 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
     				callback:function(options, success, responseCompile) {
     				// 	Workspace.common.tool.Pop.info(me, "Optimize Import complete." + responseCompile.responseText);
     				    var jsonData = Ext.JSON.decode(responseCompile.responseText);
+    				    var multiChoiceImport = false;
     				    if (Ext.isArray(jsonData.import) && !Ext.isEmpty(jsonData.import)) {
                             var cnt = jsonData.import.length;
                             var importList = jsonData.import;
+                            Ext.Array.each(importList, function(objImport, index, importItSelf) {
+                                var classname = objImport.classname;
+                                Ext.Array.remove(listClassWithOutImport, classname);
+                            });
                             Ext.Array.each(importList, function(objImport, index, importItSelf) {
                                 var classname = objImport.classname;
                                 var list = objImport.list;
@@ -111,6 +116,7 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
                                     listImportUsed.push(list[0].classname);  
                                     Ext.Array.remove(listClass, classname);
                                 } else {
+                                    multiChoiceImport = true;
                                 	var textConverter = function(value, record) {
                                         return record.raw.classname;
                                     };
@@ -126,6 +132,15 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
         			                    ,
         			                    comboConfig: {
         			                        width: 390
+        			                    }
+        			                    ,
+        			                    listeners: {
+        			                        beforeclose: function(panel, option) {
+                                                listClassWithOutImport.push(classname);
+    			                                if (listClass.length == listClassWithOutImport.length) {
+                                                    me.replaceImport(editor, position, value, listImportUsed, listClassWithOutImport);
+                                                }
+        			                        }
         			                    }
                                     });
 
@@ -166,9 +181,11 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
                                             if (btn == 'ok') {
                                                 listImportUsed.push(text.classname);
                                                 Ext.Array.remove(listClass, classname);
+                                            } else {
+                                                listClassWithOutImport.push(classname);
                                             }
-			                                if (Ext.isEmpty(listClass)) {
-                                                me.replaceImport(editor, position, value, listImportUsed);
+			                                if (listClass.length == listClassWithOutImport.length) {
+                                                me.replaceImport(editor, position, value, listImportUsed, listClassWithOutImport);
                                             }
                                         }
                                     , msgbox);
@@ -177,8 +194,8 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
     				    } else {
                             listClass = [];
     				    }
-            			if (Ext.isEmpty(listClass)) {
-                            me.replaceImport(editor, position, value, listImportUsed);
+            			if (multiChoiceImport === false && Ext.isEmpty(listClass)) {
+                            me.replaceImport(editor, position, value, listImportUsed, listClassWithOutImport);
             			}
 				    }
     			});
@@ -187,7 +204,7 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
 			}
         }
         ,
-        replaceImport: function(editor, position, value, listImportUsed) {
+        replaceImport: function(editor, position, value, listImportUsed, listClassWithOutImport) {
 			var me = Workspace.editorjava.aceeditor.command.CommandOptimizeImport;
 			var filename = editor.panelId.toLowerCase();
 
@@ -242,7 +259,15 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
 
 		    editor.scrollToLine(cursorRow+1, true, false, function(){});
 			editor.gotoLine(cursorRow+1, cursorCol, false);
-		    Workspace.common.tool.Pop.info(me, 'Optimize Import complete.', {detail: filename});
+			var message = "Optimize Import complete.";
+			var detail = "File:'" + filename + "'"
+			var fnPop = Workspace.common.tool.Pop.info;
+			if (!Ext.isEmpty(listClassWithOutImport)) {
+                detail += '<br>Without import for class:';
+                detail += listClassWithOutImport.join(",&nbsp;");
+        		fnPop = Workspace.common.tool.Pop.error;
+			}
+	        fnPop(me, message, {detail: detail});
         }
         ,
         generateImport: function(listImport) {

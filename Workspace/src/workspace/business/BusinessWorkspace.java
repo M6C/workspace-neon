@@ -1,5 +1,7 @@
 package workspace.business;
 
+import framework.trace.Trace;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -12,8 +14,6 @@ import workspace.business.BusinessWorkspace;
 
 public class BusinessWorkspace {
 
-    private BeanWorkspace beanWorkspace = new BeanWorkspace();
-
     private BusinessWorkspace() {
     }
 
@@ -24,7 +24,7 @@ public class BusinessWorkspace {
 	}
 
 	public static void setClassPath(HttpServletRequest request, String application, String classpath) throws TransformerException, IOException {
-		Trace.DEBUG(this, "BusinessWorkspace setClassPath application:" + application + " classpath:" + (classpath != null && classpath.length > 100 ? classpath.substring(0, 100) : classpath);
+		Trace.DEBUG(BusinessWorkspace.class, "BusinessWorkspace setClassPath application:" + application + " classpath:" + (classpath != null && classpath.length() > 100 ? classpath.substring(0, 100) : classpath));
 	    BeanWorkspace beanWorkspace = getBeanWorkspaceOnInitialize(request);
 
 	    beanWorkspace.setDataString(BeanWorkspace.KEY_CLASSPATH_STRING, classpath);
@@ -37,7 +37,7 @@ public class BusinessWorkspace {
 	}
 
 	public static void setClassPathList(HttpServletRequest request, String application, List<String> classpath) throws TransformerException, IOException {
-		Trace.DEBUG(this, "BusinessWorkspace setClassPathList application:" + application + " classpath.length:" + (classpath != null ? classpath.length : classpath);
+ 		Trace.DEBUG(BusinessWorkspace.class, "BusinessWorkspace setClassPathList application:" + application + " classpath.length:" + (classpath != null ? classpath.size() : classpath));
 	    BeanWorkspace beanWorkspace = getBeanWorkspaceOnInitialize(request);
 
 	    beanWorkspace.setListString(BeanWorkspace.KEY_CLASSPATH_STRING, classpath);
@@ -51,7 +51,7 @@ public class BusinessWorkspace {
     private static BeanWorkspace getBeanWorkspaceOnInitialize(HttpServletRequest request) {
 	    BeanWorkspace beanWorkspace = getBeanWorkspace(request);
 	    if (beanWorkspace == null) {
-			Trace.DEBUG(this, "BusinessWorkspace new BeanWorkspace create. Set in session with key:" + BeanWorkspace.KEY_SESSION_HTTP);
+ 			Trace.DEBUG(BusinessWorkspace.class, "BusinessWorkspace new BeanWorkspace create. Set in session with key:" + BeanWorkspace.KEY_SESSION_HTTP);
             HttpSession session = request.getSession();
 	        beanWorkspace = new BeanWorkspace();
             session.setAttribute(BeanWorkspace.KEY_SESSION_HTTP, beanWorkspace);

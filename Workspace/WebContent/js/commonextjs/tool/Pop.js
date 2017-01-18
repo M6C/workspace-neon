@@ -4,23 +4,28 @@ Ext.define('Workspace.common.tool.Pop', {
 	statics: {
 
 		show : function(type, from, message, option) {
-			return this.doPop(type, from, message, option);
+		    var me = Workspace.common.tool.Pop;
+			return me.doPop(type, from, message, option);
 		}
 		,
 		info : function(from, message, option) {
-			return this.doPop('info', from, message, option);
+			var me = Workspace.common.tool.Pop;
+			return me.doPop('info', from, message, option);
 		}
 		,
 		success : function(from, message, option) {
-			return this.doPop('success', from, message, option);
+			var me = Workspace.common.tool.Pop;
+			return me.doPop('success', from, message, option);
 		}
 		,
 		error : function(from, message, option) {
-			return this.doPop('error', from, message, option);
+			var me = Workspace.common.tool.Pop;
+			return me.doPop('error', from, message, option);
 		}
 		,
 		failure : function(from, message, option) {
-			return this.doPop('failure', from, message, option);
+			var me = Workspace.common.tool.Pop;
+			return me.doPop('failure', from, message, option);
 		}
 		,
 		// Private
