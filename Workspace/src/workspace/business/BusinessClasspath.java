@@ -8,6 +8,7 @@ import framework.ressource.util.UtilVector;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
@@ -45,7 +46,7 @@ public class BusinessClasspath {
 //        	}
 //		    pathClass.add(szAppClasspath);
 //		}
-		pathClass.add(szClasspath);
+		pathClass.addAll(Arrays.asList(szClasspath.split(";")));
 		addJarToClassPath(context.getRealPath("WEB-INF"), pathClass);
 		pathClass.add(UtilPackage.getPackageClassPath());
 		if(UtilString.isNotEmpty(szJdkpath)) {
