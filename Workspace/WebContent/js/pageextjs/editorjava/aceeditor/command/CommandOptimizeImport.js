@@ -260,11 +260,12 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
 		    editor.scrollToLine(cursorRow+1, true, false, function(){});
 			editor.gotoLine(cursorRow+1, cursorCol, false);
 			var message = "Optimize Import complete.";
-			var detail = "File:'" + filename + "'"
+			var detail = filename
 			var fnPop = Workspace.common.tool.Pop.info;
 			if (!Ext.isEmpty(listClassWithOutImport)) {
-                detail += '<br>Without import for class:';
+                detail += '<br><b>Without import for class:';
                 detail += listClassWithOutImport.join(",&nbsp;");
+                detail += '</b>';
         		fnPop = Workspace.common.tool.Pop.error;
 			}
 	        fnPop(me, message, {detail: detail});

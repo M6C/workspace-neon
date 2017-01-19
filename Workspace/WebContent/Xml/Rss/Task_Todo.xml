@@ -18,12 +18,6 @@
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 </item>
 <item>
-<title>Editeur Java : Optimisation des imports Serialiser le contenu des jar du classpath</title>
-<description>Serialiser le contenu des jar du classpath pour ne pas parcourir le classpath à chaque demande d'optimisation d'import. Stocker aussi les date/poid des jar pour ne raffechir que ceux qui ont été modifié. A la demande de l'utilisateur ou periodiquement. Deserialiser au changement de projet et socker dans le BeanGenerique de session.</description>
-<pubDate>09/01/2017</pubDate>
-<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
-</item>
-<item>
 <title>Editeur Java : Optimisation Completion via RegEx</title>
 <description>Rechercher directement dans Ace.Editor en montant à partir du curseur la déclaration. Via une regex (Mot après les caractères ';', '{', '}' et suivi d'espaces puis le nom de la variable que l'on cherche). Rechercher l'import correspondant dans Ace.Editor via une regex (Ligne commencant par 'import' puis des espaces et terminant par le nom de la class que l'on cherche puis ';') Faire attention au espace ou non en début ou fin de ligne.</description>
 <pubDate>06/01/2017</pubDate>

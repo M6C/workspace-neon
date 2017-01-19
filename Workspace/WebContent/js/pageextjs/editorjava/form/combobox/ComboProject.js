@@ -1,6 +1,7 @@
 Ext.define('Workspace.editorjava.form.combobox.ComboProject', {
 	requires: [
-  	     'Workspace.editorjava.aceeditor.command.CommandFindResource'
+	    'Workspace.common.tool.Pop',
+        'Workspace.editorjava.aceeditor.command.CommandFindResource'
   	]
   	,
 	extend: 'Workspace.widget.combobox.WidgetComboProject'
@@ -13,10 +14,24 @@ Ext.define('Workspace.editorjava.form.combobox.ComboProject', {
  	,
 	// Overrided
 	onActionItem: function(cmb, newValue, oldValue, option) {
+	    var me = this;
 		var application = newValue;
 		console.info('Workspace.editorjava.form.combobox.ComboProject select:'+application);
 
 		Ext.getCmp('project').value=application;
+
+        Workspace.common.tool.Pop.info(me, "Initialize Project '" + application + "'.", {detail: 'Waiting for complet.'});
+        Ext.Ajax.request({
+            url: DOMAIN_NAME_ROOT + '/action.servlet?event=JsonInitializeProject',
+            method: 'GET',
+            params: {application: application},
+            success: function() {
+		        Workspace.common.tool.Pop.info(me, "Initialize Project '" + application + "' success.");
+            },
+            failure: function() {
+		        Workspace.common.tool.Pop.error(me, "Initialize Project '" + application + "' failure.");
+            }
+        });
 
 		var tree = Ext.getCmp("treeDirectory");
 		tree.getRootNode().set('text', '[' + application + ']');

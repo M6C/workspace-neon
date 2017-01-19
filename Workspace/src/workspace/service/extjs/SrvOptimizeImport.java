@@ -34,17 +34,13 @@ public class SrvOptimizeImport extends SrvGenerique {
     	String jsonImport = "";
         try {
 	        HttpSession session = request.getSession();
-	        ServletContext context = session.getServletContext();
-	
 	        Document domXml = (Document)session.getAttribute("resultDom");
 	        String application = (String)bean.getParameterDataByName("application");
 	        String classname = (String)bean.getParameterDataByName("classname");
-	
-	        List<String> classpath = BusinessClasspath.getClassPathList(context, application, domXml);
-	
+            String[] classnameList = classname.split(";");
+
 	        Map<String, List<String>> mapListClass = new HashMap<String, List<String>>();
-	        String[] classnameList = classname.split(";");
-	        Map<String, List<String>> mapPathClass = getClassList(classpath);
+	        Map<String, List<String>> mapPathClass = BusinessClasspath.getClassList(request, application, domXml);
 	        for(String pathKey : mapPathClass.keySet()) {
 	        	List<String> classpathList = mapPathClass.get(pathKey);
 		        for(String classnameItem : classnameList) {
@@ -83,69 +79,5 @@ public class SrvOptimizeImport extends SrvGenerique {
 			String jsonData = "{results:"+classpathJson.size()+",import:["+jsonImport+"]}";
 			UtilExtjs.sendJson(jsonData, response);
 		}
-    }
-
-    private Map<String, List<String>> getClassList(List<String> listPath) throws IOException {
-        String ext = ".class";
-        int extLen = ext.length();
-        Map<String, List<String>> mapPathClass = new HashMap<String, List<String>>();
-
-        int size = listPath.size();
-        for(int i=0 ; i<size ; i++) {
-            String path = listPath.get(i);
-            if (UtilString.isEmpty(path)) {
-    			Trace.DEBUG("SrvOptimizeImport getClassList empty path");
-            	continue;
-            }
-            File file = new File(path);
-            if (!file.exists()) {
-    			Trace.DEBUG("SrvOptimizeImport getClassList '"+path+"' do not exist");
-            	continue;
-            }
-            Trace.DEBUG("SrvOptimizeImport file[" + i + "/" + size + "]:" + file.getAbsolutePath());
-            if (file.isDirectory()) {
-				Vector listClass = UtilFile.dir(path, true, ext + ";.jar", true);
-		        int max = UtilVector.safeSize(listClass);
-		        for(int k = 0; k < max; k++) {
-                	String className = (String)UtilVector.safeGetElementAt(listClass, k);
-                    if (className.endsWith(ext) && className.indexOf('$') < 0) {
-                    	className = className.replaceAll("[/\\\\]", ".").substring(0, className.length()-extLen);
-                        addClass(mapPathClass, path, className);
-                    } else if (className.endsWith(".jar")) {
-                    	listPath.add(new File(new File(path), className).getAbsolutePath());
-                    	size++;
-                    }
-		        }
-            } else {
-                ZipEntry[] entries = UtilPackageResource.getZipEntries(file);
-                if (entries == null) {
-        			Trace.DEBUG("SrvOptimizeImport getClassList '"+path+"' has no entrie");
-                	continue;
-                }
-                int entriesLen = entries.length;
-                for(int j=0;j<entriesLen;j++) {
-                    ZipEntry entry = entries[j];
-                    if (entry != null && !entry.isDirectory()) {
-                        String entryName=entry.getName();
-                        String entryNameLow = entryName.toLowerCase();
-                        if (entryNameLow.endsWith(ext) && entryNameLow.indexOf('$') < 0) {
-                        	String className = entryName.replaceAll("[/\\\\]", ".").substring(0, entryName.length()-extLen);
-                        	Trace.DEBUG("SrvOptimizeImport file[" + j + "/" + entriesLen + "] className:" + className);
-                            addClass(mapPathClass, path, className);
-                        }
-                    }
-                }
-            }
-        }
-        return mapPathClass;
-    }
-
-    private void addClass(Map<String, List<String>> mapPathClass, String path, String className) {
-        List<String> list = mapPathClass.get(path);
-        if (list == null) {
-            list = new ArrayList<String>();
-            mapPathClass.put(path, list);
-        }
-        list.add(className);
     }
 }
