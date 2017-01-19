@@ -62,7 +62,7 @@ Ext.define('Workspace.editorjava.panel.PanelSouth', {
 
 		var mainCenterPanel=Ext.getCmp('mainCenterPanel');
 		var tab = mainCenterPanel.getActiveTab();
-		if (Ext.isDefined(tab)) {
+		if (Ext.isDefined(tab) && Ext.isFunction(tab.doLayout)) {
 		    tab.doLayout();
 		}
 
