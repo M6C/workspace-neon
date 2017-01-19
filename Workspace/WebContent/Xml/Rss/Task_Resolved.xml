@@ -3,7 +3,7 @@
 <channel>
 <title>Resolved</title>
 <description>RSS stream resolved</description>
-<pubDate>17/01/2017</pubDate>
+<pubDate>19/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 <item>
 <title>Editeur Java : Optimisation des imports Serialiser le contenu des jar du classpath</title>

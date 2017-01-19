@@ -3,7 +3,7 @@
 <channel>
 <title>To Do</title>
 <description>RSS stream to do</description>
-<pubDate>15/01/2017</pubDate>
+<pubDate>19/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 <item>
 <title>Editeur Java : Mode tablette/smartphone.</title>
@@ -12,8 +12,14 @@
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 </item>
 <item>
+<title>Editeur Java : Dans l'affichage du chemin du fichier ajouter des infos.</title>
+<description>Dans l'affichage du chemin du fichier ajouter si Build, AutoDeploy, le type de fichier et d'encodage. Tronquer le chemin inteligement en partant du milieu du chemin et en remplacent le chaque partie entre '\' par '...' tant que ça dépasse la taille maximale à afficher. Au survole de la sourie sur le libellé afficher le chemin complet.</description>
+<pubDate>19/01/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
+<item>
 <title>Editeur Java : Bug Ctrl+Shift+R</title>
-<description>Ne fonctionne plus ou pas tout le temps.</description>
+<description>Ne fonctionne plus ou pas tout le temps. La largeur de colonne du chemin dans la grid n'est pas toujours correcte.</description>
 <pubDate>09/01/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 </item>
