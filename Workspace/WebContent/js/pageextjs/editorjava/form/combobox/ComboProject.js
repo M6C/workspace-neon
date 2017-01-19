@@ -20,18 +20,22 @@ Ext.define('Workspace.editorjava.form.combobox.ComboProject', {
 
 		Ext.getCmp('project').value=application;
 
-        Workspace.common.tool.Pop.info(me, "Initialize Project '" + application + "'.", {detail: 'Waiting for complet.'});
-        Ext.Ajax.request({
-            url: DOMAIN_NAME_ROOT + '/action.servlet?event=JsonInitializeProject',
-            method: 'GET',
-            params: {application: application},
-            success: function() {
-		        Workspace.common.tool.Pop.info(me, "Initialize Project '" + application + "' success.");
-            },
-            failure: function() {
-		        Workspace.common.tool.Pop.error(me, "Initialize Project '" + application + "' failure.");
-            }
-        });
+        if (!Ext.isEmpty(application)) {
+            Workspace.common.tool.Pop.info(me, "Initialize Project '" + application + "'.", {detail: 'Waiting for complet.'});
+            Ext.Ajax.request({
+                url: DOMAIN_NAME_ROOT + '/action.servlet?event=JsonInitializeProject',
+                method: 'GET',
+                params: {application: application},
+                success: function() {
+    		        Workspace.common.tool.Pop.info(me, "Initialize Project '" + application + "' success.");
+                },
+                failure: function() {
+    		        Workspace.common.tool.Pop.error(me, "Initialize Project '" + application + "' failure.");
+                }
+            });
+        } else {
+            console.warn('Initialize Project. No application Selected.');
+        }
 
 		var tree = Ext.getCmp("treeDirectory");
 		tree.getRootNode().set('text', '[' + application + ']');
