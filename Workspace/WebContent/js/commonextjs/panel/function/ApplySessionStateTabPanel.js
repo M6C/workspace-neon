@@ -39,6 +39,7 @@ Ext.define('Workspace.common.panel.function.ApplySessionStateTabPanel', {
     			raw.cursorCol = editor.cursorCol;
     			raw.changeScrollTop = editor.changeScrollTop;
     			raw.changeScrollLeft = editor.changeScrollLeft;
+	    		console.info('getRawFromTab - cursorCol:' + editor.cursorCol + ' cursorRow:' + editor.cursorRow + ' ScrollTop:' + editor.changeScrollTop + ' ScrollLeft:' + editor.changeScrollLeft + ' id:' + editor.id);
     			return raw;
 		    }
 	    });

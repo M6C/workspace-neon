@@ -72,16 +72,19 @@ Ext.define('Workspace.editorjava.request.JsonEditLoadFile',  {
 		    	editor.getSession().on('changeScrollTop', function(number){
 		    		if (!editor.doListenerChange) {return;}
 		    		editor.changeScrollTop = number;
+		    		console.info('changeScrollTop - cursorCol:' + editor.cursorCol + ' cursorRow:' + editor.cursorRow + ' ScrollTop:' + editor.changeScrollTop + ' ScrollLeft:' + editor.changeScrollLeft + ' id:' + editor.id);
 		    	});
 		    	editor.getSession().on('changeScrollLeft', function(number){
 		    		if (!editor.doListenerChange) {return;}
 		    		editor.changeScrollLeft = number;
+		    		console.info('changeScrollLeft - cursorCol:' + editor.cursorCol + ' cursorRow:' + editor.cursorRow + ' ScrollTop:' + editor.changeScrollTop + ' ScrollLeft:' + editor.changeScrollLeft + ' id:' + editor.id);
 		    	});
 		    	editor.getSelection().on('changeCursor', function(number){
 		    		if (!editor.doListenerChange) {return;}
 					var cursor = editor.selection.getCursor();
 					editor.cursorCol = cursor.column;
 					editor.cursorRow = cursor.row;
+		    		console.info('changeCursor - cursorCol:' + editor.cursorCol + ' cursorRow:' + editor.cursorRow + ' ScrollTop:' + editor.changeScrollTop + ' ScrollLeft:' + editor.changeScrollLeft + ' id:' + editor.id);
 		    	});
 		    	if (Ext.isDefined(callBackSuccess)) {
 		    		callBackSuccess();

@@ -193,6 +193,7 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 	,
 	editorFocusAndScroll: function(me) {
 		var editor = ace.edit(me.panelEditorId);
+        editor.doListenerChange = false;
 	    editor.focus();
 
 	    var scrollTop = (Ext.isDefined(editor.changeScrollTop) ? editor.changeScrollTop : 0);
@@ -206,5 +207,9 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 
 		editor.gotoLine(cursorRow+1, cursorCol, false);
 	    editor.scrollToLine(cursorRow+1, true, false, function(){});
+	    new Ext.util.DelayedTask().delay(500, function() {
+	        editor.doListenerChange = true;
+	        editor.focus();
+	    });
 	}
 }, function() {Workspace.tool.Log.defined('Workspace.editorjava.panel.center.PanelCenterEditor');});
