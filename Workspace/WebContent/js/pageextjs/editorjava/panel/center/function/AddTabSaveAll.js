@@ -15,13 +15,17 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabSaveAll',  {
 	        var requestList = {};
 	        var fileSavedList = [];
 	        var list = [];
+	        var showMessageSavingAll = true;
 
-		    Workspace.common.tool.Pop.info(me, 'Saving all modified files.');
-             mainCenterPanel.items.each(function(tab, index, len) {
+            mainCenterPanel.items.each(function(tab, index, len) {
 				var editor = ace.edit(tab.panelEditorId);
                 var panelId = editor.panelId;
         		var filename=panelId;
     			if (editor.dirty) {
+    			    if (showMessageSavingAll === true) {
+    			        Workspace.common.tool.Pop.info(me, 'Saving all modified files.');
+    			        showMessageSavingAll = false;
+    			    }
         			if (Ext.isDefined(editor.syncValue)) {
         				editor.syncValue();
         			}
