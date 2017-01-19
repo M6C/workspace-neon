@@ -69,7 +69,11 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
             			application: me.application,
 						build: me.build,
 						autoDeploy: me.autoDeploy,
-            		    stateful:false
+            		    stateful:false,
+            	        cursorRow: me.raw.cursorRow,
+            	        cursorCol: me.raw.cursorCol,
+            			changeScrollTop: me.changeScrollTop,
+            			changeScrollLeft: me.changeScrollLeft
 					});
 
 					Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandSave');
@@ -190,16 +194,17 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 	editorFocusAndScroll: function(me) {
 		var editor = ace.edit(me.panelEditorId);
 	    editor.focus();
-	    var cursorRow = (Ext.isDefined(editor.cursorRow) ? editor.cursorRow : 0);
-	    var cursorCol = (Ext.isDefined(editor.cursorCol) ? editor.cursorCol : 0);
-
-	    editor.scrollToLine(cursorRow+1, true, false, function(){});
-		editor.gotoLine(cursorRow+1, cursorCol, false);
 
 	    var scrollTop = (Ext.isDefined(editor.changeScrollTop) ? editor.changeScrollTop : 0);
 	    var scrollLeft = (Ext.isDefined(editor.changeScrollLeft) ? editor.changeScrollLeft : 0);
 
 		editor.getSession().setScrollTop(scrollTop);
 		editor.getSession().setScrollLeft(scrollLeft);
+
+	    var cursorRow = (Ext.isDefined(editor.cursorRow) ? editor.cursorRow : 0);
+	    var cursorCol = (Ext.isDefined(editor.cursorCol) ? editor.cursorCol : 0);
+
+		editor.gotoLine(cursorRow+1, cursorCol, false);
+	    editor.scrollToLine(cursorRow+1, true, false, function(){});
 	}
 }, function() {Workspace.tool.Log.defined('Workspace.editorjava.panel.center.PanelCenterEditor');});

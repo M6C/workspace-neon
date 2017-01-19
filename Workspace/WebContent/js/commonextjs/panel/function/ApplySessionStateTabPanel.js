@@ -13,12 +13,15 @@ Ext.define('Workspace.common.panel.function.ApplySessionStateTabPanel', {
 			    console.debug('Workspace.common.panel.function.ApplySessionStateTabPanel apply getState');
 		        var s = {raw: []}; 
 		        if (!Ext.isEmpty(panel.getActiveTab())) {
-					s.activeTab = panel.getActiveTab().raw;
+		            var tab = panel.getActiveTab();
+                    var raw = panel.getRawFromTab(tab);
+					s.activeTab = raw;
 		        }
 		        if (!Ext.isEmpty(panel.items)) {
 					var i = 0;
 			        panel.items.each(function(tab) {
-						s.raw[i++] = tab.raw;
+                        var raw = panel.getRawFromTab(tab);
+						s.raw[i++] = raw;
 					});
 		        }
 		        return s; 
@@ -27,6 +30,16 @@ Ext.define('Workspace.common.panel.function.ApplySessionStateTabPanel', {
 		    applyState: function(s) { 
 			    console.debug('Workspace.common.panel.function.ApplySessionStateTabPanel apply applyState');
 		        panel.stateData = s;
+		    }
+		    ,
+		    getRawFromTab: function(tab) {
+                var raw = tab.raw;
+    			var editor = ace.edit(tab.panelEditorId);
+    			raw.cursorRow = editor.cursorRow;
+    			raw.cursorCol = editor.cursorCol;
+    			raw.changeScrollTop = editor.changeScrollTop;
+    			raw.changeScrollLeft = editor.changeScrollLeft;
+    			return raw;
 		    }
 	    });
 
