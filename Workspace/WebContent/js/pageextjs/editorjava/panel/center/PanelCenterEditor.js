@@ -31,12 +31,22 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 			panelEditorId: me.panelEditorId
 		});
 
+        var titleTech = me.raw.contentType;
+        if (me.raw.build == 'true') {
+            titleTech += '|build';
+        }
+        if (me.raw.autoDeploy === true) {
+            titleTech += '|autoDeploy';
+        }
+        var title = me.panelId;
+        title = Workspace.tool.UtilString.cuteSplitPath(title, 10);
 		Ext.apply(me, {
 		    tbar: Ext.create('Ext.toolbar.Toolbar', {
 		    	cls: 'x-panel-header',
 		    	height: 25,
 			        items: [
-						'<span style="color:#4067B3">' + me.panelId + '</span>',
+						'<span style="color:#555555" title="'+titleTech+'">' + '<img src="'+DOMAIN_NAME_ROOT+'/imgExtJs/EditorJava/icon_info.gif" width="12px" height="12px"/>' + 
+						'</span>&nbsp;<span style="color:#4067B3" title="'+me.panelId+'">' + title + '</span>',
 					    '->',
 					    {
 					    	text: 'Save', 

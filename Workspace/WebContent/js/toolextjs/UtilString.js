@@ -1,5 +1,4 @@
 Ext.define('Workspace.tool.UtilString', {
-	// REQUIRED
 
 	statics: {
 		/**
@@ -56,6 +55,32 @@ Ext.define('Workspace.tool.UtilString', {
 		endsWith : function(str, suffix) {
 		    return str.indexOf(suffix, str.length - suffix.length) !== -1;
 		}
+		,
+		cuteSplitPath: function(str, length) {
+		    var me = Workspace.tool.UtilString;
+		    var ret = str;
+		    var size = str.length;
+		    if (size > length) {
+    		    var middle = size / 2;
+    			var sep = (ret.indexOf('/')>=0 ? '/' : '\\');
+    			var idx1 = me.reverse(ret).indexOf(sep, middle);
+    			var idx2 = ret.indexOf(sep, middle);
+    			if (idx1 > 0 && idx2 > 0) {
+    			    idx1 = middle - (idx1 - middle);
+    			    ret = ret.substr(0, idx1) + '...' + ret.substr(idx2);
+/*
+    			    if (ret.length > length) {
+    			        ret = me.cuteSplitPath(ret, length);
+    			    }
+*/
+    			}
+		    }
+		    return ret;
+		}
+        ,
+        reverse(str) {
+            return str.split('').reverse().join('');
+        }
 	}
 
 }, function() {Workspace.tool.Log.defined('Workspace.tool.UtilString');});
