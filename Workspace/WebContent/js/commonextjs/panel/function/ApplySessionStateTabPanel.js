@@ -4,10 +4,11 @@ Ext.define('Workspace.common.panel.function.ApplySessionStateTabPanel', {
 	,
 	apply: function(panel, stateId) {
 	    console.debug('Workspace.common.panel.function.ApplySessionStateTabPanel apply stateId:' + stateId);
+
 		Ext.apply(panel, {
 			stateful: true,
 			stateId: stateId,
-			stateEvents: ['add', 'remove', 'tabchange'], 
+			stateEvents: ['add', 'remove', 'tabchange', 'updatestate'], 
 			stateData: undefined,
 		    getState: function() { 
 			    console.debug('Workspace.common.panel.function.ApplySessionStateTabPanel apply getState');
@@ -39,7 +40,6 @@ Ext.define('Workspace.common.panel.function.ApplySessionStateTabPanel', {
     			raw.cursorCol = editor.cursorCol;
     			raw.changeScrollTop = editor.changeScrollTop;
     			raw.changeScrollLeft = editor.changeScrollLeft;
-	    		console.info('getRawFromTab - cursorCol:' + editor.cursorCol + ' cursorRow:' + editor.cursorRow + ' ScrollTop:' + editor.changeScrollTop + ' ScrollLeft:' + editor.changeScrollLeft + ' id:' + editor.id);
     			return raw;
 		    }
 	    });
@@ -63,21 +63,5 @@ Ext.define('Workspace.common.panel.function.ApplySessionStateTabPanel', {
     			panel.stateData = undefined;
 			}
 		});
-
-//		panel.on('show', function(component, option) {
-//		    console.debug('Workspace.common.panel.function.ApplySessionStateTabPanel apply show');
-//			if (Ext.isDefined(panel.stateData) && Ext.isDefined(panel.stateData.raw)) {
-//				var application = Ext.getCmp('project').getValue();
-//				var tree = Ext.getCmp('treeDirectory');
-//		    	Ext.Array.each(panel.stateData.raw, function(tab) {
-//					if (tab.application == application) {
-//						var path = tab.path;
-//						path = path.substring(path.indexOf(']')+1);
-//						tree.expandPath(path);
-//					}
-//				});
-//				panel.stateData = undefined;
-//			}
-//		});
 	}
 }, function() {Workspace.tool.Log.defined('Workspace.common.panel.function.ApplySessionStateTabPanel');});

@@ -15,6 +15,13 @@ Ext.define('Workspace.editorjava.request.JsonEditLoadFile',  {
 
     request: function(callBackSuccess) { 
         var me = this;
+        var updateEditorState = function(editor) {
+			var cursor = editor.selection.getCursor();
+			editor.cursorCol = cursor.column;
+			editor.cursorRow = cursor.row;
+    		editor.changeScrollTop = editor.getSession().getScrollTop();
+    		editor.changeScrollLeft = editor.getSession().getScrollLeft();
+        };
 		Ext.Ajax.request({  
 			url : DOMAIN_NAME_ROOT + '/action.servlet?event=JsonEditLoadFile',
 			headers: {'Content-Type': 'application/json; charset=UTF-8'},
@@ -28,6 +35,7 @@ Ext.define('Workspace.editorjava.request.JsonEditLoadFile',  {
 					resultMessage += me.decodeUtf8(jsonData.data[i].text) + '\r\n';
 				}
 
+                var panel = Ext.getCmp(me.panelId);
 				var filename = me.panelId.toLowerCase();
 				var editor = ace.edit(me.panelEditorId);
 		        var mode = 'text';
@@ -61,30 +69,30 @@ Ext.define('Workspace.editorjava.request.JsonEditLoadFile',  {
 
 		    	editor.dirty = false;
 		    	editor.getSession().on('change', function(e){
-		    	        if (editor.doListenerChange) {
-        			        if (!editor.dirty) {
-        					    var panelTab = Ext.getCmp(editor.panelId);
-        					    panelTab.setTitle('*' + panelTab.title);
-        		    	    }
-        		    	    editor.dirty = true
-		    	        }
+	    	        if (editor.doListenerChange) {
+    			        if (!editor.dirty) {
+    					    var panelTab = Ext.getCmp(editor.panelId);
+    					    panelTab.setTitle('*' + panelTab.title);
+    		    	    }
+    		    	    editor.dirty = true
+	    	        }
 		    	});
 		    	editor.getSession().on('changeScrollTop', function(number){
 		    		if (!editor.doListenerChange) {return;}
+		    		updateEditorState(editor);
 		    		editor.changeScrollTop = number;
-		    		console.info('changeScrollTop - cursorCol:' + editor.cursorCol + ' cursorRow:' + editor.cursorRow + ' ScrollTop:' + editor.changeScrollTop + ' ScrollLeft:' + editor.changeScrollLeft + ' id:' + editor.id);
+					panel.up('tabpanel').fireEvent('updatestate');
 		    	});
 		    	editor.getSession().on('changeScrollLeft', function(number){
 		    		if (!editor.doListenerChange) {return;}
+		    		updateEditorState(editor);
 		    		editor.changeScrollLeft = number;
-		    		console.info('changeScrollLeft - cursorCol:' + editor.cursorCol + ' cursorRow:' + editor.cursorRow + ' ScrollTop:' + editor.changeScrollTop + ' ScrollLeft:' + editor.changeScrollLeft + ' id:' + editor.id);
+					panel.up('tabpanel').fireEvent('updatestate');
 		    	});
 		    	editor.getSelection().on('changeCursor', function(number){
 		    		if (!editor.doListenerChange) {return;}
-					var cursor = editor.selection.getCursor();
-					editor.cursorCol = cursor.column;
-					editor.cursorRow = cursor.row;
-		    		console.info('changeCursor - cursorCol:' + editor.cursorCol + ' cursorRow:' + editor.cursorRow + ' ScrollTop:' + editor.changeScrollTop + ' ScrollLeft:' + editor.changeScrollLeft + ' id:' + editor.id);
+		    		updateEditorState(editor);
+					panel.up('tabpanel').fireEvent('updatestate');
 		    	});
 		    	if (Ext.isDefined(callBackSuccess)) {
 		    		callBackSuccess();
