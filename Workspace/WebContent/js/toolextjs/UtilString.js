@@ -59,21 +59,74 @@ Ext.define('Workspace.tool.UtilString', {
 		cuteSplitPath: function(str, length) {
 		    var me = Workspace.tool.UtilString;
 		    var ret = str;
-		    var size = str.length;
+
+	        var idx, application, filename;
+			var sep = (ret.indexOf('/')>=0 ? '/' : '\\');
+			var pathReplacement = sep + '...' + sep;
+			var path = ret;
+			idx = path.indexOf(pathReplacement);
+			if (idx > 0) {
+			    path = path.substr(0, idx) + path.substr(idx + pathReplacement.length - 1);
+			}
+			idx = path.lastIndexOf(sep);
+			if (idx > 0) {
+			    filename = path.substr(idx+1);
+			    path = path.substr(0, idx);
+			}
+			idx = path.lastIndexOf(']');
+			if (idx > 0) {
+			    idx++;
+			    application = path.substr(0, idx);
+			    path = path.substr(idx+1);
+			}
+
+		    var size = path.length;
 		    if (size > length) {
-    		    var middle = size / 2;
-    			var sep = (ret.indexOf('/')>=0 ? '/' : '\\');
-    			var idx1 = me.reverse(ret).indexOf(sep, middle);
-    			var idx2 = ret.indexOf(sep, middle);
+			    var part1 = '';
+			    var part2 = '';
+			    var part3 = '';
+		        var middle = size / 2;
+    			var idx1 = me.reverse(path).indexOf(sep, middle);
+    			var idx2 = path.indexOf(sep, middle);
+        		idx1 = middle - (idx1 - middle);
     			if (idx1 > 0 && idx2 > 0) {
-    			    idx1 = middle - (idx1 - middle);
-    			    ret = ret.substr(0, idx1) + '...' + ret.substr(idx2);
-/*
-    			    if (ret.length > length) {
-    			        ret = me.cuteSplitPath(ret, length);
-    			    }
-*/
+
+    			    part1 = path.substring(0, idx1-1);
+    			    part2 = path.substring(idx1-1, idx2+1);
+    			    part3 = path.substring(idx2+1);
+
+                    if (part2.length <= pathReplacement.length) {
+                        if (part1.length > part3.length && part1.lastIndexOf(sep) > 0) {
+                            doReplace = true;
+                            idx = part1.lastIndexOf(sep);
+                            part1 = part1.substr(0, idx-1)
+                        } else if (part3.indexOf(sep) > 0) {
+                            doReplace = true;
+                            idx = part3.indexOf(sep);
+                            part3 = part3.substr(idx+1)
+                        } else if (part1.length > part3.length) {
+                            part1 = '';
+                        } else {
+                            part3 = '';
+                        }
+                    }
+    			} else if (idx1 > 0) {
+    			    part1 = path.substring(0, idx1-1);
+    			} else if (idx2 > 0) {
+    			    part3 = path.substring(idx2+1);
     			}
+
+			    path = part1 + pathReplacement + part3;
+			    if (path.indexOf(sep) != 0) {
+			        path = sep + path;
+			    }
+			    if (path.lastIndexOf(sep) != (path.length-1)) {
+			        path = path + sep;
+			    }
+			    ret = application + path + filename;
+			    if (path.length > length) {
+			        ret = me.cuteSplitPath(ret, length);
+			    }
 		    }
 		    return ret;
 		}
