@@ -88,8 +88,8 @@ Ext.define('Workspace.tool.UtilString', {
 		        var middle = size / 2;
     			var idx1 = me.reverse(path).indexOf(sep, middle);
     			var idx2 = path.indexOf(sep, middle);
-        		idx1 = middle - (idx1 - middle);
     			if (idx1 > 0 && idx2 > 0) {
+        		    idx1 = middle - (idx1 - middle);
 
     			    part1 = path.substring(0, idx1-1);
     			    part2 = path.substring(idx1-1, idx2+1);
