@@ -69,11 +69,7 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
             			application: me.application,
 						build: me.build,
 						autoDeploy: me.autoDeploy,
-            		    stateful:false,
-            	        cursorRow: me.raw.cursorRow,
-            	        cursorCol: me.raw.cursorCol,
-            			changeScrollTop: me.changeScrollTop,
-            			changeScrollLeft: me.changeScrollLeft
+            		    stateful:false
 					});
 
 					Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandSave');
