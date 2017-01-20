@@ -198,11 +198,13 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 		editor.gotoLine(cursorRow+1, cursorCol, false);
 	    editor.scrollToLine(cursorRow+1, true, false, function(){});
 
-	    var scrollTop = (Ext.isDefined(editor.changeScrollTop) ? editor.changeScrollTop : 0);
-	    var scrollLeft = (Ext.isDefined(editor.changeScrollLeft) ? editor.changeScrollLeft : 0);
-
-		editor.getSession().setScrollTop(scrollTop);
-		editor.getSession().setScrollLeft(scrollLeft);
+        if (Ext.isDefined(editor.changeScrollTop) && Ext.isDefined(editor.changeScrollLeft)) {
+    	    var scrollTop = editor.changeScrollTop;
+    	    var scrollLeft = editor.changeScrollLeft;
+    
+    		editor.getSession().setScrollTop(scrollTop);
+    		editor.getSession().setScrollLeft(scrollLeft);
+        }
 
 	    new Ext.util.DelayedTask().delay(500, function() {
 	        editor.doListenerChange = true;
