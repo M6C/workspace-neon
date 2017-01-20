@@ -33,13 +33,13 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 
         var titleTech = me.raw.contentType;
         if (me.raw.build == 'true') {
-            titleTech += '|build';
+            titleTech += '&nbsp;|&nbsp;build';
         }
         if (me.raw.autoDeploy === true) {
-            titleTech += '|autoDeploy';
+            titleTech += '&nbsp;|&nbsp;autoDeploy';
         }
         var title = me.panelId;
-        title = Workspace.tool.UtilString.cuteSplitPath(title, 10);
+        title = Workspace.tool.UtilString.cuteSplitPath(title, 100);
 		Ext.apply(me, {
 		    tbar: Ext.create('Ext.toolbar.Toolbar', {
 		    	cls: 'x-panel-header',

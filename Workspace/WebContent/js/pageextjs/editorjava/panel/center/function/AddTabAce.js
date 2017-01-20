@@ -53,8 +53,8 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 					Ext.apply(editor, {
             	        cursorRow: raw.cursorRow,
             	        cursorCol: raw.cursorCol,
-            			changeScrollTop: changeScrollTop,
-            			changeScrollLeft: changeScrollLeft
+            			changeScrollTop: raw.changeScrollTop,
+            			changeScrollLeft: raw.changeScrollLeft
 					});
 
 					Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandChangeTab');

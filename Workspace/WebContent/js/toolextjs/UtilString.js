@@ -64,10 +64,6 @@ Ext.define('Workspace.tool.UtilString', {
 			var sep = (ret.indexOf('/')>=0 ? '/' : '\\');
 			var pathReplacement = sep + '...' + sep;
 			var path = ret;
-			idx = path.indexOf(pathReplacement);
-			if (idx > 0) {
-			    path = path.substr(0, idx) + path.substr(idx + pathReplacement.length - 1);
-			}
 			idx = path.lastIndexOf(sep);
 			if (idx > 0) {
 			    filename = path.substr(idx+1);
@@ -127,6 +123,13 @@ Ext.define('Workspace.tool.UtilString', {
 			    if (path.length > length) {
 			        ret = me.cuteSplitPath(ret, length);
 			    }
+
+			    var pathReplacement2 = pathReplacement + '...' + sep;
+				idx = ret.indexOf(pathReplacement2);
+    			while (idx > 0) {
+    			    ret = ret.substr(0, idx) + pathReplacement + ret.substr(idx + pathReplacement2.length);
+					idx = ret.indexOf(pathReplacement2);
+    			}
 		    }
 		    return ret;
 		}
