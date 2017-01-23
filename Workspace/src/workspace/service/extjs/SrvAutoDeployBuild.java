@@ -121,10 +121,12 @@ public class SrvAutoDeployBuild extends SrvGenerique {
 
 			File fileSrc = new File(classname);
 
-			File dirDst = fileDst.getParentFile();//new File(filenameDst.substring(filenameDst.lastIndexOf(File.separator)));
-			if (!dirDst.exists()) {
-				dirDst.mkdirs();
-			}
+ 			File dirDst = fileDst.getParentFile();//new File(filenameDst.substring(filenameDst.lastIndexOf(File.separator)));
+// 			File dirDst = new File(classnameDst.substring(classnameDst.lastIndexOf(File.separator)));
+//			fileDst.mkdirs();
+ 			if (!dirDst.exists()) {
+ 				dirDst.mkdirs();
+ 			}
 
 			String src = UtilEncoder.encodeHTMLEntities("[" + application + "]" + classname.substring(pathClassLen));
 			String dst = UtilEncoder.encodeHTMLEntities("[DEPLOYED_SERVER]" + classnameDst.substring(serverDeployLen));

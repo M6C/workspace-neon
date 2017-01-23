@@ -3,7 +3,8 @@ Ext.define('Workspace.editorjava.debug.ApplyDebug', {
 	apply: function(editor) {
 	    console.debug('Workspace.editorjava.debug.ApplyDebug apply');
 
-        editor.on("guttermousedown", function(e) {
+        editor.on('guttermousedown', function(e) {
+            console.log(e.getDocumentPosition().row);
             var target = e.domEvent.target; 
             if (target.className.indexOf("ace_gutter-cell") == -1)
                 return;

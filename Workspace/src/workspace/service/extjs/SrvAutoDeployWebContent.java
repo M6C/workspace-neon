@@ -1,5 +1,6 @@
 package workspace.service.extjs;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -106,6 +107,14 @@ public class SrvAutoDeployWebContent extends SrvAutoDeployBuild {
         	}
 
         	String filenameDst = UtilFile.formatPath(autoDeploy, filenameSrc.substring(pathWebRoot.length()));
+
+         	File fileDst = new File(filenameDst);
+//        	File fileDst = new File(filenameDst.substring(filenameDst.lastIndexOf(File.separator)));
+//        	fileDst.mkdirs();
+ 			File dirDst = fileDst.getParentFile();
+ 			if (!dirDst.exists()) {
+ 				dirDst.mkdirs();
+ 			}
 
         	UtilFile.copyFile(filenameSrc, filenameDst);
             String msg = "Success autoDeploy '" + filenameSrc + "' copied to '"+filenameDst+"'";
