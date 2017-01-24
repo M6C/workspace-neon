@@ -1,5 +1,16 @@
 package workspace.service.debug;
 
+import com.sun.jdi.Location;
+import com.sun.jdi.VirtualMachine;
+import com.sun.jdi.request.BreakpointRequest;
+import com.sun.jdi.request.EventRequest;
+import com.sun.jdi.request.EventRequestManager;
+
+import framework.beandata.BeanGenerique;
+import framework.ressource.util.UtilString;
+import framework.ressource.util.jdi.UtilJDI;
+import framework.service.SrvGenerique;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -20,6 +31,7 @@ import javax.jms.QueueSender;
 import javax.jms.QueueSession;
 import javax.jms.Session;
 import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.naming.NameAlreadyBoundException;
 import javax.naming.NameNotFoundException;
 import javax.naming.NamingException;
@@ -32,17 +44,7 @@ import org.w3c.dom.Document;
 import workspace.adaptateur.application.AdpXmlApplication;
 import workspace.bean.debug.BeanDebug;
 import workspace.thread.debug.ThrdDebugEventQueue;
-
-import com.sun.jdi.Location;
-import com.sun.jdi.VirtualMachine;
-import com.sun.jdi.request.BreakpointRequest;
-import com.sun.jdi.request.EventRequest;
-import com.sun.jdi.request.EventRequestManager;
-
-import framework.beandata.BeanGenerique;
-import framework.ressource.util.UtilString;
-import framework.ressource.util.jdi.UtilJDI;
-import framework.service.SrvGenerique;
+import workspace.util.UtilPath;
 
 /**
  *
@@ -61,9 +63,7 @@ public class SrvDebugBreakpointAdd extends SrvGenerique {
       String application = (String)bean.getParameterDataByName("application");
       String path = (String)bean.getParameterDataByName("pathToExpand");
       String fileName = (String)bean.getParameterDataByName("FileName");
-      if (UtilString.isNotEmpty(szLigne) &&
-              UtilString.isNotEmpty(application) &&
-              UtilString.isNotEmpty(fileName)){
+      if (UtilString.isNotEmpty(szLigne)){
           HttpSession session = request.getSession();
           VirtualMachine virtualMachine = null;
           try {
@@ -72,9 +72,18 @@ public class SrvDebugBreakpointAdd extends SrvGenerique {
               String text = "";
     
               Document domXml = (Document)session.getAttribute("resultDom");
-              String filePathMain = AdpXmlApplication.getPathMain(domXml, application);
-              File filePath = new File(filePathMain, path);
-              File file = new File(filePath, fileName);
+              File file = null;
+              if (UtilString.isNotEmpty(application) &&
+                UtilString.isNotEmpty(fileName)) {
+                  String filePathMain = AdpXmlApplication.getPathMain(domXml, application);
+                  File filePath = new File(filePathMain, path);
+                  file = new File(filePath, fileName);
+              } else if (UtilString.isNotEmpty(fileName)) {
+                String filenameFormated = UtilPath.formatPath(domXml, fileName);
+                file = new File(filenameFormated);
+              } else {
+                  return;
+              }
               String className = "";//szClass;
               FileReader fileReader = new FileReader(file);
               BufferedReader fileInput = new BufferedReader(fileReader);
