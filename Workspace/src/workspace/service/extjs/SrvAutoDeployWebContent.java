@@ -112,6 +112,9 @@ public class SrvAutoDeployWebContent extends SrvAutoDeployBuild {
 //        	File fileDst = new File(filenameDst.substring(filenameDst.lastIndexOf(File.separator)));
 //        	fileDst.mkdirs();
  			File dirDst = fileDst.getParentFile();
+ 			if (dirDst.isFile()) {
+ 				dirDst.delete();
+ 			}
  			if (!dirDst.exists()) {
  				dirDst.mkdirs();
  			}

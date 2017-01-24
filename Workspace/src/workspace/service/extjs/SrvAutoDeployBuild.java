@@ -115,15 +115,15 @@ public class SrvAutoDeployBuild extends SrvGenerique {
 			String classname = (String) list.get(i);
 			String classnameDst = UtilFile.formatPath(pathTo, classname.substring(pathClassLen));
 			
+			File fileSrc = new File(classname);
 			File fileDst = new File(classnameDst);
-			if (fileDst.isDirectory())
+			if (fileDst.isDirectory() || fileSrc.isDirectory())
 				continue;
 
-			File fileSrc = new File(classname);
-
- 			File dirDst = fileDst.getParentFile();//new File(filenameDst.substring(filenameDst.lastIndexOf(File.separator)));
-// 			File dirDst = new File(classnameDst.substring(classnameDst.lastIndexOf(File.separator)));
-//			fileDst.mkdirs();
+ 			File dirDst = fileDst.getParentFile();
+ 			if (dirDst.isFile()) {
+ 				dirDst.delete();
+ 			}
  			if (!dirDst.exists()) {
  				dirDst.mkdirs();
  			}
