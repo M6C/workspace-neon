@@ -63,9 +63,9 @@ Ext.define('Workspace.editorjava.request.JsonEditLoadFile',  {
 
 		        editor.doListenerChange = false;
 				editor.setValue(resultMessage);
-				editor.raw = {
+				Ext.apply(editor.raw, {
 				    encoding: jsonData.encoding
-				};
+				});
 
 		    	editor.dirty = false;
 		    	editor.getSession().on('change', function(e){
