@@ -148,11 +148,12 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
     callbackPrompt: function (btn, text, option) {
 		var me = this;
 		var classname = text.classname;
+		var name = classname.substring(classname.lastIndexOf('.') + 1);
         if (btn == 'ok') {
             me.listImportUsed.push(classname);
-            Ext.Array.remove(me.listClass, classname);
+            Ext.Array.remove(me.listClass, name);
         } else {
-            me.listClassWithOutImport.push(classname);
+            me.listClassWithOutImport.push(name);
         }
         if (me.listClass.length == me.listClassWithOutImport.length) {
             me.replaceImport();
@@ -304,14 +305,14 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
 		var me = this;
         var ret = "";
 
-        me.listImport = me.listImport.sort(function(a, b){
+        var listImport = me.listImportUsed.sort(function(a, b){
             if (a < b) return -1;
             if (a > b) return 1;
             return 0;
         });
 
         var rootPackage = undefined;
-        Ext.Array.each(me.listImport, function(classname, index, importItSelf) {
+        Ext.Array.each(listImport, function(classname, index, importItSelf) {
             var idx = classname.indexOf(".");
             if (idx > 0 && (!Ext.isDefined(rootPackage) || (classname.indexOf(rootPackage) != 0))) {
                 ret += "\r\n";
