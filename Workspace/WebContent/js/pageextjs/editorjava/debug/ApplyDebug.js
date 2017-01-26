@@ -6,9 +6,11 @@ Ext.define('Workspace.editorjava.debug.ApplyDebug', {
 	statics: {
     	apply: function(editor) {
     	    console.debug('Workspace.editorjava.debug.ApplyDebug apply');
+    	    var me = Workspace.editorjava.debug.ApplyDebug;
     
             editor.on('guttermousedown', function(e) {
-                console.log(e.getDocumentPosition().row);
+                var row = e.getDocumentPosition().row;
+                console.log(row);
                 e.stop();
 
                 var callback = function () {
@@ -22,13 +24,21 @@ Ext.define('Workspace.editorjava.debug.ApplyDebug', {
                 
                     var breakpoints = e.editor.session.getBreakpoints();
                     var row = e.getDocumentPosition().row;
-                    if(typeof breakpoints[row] === typeof undefined)
+                    if(typeof breakpoints[row] === typeof undefined) {
                         e.editor.session.setBreakpoint(row);
-                    else
+                    }
+                    else {
                         e.editor.session.clearBreakpoint(row);
+                    }
                 };
-                Ext.create('Workspace.editorjava.debug.request.JsonDebugBreakpointAdd', callback);
+                me.add(editor.raw, row, callback);
             })
         }
-    }
+        ,
+        add: function(raw, row, callback) {
+            Ext.create('Workspace.editorjava.debug.request.JsonDebugBreakpointAdd', {
+                filename:raw.path, breakpointLine:row, breakpointClass: raw.className
+            }).request(callback);
+        }
+	}
 }, function() {Workspace.tool.Log.defined('Workspace.editorjava.debug.ApplyDebug');});

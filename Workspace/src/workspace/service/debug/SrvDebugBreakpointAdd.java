@@ -74,12 +74,13 @@ public class SrvDebugBreakpointAdd extends SrvGenerique {
               Document domXml = (Document)session.getAttribute("resultDom");
               File file = null;
               if (UtilString.isNotEmpty(application) &&
-                UtilString.isNotEmpty(fileName)) {
+                UtilString.isNotEmpty(fileName) &&
+                UtilString.isNotEmpty(path)) {
                   String filePathMain = AdpXmlApplication.getPathMain(domXml, application);
                   File filePath = new File(filePathMain, path);
                   file = new File(filePath, fileName);
               } else if (UtilString.isNotEmpty(fileName)) {
-                String filenameFormated = UtilPath.formatPath(domXml, fileName);
+                String filenameFormated = UtilPath.formatPath(domXml, application, fileName);
                 file = new File(filenameFormated);
               } else {
                   return;

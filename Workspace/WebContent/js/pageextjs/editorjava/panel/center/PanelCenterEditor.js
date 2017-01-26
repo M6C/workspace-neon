@@ -77,7 +77,8 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
             			application: me.application,
 						build: me.build,
 						autoDeploy: me.autoDeploy,
-            		    stateful:false
+            		    stateful:false,
+            		    raw: me.raw
 					});
 
 					Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandSave');
