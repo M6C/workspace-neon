@@ -55,10 +55,10 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandImport',  {
 		var name = classname.substring(classname.lastIndexOf('.') + 1);
         if (btn == 'ok') {
             me.listImportUsed.push(classname);
-            Ext.Array.remove(me.listClass, name);
+            Ext.Array.remove(me.listClassWithOutImportProcess, name);
             Ext.Array.remove(me.listClassWithOutImport, name);
         }
-        if (me.listClass.length == me.listClassWithOutImport.length) {
+        if (me.listClassWithOutImportProcess.length == me.listClassWithOutImport.length) {
             me.replaceImport();
         }
     }

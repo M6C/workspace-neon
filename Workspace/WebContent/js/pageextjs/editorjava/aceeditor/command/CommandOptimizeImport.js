@@ -94,7 +94,8 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
     doOptimizeImport: function() {
 		var me = this;
 
-        var listClass = Ext.clone(me.listClassWithOutImport);
+        me.listClassWithOutImportProcess = Ext.clone(me.listClassWithOutImport);
+        var listClass = me.listClassWithOutImportProcess;
         if (!Ext.isEmpty(listClass)) {
 		    var paramApplication = Ext.getCmp('project').value;
             var paramClassname = listClass.join(";");
@@ -128,7 +129,7 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
                 var list = objImport.list;
                 if (list.length == 1) {
                     me.listImportUsed.push(list[0].classname);  
-                    Ext.Array.remove(me.listClass, classname);
+                    Ext.Array.remove(me.listClassWithOutImportProcess, classname);
                 } else {
                     multiChoiceImport = true;
                     // Do Replace Import on 1st Window because WindowCombo is ASYNCHRONOUS and the 1st Window will be the last showing window
@@ -138,7 +139,7 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
                 }
             });
 	    } else {
-            me.listClass = [];
+            me.listClassWithOutImportProcess = [];
 	    }
 		if (multiChoiceImport === false && Ext.isEmpty(me.listClass)) {
             me.replaceImport();
@@ -151,11 +152,11 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
 		var name = classname.substring(classname.lastIndexOf('.') + 1);
         if (btn == 'ok') {
             me.listImportUsed.push(classname);
-            Ext.Array.remove(me.listClass, name);
+            Ext.Array.remove(me.listClassWithOutImportProcess, name);
         } else {
             me.listClassWithOutImport.push(name);
         }
-        if (me.listClass.length == me.listClassWithOutImport.length) {
+        if (me.listClassWithOutImportProcess.length == me.listClassWithOutImport.length) {
             me.replaceImport();
         }
     }
@@ -183,7 +184,7 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
             listeners: {
                 beforeclose: function(panel, option) {
                     me.listClassWithOutImport.push(classname);
-                    if (me.listClass.length == me.listClassWithOutImport.length) {
+                    if (me.listClassWithOutImportProcess.length == me.listClassWithOutImport.length) {
                         me.replaceImport();
                     }
                 }
