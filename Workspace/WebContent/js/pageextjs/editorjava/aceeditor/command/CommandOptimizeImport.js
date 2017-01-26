@@ -170,7 +170,7 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
             return record.raw.classname;
         };
 
-        var msgbox = Ext.create('Workspace.common.window.WindowCombo',  {
+        var msgbox = Ext.create('Workspace.common.window.WindowComboSelectInfo',  {
             value: list, 
             doReplaceImport: doReplaceImport, 
             textConverter: textConverter, 
@@ -190,38 +190,6 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
                 }
             }
         });
-
-        var maxLenTitle = 60;
-        var getTitle = function(data) {
-        	var path = data.path;//classname;
-        	var len = path.length;
-        	if (len > maxLenTitle) {
-        	    path = "..." + path.substring(len - maxLenTitle)
-        	}
-        	return path;
-        }
-        msgbox.textField.on('select', function(combo, records, option) {
-        	var title = '';
-        	if (records.length == 1) {
-            	title = getTitle(records[0].data.data);
-        	}
-        	msgbox.setTitle(title);
-        });
-
-        var onSpecialkey = function (field, e) {
-        	var key = e.getKey();
-        	if (key == e.UP || key == e.DOWN) {
-
-            	var idx = field.idxFocus;
-                if (Ext.isDefined(idx) && idx >= 0) {
-            	    var title = getTitle(field.store.data.items[idx].data.data);
-                    msgbox.setTitle(title);
-                }
-        	}
-        };
-
-        // Add listener no need to use Ext.Function.createSequence. Because old listener is not removed.
-        msgbox.textField.on('specialkey', onSpecialkey);
 
         msgbox.prompt("Optimize Import", classname, me.callbackPrompt, me);
     }

@@ -7,12 +7,11 @@ Ext.define('Workspace.common.window.WindowCombo', {
 
             var index = me.promptContainer.items.indexOf(me.textField);
             me.promptContainer.remove(me.textField); 
-            me.textField = me._createComboBoxField();
+            me.textField = me._createComboBoxField(me);
             me.textField.msgButtons = me.msgButtons;
             me.promptContainer.insert(index, me.textField);
     },
-    _createComboBoxField: function () {
-        var me = this;
+    _createComboBoxField: function (me) {
         var data = me.value;
 
     	var defaultConverter = function(value, record) {
