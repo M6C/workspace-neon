@@ -861,7 +861,6 @@
     </SERVLET>
     <SERVLET Name="DebuggerBreakpointResume" TargetError="/Web/Page/Common/PageMessage.jsp">
         <BEAN Name="BeanDebuggerResume" Scope="session" Service="workspace.service.debug.SrvDebugBreakpointResume"/>
-        <BEAN Name="BeanDebuggerResume" Scope="session" Service="workspace.service.debug.SrvDebugBreakpointResume"/>
     </SERVLET>
     <SERVLET Name="DebuggerBreakpointVariable" Target="/Web/Page/Common/PageMessage.jsp" TargetError="/Web/Page/Common/PageMessage.jsp">
         <BEAN Name="BeanDebuggerVariable" Scope="request" Service="workspace.service.debug.SrvDebugBreakpointVariable"/>

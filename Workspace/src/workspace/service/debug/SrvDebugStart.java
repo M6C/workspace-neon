@@ -38,18 +38,18 @@ public class SrvDebugStart extends SrvGenerique {
 				  String hostName = "localhost";
 				  Integer port = new Integer(4082);
 //TODO The method createVirtualMachine(String, Integer) from the type UtilJDI refers to the missing type VirtualMachine
-//				  virtualMachine = UtilJDI.createVirtualMachine(hostName, port);
-//				  beanDebug = new BeanDebug(virtualMachine);
-//
-//				  ThrdDebugEventQueue thread = new ThrdDebugEventQueue(beanDebug, virtualMachine.eventQueue());
-//				  thread.setOut(System.out);
-//				  thread.setErr(System.err);
-//				  thread.setErrTrace(System.err);
-//				  thread.start();
-//				  
-//				  beanDebug.setThrdDebugEventQueue(thread);
-//
-//				  session.setAttribute("beanDebug", beanDebug);
+				  virtualMachine = UtilJDI.createVirtualMachine(hostName, port);
+				  beanDebug = new BeanDebug(virtualMachine);
+
+				  ThrdDebugEventQueue thread = new ThrdDebugEventQueue(beanDebug, virtualMachine.eventQueue());
+				  thread.setOut(System.out);
+				  thread.setErr(System.err);
+				  thread.setErrTrace(System.err);
+				  thread.start();
+				  
+				  beanDebug.setThrdDebugEventQueue(thread);
+
+				  session.setAttribute("beanDebug", beanDebug);
 			  }
 			  else {
 				  virtualMachine = beanDebug.getVirtualMachine();

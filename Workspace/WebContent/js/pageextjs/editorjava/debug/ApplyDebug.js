@@ -4,6 +4,8 @@ Ext.define('Workspace.editorjava.debug.ApplyDebug', {
 	]
     ,
 	statics: {
+	    waiting: false
+	    ,
     	apply: function(editor) {
     	    console.debug('Workspace.editorjava.debug.ApplyDebug apply');
     	    var me = Workspace.editorjava.debug.ApplyDebug;
@@ -29,6 +31,10 @@ Ext.define('Workspace.editorjava.debug.ApplyDebug', {
                     }
                     else {
                         e.editor.session.clearBreakpoint(row);
+                    }
+                    
+                    if (!me.waiting) {
+                        Ext.create('Workspace.editorjava.debug.request.JsonDebugCheck').start();
                     }
                 };
                 me.add(editor.raw, row, callback);
