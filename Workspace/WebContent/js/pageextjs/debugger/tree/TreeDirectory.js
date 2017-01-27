@@ -75,7 +75,7 @@ Workspace.debugger.TreeDirectory = Ext.extend(Workspace.tree.TreeDirectory, {
 		    	    	var requestUrl = DOMAIN_NAME_ROOT + '/action.servlet';
 		      			Ext.Ajax.request({
 		      			   url: requestUrl,
-		      			   params: {event:'DebuggerBreakpointAddExtJs',application:project,breakpointClass:pClass,breakpointLine:rowIndex},
+		      			   params: {event:'DebuggerBreakpointAddExtJs',application:project,className:pClass,breakpointLine:rowIndex},
 		      			   success: function(result, request){
 		      				   console.log('DebuggerBreakpointAdd result', result);
 		      				   var jsonData = Ext.util.JSON.decode(result.responseText);

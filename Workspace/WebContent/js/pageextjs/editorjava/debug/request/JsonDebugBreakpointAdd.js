@@ -16,7 +16,7 @@ Ext.define('Workspace.editorjava.debug.request.JsonDebugBreakpointAdd',  {
 			url : DOMAIN_NAME_ROOT + '/action.servlet?event=DebuggerBreakpointAddExtJs',
 			headers: {'Content-Type': 'application/json; charset=UTF-8'},
 			method: 'GET',
-			params :{filename:me.filename, breakpointLine:me.line, breakpointClass: me.classname},
+			params :{FileName:me.filename, breakpointLine:me.line, className: me.classname},
 			callback:function(opts, success, response) {
 				paramCallBack();
 			}

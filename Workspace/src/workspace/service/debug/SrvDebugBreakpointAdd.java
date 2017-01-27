@@ -63,6 +63,8 @@ public class SrvDebugBreakpointAdd extends SrvGenerique {
       String application = (String)bean.getParameterDataByName("application");
       String path = (String)bean.getParameterDataByName("pathToExpand");
       String fileName = (String)bean.getParameterDataByName("FileName");
+      String className = (String)bean.getParameterDataByName("className");
+
       if (UtilString.isNotEmpty(szLigne)){
           HttpSession session = request.getSession();
           VirtualMachine virtualMachine = null;
@@ -73,34 +75,40 @@ public class SrvDebugBreakpointAdd extends SrvGenerique {
     
               Document domXml = (Document)session.getAttribute("resultDom");
               File file = null;
-              if (UtilString.isNotEmpty(application) &&
+              boolean readFile = false;
+              if (UtilString.isNotEmpty(className)) {
+              } else if (UtilString.isNotEmpty(application) &&
                 UtilString.isNotEmpty(fileName) &&
                 UtilString.isNotEmpty(path)) {
                   String filePathMain = AdpXmlApplication.getPathMain(domXml, application);
                   File filePath = new File(filePathMain, path);
                   file = new File(filePath, fileName);
+                  readFile = true;
               } else if (UtilString.isNotEmpty(fileName)) {
                 String filenameFormated = UtilPath.formatPath(domXml, application, fileName);
                 file = new File(filenameFormated);
+                readFile = true;
               } else {
                   return;
               }
-              String className = "";//szClass;
-              FileReader fileReader = new FileReader(file);
-              BufferedReader fileInput = new BufferedReader(fileReader);
-              String lineFile = fileInput.readLine();
-              while (lineFile!=null) {
-                  lineFile = lineFile.trim();
-                  if (lineFile.toUpperCase().startsWith("PACKAGE ")&&
-                      lineFile.endsWith(";")) {
-                      className = lineFile.substring(8, lineFile.length()-1);
-                      break;
+              if (readFile) {
+                  className = "";//szClass;
+                  FileReader fileReader = new FileReader(file);
+                  BufferedReader fileInput = new BufferedReader(fileReader);
+                  String lineFile = fileInput.readLine();
+                  while (lineFile!=null) {
+                      lineFile = lineFile.trim();
+                      if (lineFile.toUpperCase().startsWith("PACKAGE ")&&
+                          lineFile.endsWith(";")) {
+                          className = lineFile.substring(8, lineFile.length()-1);
+                          break;
+                      }
+                      lineFile = fileInput.readLine();
                   }
-                  lineFile = fileInput.readLine();
+    
+                  className += fileName.substring(0, fileName.lastIndexOf('.'));
+                  className = className.replace('\\', '.').replace('/', '.');
               }
-
-              className += fileName.substring(0, fileName.lastIndexOf('.'));
-              className = className.replace('\\', '.').replace('/', '.');
               Integer rowNum = new Integer(szLigne);
 
 //              BeanDebug beanDebug = (BeanDebug)session.getAttribute("beanDebug");
@@ -128,18 +136,19 @@ public class SrvDebugBreakpointAdd extends SrvGenerique {
               BeanDebug beanDebug = (BeanDebug)session.getAttribute("beanDebug");
               if (beanDebug==null) {
 //TODO The method createVirtualMachine(String, Integer) from the type UtilJDI refers to the missing type VirtualMachine
-//                  virtualMachine = UtilJDI.createVirtualMachine(hostName, port);
-//                  beanDebug = new BeanDebug(virtualMachine);
-//
-//                  ThrdDebugEventQueue thread = new ThrdDebugEventQueue(beanDebug, virtualMachine.eventQueue());
-//                  thread.setOut(System.out);
-//                  thread.setErr(System.err);
-//                  thread.setErrTrace(System.err);
-//                  thread.start();
-//                  
-//                  beanDebug.setThrdDebugEventQueue(thread);
-//
-//                  session.setAttribute("beanDebug", beanDebug);
+// Enable GlassFish Debug : https://docs.oracle.com/cd/E18930_01/html/821-2418/beafd.html
+                 virtualMachine = UtilJDI.createVirtualMachine(hostName, port);
+                 beanDebug = new BeanDebug(virtualMachine);
+
+                 ThrdDebugEventQueue thread = new ThrdDebugEventQueue(beanDebug, virtualMachine.eventQueue());
+                 thread.setOut(System.out);
+                 thread.setErr(System.err);
+                 thread.setErrTrace(System.err);
+                 thread.start();
+                 
+                 beanDebug.setThrdDebugEventQueue(thread);
+
+                 session.setAttribute("beanDebug", beanDebug);
               }
               else {
                   virtualMachine = beanDebug.getVirtualMachine();
@@ -167,24 +176,24 @@ public class SrvDebugBreakpointAdd extends SrvGenerique {
               }
               if (brkR==null) {
 //TODO The method createVirtualMachine(String, Integer) from the type UtilJDI refers to the missing type VirtualMachine
-//                  brkR = UtilJDI.createBreakpointRequest(virtualMachine, className, rowNum);
-//                  if (brkR!=null) {
-//                      // Stock le nom de l'application dans le point d'arret
-//                      brkR.putProperty("application", application);
-//                      // Stock le chemin des sources de la class dans le point d'arret
-//                      brkR.putProperty("path", path);
-//                      // Stock le nom de la class dans le point d'arret
-//                      brkR.putProperty("className", className);
-//                      // Stock le nom du fichier dans le point d'arret
-//                      brkR.putProperty("fileName", file.getName());
-//                      
-//                      tableBreakpoint.put(className+":"+szLigne, brkR);
-//                      
-//                      text = "added";
-//                  }
-//                  else {
-//                      text = URLEncoder.encode("Can't create breakpoint", "UTF-8");
-//                  }
+                 brkR = UtilJDI.createBreakpointRequest(virtualMachine, className, rowNum);
+                 if (brkR!=null) {
+                     // Stock le nom de l'application dans le point d'arret
+                     brkR.putProperty("application", application);
+                     // Stock le chemin des sources de la class dans le point d'arret
+                     brkR.putProperty("path", path);
+                     // Stock le nom de la class dans le point d'arret
+                     brkR.putProperty("className", className);
+                     // Stock le nom du fichier dans le point d'arret
+                     brkR.putProperty("fileName", file.getName());
+                     
+                     tableBreakpoint.put(className+":"+szLigne, brkR);
+                     
+                     text = "added";
+                 }
+                 else {
+                     text = URLEncoder.encode("Can't create breakpoint", "UTF-8");
+                 }
               } else {
                   eventRequestManager.deleteEventRequest(brkR);
                   tableBreakpoint.remove(className+":"+szLigne);

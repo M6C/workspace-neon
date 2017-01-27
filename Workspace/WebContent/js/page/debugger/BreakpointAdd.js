@@ -5,7 +5,7 @@ var oHttp;
 function setBreakpoint(pApplication, pPath, pClass, pFileName, pLine) {
 //alert("setBreakpoint");
 	oHttp = getHTTPObject();
-  var urlParam = "event=DebuggerBreakpointAdd&application=" + escape(pApplication) + "&pathToExpand=" + escape(pPath) + "&FileName=" + escape(pFileName) + "&breakpointClass=" + escape(pClass) + "&breakpointLine=" + pLine;
+  var urlParam = "event=DebuggerBreakpointAdd&application=" + escape(pApplication) + "&pathToExpand=" + escape(pPath) + "&FileName=" + escape(pFileName) + "&className=" + escape(pClass) + "&breakpointLine=" + pLine;
   sendToUrlPost(oHttp, url, urlParam, "handleHttpResponse_BreakpointAdd");
 }
 
