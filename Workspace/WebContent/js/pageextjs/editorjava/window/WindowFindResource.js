@@ -37,7 +37,7 @@ Ext.define('Workspace.editorjava.window.WindowFindResource', {
 		    items : [
 				{
 				    anchor: '100% 10%',
-					xtype: 'textfield',
+					xtype: 'combo',
 				    id: 'nameFilter',
 				    name: 'nameFilter',
 				    fieldLabel: '',
@@ -45,6 +45,8 @@ Ext.define('Workspace.editorjava.window.WindowFindResource', {
 				    enableKeyEvents: true,
 				    emptyText: 'Name Filter',
 				    value: me.nameFilter,
+        		    store: Ext.create('Workspace.common.form.combobox.data.StoreProjectExtjs4'),
+                    displayField:'project',
 				    listeners: {
 				    	keypress : me.onKeyPress
 				    }
