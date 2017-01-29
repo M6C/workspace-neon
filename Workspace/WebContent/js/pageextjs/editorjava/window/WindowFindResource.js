@@ -115,6 +115,11 @@ Ext.define('Workspace.editorjava.window.WindowFindResource', {
 			if (store.isLoading()) {
 				Workspace.common.tool.Pop.info(me, 'Find resource loading in progress.');
 			} else {
+			    var idx1 = nameFilter.indexOf('[');
+			    var idx2 = nameFilter.indexOf(']');
+			    if (idx1 == 0 && idx2 > 0) {
+			        
+			    }
 				grid.getStore().load(new Ext.data.Operation({
 		    		action : 'read',
 		    		params: {

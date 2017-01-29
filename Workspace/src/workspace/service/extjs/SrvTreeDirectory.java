@@ -46,14 +46,34 @@ public class SrvTreeDirectory extends SrvGenerique {
         String jsonData = null;
         String pathFormated = null;
         try {
+            if (UtilString.isNotEmpty(nameFilter)) {
+            	nameFilter = nameFilter.trim();
+            	String app = UtilPath.getInstance().extractPathApplication(nameFilter);
+            	if (UtilString.isNotEmpty(app)) {
+            	    application = app;
+            	    nameFilter = nameFilter.substring(nameFilter.indexOf(']')+1);
+            	}
+            }
+
+        	if (UtilString.isNotEmpty(contentFilter)) {
+            	contentFilter = contentFilter.trim();
+            }
+            if (UtilString.isNotEmpty(extentionFilter)) {
+            	String app = UtilPath.getInstance().extractPathApplication(extentionFilter);
+            	if (UtilString.isNotEmpty(app)) {
+            	    application = app;
+            	    extentionFilter = extentionFilter.substring(extentionFilter.indexOf(']')+1);
+            	}
+            }
+
             if(UtilString.isEmpty(application) && UtilString.isNotEmpty(path)) {
             	application = UtilPath.extractPathApplication(path);
             	if (application != null) {
             		path = path.substring(application.length()+2);
             	}
             }
-            if(UtilString.isNotEmpty(application))
-            {
+
+            if(UtilString.isNotEmpty(application)) {
                 Document dom = (Document)request.getSession().getAttribute("resultDom");
                 pathMain = AdpXmlApplication.getFormatedPathMain(context, dom, application);
                 pathSrc = AdpXmlApplication.getPathSource(context, dom, application);
@@ -89,14 +109,7 @@ public class SrvTreeDirectory extends SrvGenerique {
                         }
                         FilenameFilter filter = null;
 
-                        if (UtilString.isNotEmpty(nameFilter)) {
-                        	nameFilter = nameFilter.trim();
-                        }
                     	final String strName = (nameFilter == null ? null : (bIgnoreCase ? nameFilter.toLowerCase() : nameFilter));
-
-                    	if (UtilString.isNotEmpty(contentFilter)) {
-                        	contentFilter = contentFilter.trim();
-                        }
                     	final String strContent = (contentFilter == null ? null : (bIgnoreCase ? contentFilter.toLowerCase() : contentFilter));
                     	final String strExtention = (extentionFilter == null ? null : (bIgnoreCase ? extentionFilter.toLowerCase() : extentionFilter));
 
