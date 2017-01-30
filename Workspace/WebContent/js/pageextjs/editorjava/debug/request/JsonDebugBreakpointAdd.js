@@ -1,5 +1,5 @@
 Ext.define('Workspace.editorjava.debug.request.JsonDebugBreakpointAdd',  {
-	requires: ['Workspace.common.tool.Toast']
+	requires: ['Workspace.common.tool.Pop']
 	,
     constructor: function(config) {
 		console.info('Workspace.editorjava.debug.request.JsonDebugBreakpointAdd constructor');

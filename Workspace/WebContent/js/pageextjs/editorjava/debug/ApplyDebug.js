@@ -1,6 +1,7 @@
 Ext.define('Workspace.editorjava.debug.ApplyDebug', {
 	requires: [
-	  'Workspace.editorjava.debug.request.JsonDebugBreakpointAdd'
+	  'Workspace.editorjava.debug.request.JsonDebugBreakpointAdd',
+	  'Workspace.editorjava.debug.request.JsonDebugCheck'
 	]
     ,
 	statics: {
@@ -34,7 +35,12 @@ Ext.define('Workspace.editorjava.debug.ApplyDebug', {
                     }
                     
                     if (!me.waiting) {
-                        Ext.create('Workspace.editorjava.debug.request.JsonDebugCheck').start();
+                    	me.waiting = true;
+                        Workspace.editorjava.debug.request.JsonDebugCheck.start();
+                    } else {
+                    	// For Testing
+                    	me.waiting = false;
+                        Workspace.editorjava.debug.request.JsonDebugCheck.stop();
                     }
                 };
                 me.add(editor.raw, row, callback);
