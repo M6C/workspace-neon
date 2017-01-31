@@ -137,6 +137,34 @@ Ext.define('Workspace.tool.UtilString', {
         reverse(str) {
             return str.split('').reverse().join('');
         }
+        ,
+        decodeUtf8: function(str) {
+            var ret = '';
+            var cTmp = 0;
+            for (var i = 0; i < str.length; i++) {
+            	var char = str.charCodeAt(i);
+            	if (char == 0x25) { //'%'
+                	var c = str.substr(++i, 2);
+                    if (c == "C3") { // For UTF-8
+    	            	cTmp = 64;
+                    } else {
+                    	ret += String.fromCharCode(parseInt(c, 16) + cTmp);
+                    }
+                    i++;
+                }
+                else {
+                	cTmp = 0;
+                	if (char == 43) { //'+' => ' '
+    	            	ret += ' ';
+    	            }
+    	            else {
+//    	            	ret += decodeURIComponent(String.fromCharCode(char));
+    	            	ret += String.fromCharCode(char);
+    	            }
+                }
+        	}
+            return ret;
+        }
 	}
 
 }, function() {Workspace.tool.Log.defined('Workspace.tool.UtilString');});

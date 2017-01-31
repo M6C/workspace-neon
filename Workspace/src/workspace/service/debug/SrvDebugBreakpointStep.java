@@ -40,14 +40,14 @@ public class SrvDebugBreakpointStep extends SrvGenerique {
   	  HttpSession session = request.getSession();
   	  String step = (String)bean.getParameterDataByName("step");
   	  VirtualMachine virtualMachine = null;
+  	  LocatableEvent brkE = null;
 	  try {
     	  BeanDebug beanDebug = (BeanDebug)session.getAttribute("beanDebug");
     	  if (beanDebug!=null) {
     		  Event currentEvent = beanDebug.getCurrentEvent();
     		  if ((currentEvent!=null)&&(currentEvent instanceof LocatableEvent)) {
-	              PrintWriter out = response.getWriter();
     			  virtualMachine = beanDebug.getVirtualMachine();
-    			  LocatableEvent brkE = (LocatableEvent)currentEvent;
+    			  brkE = (LocatableEvent)currentEvent;
     			  EventRequest brkR = brkE.request();
     			  ThreadReference thread=brkE.thread();
 
@@ -114,10 +114,6 @@ public class SrvDebugBreakpointStep extends SrvGenerique {
 	    			  stepRequest.putProperty("line", new Integer(lineNumber));
 	    			  beanDebug.setCurrentStep(stepRequest);
 	
-		              out.print(application+":"+path+":"+sourceName+":"+lineNumber);
-	    		  }
-	    		  else {
-		              out.print("resume");
 	    		  }
     		  }
     	  }
@@ -129,18 +125,38 @@ public class SrvDebugBreakpointStep extends SrvGenerique {
 		  throw ex;
 	  }
 	  finally {
-		  if (virtualMachine!=null)
+		  if (virtualMachine!=null) {
 			  virtualMachine.resume();
+		  }
+		  doResponse(request, response, bean, brkE);
 	  }
     }
+
+	protected void doResponse(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean, LocatableEvent brkE) throws Exception {
+        PrintWriter out = response.getWriter();
+		  EventRequest brkR = brkE.request();
+		  String application = URLEncoder.encode((String)brkR.getProperty("application"), "UTF-8");
+		  // Recupere le chemin des sources de la class du point d'arret
+		  String path = (String)brkR.getProperty("path");//URLEncoder.encode((String)brkR.getProperty("path"), "UTF-8");
+		  // Recupere le nom de la class du point d'arret
+//		  String className = URLEncoder.encode((String)brkR.getProperty("className"), "UTF-8");
+		  // Recupere le nom du fichier source
+		  String sourceName = URLEncoder.encode(brkE.location().sourceName(), "UTF-8");
+			
+		  int lineNumber = brkE.location().lineNumber();
+		  // Avance d'une ligne car difference entre le BreakpointEvent et le StepEvent
+		  lineNumber++;
+
+		  out.print(application+":"+path+":"+sourceName+":"+lineNumber);
+	}
 
     /**
      * Clear a previous step request on this thread: only one is allowed
      * per thread
      */
     private void clearPreviousStep(EventRequestManager eventRequestManager, ThreadReference thread) {
-    	List requests = eventRequestManager.stepRequests();
-    	Iterator iter = requests.iterator();
+    	List<?> requests = eventRequestManager.stepRequests();
+    	Iterator<?> iter = requests.iterator();
     	while (iter.hasNext()) {
     		StepRequest request = (StepRequest)iter.next();
     		ThreadReference requestThread =  request.thread();

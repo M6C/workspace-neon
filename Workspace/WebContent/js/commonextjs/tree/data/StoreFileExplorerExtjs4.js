@@ -33,10 +33,12 @@ Ext.define('Workspace.common.tree.data.StoreFileExplorerExtjs4', {
 	    }
 		,
 		'load': function(store, node, records, successful, options) {
-			var size = records.length;
-			for(var i=0 ; i<size ; i++) {
-				record = records[i];
-				Ext.apply(record.data, record.raw);
+			if (!Ext.isEmpty(records)) {
+				var size = records.length;
+				for(var i=0 ; i<size ; i++) {
+					record = records[i];
+					Ext.apply(record.data, record.raw);
+				}
 			}
 		}
 	}

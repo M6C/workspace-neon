@@ -17,6 +17,7 @@ Ext.define('Workspace.editorjava.debug.request.JsonDebugStop',  {
 			headers: {'Content-Type': 'application/json; charset=UTF-8'},
 			method: 'GET',
 			callback:function(opts, success, response) {
+                Workspace.common.tool.Pop.info(me, 'Stop&nbsp;Debug');
 				paramCallBack();
 			}
 		});

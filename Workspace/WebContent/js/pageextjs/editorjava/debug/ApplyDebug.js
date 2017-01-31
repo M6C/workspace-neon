@@ -49,7 +49,7 @@ Ext.define('Workspace.editorjava.debug.ApplyDebug', {
         ,
         add: function(raw, row, callback) {
             Ext.create('Workspace.editorjava.debug.request.JsonDebugBreakpointAdd', {
-                filename:raw.path, line:row, classname: raw.className
+                application: raw.application, filename:raw.path, line:row, classname: raw.className
             }).request(callback);
         }
 	}

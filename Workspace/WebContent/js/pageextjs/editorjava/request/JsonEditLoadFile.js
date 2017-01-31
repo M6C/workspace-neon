@@ -2,7 +2,10 @@
 // - panelId
 // - panelEditorId
 Ext.define('Workspace.editorjava.request.JsonEditLoadFile',  {
-	requires: ['Workspace.common.tool.Toast']
+	requires: [
+	    'Workspace.common.tool.Toast',
+	    'Workspace.tool.UtilString'
+	]
 	,
     constructor: function(config) {
 		console.info('Workspace.editorjava.request.JsonEditLoadFile constructor');
@@ -32,7 +35,7 @@ Ext.define('Workspace.editorjava.request.JsonEditLoadFile',  {
 				var results = jsonData.results;
 				var resultMessage = '';
 				for(i=0 ; i<results ; i++) {
-					resultMessage += me.decodeUtf8(jsonData.data[i].text) + '\r\n';
+					resultMessage += Workspace.tool.UtilString.decodeUtf8(jsonData.data[i].text) + '\r\n';
 				}
 
                 var panel = Ext.getCmp(me.panelId);
@@ -103,33 +106,5 @@ Ext.define('Workspace.editorjava.request.JsonEditLoadFile',  {
 				alert('failure');
 			}
 		});
-    }
-    ,
-    decodeUtf8: function(str) {
-        var ret = '';
-        var cTmp = 0;
-        for (var i = 0; i < str.length; i++) {
-        	var char = str.charCodeAt(i);
-        	if (char == 0x25) { //'%'
-            	var c = str.substr(++i, 2);
-                if (c == "C3") { // For UTF-8
-	            	cTmp = 64;
-                } else {
-                	ret += String.fromCharCode(parseInt(c, 16) + cTmp);
-                }
-                i++;
-            }
-            else {
-            	cTmp = 0;
-            	if (char == 43) { //'+' => ' '
-	            	ret += ' ';
-	            }
-	            else {
-//	            	ret += decodeURIComponent(String.fromCharCode(char));
-	            	ret += String.fromCharCode(char);
-	            }
-            }
-    	}
-        return ret;
     }
 }, function() {Workspace.tool.Log.defined('Workspace.editorjava.request.JsonEditLoadFile');});

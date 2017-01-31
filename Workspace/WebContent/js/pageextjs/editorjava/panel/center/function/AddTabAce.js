@@ -68,6 +68,29 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 
 					Ext.Loader.syncRequire('Workspace.editorjava.debug.ApplyDebug');
 				    Workspace.editorjava.debug.ApplyDebug.apply(editor);
+				} else {
+					var apply = false;
+					var obj = {};
+				    if (Ext.isDefined(raw.cursorRow)) {
+					    obj.cursorRow = raw.cursorRow;
+						apply = true;
+				    }
+				    if (Ext.isDefined(raw.cursorCol)) {
+					    obj.cursorRow = raw.cursorRow;
+						apply = true;
+				    }
+				    if (Ext.isDefined(raw.changeScrollTop)) {
+					    obj.cursorRow = raw.cursorRow;
+						apply = true;
+				    }
+				    if (Ext.isDefined(raw.changeScrollLeft)) {
+					    obj.cursorRow = raw.cursorRow;
+						apply = true;
+				    }
+				    if (apply) {
+					    Ext.apply(editor, obj);
+					    Ext.apply(editor.raw, obj);
+				    }
 				}
 
 				editor.build = raw.build;

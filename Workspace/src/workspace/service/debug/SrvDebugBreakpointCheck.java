@@ -27,33 +27,39 @@ import framework.service.SrvGenerique;
 public class SrvDebugBreakpointCheck extends SrvGenerique {
 
 	public void init() {
-    }
+	}
 
-    public void execute(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean) throws Exception {
-    	  HttpSession session = request.getSession();
-    	  try {
-	    	  BeanDebug beanDebug = (BeanDebug)session.getAttribute("beanDebug");
-	    	  if (beanDebug!=null) {
-	    		  Event currentEvent = beanDebug.getCurrentEvent();
-	    		  if ((currentEvent!=null)&&(currentEvent instanceof BreakpointEvent)) {
-	    			  BreakpointEvent brkE = (BreakpointEvent)currentEvent;
-	    			  BreakpointRequest brkR = (BreakpointRequest)brkE.request();
-					  // Recupere le nom de l'application du point d'arret
-		    		  String application = URLEncoder.encode((String)brkR.getProperty("application"), "UTF-8");
-					  // Recupere le chemin des sources de la class du point d'arret
-		    		  String path = URLEncoder.encode((String)brkR.getProperty("path"), "UTF-8");
-		    		  String sourceName = URLEncoder.encode(brkR.location().sourceName(), "UTF-8");
-		    		  int lineNumber = brkE.location().lineNumber();
-		    		  PrintWriter out = response.getWriter();
-		              out.print(application+":"+path+":"+sourceName+":"+lineNumber);
-	    		  }
-	    	  }
-    	  }
-    	  catch(Exception ex) {
-    		  StringWriter sw = new StringWriter();
-    		  ex.printStackTrace(new PrintWriter(sw));
-    		  request.setAttribute("msgText", sw.toString());
-    		  throw ex;
-    	  }
-    }
+	public void execute(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean) throws Exception {
+		HttpSession session = request.getSession();
+		BreakpointEvent brkE = null;
+		try {
+			BeanDebug beanDebug = (BeanDebug) session.getAttribute("beanDebug");
+			if (beanDebug != null) {
+				Event currentEvent = beanDebug.getCurrentEvent();
+				if ((currentEvent != null) && (currentEvent instanceof BreakpointEvent)) {
+					brkE = (BreakpointEvent) currentEvent;
+				}
+			}
+		} catch (Exception ex) {
+			StringWriter sw = new StringWriter();
+			ex.printStackTrace(new PrintWriter(sw));
+			request.setAttribute("msgText", sw.toString());
+			throw ex;
+		} finally {
+			doResponse(request, response, bean, brkE);
+		}
+	}
+
+	protected void doResponse(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean, BreakpointEvent brkE) throws Exception {
+		BreakpointRequest brkR = (BreakpointRequest) brkE.request();
+		// Recupere le nom de l'application du point d'arret
+		String application = URLEncoder.encode((String) brkR.getProperty("application"), "UTF-8");
+		// Recupere le chemin des sources de la class du point d'arret
+		String path = URLEncoder.encode((String) brkR.getProperty("path"), "UTF-8");
+		String sourceName = URLEncoder.encode(brkR.location().sourceName(), "UTF-8");
+		int lineNumber = brkE.location().lineNumber();
+		PrintWriter out = response.getWriter();
+		out.print(application + ":" + path + ":" + sourceName + ":" + lineNumber);
+	}
+
 }

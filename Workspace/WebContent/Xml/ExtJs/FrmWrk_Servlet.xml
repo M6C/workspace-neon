@@ -292,10 +292,17 @@
         <BEAN Name="BeanDebuggerAdd" Scope="session" Service="workspace.service.debug.extjs.SrvDebugBreakpointAdd">
             <PARAM Name="breakpointLine" Type="STRING"/>
             <PARAM Name="application" Type="STRING"/>
-            <PARAM Name="pathToExpand" Type="STRING"/>
             <PARAM Name="FileName" Type="STRING"/>
             <PARAM Name="className" Type="STRING"/>
             <PARAM Name="virtualMachine" Type="OBJECT" Synchronize="FALSE"/>
+        </BEAN>
+    </SERVLET>
+    <SERVLET Name="DebuggerBreakpointCheckExtJs" TargetError="/Web/Page/Common/PageMessage.jsp">
+        <BEAN Name="BeanDebuggerCheck" Scope="session" Service="workspace.service.debug.extjs.SrvDebugBreakpointCheck"/>
+    </SERVLET>
+    <SERVLET Name="DebuggerBreakpointStepExtJs" TargetError="/Web/Page/Common/PageMessage.jsp">
+        <BEAN Name="BeanDebuggerStep" Scope="session" Service="workspace.service.debug.extjs.SrvDebugBreakpointStep">
+            <PARAM Name="step" Type="STRING"/>
         </BEAN>
     </SERVLET>
     <!-- ADMIN -->
