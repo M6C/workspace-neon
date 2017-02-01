@@ -9,19 +9,19 @@ Ext.define('Workspace.editorjava.debug.WaiterDebug',  {
     debug: function(callback) {
 	    var me = this;
         if (!me.debugging) {
-        	me.debugging = true;
             me.start(callback);
         } else {
-        	me.debugging = false;
             me.stop(callback);
         }
     }
     ,
     start: function(paramcallback) {
         var me = this;
+    	me.debugging = true;
         if (!Ext.isDefined(me._delay)) {
         	var callback = function() {
                 Workspace.common.tool.Pop.info(me, 'Start&nbsp;Debug');
+
                 me._delay = new Ext.util.DelayedTask();
                 me._delay.delay(0, function() {
                 	me._check(paramcallback);
@@ -31,13 +31,18 @@ Ext.define('Workspace.editorjava.debug.WaiterDebug',  {
         }
     }
     ,
-    stop: function() {
+    stop: function(paramcallback) {
         var me = this;
+    	me.debugging = false;
         if (Ext.isDefined(me._delay)) {
         	var callback = function() {
                 Workspace.common.tool.Pop.info(me, 'Stop&nbsp;Debug');
                 me._delay.cancel();
                 me._delay = undefined;
+
+                if (Ext.isDefined(paramcallback)) {
+                	paramcallback();
+                }
         	}
 
         	Ext.create('Workspace.editorjava.debug.request.JsonDebugStop').request(callback);
@@ -60,9 +65,9 @@ Ext.define('Workspace.editorjava.debug.WaiterDebug',  {
     			return;
     		}
 			if (jsonData.stopped === true) {
-                if (Ext.isDefined(paramcallback)) {
-                	paramcallback(jsonData);
-                }
+				me.stop(function() {
+					paramcallback(jsonData);
+				});
 			} else {
 				me._delay.delay(me._time, function() {
                 	me._check(paramcallback);

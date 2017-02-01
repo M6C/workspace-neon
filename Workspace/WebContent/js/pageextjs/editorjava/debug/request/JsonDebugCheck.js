@@ -8,7 +8,7 @@ Ext.define('Workspace.editorjava.debug.request.JsonDebugCheck',  {
 	    me.callParent();
 	}
 	,
-	request: function(paramCallBack) { 
+	request: function(paramCallBack) {
 	    var me = this;
 		Ext.Ajax.request({  
 			url : DOMAIN_NAME_ROOT + '/action.servlet?event=DebuggerBreakpointCheckExtJs',

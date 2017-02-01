@@ -1,5 +1,6 @@
 Ext.define('Workspace.editorjava.panel.PanelCenter', {
 	requires: [
+	     'Workspace.common.tool.Pop',
 	     'Workspace.editorjava.debug.WaiterDebug',
   	     'Workspace.editorjava.panel.center.function.AddTabAce'
   	]
@@ -39,6 +40,12 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 	}
 	,
 	callbackDebug: function(jsonData) {
+		if (!Ext.isDefined(jsonData)) {
+			return;
+		}
+
+		var me = this;
+		var mainCenterPanel = Ext.getCmp('mainCenterPanel');
 		var application = Workspace.tool.UtilString.decodeUtf8(jsonData.application);
 		var classname = Workspace.tool.UtilString.decodeUtf8(jsonData.className);
 		var fileName = Workspace.tool.UtilString.decodeUtf8(jsonData.fileName);
@@ -62,13 +69,18 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 
 		// Explicit load required library (Mandatory for extending this class)
 		Ext.Loader.syncRequire('Workspace.editorjava.panel.center.function.AddTabAce');
-		Workspace.editorjava.panel.center.function.AddTabAce.call(raw);
+		var panelTab = Workspace.editorjava.panel.center.function.AddTabAce.call(raw);
 
-//			var editor = ace.editor(fileName + 'Editor');
-//			var callbackResume = function (jsonData, params) {
-//				Workspace.editorjava.debug.ApplyDebug.callbackAdd(jsonData, params, editor, row)
-//            };
-//			Ext.Loader.syncRequire('Workspace.editorjava.debug.request.JsonDebugResume');
-//        	Ext.create('Workspace.editorjava.debug.request.JsonDebugResume').request(callbackResume);
+		panelTab.initializeButtonDebug();
+
+		var callbackResume = function (jsonData, params) {
+            Workspace.common.tool.Pop.info(me, 'Resume');
+            mainCenterPanel.waiterDebug.debug(me.callbackDebug);
+
+    		panelTab.initializeButtonDebug();
+		};
+
+		Ext.Loader.syncRequire('Workspace.editorjava.debug.request.JsonDebugResume');
+    	Ext.create('Workspace.editorjava.debug.request.JsonDebugResume').request(callbackResume);
 	}
 }, function() {Workspace.tool.Log.defined('Workspace.editorjava.panel.PanelCenter');});

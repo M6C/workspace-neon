@@ -1,6 +1,5 @@
 Ext.define('Workspace.editorjava.debug.request.JsonDebugStop',  {
-	requires: ['Workspace.common.tool.Pop']
-	,
+
     constructor: function(config) {
         var me = this;
 

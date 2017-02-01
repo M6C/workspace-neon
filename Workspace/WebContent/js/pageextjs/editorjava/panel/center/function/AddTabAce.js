@@ -96,6 +96,8 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 				editor.build = raw.build;
 				editor.autoDeploy = raw.autoDeploy;
 			    editor.focus();
+			    
+			    return panelTab;
 			}
 		}
 	}
