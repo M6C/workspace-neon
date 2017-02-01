@@ -1,8 +1,7 @@
 Ext.define('Workspace.editorjava.debug.request.JsonDebugStop',  {
-	requires: ['Workspace.common.tool.Toast']
+	requires: ['Workspace.common.tool.Pop']
 	,
     constructor: function(config) {
-		console.info('Workspace.editorjava.debug.request.JsonDebugStop constructor');
         var me = this;
 
         Ext.apply(me, config);
@@ -17,8 +16,9 @@ Ext.define('Workspace.editorjava.debug.request.JsonDebugStop',  {
 			headers: {'Content-Type': 'application/json; charset=UTF-8'},
 			method: 'GET',
 			callback:function(opts, success, response) {
-                Workspace.common.tool.Pop.info(me, 'Stop&nbsp;Debug');
-				paramCallBack();
+                if (Ext.isDefined(paramCallBack)) {
+                	paramCallBack();
+                }
 			}
 		});
     }

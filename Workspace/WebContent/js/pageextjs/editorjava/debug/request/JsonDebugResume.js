@@ -2,7 +2,6 @@ Ext.define('Workspace.editorjava.debug.request.JsonDebugResume',  {
 	requires: ['Workspace.common.tool.Toast']
 	,
     constructor: function(config) {
-		console.info('Workspace.editorjava.debug.request.JsonDebugResume constructor');
         var me = this;
 
         Ext.apply(me, config);
@@ -19,7 +18,11 @@ Ext.define('Workspace.editorjava.debug.request.JsonDebugResume',  {
 			callback:function(opts, success, response) {
                 Workspace.common.tool.Pop.info(me, 'Resume&nbsp;Debug');
                 if (Ext.isDefined(paramCallBack)) {
-                	paramCallBack();
+                	var jsonData;
+    	    		if (success) {
+    	    			jsonData = Ext.decode(response.responseText);
+    	    		}
+                	paramCallBack(jsonData);
                 }
 			}
 		});

@@ -2,10 +2,11 @@ Ext.define('Workspace.editorjava.debug.request.JsonDebugBreakpointAdd',  {
 	requires: ['Workspace.common.tool.Pop']
 	,
     constructor: function(config) {
-		console.info('Workspace.editorjava.debug.request.JsonDebugBreakpointAdd constructor');
         var me = this;
 
         Ext.apply(me, config);
+
+		me.params  = {application: me.application, FileName:me.filename, breakpointLine:me.line, className: me.classname},
 
         me.callParent();
     }
@@ -16,9 +17,15 @@ Ext.define('Workspace.editorjava.debug.request.JsonDebugBreakpointAdd',  {
 			url : DOMAIN_NAME_ROOT + '/action.servlet?event=DebuggerBreakpointAddExtJs',
 			headers: {'Content-Type': 'application/json; charset=UTF-8'},
 			method: 'GET',
-			params :{application: me.application, FileName:me.filename, breakpointLine:me.line, className: me.classname},
+			params : me.params,
 			callback:function(opts, success, response) {
-				paramCallBack();
+                if (Ext.isDefined(paramCallBack)) {
+                	var jsonData;
+    	    		if (success) {
+    	    			jsonData = Ext.decode(response.responseText);
+    	    		}
+                	paramCallBack(jsonData, me.params);
+                }
 			}
 		});
     }

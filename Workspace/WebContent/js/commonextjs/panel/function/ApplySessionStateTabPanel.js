@@ -35,12 +35,17 @@ Ext.define('Workspace.common.panel.function.ApplySessionStateTabPanel', {
 		    ,
 		    getRawFromTab: function(tab) {
                 var raw = tab.raw;
+    			if (!Ext.isDefined(raw)) {
+    				raw = {};
+    			}
     			var editor = ace.edit(tab.panelEditorId);
-		        // console.info('getRawFromTab - cursorCol:' + editor.cursorCol + ' cursorRow:' + editor.cursorRow + ' ScrollTop:' + editor.changeScrollTop + ' ScrollLeft:' + editor.changeScrollLeft + ' id:' + editor.id);
-    			raw.cursorRow = editor.cursorRow;
-    			raw.cursorCol = editor.cursorCol;
-    			//raw.changeScrollTop = editor.changeScrollTop;
-    			//raw.changeScrollLeft = editor.changeScrollLeft;
+    			if (Ext.isDefined(editor)) {
+			        // console.info('getRawFromTab - cursorCol:' + editor.cursorCol + ' cursorRow:' + editor.cursorRow + ' ScrollTop:' + editor.changeScrollTop + ' ScrollLeft:' + editor.changeScrollLeft + ' id:' + editor.id);
+	    			raw.cursorRow = editor.cursorRow;
+	    			raw.cursorCol = editor.cursorCol;
+	    			//raw.changeScrollTop = editor.changeScrollTop;
+	    			//raw.changeScrollLeft = editor.changeScrollLeft;
+    			}
     			return raw;
 		    }
 	    });

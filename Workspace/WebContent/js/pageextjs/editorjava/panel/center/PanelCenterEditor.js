@@ -3,6 +3,7 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 	  'Workspace.editorjava.panel.center.function.AddTabSave',
 	  'Workspace.editorjava.panel.center.function.AddTabSaveAll',
 	  'Workspace.editorjava.panel.center.function.AddTabReload',
+	  'Workspace.editorjava.debug.ApplyDebug',
 	  'Workspace.editorjava.request.JsonEditLoadFile'
 	]
 	,
@@ -38,6 +39,7 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
         }
         var title = me.panelId;
         title = Workspace.tool.UtilString.cuteSplitPath(title, 100);
+
 		Ext.apply(me, {
 		    tbar: Ext.create('Ext.toolbar.Toolbar', {
 		    	cls: 'x-panel-header',
@@ -46,6 +48,25 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 						'<span style="color:#555555" title="'+titleTech+'">' + '<img src="'+DOMAIN_NAME_ROOT+'/imgExtJs/EditorJava/icon_info.gif" width="12px" height="12px"/>' + 
 						'</span>&nbsp;<span style="color:#4067B3" title="'+me.panelId+'">' + title + '</span>',
 					    '->',
+			            {
+					    	text: 'Debug',
+					    	id: 'btnDebugStart',
+					    	style: 'background-color:rgb(128, 204, 255)',
+					    	handler:  function(button, e) {
+					            me.debug();
+					            me.initializeButtonDebug();
+					    	}
+			            },
+			            {
+					    	text: 'Debug',
+					    	id: 'btnDebugStop',
+					    	style: 'background-color:rgb(255,100,100)',
+					    	handler:  function(button, e) {
+					            me.debug();
+					            me.initializeButtonDebug();
+					    	}
+			            },
+					    {xtype: 'tbseparator'},
 					    {
 					    	text: 'Save', 
 					    	handler:  function(button, e) {
@@ -69,7 +90,9 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 		    listeners : {
 		    	'show': function(tab, option) {
 
-					var editor = ace.edit(me.panelEditorId);
+		    		me.initializeButtonDebug();
+
+		            var editor = ace.edit(me.panelEditorId);
 					Ext.apply(editor, {
 					    id: me.panelEditorId,
             			panelId: me.panelId,
@@ -148,6 +171,17 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 		    }
 	    });
 		me.callParent(arguments);
+	}
+	,
+	debug: function() {
+		Ext.getCmp('mainCenterPanel').debug();
+	}
+	,
+	initializeButtonDebug: function() {
+		var me = this;
+		var debugging = Ext.getCmp('mainCenterPanel').waiterDebug.debugging;
+		Ext.getCmp('btnDebugStart').setVisible(!debugging);
+		Ext.getCmp('btnDebugStop').setVisible(debugging);
 	}
 	,
 	expandTree: function(tab) {
