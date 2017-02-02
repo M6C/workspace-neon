@@ -2,19 +2,20 @@ package workspace.service.debug;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Enumeration;
+import java.util.Hashtable;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import workspace.bean.debug.BeanDebug;
-import workspace.thread.debug.ThrdDebugEventQueue;
-
 import com.sun.jdi.VirtualMachine;
+import com.sun.jdi.request.BreakpointRequest;
 
 import framework.beandata.BeanGenerique;
-import framework.ressource.util.jdi.UtilJDI;
 import framework.service.SrvGenerique;
+import workspace.bean.debug.BeanDebug;
+import workspace.service.debug.tool.ToolDebug;
 
 /**
  *
@@ -33,28 +34,25 @@ public class SrvDebugStart extends SrvGenerique {
           PrintWriter out = response.getWriter();
     	  VirtualMachine virtualMachine = null;
     	  try {
-			  BeanDebug beanDebug = (BeanDebug)session.getAttribute("beanDebug");
-			  if (beanDebug==null) {
-				  String hostName = "localhost";
-	              Integer port = new Integer(8380);
-//TODO The method createVirtualMachine(String, Integer) from the type UtilJDI refers to the missing type VirtualMachine
-				  virtualMachine = UtilJDI.createVirtualMachine(hostName, port);
-				  beanDebug = new BeanDebug(virtualMachine);
-
-				  session.setAttribute("beanDebug", beanDebug);
-			  }
-			  if (beanDebug.getThrdDebugEventQueue() == null) {
-				  ThrdDebugEventQueue thread = new ThrdDebugEventQueue(beanDebug, virtualMachine.eventQueue());
-				  thread.setOut(System.out);
-				  thread.setErr(System.err);
-				  thread.setErrTrace(System.err);
-				  thread.start();
-				  
-				  beanDebug.setThrdDebugEventQueue(thread);
-			  }
+    		  String hostName = "localhost";
+    		  Integer port = new Integer(8380);
+			  BeanDebug beanDebug = ToolDebug.getBeanDebug(session, hostName, port);;
 
 			  virtualMachine = beanDebug.getVirtualMachine();
 
+			  Hashtable<String, BreakpointRequest> tableBreakpoint = beanDebug.getTableBreakpoint();
+			  if (tableBreakpoint!=null) {
+				  BreakpointRequest brkR = null, brkR2 = null;
+				  Object key = null;
+				  Enumeration<String> enumKeys = tableBreakpoint.keys();
+				  while(enumKeys.hasMoreElements()) {
+					  key = enumKeys.nextElement();
+					  brkR = (BreakpointRequest)tableBreakpoint.get(key);
+					  brkR2 = ToolDebug.recreateBreakpoint(beanDebug, brkR);
+					  copyBreakpointProperties(brkR, brkR2);
+				  }
+			  }
+			  
 			  out.print("Started");
     	  }
     	  catch(Exception ex) {
@@ -67,5 +65,13 @@ public class SrvDebugStart extends SrvGenerique {
     		  if (virtualMachine!=null)
     			  virtualMachine.resume();
     	  }
+    }
+
+    protected void copyBreakpointProperties(BreakpointRequest brkR1, BreakpointRequest brkR2) throws Exception {
+        brkR2.putProperty("line", brkR1.getProperty("line"));
+        brkR2.putProperty("className", brkR1.getProperty("className"));
+        brkR2.putProperty("application", brkR1.getProperty("application"));
+        brkR2.putProperty("fileName", brkR1.getProperty("fileName"));
+        brkR2.putProperty("path", brkR1.getProperty("path"));
     }
 }

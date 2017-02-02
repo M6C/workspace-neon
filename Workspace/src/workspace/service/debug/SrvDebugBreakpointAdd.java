@@ -1,14 +1,11 @@
 package workspace.service.debug;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.io.StringWriter;
 import java.net.URLEncoder;
 import java.util.Hashtable;
-import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.jms.JMSException;
@@ -29,10 +26,8 @@ import javax.servlet.http.HttpSession;
 
 import org.w3c.dom.Document;
 
-import com.sun.jdi.Location;
 import com.sun.jdi.VirtualMachine;
 import com.sun.jdi.request.BreakpointRequest;
-import com.sun.jdi.request.EventRequest;
 import com.sun.jdi.request.EventRequestManager;
 
 import framework.beandata.BeanGenerique;
@@ -41,7 +36,7 @@ import framework.ressource.util.jdi.UtilJDI;
 import framework.service.SrvGenerique;
 import workspace.adaptateur.application.AdpXmlApplication;
 import workspace.bean.debug.BeanDebug;
-import workspace.thread.debug.ThrdDebugEventQueue;
+import workspace.service.debug.tool.ToolDebug;
 import workspace.util.UtilPath;
 
 /**
@@ -93,96 +88,16 @@ public class SrvDebugBreakpointAdd extends SrvGenerique {
                   return;
               }
               if (readFile) {
-                  className = "";//szClass;
-                  FileReader fileReader = new FileReader(file);
-                  BufferedReader fileInput = null;
-                  try {
-	                  fileInput = new BufferedReader(fileReader);
-	                  String lineFile = fileInput.readLine();
-	                  while (lineFile!=null) {
-	                      lineFile = lineFile.trim();
-	                      if (lineFile.toUpperCase().startsWith("PACKAGE ")&&
-	                          lineFile.endsWith(";")) {
-	                          className = lineFile.substring(8, lineFile.length()-1);
-	                          break;
-	                      }
-	                      lineFile = fileInput.readLine();
-	                  }
-                  } finally {
-                	  if (fileInput != null) {
-                		  fileInput.close();
-                	  }
-                  }
-    
-                  className += fileName.substring(0, fileName.lastIndexOf('.'));
-                  className = className.replace('\\', '.').replace('/', '.');
+                  className = ToolDebug.readClassnameFromFile(file);
               }
+
               Integer rowNum = new Integer(szLigne);
-
-//              BeanDebug beanDebug = (BeanDebug)session.getAttribute("beanDebug");
-//              if (beanDebug==null) {
-//                  beanDebug = new BeanDebug();
-//                  session.setAttribute("beanDebug", beanDebug);
-//              }
-//              VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
-//              if (virtualMachine==null) {
-//                  virtualMachine = UtilJDI.createVirtualMachine(hostName, port);
-//                  beanDebug.setVirtualMachine(virtualMachine);
-//              }
-//              ThrdDebugEventQueue thread = beanDebug.getThrdDebugEventQueue();
-//              if (thread==null) {
-//                  thread = new ThrdDebugEventQueue(beanDebug, virtualMachine.eventQueue());
-//                  thread.setOut(System.out);
-//                  thread.setErr(System.err);
-//                  thread.setErrTrace(System.err);
-//                  thread.start();
-//                  
-//                  beanDebug.setThrdDebugEventQueue(thread);
-//              }
-              
-
-              BeanDebug beanDebug = (BeanDebug)session.getAttribute("beanDebug");
-              if (beanDebug==null) {
-//TODO The method createVirtualMachine(String, Integer) from the type UtilJDI refers to the missing type VirtualMachine
-// Enable GlassFish Debug : https://docs.oracle.com/cd/E18930_01/html/821-2418/beafd.html
-                 virtualMachine = UtilJDI.createVirtualMachine(hostName, port);
-                 beanDebug = new BeanDebug(virtualMachine);
-
-                 session.setAttribute("beanDebug", beanDebug);
-			  }
-			  if (beanDebug.getThrdDebugEventQueue() == null) {
-
-                 ThrdDebugEventQueue thread = new ThrdDebugEventQueue(beanDebug, virtualMachine.eventQueue());
-                 thread.setOut(System.out);
-                 thread.setErr(System.err);
-                 thread.setErrTrace(System.err);
-                 thread.start();
-                 
-                 beanDebug.setThrdDebugEventQueue(thread);
-              }
-
+              BeanDebug beanDebug = ToolDebug.getBeanDebug(session, hostName, port);
               virtualMachine = beanDebug.getVirtualMachine();
 
               Hashtable<String, BreakpointRequest> tableBreakpoint = beanDebug.getTableBreakpoint();
-              EventRequest eventRequest = null;
-              BreakpointRequest brkR = null;
-              Location location = null;
               EventRequestManager eventRequestManager = virtualMachine.eventRequestManager();
-              List<?> breakpointRequests = eventRequestManager.breakpointRequests();
-              int size = breakpointRequests.size();
-              for(int i=0 ; i<size ; i++) {
-                  eventRequest = (EventRequest)breakpointRequests.get(i);
-                  if (eventRequest instanceof BreakpointRequest) {
-                      brkR = (BreakpointRequest)eventRequest;
-                      location = brkR.location();
-                      if (className.equals(brkR.getProperty("className")) &&
-                              (location.lineNumber()==rowNum.intValue())) {
-                          break;
-                      }
-                      else
-                          brkR = null;
-                  }
-              }
+              BreakpointRequest brkR = ToolDebug.findBreakpoint(virtualMachine, className, rowNum.intValue());
               if (brkR==null) {
 //TODO The method createVirtualMachine(String, Integer) from the type UtilJDI refers to the missing type VirtualMachine
                  brkR = UtilJDI.createBreakpointRequest(virtualMachine, className, rowNum);
@@ -228,10 +143,13 @@ addToJNDI(ctx, "/workspace/debug/breakpoint", request.getSession().getId(), thre
     }
 
     protected void initBreakpointProperties(BeanGenerique bean, BreakpointRequest brkR) throws Exception {
+        String line = (String)bean.getParameterDataByName("breakpointLine");
         String application = (String)bean.getParameterDataByName("application");
         String path = (String)bean.getParameterDataByName("pathToExpand");
         String className = (String)bean.getParameterDataByName("className");
 
+        // Stock le numero de ligne du point d'arret
+        brkR.putProperty("line", line);
         // Stock le nom de l'application dans le point d'arret
         brkR.putProperty("application", application);
         // Stock le chemin des sources de la class dans le point d'arret

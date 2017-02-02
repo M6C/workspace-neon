@@ -7,13 +7,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import workspace.bean.debug.BeanDebug;
-import workspace.thread.debug.ThrdDebugEventQueue;
-
 import com.sun.jdi.VirtualMachine;
+import com.sun.jdi.event.BreakpointEvent;
+import com.sun.jdi.event.Event;
 
 import framework.beandata.BeanGenerique;
 import framework.service.SrvGenerique;
+import workspace.bean.debug.BeanDebug;
+import workspace.service.debug.tool.ToolDebug;
+import workspace.thread.debug.ThrdDebugEventQueue;
 
 /**
  *
@@ -40,11 +42,23 @@ public class SrvDebugStop extends SrvGenerique {
 
 				  thrdDebugEventQueue = beanDebug.getThrdDebugEventQueue();
 
-    			  beanDebug.setCurrentEvent(null);
+	    		  Event currentEvent = beanDebug.getCurrentEvent();
+	    		  if (currentEvent instanceof BreakpointEvent) {
+    				  ((BreakpointEvent)currentEvent).thread().resume();
+    			  }
+    			  if (beanDebug.getCurrentStep() != null) {
+    				  beanDebug.getCurrentStep().thread().resume();
+    			  }
+    			  virtualMachine.resume();
+
+    			  ToolDebug.deleteBreakpoint(beanDebug);
+
+				  beanDebug.setCurrentEvent(null);
     			  beanDebug.setCurrentStep(null);
     			  beanDebug.setThrdDebugEventQueue(null);
+    			  beanDebug.setVirtualMachine(null);
 
-				  session.removeAttribute("beanDebug");
+//				  session.removeAttribute("beanDebug");
 			  }
 			  out.print("Stopped");
     	  }

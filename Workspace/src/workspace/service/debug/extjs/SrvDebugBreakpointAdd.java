@@ -10,10 +10,12 @@ import com.sun.jdi.request.BreakpointRequest;
 public class SrvDebugBreakpointAdd extends workspace.service.debug.SrvDebugBreakpointAdd {
 
     protected void initBreakpointProperties(BeanGenerique bean, BreakpointRequest brkR) throws Exception {
+        String line = (String)bean.getParameterDataByName("breakpointLine");
         String className = (String)bean.getParameterDataByName("className");
         String application = (String)bean.getParameterDataByName("application");
         String fileName = (String)bean.getParameterDataByName("FileName");
 
+        brkR.putProperty("line", line);
         brkR.putProperty("className", className);
         brkR.putProperty("application", application);
         brkR.putProperty("fileName", fileName);

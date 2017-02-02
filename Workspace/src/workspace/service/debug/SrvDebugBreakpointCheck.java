@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import workspace.bean.debug.BeanDebug;
+import workspace.service.debug.tool.ToolDebug;
 
 import com.sun.jdi.event.BreakpointEvent;
 import com.sun.jdi.event.Event;
@@ -33,7 +34,9 @@ public class SrvDebugBreakpointCheck extends SrvGenerique {
 		HttpSession session = request.getSession();
 		BreakpointEvent brkE = null;
 		try {
-			BeanDebug beanDebug = (BeanDebug) session.getAttribute("beanDebug");
+			String hostName = "localhost";
+			Integer port = new Integer(8380);
+			BeanDebug beanDebug = ToolDebug.getBeanDebug(session, hostName, port);
 			if (beanDebug != null) {
 				Event currentEvent = beanDebug.getCurrentEvent();
 				if ((currentEvent != null) && (currentEvent instanceof BreakpointEvent)) {

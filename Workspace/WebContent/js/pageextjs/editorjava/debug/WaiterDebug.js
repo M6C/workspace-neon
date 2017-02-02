@@ -6,33 +6,39 @@ Ext.define('Workspace.editorjava.debug.WaiterDebug',  {
 	,
     debugging: false
     ,
-    debug: function(callback) {
-	    var me = this;
-        if (!me.debugging) {
-            me.start(callback);
-        } else {
-            me.stop(callback);
-        }
-    }
-    ,
     start: function(paramcallback) {
         var me = this;
-    	me.debugging = true;
-        if (!Ext.isDefined(me._delay)) {
-        	var callback = function() {
-                Workspace.common.tool.Pop.info(me, 'Start&nbsp;Debug');
+        var detail = undefined;
+        var callback = function() {
+            Workspace.common.tool.Pop.info(me, 'Start&nbsp;Debug', {detail: detail});
 
-                me._delay = new Ext.util.DelayedTask();
-                me._delay.delay(0, function() {
-                	me._check(paramcallback);
-                });
-        	}
+            me._delay = new Ext.util.DelayedTask();
+            me._delay.delay(0, function() {
+            	me._check(paramcallback);
+            });
+    	}
+
+        me.debugging = true;
+
+    	if (Ext.isDefined(me._delay)) {
+    		detail = "Stopping process before starting.";
+            me._delay.cancel();
+            me._delay = undefined;
+            callback();
+        } else {
             Ext.create('Workspace.editorjava.debug.request.JsonDebugStart').request(callback);
         }
     }
     ,
     stop: function(paramcallback) {
         var me = this;
+        if (!me.debugging) {
+    		Workspace.common.tool.Pop.failure(me, 'Debug already stopped', {toast: false});
+            if (Ext.isDefined(paramcallback)) {
+            	paramcallback();
+            }
+    		return;
+        }
     	me.debugging = false;
         if (Ext.isDefined(me._delay)) {
         	var callback = function() {
@@ -65,14 +71,13 @@ Ext.define('Workspace.editorjava.debug.WaiterDebug',  {
     			return;
     		}
 			if (jsonData.stopped === true) {
-				me.stop(function() {
-					paramcallback(jsonData);
-				});
-			} else {
-				me._delay.delay(me._time, function() {
-                	me._check(paramcallback);
-                });
+                if (Ext.isDefined(paramcallback)) {
+    				paramcallback(jsonData);
+                }
 			}
+			me._delay.delay(me._time, function() {
+				me._check(paramcallback);
+			});
 		};
         Ext.create('Workspace.editorjava.debug.request.JsonDebugCheck').request(callback);
     }

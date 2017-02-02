@@ -53,8 +53,7 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 					    	id: 'btnDebugStart',
 					    	style: 'background-color:rgb(128, 204, 255)',
 					    	handler:  function(button, e) {
-					            me.debug();
-					            me.initializeButtonDebug();
+					            me.debugStart();
 					    	}
 			            },
 			            {
@@ -62,8 +61,7 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 					    	id: 'btnDebugStop',
 					    	style: 'background-color:rgb(255,100,100)',
 					    	handler:  function(button, e) {
-					            me.debug();
-					            me.initializeButtonDebug();
+					            me.debugStop();
 					    	}
 			            },
 					    {xtype: 'tbseparator'},
@@ -90,7 +88,7 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 		    listeners : {
 		    	'show': function(tab, option) {
 
-		    		me.initializeButtonDebug();
+		    		Ext.getCmp('mainCenterPanel').initializeButtonDebug();
 
 		            var editor = ace.edit(me.panelEditorId);
 					Ext.apply(editor, {
@@ -173,15 +171,12 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 		me.callParent(arguments);
 	}
 	,
-	debug: function() {
-		Ext.getCmp('mainCenterPanel').debug();
+	debugStart: function() {
+		Ext.getCmp('mainCenterPanel').debugStart();
 	}
 	,
-	initializeButtonDebug: function() {
-		var me = this;
-		var debugging = Ext.getCmp('mainCenterPanel').waiterDebug.debugging;
-		Ext.getCmp('btnDebugStart').setVisible(!debugging);
-		Ext.getCmp('btnDebugStop').setVisible(debugging);
+	debugStop: function() {
+		Ext.getCmp('mainCenterPanel').debugStop();
 	}
 	,
 	expandTree: function(tab) {

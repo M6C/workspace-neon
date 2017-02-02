@@ -34,13 +34,21 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
         return ret;
 	}
 	,
-	debug: function() {
+	debugStart: function() {
 		var me = this;
-		me.waiterDebug.debug(me.callbackDebug);
+		me.waiterDebug.start(me.callbackDebugStart);
+		me.initializeButtonDebug();
 	}
 	,
-	callbackDebug: function(jsonData) {
+	debugStop: function() {
+		var me = this;
+		me.waiterDebug.stop(me.callbackDebugStop);
+		me.initializeButtonDebug();
+	}
+	,
+	callbackDebugStart: function(jsonData) {
 		if (!Ext.isDefined(jsonData)) {
+    		Workspace.common.tool.Pop.failure(me, 'Debug callback with empty json data', {toast: false});
 			return;
 		}
 
@@ -71,16 +79,25 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 		Ext.Loader.syncRequire('Workspace.editorjava.panel.center.function.AddTabAce');
 		var panelTab = Workspace.editorjava.panel.center.function.AddTabAce.call(raw);
 
-		panelTab.initializeButtonDebug();
-
 		var callbackResume = function (jsonData, params) {
             Workspace.common.tool.Pop.info(me, 'Resume');
-            mainCenterPanel.waiterDebug.debug(me.callbackDebug);
 
-    		panelTab.initializeButtonDebug();
+            mainCenterPanel.initializeButtonDebug();
 		};
 
 		Ext.Loader.syncRequire('Workspace.editorjava.debug.request.JsonDebugResume');
     	Ext.create('Workspace.editorjava.debug.request.JsonDebugResume').request(callbackResume);
+	}
+	,
+	initializeButtonDebug: function() {
+		var me = this;
+		var debugging = me.waiterDebug.debugging;
+		Ext.getCmp('btnDebugStart').setVisible(!debugging);
+		Ext.getCmp('btnDebugStop').setVisible(debugging);
+	}
+	,
+	callbackDebugStop: function(jsonData) {
+		var mainCenterPanel = Ext.getCmp('mainCenterPanel');
+		mainCenterPanel.initializeButtonDebug();
 	}
 }, function() {Workspace.tool.Log.defined('Workspace.editorjava.panel.PanelCenter');});
