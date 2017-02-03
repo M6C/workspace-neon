@@ -1,5 +1,4 @@
 Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
-	// REQUIRED
 	requires: [ 
 	     'Workspace.editorjava.panel.center.function.AddTabSave',
 	     'Workspace.editorjava.panel.center.function.AddTabReload'
@@ -49,14 +48,14 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 				editor.id = panelEditorId;
 				editor.panelId = panelId;
 
+				Ext.apply(editor, {
+					cursorRow: raw.cursorRow,
+					cursorCol: raw.cursorCol,
+					changeScrollTop: raw.changeScrollTop,
+					changeScrollLeft: raw.changeScrollLeft
+				});
+				
 				if (initializeEditor) {
-					Ext.apply(editor, {
-            	        cursorRow: raw.cursorRow,
-            	        cursorCol: raw.cursorCol,
-            			changeScrollTop: raw.changeScrollTop,
-            			changeScrollLeft: raw.changeScrollLeft
-					});
-
 					Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandChangeTab');
 				    Workspace.editorjava.aceeditor.command.CommandChangeTab.addCommand(editor, mainCenterPanel);
 
@@ -68,29 +67,6 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 
 					Ext.Loader.syncRequire('Workspace.editorjava.debug.ApplyDebug');
 				    Workspace.editorjava.debug.ApplyDebug.apply(editor);
-				} else {
-					var apply = false;
-					var obj = {};
-				    if (Ext.isDefined(raw.cursorRow)) {
-					    obj.cursorRow = raw.cursorRow;
-						apply = true;
-				    }
-				    if (Ext.isDefined(raw.cursorCol)) {
-					    obj.cursorRow = raw.cursorRow;
-						apply = true;
-				    }
-				    if (Ext.isDefined(raw.changeScrollTop)) {
-					    obj.cursorRow = raw.cursorRow;
-						apply = true;
-				    }
-				    if (Ext.isDefined(raw.changeScrollLeft)) {
-					    obj.cursorRow = raw.cursorRow;
-						apply = true;
-				    }
-				    if (apply) {
-					    Ext.apply(editor, obj);
-					    Ext.apply(editor.raw, obj);
-				    }
 				}
 
 				editor.build = raw.build;

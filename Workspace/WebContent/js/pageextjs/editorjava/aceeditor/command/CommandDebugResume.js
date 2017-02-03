@@ -22,6 +22,8 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandDebugResume',  {
 	    }
 		,
 		callbackResume: function (jsonData, params) {
+			var me = Workspace.editorjava.aceeditor.command.CommandDebugResume;
+
 			var mainCenterPanel = Ext.getCmp('mainCenterPanel');
             mainCenterPanel.initializeButtonDebug();
 

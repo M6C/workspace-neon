@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sun.jdi.event.LocatableEvent;
+import com.sun.jdi.request.EventRequest;
 import com.sun.jdi.request.StepRequest;
 
 import framework.beandata.BeanGenerique;
@@ -17,25 +18,27 @@ public class SrvDebugBreakpointStep extends workspace.service.debug.SrvDebugBrea
 		// Recupere le nom de l'application du point d'arret
 		boolean success = false;
 		String application = "";
+        String className = "";
+        String line = "0";
 		String fileName = "";
 		String sourceName = "";
-		String line = "";
 		if (brkE != null) {
 			success = true;
-			StepRequest brkR = (StepRequest) brkE.request();
+			EventRequest brkR = (EventRequest) brkE.request();
 			application = URLEncoder.encode((String) brkR.getProperty("application"), "UTF-8");
-			// Recupere le chemin des sources de la class du point d'arret
+	        className = URLEncoder.encode((String)brkR.getProperty("className"), "UTF-8");
+	        line = Integer.toString(brkE.location().lineNumber());
 			fileName = URLEncoder.encode((String) brkR.getProperty("fileName"), "UTF-8");
 			sourceName = URLEncoder.encode(brkE.location().sourceName(), "UTF-8");
-			line = Integer.toString(brkE.location().lineNumber());
 		}
 
         String jsonData = "{"+
         	"'success':" + success + "," +
-            "'application':" + application + "," +
-        	"'fileName':'" + fileName + "'," +
-        	"'sourceName':'" + sourceName + "'," +
-        	"'lineNumber':'" + line + "'" +
+            "'application':'" + application + "'," +
+            "'className':'" + className + "'," +
+        	"'line':" + line + "," +
+        	"'fileName':'" + fileName + "'," + 
+        	"'sourceName':'" + sourceName + "'" +
         "}";
 
         OutputStream os = response.getOutputStream();

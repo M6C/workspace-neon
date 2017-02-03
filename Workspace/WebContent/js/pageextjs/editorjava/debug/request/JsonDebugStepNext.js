@@ -17,7 +17,11 @@ Ext.define('Workspace.editorjava.debug.request.JsonDebugStepNext',  {
 			params : {step: 'OVER'},
 			callback:function(opts, success, response) {
                 if (Ext.isDefined(paramCallBack)) {
-                	paramCallBack();
+	            	var jsonData;
+		    		if (success) {
+		    			jsonData = Ext.decode(response.responseText);
+		    		}
+	            	paramCallBack(jsonData);
                 }
 			}
 		});

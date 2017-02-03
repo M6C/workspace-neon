@@ -65,24 +65,38 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 		var sep = (fileName.indexOf('/')>=0 ? '/' : '\\');
 		var text = fileName.substring(fileName.lastIndexOf(sep) + 1);
 		var row = jsonData.line;
+		var panelId = fileName;
 
-		var raw = {
-			'text':text,
-			'id':fileName,
-			'application':application,
-			'path':fileName,
-			'className':classname,
-			'contentType':'text/java',
-			'build':'true',
-			'leaf':false,
-			'autoDeploy':true,
-			'cursorRow': row,
-			'cursorCol': 0
-		};
-
-		// Explicit load required library (Mandatory for extending this class)
-		Ext.Loader.syncRequire('Workspace.editorjava.panel.center.function.AddTabAce');
-		Workspace.editorjava.panel.center.function.AddTabAce.call(raw);
+		var mainCenterPanel=Ext.getCmp('mainCenterPanel');
+		var panel = mainCenterPanel.getActiveTab();
+		if (panel.id == panelId) {
+			var editor = ace.edit(panel.panelEditorId);
+	    	Ext.apply(editor, {
+	    		cursorRow: row,
+	    		cursorCol: 0,
+	    		changeScrollTop: undefined,
+	    		changeScrollLeft: undefined
+    		});
+	    	panel.editorFocusAndScroll(panel);
+		} else {
+			var raw = {
+				'text':text,
+				'id':fileName,
+				'application':application,
+				'path':fileName,
+				'className':classname,
+				'contentType':'text/java',
+				'build':'true',
+				'leaf':false,
+				'autoDeploy':true,
+				'cursorRow': row,
+				'cursorCol': 0
+			};
+	
+			// Explicit load required library (Mandatory for extending this class)
+			Ext.Loader.syncRequire('Workspace.editorjava.panel.center.function.AddTabAce');
+			Workspace.editorjava.panel.center.function.AddTabAce.call(raw);
+		}
 	}
 	,
 	initializeButtonDebug: function() {

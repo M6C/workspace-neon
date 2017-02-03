@@ -6,20 +6,21 @@ import java.net.URLEncoder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sun.jdi.event.BreakpointEvent;
+import com.sun.jdi.event.LocatableEvent;
 import com.sun.jdi.request.BreakpointRequest;
 
-import framework.beandata.BeanGenerique;
+import workspace.bean.debug.BeanDebug;
 
 public class SrvDebugBreakpointCheck extends workspace.service.debug.SrvDebugBreakpointCheck {
 
-	protected void doResponse(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean, BreakpointEvent brkE) throws Exception {
+	@Override
+	protected void doResponse(HttpServletRequest request, HttpServletResponse response, BeanDebug beanDebug, LocatableEvent brkE) throws Exception {
 		boolean stopped = false;
 		String application = "";
         String className = "";
 		String fileName = "";
-		String line = "";
-		if (brkE != null) {
+		String line = "0";
+		if (brkE != null && beanDebug.getCurrentStepEvent() == null) {
 			stopped = true;
 			BreakpointRequest brkR = (BreakpointRequest) brkE.request();
 			application = URLEncoder.encode((String)brkR.getProperty("application"), "UTF-8");
@@ -32,7 +33,7 @@ public class SrvDebugBreakpointCheck extends workspace.service.debug.SrvDebugBre
         	"'stopped':" + stopped + "," +
             "'application':'" + application + "'," +
             "'className':'" + className + "'," +
-        	"'line':'" + line + "'," +
+        	"'line':" + line + "," +
             "'fileName':'" + fileName + "'" +
         "}";
 

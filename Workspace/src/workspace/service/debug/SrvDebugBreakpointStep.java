@@ -117,9 +117,9 @@ public class SrvDebugBreakpointStep extends SrvGenerique {
     }
 
     protected void copyBreakpointProperties(EventRequest brkR, StepRequest stepRequest) throws Exception {
-    	stepRequest.putProperty("line", brkR.getProperty("line"));
-    	stepRequest.putProperty("className", brkR.getProperty("className"));
     	stepRequest.putProperty("application", brkR.getProperty("application"));
+    	stepRequest.putProperty("className", brkR.getProperty("className"));
+    	stepRequest.putProperty("line", brkR.getProperty("line"));
     	stepRequest.putProperty("fileName", brkR.getProperty("fileName"));
     	stepRequest.putProperty("path", brkR.getProperty("path"));
     }

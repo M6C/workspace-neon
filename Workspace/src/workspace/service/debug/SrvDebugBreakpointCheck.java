@@ -8,15 +8,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import workspace.bean.debug.BeanDebug;
-import workspace.service.debug.tool.ToolDebug;
-
-import com.sun.jdi.event.BreakpointEvent;
 import com.sun.jdi.event.Event;
+import com.sun.jdi.event.LocatableEvent;
 import com.sun.jdi.request.BreakpointRequest;
 
 import framework.beandata.BeanGenerique;
 import framework.service.SrvGenerique;
+import workspace.bean.debug.BeanDebug;
+import workspace.service.debug.tool.ToolDebug;
 
 /**
  *
@@ -32,15 +31,16 @@ public class SrvDebugBreakpointCheck extends SrvGenerique {
 
 	public void execute(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean) throws Exception {
 		HttpSession session = request.getSession();
-		BreakpointEvent brkE = null;
+		LocatableEvent brkE = null;
+		String hostName = "localhost";
+		Integer port = new Integer(8380);
+		BeanDebug beanDebug = null;
 		try {
-			String hostName = "localhost";
-			Integer port = new Integer(8380);
-			BeanDebug beanDebug = ToolDebug.getBeanDebug(session, hostName, port);
+			beanDebug = ToolDebug.getBeanDebug(session, hostName, port);
 			if (beanDebug != null) {
 				Event currentEvent = beanDebug.getCurrentEvent();
-				if ((currentEvent != null) && (currentEvent instanceof BreakpointEvent)) {
-					brkE = (BreakpointEvent) currentEvent;
+				if ((currentEvent != null) && (currentEvent instanceof LocatableEvent)) {
+					brkE = (LocatableEvent) currentEvent;
 				}
 			}
 		} catch (Exception ex) {
@@ -49,11 +49,11 @@ public class SrvDebugBreakpointCheck extends SrvGenerique {
 			request.setAttribute("msgText", sw.toString());
 			throw ex;
 		} finally {
-			doResponse(request, response, bean, brkE);
+			doResponse(request, response, beanDebug, brkE);
 		}
 	}
 
-	protected void doResponse(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean, BreakpointEvent brkE) throws Exception {
+	protected void doResponse(HttpServletRequest request, HttpServletResponse response, BeanDebug beanDebug, LocatableEvent brkE) throws Exception {
 		BreakpointRequest brkR = (BreakpointRequest) brkE.request();
 		// Recupere le nom de l'application du point d'arret
 		String application = URLEncoder.encode((String) brkR.getProperty("application"), "UTF-8");
