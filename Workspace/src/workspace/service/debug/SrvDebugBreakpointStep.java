@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import workspace.bean.debug.BeanDebug;
-
 import com.sun.jdi.ThreadReference;
 import com.sun.jdi.VirtualMachine;
 import com.sun.jdi.event.Event;
@@ -23,6 +21,7 @@ import com.sun.jdi.request.StepRequest;
 import framework.beandata.BeanGenerique;
 import framework.ressource.util.UtilString;
 import framework.service.SrvGenerique;
+import workspace.bean.debug.BeanDebug;
 
 /**
  *
@@ -44,7 +43,7 @@ public class SrvDebugBreakpointStep extends SrvGenerique {
 	  try {
     	  BeanDebug beanDebug = (BeanDebug)session.getAttribute("beanDebug");
     	  if (beanDebug!=null) {
-    		  Event currentEvent = beanDebug.getCurrentEvent();
+    		  Event currentEvent = (beanDebug.getCurrentStepEvent() != null) ? beanDebug.getCurrentStepEvent() : beanDebug.getCurrentEvent();
     		  if ((currentEvent!=null)&&(currentEvent instanceof LocatableEvent)) {
     			  virtualMachine = beanDebug.getVirtualMachine();
     			  brkE = (LocatableEvent)currentEvent;
@@ -65,17 +64,11 @@ public class SrvDebugBreakpointStep extends SrvGenerique {
 	    		  int lineNumber = brkE.location().lineNumber();
 	    		  // Avance d'une ligne car difference entre le BreakpointEvent et le StepEvent
 	    		  lineNumber++;
-				  // Recupere le nom de l'application du point d'arret
-	    		  String application = URLEncoder.encode((String)brkR.getProperty("application"), "UTF-8");
-				  // Recupere le chemin des sources de la class du point d'arret
-	    		  String path = (String)brkR.getProperty("path");//URLEncoder.encode((String)brkR.getProperty("path"), "UTF-8");
-				  // Recupere le nom de la class du point d'arret
-	    		  String className = URLEncoder.encode((String)brkR.getProperty("className"), "UTF-8");
-				  // Recupere le nom du fichier source
-	    		  String sourceName = URLEncoder.encode(brkE.location().sourceName(), "UTF-8");
-	    		  String fileName = URLEncoder.encode((String)brkR.getProperty("fileName"), "UTF-8");
+//				  // Recupere le nom du fichier source
+//	    		  String sourceName = brkE.location().sourceName();
+//	    		  String fileName = (String)brkR.getProperty("fileName");
 
-	    		  if (fileName.equals(sourceName)) {
+//	    		  if (fileName.equals(sourceName)) {
 		    		  EventRequestManager eventRequestManager = virtualMachine.eventRequestManager();
 	
 	    			  // clear any previous steps on this thread
@@ -100,21 +93,12 @@ public class SrvDebugBreakpointStep extends SrvGenerique {
 	    					  stepRequest.addClassExclusionFilter("sun.*"); 
 	    				  }
 	
-					  // Stock le nom de l'application dans le point d'arret
-	    			  stepRequest.putProperty("application", application);
-					  // Stock le chemin des sources de la class dans le point d'arret
-	    			  stepRequest.putProperty("path", path);
-					  // Stock le nom de la class dans le point d'arret
-	    			  stepRequest.putProperty("className", className);
-					  // Stock le nom du fichier dans le point d'arret
-	    			  stepRequest.putProperty("fileName", fileName);
+	    			  copyBreakpointProperties(brkR, stepRequest);
 	
 					  stepRequest.addCountFilter(1);  // next step only
 	    			  stepRequest.enable();
 	    			  stepRequest.putProperty("line", new Integer(lineNumber));
-	    			  beanDebug.setCurrentStep(stepRequest);
-	
-	    		  }
+//	    		  }
     		  }
     	  }
 	  }
@@ -130,6 +114,14 @@ public class SrvDebugBreakpointStep extends SrvGenerique {
 		  }
 		  doResponse(request, response, bean, brkE);
 	  }
+    }
+
+    protected void copyBreakpointProperties(EventRequest brkR, StepRequest stepRequest) throws Exception {
+    	stepRequest.putProperty("line", brkR.getProperty("line"));
+    	stepRequest.putProperty("className", brkR.getProperty("className"));
+    	stepRequest.putProperty("application", brkR.getProperty("application"));
+    	stepRequest.putProperty("fileName", brkR.getProperty("fileName"));
+    	stepRequest.putProperty("path", brkR.getProperty("path"));
     }
 
 	protected void doResponse(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean, LocatableEvent brkE) throws Exception {

@@ -8,7 +8,16 @@ Ext.define('Workspace.editorjava.debug.ApplyDebug', {
     	apply: function(editor) {
     	    var me = Workspace.editorjava.debug.ApplyDebug;
 
-            editor.on('guttermousedown', function(e) {
+			Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandDebugStepNext');
+			Workspace.editorjava.aceeditor.command.CommandDebugStepNext.addCommand(editor);
+
+		    Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandDebugStepOut');
+		    Workspace.editorjava.aceeditor.command.CommandDebugStepOut.addCommand(editor);
+
+		    Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandDebugResume');
+		    Workspace.editorjava.aceeditor.command.CommandDebugResume.addCommand(editor);
+
+		    editor.on('guttermousedown', function(e) {
                 var row = e.getDocumentPosition().row;
                 console.log(row);
                 e.stop();

@@ -1,16 +1,17 @@
 package workspace.thread.debug;
 
+import java.io.PrintStream;
+import java.io.Serializable;
+
 import com.sun.jdi.VMDisconnectedException;
 import com.sun.jdi.event.Event;
 import com.sun.jdi.event.EventIterator;
 import com.sun.jdi.event.EventQueue;
 import com.sun.jdi.event.EventSet;
 import com.sun.jdi.event.LocatableEvent;
+import com.sun.jdi.event.StepEvent;
 
 import framework.trace.Trace;
-
-import java.io.PrintStream;
-import java.io.Serializable;
 import workspace.bean.debug.BeanDebug;
 
 /**
@@ -18,6 +19,8 @@ import workspace.bean.debug.BeanDebug;
  */
 
 public class ThrdDebugEventQueue extends Thread implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private BeanDebug beanDebug; 
 	private EventQueue eventQ;
@@ -42,7 +45,9 @@ public class ThrdDebugEventQueue extends Thread implements Serializable {
 						EventIterator eventIterator = eventSet.eventIterator();
 						while (eventIterator.hasNext()) {
 							Event event = eventIterator.nextEvent();
-							if (event instanceof LocatableEvent) {
+							if (event instanceof StepEvent) {
+								beanDebug.setCurrentStepEvent((StepEvent) event);
+							} else if (event instanceof LocatableEvent) {
 								beanDebug.setCurrentEvent(event);
 								// eventQ.virtualMachine().resume();
 								// running = false;

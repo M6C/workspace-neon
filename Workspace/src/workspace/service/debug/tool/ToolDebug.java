@@ -151,4 +151,51 @@ public class ToolDebug {
 			}
 		}
 	}
+
+	// NOT USED
+	public static void deleteAllBreakpoint(BeanDebug beanDebug) throws NumberFormatException, AbsentInformationException {
+		VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
+		EventRequestManager eventRequestManager = virtualMachine.eventRequestManager();
+		eventRequestManager.deleteAllBreakpoints();
+	}
+
+	// NOT USED
+	public static void stopRunning(BeanDebug beanDebug) {
+		  ThrdDebugEventQueue thrdDebugEventQueue = beanDebug.getThrdDebugEventQueue();
+		  if (thrdDebugEventQueue!=null) {
+			  thrdDebugEventQueue.stopRunning();
+		  }
+	}
+
+	// NOT USED
+	public static void recreateAllBreakpoint(BeanDebug beanDebug) {
+		VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
+		EventRequestManager eventRequestManager = virtualMachine.eventRequestManager();
+		// Recréé la totalitée des points d'arret
+		Hashtable<String, BreakpointRequest> tableBreakpoint = beanDebug.getTableBreakpoint();
+		if (tableBreakpoint!=null) {
+			BreakpointRequest brkR1 = null, brkR2 = null;
+			String key = null;
+			Enumeration enumKeys = tableBreakpoint.keys();
+			while(enumKeys.hasMoreElements()) {
+				key = (String) enumKeys.nextElement();
+				brkR1 = (BreakpointRequest)tableBreakpoint.get(key);
+				// Suppression du point d'arret
+				eventRequestManager.deleteEventRequest(brkR1);
+				brkR2 = eventRequestManager.createBreakpointRequest(brkR1.location());
+				if (brkR2!=null) {
+					// Stock le nom de l'application dans le point d'arret
+					brkR2.putProperty("application", brkR1.getProperty("application"));
+					// Stock le chemin des sources de la class dans le point d'arret
+					brkR2.putProperty("path", brkR1.getProperty("path"));
+					// Stock le nom de la class dans le point d'arret
+					brkR2.putProperty("className", brkR1.getProperty("className"));
+					// Stock le nom du fichier dans le point d'arret
+					brkR2.putProperty("fileName", brkR1.getProperty("fileName"));
+					brkR2.enable();
+				}
+				tableBreakpoint.put(key, brkR2);
+			}
+		}
+	}
 }

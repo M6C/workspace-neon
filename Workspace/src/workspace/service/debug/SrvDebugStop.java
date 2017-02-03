@@ -46,15 +46,15 @@ public class SrvDebugStop extends SrvGenerique {
 	    		  if (currentEvent instanceof BreakpointEvent) {
     				  ((BreakpointEvent)currentEvent).thread().resume();
     			  }
-    			  if (beanDebug.getCurrentStep() != null) {
-    				  beanDebug.getCurrentStep().thread().resume();
+    			  if (beanDebug.getCurrentStepEvent() != null) {
+    				  beanDebug.getCurrentStepEvent().thread().resume();
     			  }
     			  virtualMachine.resume();
 
     			  ToolDebug.deleteBreakpoint(beanDebug);
 
 				  beanDebug.setCurrentEvent(null);
-    			  beanDebug.setCurrentStep(null);
+    			  beanDebug.setCurrentStepEvent(null);
     			  beanDebug.setThrdDebugEventQueue(null);
     			  beanDebug.setVirtualMachine(null);
 

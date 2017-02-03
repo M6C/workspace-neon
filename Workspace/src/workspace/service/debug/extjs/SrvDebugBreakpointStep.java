@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sun.jdi.event.LocatableEvent;
-import com.sun.jdi.request.BreakpointRequest;
+import com.sun.jdi.request.StepRequest;
 
 import framework.beandata.BeanGenerique;
 
@@ -22,11 +22,11 @@ public class SrvDebugBreakpointStep extends workspace.service.debug.SrvDebugBrea
 		String line = "";
 		if (brkE != null) {
 			success = true;
-			BreakpointRequest brkR = (BreakpointRequest) brkE.request();
+			StepRequest brkR = (StepRequest) brkE.request();
 			application = URLEncoder.encode((String) brkR.getProperty("application"), "UTF-8");
 			// Recupere le chemin des sources de la class du point d'arret
 			fileName = URLEncoder.encode((String) brkR.getProperty("fileName"), "UTF-8");
-			sourceName = URLEncoder.encode(brkR.location().sourceName(), "UTF-8");
+			sourceName = URLEncoder.encode(brkE.location().sourceName(), "UTF-8");
 			line = Integer.toString(brkE.location().lineNumber());
 		}
 
