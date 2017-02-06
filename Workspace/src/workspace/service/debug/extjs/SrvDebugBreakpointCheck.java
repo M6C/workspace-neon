@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sun.jdi.event.LocatableEvent;
 import com.sun.jdi.request.BreakpointRequest;
+import com.sun.jdi.request.EventRequest;
 
 import workspace.bean.debug.BeanDebug;
 
@@ -20,13 +21,14 @@ public class SrvDebugBreakpointCheck extends workspace.service.debug.SrvDebugBre
         String className = "";
 		String fileName = "";
 		String line = "0";
-		if (brkE != null && beanDebug.getCurrentStepEvent() == null) {
+		if (brkE != null /*&& beanDebug.getCurrentStepEvent() == null*/) {
 			stopped = true;
-			BreakpointRequest brkR = (BreakpointRequest) brkE.request();
+			EventRequest brkR = (EventRequest) brkE.request();
 			application = URLEncoder.encode((String)brkR.getProperty("application"), "UTF-8");
 	        className = URLEncoder.encode((String)brkR.getProperty("className"), "UTF-8");
 	        fileName = URLEncoder.encode((String) brkR.getProperty("fileName"), "UTF-8");
 			line = Integer.toString(brkE.location().lineNumber());
+System.out.println("===========================) chk - line:" + line);
 		}
 
         String jsonData = "{"+

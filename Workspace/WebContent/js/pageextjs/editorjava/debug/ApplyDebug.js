@@ -19,7 +19,7 @@ Ext.define('Workspace.editorjava.debug.ApplyDebug', {
 
 		    editor.on('guttermousedown', function(e) {
                 var row = e.getDocumentPosition().row;
-                console.log(row);
+console.log("===========================) Add - line:" + row);
                 e.stop();
 
                 var editor = e.editor;
@@ -30,8 +30,6 @@ Ext.define('Workspace.editorjava.debug.ApplyDebug', {
                     return; 
                 if (e.clientX > 25 + target.getBoundingClientRect().left) 
                     return; 
-
-                var row = e.getDocumentPosition().row;
 
                 var callback = function (jsonData, params) {
                 	me.callbackAdd(jsonData, params, editor, row)
@@ -66,7 +64,7 @@ Ext.define('Workspace.editorjava.debug.ApplyDebug', {
         ,
         add: function(raw, row, callback) {
             Ext.create('Workspace.editorjava.debug.request.JsonDebugBreakpointAdd', {
-                application: raw.application, filename:raw.path, line:row, classname: raw.className
+                application: raw.application, filename:raw.path, line:row + 1, classname: raw.className
             }).request(callback);
         }
 	}

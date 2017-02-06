@@ -58,7 +58,9 @@ public class SrvDebugStop extends SrvGenerique {
     			  beanDebug.setThrdDebugEventQueue(null);
     			  beanDebug.setVirtualMachine(null);
 
-//				  session.removeAttribute("beanDebug");
+    			  if (beanDebug.getTableBreakpoint().size() == 0) {
+    				  session.removeAttribute("beanDebug");
+    			  }
 			  }
 			  out.print("Stopped");
     	  }

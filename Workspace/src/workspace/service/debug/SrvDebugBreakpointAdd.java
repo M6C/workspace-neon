@@ -59,7 +59,7 @@ public class SrvDebugBreakpointAdd extends SrvGenerique {
       String path = (String)bean.getParameterDataByName("pathToExpand");
       String fileName = (String)bean.getParameterDataByName("FileName");
       String className = (String)bean.getParameterDataByName("className");
-
+System.out.println("===========================) Add - line:" + szLigne);
       String result = "";
       boolean success = false;
       if (UtilString.isNotEmpty(szLigne)){

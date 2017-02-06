@@ -39,9 +39,11 @@ public class SrvDebugBreakpointVariable extends SrvGenerique {
     	  try {
 	    	  BeanDebug beanDebug = (BeanDebug)session.getAttribute("beanDebug");
 	    	  if (beanDebug!=null) {
-	    		  Event currentEvent = beanDebug.getCurrentEvent();
+//	    		  Event currentEvent = beanDebug.getCurrentEvent();
+	    		  Event currentEvent = (beanDebug.getCurrentStepEvent() != null) ? beanDebug.getCurrentStepEvent() : beanDebug.getCurrentEvent();
 	    		  if ((currentEvent!=null)&&(currentEvent instanceof LocatableEvent)) {
 	    			  LocatableEvent event = (LocatableEvent)currentEvent;
+System.out.println("===========================) Var - line:" + event.location().lineNumber());
 		    		  ThreadReference thread = event.thread();
 		    		  List frames = thread.frames();
 		    		  if ((frames!=null)&&(!frames.isEmpty())) {

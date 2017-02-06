@@ -297,13 +297,16 @@
             <PARAM Name="virtualMachine" Type="OBJECT" Synchronize="FALSE"/>
         </BEAN>
     </SERVLET>
-    <SERVLET Name="DebuggerBreakpointCheckExtJs" TargetError="/Web/Page/Common/PageMessage.jsp">
+    <SERVLET Name="DebuggerBreakpointCheckExtJs" Target="" TargetError="">
         <BEAN Name="BeanDebuggerCheck" Scope="session" Service="workspace.service.debug.extjs.SrvDebugBreakpointCheck"/>
     </SERVLET>
-    <SERVLET Name="DebuggerBreakpointStepExtJs" TargetError="/Web/Page/Common/PageMessage.jsp">
+    <SERVLET Name="DebuggerBreakpointStepExtJs" Target="" TargetError="">
         <BEAN Name="BeanDebuggerStep" Scope="session" Service="workspace.service.debug.extjs.SrvDebugBreakpointStep">
             <PARAM Name="step" Type="STRING"/>
         </BEAN>
+    </SERVLET>
+    <SERVLET Name="DebuggerBreakpointVariableExtJs" Target="" TargetError="">
+        <BEAN Name="BeanDebuggerVariable" Scope="request" Service="workspace.service.debug.SrvDebugBreakpointVariable"/>
     </SERVLET>
     <!-- ADMIN -->
     <SERVLET Name="AdminPageExtJs" Target="/Web/PageExtJs/Admin/Page.jsp" TargetError="/Web/Page/index.jsp"/>

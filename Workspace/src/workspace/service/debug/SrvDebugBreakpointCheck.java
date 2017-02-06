@@ -38,7 +38,8 @@ public class SrvDebugBreakpointCheck extends SrvGenerique {
 		try {
 			beanDebug = ToolDebug.getBeanDebug(session, hostName, port);
 			if (beanDebug != null) {
-				Event currentEvent = beanDebug.getCurrentEvent();
+//				Event currentEvent = beanDebug.getCurrentEvent();
+				Event currentEvent = (beanDebug.getCurrentStepEvent() != null) ? beanDebug.getCurrentStepEvent() : beanDebug.getCurrentEvent();
 				if ((currentEvent != null) && (currentEvent instanceof LocatableEvent)) {
 					brkE = (LocatableEvent) currentEvent;
 				}

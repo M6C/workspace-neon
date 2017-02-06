@@ -47,10 +47,12 @@ public class ThrdDebugEventQueue extends Thread implements Serializable {
 							Event event = eventIterator.nextEvent();
 							if (event instanceof StepEvent) {
 								beanDebug.setCurrentStepEvent((StepEvent) event);
+//								running = false;
+								break;
 							} else if (event instanceof LocatableEvent) {
 								beanDebug.setCurrentEvent(event);
 								// eventQ.virtualMachine().resume();
-								// running = false;
+//								running = false;
 								break;
 							}
 						}

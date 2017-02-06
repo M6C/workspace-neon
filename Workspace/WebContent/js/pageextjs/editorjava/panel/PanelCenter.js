@@ -64,8 +64,9 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 		var fileName = Workspace.tool.UtilString.decodeUtf8(jsonData.fileName);
 		var sep = (fileName.indexOf('/')>=0 ? '/' : '\\');
 		var text = fileName.substring(fileName.lastIndexOf(sep) + 1);
-		var row = jsonData.line;
+		var row = jsonData.line - 1;
 		var panelId = fileName;
+console.log("===========================) Sta - line:" + row);
 
 		var mainCenterPanel=Ext.getCmp('mainCenterPanel');
 		var panel = mainCenterPanel.getActiveTab();
@@ -97,6 +98,11 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 			Ext.Loader.syncRequire('Workspace.editorjava.panel.center.function.AddTabAce');
 			Workspace.editorjava.panel.center.function.AddTabAce.call(raw);
 		}
+
+		var callbackVariable = function(jsonData) {
+    		Workspace.common.tool.Pop.info(me, 'Variable:', {toast: false, detail:jsonData});
+		};
+        Ext.create('Workspace.editorjava.debug.request.JsonDebugVariable').request(callbackVariable);
 	}
 	,
 	initializeButtonDebug: function() {
