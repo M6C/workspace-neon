@@ -58,13 +58,21 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 		}
 
 		var me = this;
-		var mainCenterPanel = Ext.getCmp('mainCenterPanel');
-		var application = Workspace.tool.UtilString.decodeUtf8(jsonData.application);
-		var classname = Workspace.tool.UtilString.decodeUtf8(jsonData.className);
-		var sourceName = jsonData.sourceName;
 		var row = jsonData.line - 1;
+		var classname = Workspace.tool.UtilString.decodeUtf8(jsonData.className);
+		var mainCenterPanel=Ext.getCmp('mainCenterPanel');
+
+		if (mainCenterPanel.waiterDebug.classname == classname && mainCenterPanel.waiterDebug.row == row) {
+    		Workspace.common.tool.Pop.info(me, "No debug change class:'" + classname + "' line:" + (row+1), {toast: false});
+    		return;
+		}
+		mainCenterPanel.waiterDebug.classname = classname;
+		mainCenterPanel.waiterDebug.row = row;
+
+		var application = Workspace.tool.UtilString.decodeUtf8(jsonData.application);
+		var sourceName = jsonData.sourceName;
 		if (Ext.isEmpty(sourceName)) {
-    		Workspace.common.tool.Pop.failure(me, "No Source found for class:'" + classname + "' line:" + row );
+    		Workspace.common.tool.Pop.failure(me, "No Source found for class:'" + classname + "' line:" + (row+1));
 			return;
 		}
 		var sourceName = Workspace.tool.UtilString.decodeUtf8(jsonData.sourceName[0]);
@@ -73,7 +81,6 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 		var text = sourceName.substring(sourceName.lastIndexOf(sep) + 1);
 		var panelId = sourceName;
 
-		var mainCenterPanel=Ext.getCmp('mainCenterPanel');
 		var panel = mainCenterPanel.getActiveTab();
 		if (panel.id == panelId) {
 			var editor = ace.edit(panel.panelEditorId);
@@ -105,7 +112,9 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 		}
 
 		var callbackVariable = function(jsonData) {
-    		Workspace.common.tool.Pop.info(me, 'Variable:', {toast: false, detail:jsonData});
+		    if (!Ext.isEmpty(jsonData)) {
+    		    Workspace.common.tool.Pop.info(me, 'Variable:', {toast: false, detail:jsonData});
+		    }
 		};
         Ext.create('Workspace.editorjava.debug.request.JsonDebugVariable').request(callbackVariable);
 	}
