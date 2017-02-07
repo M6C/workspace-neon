@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sun.jdi.event.LocatableEvent;
-import com.sun.jdi.request.BreakpointRequest;
 import com.sun.jdi.request.EventRequest;
 
 import workspace.bean.debug.BeanDebug;
+import workspace.service.debug.tool.ToolDebug;
 
 public class SrvDebugBreakpointCheck extends workspace.service.debug.SrvDebugBreakpointCheck {
 
@@ -21,14 +21,15 @@ public class SrvDebugBreakpointCheck extends workspace.service.debug.SrvDebugBre
         String className = "";
 		String fileName = "";
 		String line = "0";
+		String sourceName = "";
 		if (brkE != null /*&& beanDebug.getCurrentStepEvent() == null*/) {
 			stopped = true;
 			EventRequest brkR = (EventRequest) brkE.request();
 			application = URLEncoder.encode((String)brkR.getProperty("application"), "UTF-8");
-	        className = URLEncoder.encode((String)brkR.getProperty("className"), "UTF-8");
 	        fileName = URLEncoder.encode((String) brkR.getProperty("fileName"), "UTF-8");
 			line = Integer.toString(brkE.location().lineNumber());
-System.out.println("===========================) chk - line:" + line);
+			className = URLEncoder.encode(brkE.location().declaringType().name(), "UTF-8");
+			sourceName = ToolDebug.getPathExistInApplicationJson(beanDebug, brkE, "UTF-8");
 		}
 
         String jsonData = "{"+
@@ -36,7 +37,8 @@ System.out.println("===========================) chk - line:" + line);
             "'application':'" + application + "'," +
             "'className':'" + className + "'," +
         	"'line':" + line + "," +
-            "'fileName':'" + fileName + "'" +
+            "'fileName':'" + fileName + "'," + 
+        	"'sourceName':[" + sourceName + "]" +
         "}";
 
         OutputStream os = response.getOutputStream();

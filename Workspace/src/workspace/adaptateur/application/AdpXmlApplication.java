@@ -5,8 +5,10 @@ import framework.ressource.util.UtilXML;
 import framework.trace.Trace;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.Dictionary;
 import java.util.Hashtable;
+
 import javax.servlet.ServletContext;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
@@ -46,6 +48,21 @@ public class AdpXmlApplication extends AdpXml {
         String xpath = "//ROOT/USER/PROFILES/PROFILE/APPLICATIONS/APPLICATION[@Name = '" + application + "']/VERSIONNING/MODULE_NAME";
         ret = UtilXML.getXPathStringValue(dom, xpath);
         if(ret == null && throwException)
+            throw new IllegalArgumentException((new StringBuilder("XPath [")).append(xpath).append("] value not found in document").toString());
+        else
+            return ret;
+    }
+
+    public static String[] getModuleList(Document dom) {
+        String[] ret = null;
+        checkDocument(dom);
+        String xpath = "/USER/PROFILES/PROFILE/APPLICATIONS/APPLICATION";
+        try {
+			ret = UtilXML.getListElementAttributValue(dom.getDocumentElement(), xpath, "Name");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+        if(ret == null)
             throw new IllegalArgumentException((new StringBuilder("XPath [")).append(xpath).append("] value not found in document").toString());
         else
             return ret;

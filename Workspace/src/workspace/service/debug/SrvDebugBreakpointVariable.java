@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import workspace.bean.debug.BeanDebug;
-
 import com.sun.jdi.LocalVariable;
 import com.sun.jdi.StackFrame;
 import com.sun.jdi.ThreadReference;
@@ -20,6 +18,7 @@ import com.sun.jdi.event.LocatableEvent;
 
 import framework.beandata.BeanGenerique;
 import framework.service.SrvGenerique;
+import workspace.bean.debug.BeanDebug;
 
 /**
  *
@@ -43,7 +42,6 @@ public class SrvDebugBreakpointVariable extends SrvGenerique {
 	    		  Event currentEvent = (beanDebug.getCurrentStepEvent() != null) ? beanDebug.getCurrentStepEvent() : beanDebug.getCurrentEvent();
 	    		  if ((currentEvent!=null)&&(currentEvent instanceof LocatableEvent)) {
 	    			  LocatableEvent event = (LocatableEvent)currentEvent;
-System.out.println("===========================) Var - line:" + event.location().lineNumber());
 		    		  ThreadReference thread = event.thread();
 		    		  List frames = thread.frames();
 		    		  if ((frames!=null)&&(!frames.isEmpty())) {
@@ -52,10 +50,10 @@ System.out.println("===========================) Var - line:" + event.location()
 		    			  while(it.hasNext()) {
 		    				  frame = (StackFrame)it.next();
 		    				  try {
-			    				  sb.append("&nbsp;</td><td><table><tr><td colspan='3' nowrap><b>");
+			    				  sb.append("&nbsp;</td><td><table><tr><td colspan='3' nowrap>");
+			    				  sb.append(frame.location().declaringType().name());
+			    				  sb.append("<br><b>");
 			    				  sb.append(frame.location().sourcePath());
-			    				  sb.append("\\");
-			    				  sb.append(frame.location().sourceName());
 			    				  sb.append("</b><br><u>");
 			    				  sb.append(frame.location().method().name());
 			    				  sb.append("</u>&nbsp;");

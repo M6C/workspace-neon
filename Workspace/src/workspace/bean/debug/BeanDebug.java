@@ -1,7 +1,9 @@
 package workspace.bean.debug;
 
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import com.sun.jdi.IncompatibleThreadStateException;
 import com.sun.jdi.StackFrame;
@@ -21,6 +23,8 @@ public class BeanDebug
     private Hashtable tableBreakpoint;
     private ThrdDebugEventQueue thrdDebugEventQueue;
     private StepEvent currentStepEvent;
+
+    private Map<String, String[]> mapApplicationPath = new HashMap<String, String[]>();
 
 	public BeanDebug() {
         tableBreakpoint = new Hashtable();
@@ -129,4 +133,8 @@ public class BeanDebug
     public void setCurrentStepEvent(StepEvent currentStepEvent) {
         this.currentStepEvent = currentStepEvent;
     }
+
+	public Map<String, String[]> getMapApplicationPath() {
+		return mapApplicationPath;
+	}
 }

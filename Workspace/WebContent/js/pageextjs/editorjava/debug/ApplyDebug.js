@@ -19,7 +19,6 @@ Ext.define('Workspace.editorjava.debug.ApplyDebug', {
 
 		    editor.on('guttermousedown', function(e) {
                 var row = e.getDocumentPosition().row;
-console.log("===========================) Add - line:" + row);
                 e.stop();
 
                 var editor = e.editor;

@@ -62,7 +62,6 @@ public class SrvDebugBreakpointStep extends SrvGenerique {
     			  }
 
 	    		  int lineNumber = brkE.location().lineNumber();
-System.out.println("===========================) Stp - line:" + lineNumber);
 	    		  // Avance d'une ligne car difference entre le BreakpointEvent et le StepEvent
 	    		  lineNumber++;
 //				  // Recupere le nom du fichier source

@@ -61,12 +61,17 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 		var mainCenterPanel = Ext.getCmp('mainCenterPanel');
 		var application = Workspace.tool.UtilString.decodeUtf8(jsonData.application);
 		var classname = Workspace.tool.UtilString.decodeUtf8(jsonData.className);
-		var fileName = Workspace.tool.UtilString.decodeUtf8(jsonData.fileName);
-		var sep = (fileName.indexOf('/')>=0 ? '/' : '\\');
-		var text = fileName.substring(fileName.lastIndexOf(sep) + 1);
+		var sourceName = jsonData.sourceName;
 		var row = jsonData.line - 1;
-		var panelId = fileName;
-console.log("===========================) Sta - line:" + row);
+		if (Ext.isEmpty(sourceName)) {
+    		Workspace.common.tool.Pop.failure(me, "No Source found for class:'" + classname + "' line:" + row );
+			return;
+		}
+		var sourceName = Workspace.tool.UtilString.decodeUtf8(jsonData.sourceName[0]);
+
+		var sep = (sourceName.indexOf('/')>=0 ? '/' : '\\');
+		var text = sourceName.substring(sourceName.lastIndexOf(sep) + 1);
+		var panelId = sourceName;
 
 		var mainCenterPanel=Ext.getCmp('mainCenterPanel');
 		var panel = mainCenterPanel.getActiveTab();
@@ -82,9 +87,9 @@ console.log("===========================) Sta - line:" + row);
 		} else {
 			var raw = {
 				'text':text,
-				'id':fileName,
+				'id':panelId,
 				'application':application,
-				'path':fileName,
+				'path':sourceName,
 				'className':classname,
 				'contentType':'text/java',
 				'build':'true',
