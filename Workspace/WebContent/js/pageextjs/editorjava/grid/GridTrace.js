@@ -1,6 +1,8 @@
 Ext.define('Workspace.editorjava.grid.GridTrace', {
-	// REQUIRED
-	requires: ['Workspace.editorjava.grid.trace.OnRendererColumnImage']
+	requires: [
+        'Workspace.editorjava.grid.trace.OnRendererColumnImage',
+        'Workspace.editorjava.grid.trace.OnRendererColumnCount'
+    ]
 	,
 	extend: 'Ext.grid.Panel'
 	,
@@ -29,11 +31,16 @@ Ext.define('Workspace.editorjava.grid.GridTrace', {
 	            width: 115,
 	            renderer: Ext.util.Format.dateRenderer('Y-m-d G:i:s')
 	          }),
-	          Ext.create('Ext.grid.column.Column', {dataIndex: 'text', flex: 1})
+	          Ext.create('Ext.grid.column.Column', {dataIndex: 'text', flex: 1}),
+	          Ext.create('Ext.grid.column.Column', {dataIndex: 'count',
+				  width: Workspace.editorjava.grid.trace.OnRendererColumnCount.width
+				  ,
+				  renderer:Workspace.editorjava.grid.trace.OnRendererColumnCount.call
+	          })
 		  	]
 			,
 			store: Ext.create('Ext.data.ArrayStore', {
-				fields: ['image', 'date', 'text']
+				fields: ['image', 'date', 'text', 'count']
 				,
 			    proxy: {
 			        type: 'memory',

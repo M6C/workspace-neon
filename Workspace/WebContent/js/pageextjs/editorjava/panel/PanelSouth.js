@@ -54,7 +54,18 @@ Ext.define('Workspace.editorjava.panel.PanelSouth', {
 
     	var date = new Date();
     	var gridTrace = this.getChildByElement('editorjavaGridTrace');
-    	gridTrace.store.insert(0, {'image':type, 'date':date, 'text':message});
+    	var model = gridTrace.store.getAt(0);
+    	var count = '';
+    	if (Ext.isDefined(model) && model.get('text') == message) {
+    	    count = model.get('count');
+    	    if (Ext.isEmpty(count)) {
+    	        count = 1;
+    	    }
+    	    count++;
+    	    //count = "<p style='color:rgb(128, 204, 255)'>" + count + "</p>";
+    	    gridTrace.store.removeAt(0);
+    	}
+	    gridTrace.store.insert(0, {'image':type, 'date':date, 'text':message, 'count': count});
     	gridTrace.getSelectionModel().select(0);
     	gridTrace.doLayout();
     	this.doLayout();

@@ -18,7 +18,7 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 		call : function(raw) {
 		    console.info('Workspace.editorjava.panel.center.function.AddTab.call');
 			if (raw.contentType!='directory') {
-				var panelId=raw.id;
+				var panelId=raw.id.replace('\\', '/', 'g');
 				var panelEditorId=panelId+'Editor';
 				var mainCenterPanel=Ext.getCmp('mainCenterPanel');
 
