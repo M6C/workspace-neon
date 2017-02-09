@@ -13,7 +13,7 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandDebugResume',  {
 
 		        	var mainCenterPanel = Ext.getCmp('mainCenterPanel');
 	                if (mainCenterPanel.isDebugging()) {
-	        			Ext.create('Workspace.editorjava.debug.request.JsonDebugResume').request(me.callbackResume);
+	        			Ext.create('Workspace.editorjava.debug.request.JsonDebugResume', {application: editor.raw.application}).request(me.callbackResume);
 	                } else {
 	            		Workspace.common.tool.Pop.failure(me, 'Debuger is disabled', {toast: false});
 	                }

@@ -20,14 +20,21 @@ public class BeanDebug
 {
     private VirtualMachine virtualMachine;
     private Event currentEvent;
-    private Hashtable tableBreakpoint;
+    private Hashtable tableBreakpoint = new Hashtable();
     private ThrdDebugEventQueue thrdDebugEventQueue;
     private StepEvent currentStepEvent;
+    private String application;
+    private String hostname;
+    private int port;
+    private int timeout;
 
     private Map<String, String[]> mapApplicationPath = new HashMap<String, String[]>();
 
 	public BeanDebug() {
-        tableBreakpoint = new Hashtable();
+    }
+
+	public BeanDebug(String application) {
+	    this.application = application;
     }
 
     public BeanDebug(VirtualMachine pVirtualMachine) {
@@ -137,4 +144,36 @@ public class BeanDebug
 	public Map<String, String[]> getMapApplicationPath() {
 		return mapApplicationPath;
 	}
+
+    public String getApplication() {
+        return application;
+    }
+
+    public void setApplication(String application) {
+        this.application = application;
+    }
+
+    public String getHostname() {
+        return hostname;
+    }
+
+    public void setHostname(String hostname) {
+        this.hostname = hostname;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public int getTimeout() {
+        return timeout;
+    }
+
+    public void setTimeout(int timeout) {
+        this.timeout = timeout;
+    }
 }

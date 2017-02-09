@@ -33,9 +33,8 @@ public class SrvDebugBreakpointResume extends SrvGenerique {
     public void execute(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean) throws Exception {
   	  HttpSession session = request.getSession();
 	  try {
-          String hostName = "localhost";
-          Integer port = new Integer(8380);
-          BeanDebug beanDebug = ToolDebug.getBeanDebug(session, hostName, port);
+		  String application = (String)bean.getParameterDataByName("application");
+          BeanDebug beanDebug = ToolDebug.getBeanDebug(session, application);
     	  if (beanDebug!=null) {
     		  Event currentEvent = beanDebug.getCurrentEvent();
     		  if ((currentEvent!=null)&&(currentEvent instanceof LocatableEvent)) {
@@ -60,6 +59,9 @@ public class SrvDebugBreakpointResume extends SrvGenerique {
     			  PrintWriter out = response.getWriter();
     			  out.print("resume");
     		  }
+    	  } else {
+    		  System.err.println("BeanDebug not found. Can't Resume Breakpoint.");
+    		  return;
     	  }
 	  }
 	  catch(Exception ex) {

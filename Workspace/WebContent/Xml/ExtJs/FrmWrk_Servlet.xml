@@ -299,14 +299,18 @@
     </SERVLET>
     <SERVLET Name="DebuggerBreakpointCheckExtJs" Target="" TargetError="">
         <BEAN Name="BeanDebuggerCheck" Scope="session" Service="workspace.service.debug.extjs.SrvDebugBreakpointCheck"/>
+            <PARAM Name="application" Type="STRING"/>
     </SERVLET>
     <SERVLET Name="DebuggerBreakpointStepExtJs" Target="" TargetError="">
         <BEAN Name="BeanDebuggerStep" Scope="session" Service="workspace.service.debug.extjs.SrvDebugBreakpointStep">
+            <PARAM Name="application" Type="STRING"/>
             <PARAM Name="step" Type="STRING"/>
         </BEAN>
     </SERVLET>
     <SERVLET Name="DebuggerBreakpointVariableExtJs" Target="" TargetError="">
-        <BEAN Name="BeanDebuggerVariable" Scope="request" Service="workspace.service.debug.SrvDebugBreakpointVariable"/>
+        <BEAN Name="BeanDebuggerVariable" Scope="request" Service="workspace.service.debug.SrvDebugBreakpointVariable">
+            <PARAM Name="application" Type="STRING"/>
+        </BEAN>
     </SERVLET>
     <!-- ADMIN -->
     <SERVLET Name="AdminPageExtJs" Target="/Web/PageExtJs/Admin/Page.jsp" TargetError="/Web/Page/index.jsp"/>
@@ -862,25 +866,34 @@
         </BEAN>
     </SERVLET>
     <SERVLET Name="DebuggerBreakpointCheck" TargetError="/Web/Page/Common/PageMessage.jsp">
-        <BEAN Name="BeanDebuggerCheck" Scope="session" Service="workspace.service.debug.SrvDebugBreakpointCheck"/>
+        <BEAN Name="BeanDebuggerCheck" Scope="session" Service="workspace.service.debug.SrvDebugBreakpointCheck">
+            <PARAM Name="application" Type="STRING"/>
+        </BEAN>
     </SERVLET>
     <SERVLET Name="DebuggerBreakpointStep" TargetError="/Web/Page/Common/PageMessage.jsp">
         <BEAN Name="BeanDebuggerStep" Scope="session" Service="workspace.service.debug.SrvDebugBreakpointStep">
+            <PARAM Name="application" Type="STRING"/>
             <PARAM Name="step" Type="STRING"/>
         </BEAN>
     </SERVLET>
     <SERVLET Name="DebuggerBreakpointResume" TargetError="/Web/Page/Common/PageMessage.jsp">
-        <BEAN Name="BeanDebuggerResume" Scope="session" Service="workspace.service.debug.SrvDebugBreakpointResume"/>
+        <BEAN Name="BeanDebuggerResume" Scope="session" Service="workspace.service.debug.SrvDebugBreakpointResume">
+            <PARAM Name="application" Type="STRING"/>
+        </BEAN>
     </SERVLET>
     <SERVLET Name="DebuggerBreakpointVariable" Target="/Web/Page/Common/PageMessage.jsp" TargetError="/Web/Page/Common/PageMessage.jsp">
-        <BEAN Name="BeanDebuggerVariable" Scope="request" Service="workspace.service.debug.SrvDebugBreakpointVariable"/>
+        <BEAN Name="BeanDebuggerVariable" Scope="request" Service="workspace.service.debug.SrvDebugBreakpointVariable">
+            <PARAM Name="application" Type="STRING"/>
+        </BEAN>
     </SERVLET>
     <SERVLET Name="DebuggerBreakpointVariable2" Target="/Web/Page/Common/PageDebugVariable.jsp" TargetError="/Web/Page/Common/PageMessage.jsp"/>
     <SERVLET Name="DebuggerStart" TargetError="/Web/Page/Common/PageMessage.jsp">
-        <BEAN Name="BeanDebuggerStart" Scope="session" Service="workspace.service.debug.SrvDebugStart"/>
+        <BEAN Name="BeanDebuggerStart" Scope="session" Service="workspace.service.debug.SrvDebugStart">
+            <PARAM Name="application" Type="STRING"/>
+        </BEAN>
     </SERVLET>
     <SERVLET Name="DebuggerStop" TargetError="/Web/Page/Common/PageMessage.jsp">
-        <BEAN Name="BeanDebuggerStop" Scope="session" Service="workspace.service.debug.SrvDebugStop"/>
+        <BEAN Name="BeanDebuggerStop" Scope="session" Service="workspace.service.debug.SrvDebugStop"/>        
     </SERVLET>
     <SERVLET Name="ServerWebCommand" Target="/Web/Page/Common/PageServerWebCommand.jsp" TargetError="/Web/Page/Common/PageMessage.jsp"/>
     <SERVLET Name="ServerWebCommandValider" Target="/Web/Page/Common/PageMessage.jsp" TargetError="/Web/Page/Common/PageMessage.jsp">

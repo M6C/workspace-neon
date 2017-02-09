@@ -33,6 +33,7 @@ import framework.ressource.util.UtilFile;
 import framework.ressource.util.UtilString;
 import framework.ressource.util.jdi.UtilJDI;
 import workspace.adaptateur.application.AdpXmlApplication;
+import workspace.adaptateur.application.AdpXmlDebug;
 import workspace.bean.debug.BeanDebug;
 import workspace.thread.debug.ThrdDebugEventQueue;
 
@@ -91,15 +92,19 @@ public class ToolDebug {
         return className;
 	}
 
-	public static BeanDebug getBeanDebug(HttpSession session, String hostName, int port) throws IOException, IllegalConnectorArgumentsException {
+	public static BeanDebug getBeanDebug(HttpSession session, String application) throws IOException, IllegalConnectorArgumentsException {
         BeanDebug beanDebug = (BeanDebug)session.getAttribute("beanDebug");
+        if (beanDebug==null && application == null) {
+        	System.err.println("BeanDebug not found and can't create it for empty application");
+        	return beanDebug;
+        }
         try {
             if (beanDebug==null) {
-	        	beanDebug = createBeanDebug();
+	        	beanDebug = createBeanDebug(application);
 		        initializeBeanDebugData(session, beanDebug);
 		        session.setAttribute("beanDebug", beanDebug);
             }
-            initializeBeanDebug(beanDebug, hostName, port);
+            initializeBeanDebug(beanDebug);
         } catch (Exception ex) {
             if (beanDebug!=null) {
 	    		Event currentEvent = beanDebug.getCurrentEvent();
@@ -177,14 +182,14 @@ public class ToolDebug {
 		return ret;
 	}
 
-	public static BeanDebug createBeanDebug() throws IOException, IllegalConnectorArgumentsException {
-        return new BeanDebug(null);
+	public static BeanDebug createBeanDebug(String application) throws IOException, IllegalConnectorArgumentsException {
+        return new BeanDebug(application);
 	}
 
-	private static void initializeBeanDebug(BeanDebug beanDebug, String hostName, int port) throws IOException, IllegalConnectorArgumentsException {
+	private static void initializeBeanDebug(BeanDebug beanDebug) throws IOException, IllegalConnectorArgumentsException {
 		VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
 		if (virtualMachine == null) {
-			virtualMachine = UtilJDI.createVirtualMachine(hostName, port);
+			virtualMachine = UtilJDI.createVirtualMachine(beanDebug.getHostname(), beanDebug.getPort());
 	        beanDebug.setVirtualMachine(virtualMachine);
 		}
 		if (beanDebug.getThrdDebugEventQueue() == null) {
@@ -214,6 +219,32 @@ public class ToolDebug {
 					e.printStackTrace();
 				}
         	}
+
+        	String application = beanDebug.getApplication();
+        	String hostname = null;
+        	int port = -1;
+        	int timeout = 30000; // Default 5 minutes
+
+        	try {
+            	hostname = AdpXmlDebug.getHostname(context, dom, application);
+        	} catch (Exception ex) {
+                System.out.println("Debug hostname not found in application '" + application + "'");
+        	}
+        	try {
+        		port = AdpXmlDebug.getPort(context, dom, application);
+        	} catch (Exception ex) {
+        		System.out.println("Debug port not found in application '" + application + "'");
+        	}
+        	try {
+        		timeout = AdpXmlDebug.getTimeout(context, dom, application);
+        	} catch (Exception ex) {
+        		System.out.println("Debug timeout not found in application '" + application + "'");
+        	}
+        	System.out.println("Debug information hostname:'" + hostname + "' port:" + port + " timeout:" + timeout);
+
+        	beanDebug.setHostname(hostname);
+        	beanDebug.setPort(port);
+        	beanDebug.setTimeout(timeout);
         }
 	}
 

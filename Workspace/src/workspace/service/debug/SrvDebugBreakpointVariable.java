@@ -43,6 +43,10 @@ public class SrvDebugBreakpointVariable extends SrvGenerique {
 	    		  if ((currentEvent!=null)&&(currentEvent instanceof LocatableEvent)) {
 	    			  LocatableEvent event = (LocatableEvent)currentEvent;
 		    		  ThreadReference thread = event.thread();
+		    		  if (thread == null) {
+		    			  System.err.println("No Thread found for event");
+		    			  return;
+		    		  }
 		    		  List frames = thread.frames();
 		    		  if ((frames!=null)&&(!frames.isEmpty())) {
 		    			  StackFrame frame = null;

@@ -18,6 +18,7 @@ Ext.define('Workspace.editorjava.debug.WaiterDebug',  {
             });
     	}
 
+        me.application = Ext.getCmp('project').value;
         me.debugging = true;
 
     	if (Ext.isDefined(me._delay)) {
@@ -26,7 +27,7 @@ Ext.define('Workspace.editorjava.debug.WaiterDebug',  {
             me._delay = undefined;
             callback();
         } else {
-            Ext.create('Workspace.editorjava.debug.request.JsonDebugStart').request(callback);
+            Ext.create('Workspace.editorjava.debug.request.JsonDebugStart', {application: me.application}).request(callback);
         }
     }
     ,
@@ -51,7 +52,7 @@ Ext.define('Workspace.editorjava.debug.WaiterDebug',  {
                 }
         	}
 
-        	Ext.create('Workspace.editorjava.debug.request.JsonDebugStop').request(callback);
+        	Ext.create('Workspace.editorjava.debug.request.JsonDebugStop', {application: me.application}).request(callback);
         }
     }
     ,
@@ -79,6 +80,6 @@ Ext.define('Workspace.editorjava.debug.WaiterDebug',  {
 				me._check(paramcallback);
 			});
 		};
-        Ext.create('Workspace.editorjava.debug.request.JsonDebugCheck').request(callback);
+        Ext.create('Workspace.editorjava.debug.request.JsonDebugCheck', {application: me.application}).request(callback);
     }
 }, function() {Workspace.tool.Log.defined('Workspace.editorjava.debug.WaiterDebug');});

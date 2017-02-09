@@ -5,7 +5,7 @@ Ext.define('Workspace.editorjava.debug.request.JsonDebugBreakpointAdd',  {
 
         Ext.apply(me, config);
 
-		me.params  = {application: me.application, FileName:me.filename, breakpointLine:me.line, className: me.classname},
+		me.params  = {application: me.application, FileName:me.filename, breakpointLine:me.line, className: me.classname};
 
         me.callParent();
     }

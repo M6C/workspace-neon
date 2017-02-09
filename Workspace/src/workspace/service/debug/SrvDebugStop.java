@@ -35,7 +35,8 @@ public class SrvDebugStop extends SrvGenerique {
     	  VirtualMachine virtualMachine = null;
     	  ThrdDebugEventQueue thrdDebugEventQueue = null;
     	  try {
-			  BeanDebug beanDebug = (BeanDebug)session.getAttribute("beanDebug");
+    		  String application = (String)bean.getParameterDataByName("application");
+			  BeanDebug beanDebug = ToolDebug.getBeanDebug(session, application);
 			  if (beanDebug!=null) {
 
 				  virtualMachine = beanDebug.getVirtualMachine();
@@ -60,7 +61,10 @@ public class SrvDebugStop extends SrvGenerique {
 
     			  if (beanDebug.getTableBreakpoint().size() == 0) {
     				  session.removeAttribute("beanDebug");
+    				  System.out.println("BeanDebug removed in session because TableBreakpoint is empty.");
     			  }
+			  } else {
+				  System.err.println("BeanDebug not found. Can't Stop Debug.");
 			  }
 			  out.print("Stopped");
     	  }

@@ -11,7 +11,7 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandDebugStepOut',  {
 		        exec: function(container) {
 	                var mainCenterPanel = Ext.getCmp('mainCenterPanel');
 	                if (mainCenterPanel.isDebugging()) {
-	        			Ext.create('Workspace.editorjava.debug.request.JsonDebugStepOut').request(mainCenterPanel.callbackDebugStart);
+	        			Ext.create('Workspace.editorjava.debug.request.JsonDebugStepOut', {application: editor.raw.application}).request(mainCenterPanel.callbackDebugStart);
 	                } else {
 	            		Workspace.common.tool.Pop.failure(me, 'Debuger is disabled', {toast: false});
 	                }

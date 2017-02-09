@@ -116,6 +116,10 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
 		var me = this;
 	    // 	Workspace.common.tool.Pop.info(me, "Optimize Import complete." + responseCompile.responseText);
 	    var jsonData = Ext.JSON.decode(responseCompile.responseText);
+	    if (!Ext.isDefined(jsonData)) {
+    		Workspace.common.tool.Pop.failure(me, 'Optimize Import callback with empty json data', {toast: false});
+			return;
+	    }
 	    var multiChoiceImport = false;
 	    if (Ext.isArray(jsonData.import) && !Ext.isEmpty(jsonData.import)) {
             var cnt = jsonData.import.length;
@@ -141,7 +145,7 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandOptimizeImport',  {
 	    } else {
             me.listClassWithOutImportProcess = [];
 	    }
-		if (multiChoiceImport === false && Ext.isEmpty(me.listClass)) {
+		if (multiChoiceImport === false && Ext.isEmpty(me.listClassWithOutImport)) {
             me.replaceImport();
 		}
     }

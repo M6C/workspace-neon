@@ -34,9 +34,12 @@ public class SrvDebugStart extends SrvGenerique {
           PrintWriter out = response.getWriter();
     	  VirtualMachine virtualMachine = null;
     	  try {
-    		  String hostName = "localhost";
-    		  Integer port = new Integer(8380);
-			  BeanDebug beanDebug = ToolDebug.getBeanDebug(session, hostName, port);;
+    		  String application = (String)bean.getParameterDataByName("application");
+			  BeanDebug beanDebug = ToolDebug.getBeanDebug(session, application);
+			  if (beanDebug==null) {
+				  System.err.println("BeanDebug not found. Can't Start Debug.");
+				  return;
+			  }
 
 			  virtualMachine = beanDebug.getVirtualMachine();
 

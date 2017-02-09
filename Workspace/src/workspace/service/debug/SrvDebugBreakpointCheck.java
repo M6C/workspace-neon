@@ -32,17 +32,19 @@ public class SrvDebugBreakpointCheck extends SrvGenerique {
 	public void execute(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean) throws Exception {
 		HttpSession session = request.getSession();
 		LocatableEvent brkE = null;
-		String hostName = "localhost";
-		Integer port = new Integer(8380);
+		String application = (String)bean.getParameterDataByName("application");
 		BeanDebug beanDebug = null;
 		try {
-			beanDebug = ToolDebug.getBeanDebug(session, hostName, port);
+			beanDebug = ToolDebug.getBeanDebug(session, application);
 			if (beanDebug != null) {
 //				Event currentEvent = beanDebug.getCurrentEvent();
 				Event currentEvent = (beanDebug.getCurrentStepEvent() != null) ? beanDebug.getCurrentStepEvent() : beanDebug.getCurrentEvent();
 				if ((currentEvent != null) && (currentEvent instanceof LocatableEvent)) {
 					brkE = (LocatableEvent) currentEvent;
 				}
+			} else {
+				System.err.println("BeanDebug not found. Can't Check Breakpoint.");
+				return;
 			}
 		} catch (Exception ex) {
 			StringWriter sw = new StringWriter();

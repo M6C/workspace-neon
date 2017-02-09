@@ -5,7 +5,9 @@ Ext.define('Workspace.editorjava.debug.request.JsonDebugCheck',  {
 	
 	    Ext.apply(me, config);
 	
-	    me.callParent();
+		me.params  = {application: me.application};
+
+		me.callParent();
 	}
 	,
 	request: function(paramCallBack) {
@@ -14,6 +16,7 @@ Ext.define('Workspace.editorjava.debug.request.JsonDebugCheck',  {
 			url : DOMAIN_NAME_ROOT + '/action.servlet?event=DebuggerBreakpointCheckExtJs',
 			headers: {'Content-Type': 'application/json; charset=UTF-8'},
 			method: 'GET',
+			params : me.params,
 			callback:function(opts, success, response) {
 	            if (Ext.isDefined(paramCallBack)) {
 	            	var jsonData;

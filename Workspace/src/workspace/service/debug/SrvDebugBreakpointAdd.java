@@ -65,8 +65,6 @@ public class SrvDebugBreakpointAdd extends SrvGenerique {
           HttpSession session = request.getSession();
           VirtualMachine virtualMachine = null;
           try {
-              String hostName = "localhost";
-              Integer port = new Integer(8380);
               String text = "";
     
               Document domXml = (Document)session.getAttribute("resultDom");
@@ -91,7 +89,11 @@ public class SrvDebugBreakpointAdd extends SrvGenerique {
               }
 
               Integer rowNum = new Integer(szLigne);
-              BeanDebug beanDebug = ToolDebug.getBeanDebug(session, hostName, port);
+              BeanDebug beanDebug = ToolDebug.getBeanDebug(session, application);
+              if (beanDebug==null) {
+              	System.err.println("BeanDebug not found. Can't Add Breakpoint.");
+              	return;
+              }
               virtualMachine = beanDebug.getVirtualMachine();
 
               Hashtable<String, BreakpointRequest> tableBreakpoint = beanDebug.getTableBreakpoint();
