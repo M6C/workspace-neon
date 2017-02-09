@@ -46,7 +46,7 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
 						}
     					Workspace.common.tool.Pop.info(me, msg);
 					} else {
-    					Ext.create('Workspace.common.window.WindowTextCompile', jsonData).show();
+    					Ext.create('Workspace.common.window.WindowTextCompile', {modal:false, data:jsonData}).show();
 					}
 				},
 				params:{application:me.application,target:'compile',className:me.className}

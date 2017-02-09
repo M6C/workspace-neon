@@ -39,7 +39,7 @@ function build() {
 					Workspace.common.window.WindowWaiting.hideWindowWaiting(wndWait, "");
 
 					var option = {response: response};
-					Ext.create('Workspace.common.window.WindowTextCompile', option).show();
+					Ext.create('Workspace.common.window.WindowTextCompile', {modal:false, data:option}).show();
 				}
 			});
 	      }
