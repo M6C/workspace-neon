@@ -45,11 +45,43 @@ Ext.define('Workspace.editorjava.window.WindowFindResource', {
 				    enableKeyEvents: true,
 				    emptyText: 'Name Filter',
 				    value: me.nameFilter,
-        		    store: Ext.create('Workspace.common.form.combobox.data.StoreProjectExtjs4'),
+        		    store: Ext.create('Workspace.common.form.combobox.data.StoreProjectExtjs4', {autoload: true}),
                     displayField:'project',
 				    listeners: {
 				    	keypress : me.onKeyPress
-				    }
+				    },
+				    _isExpanded:  false, // true means block, false auto
+                    isExpanded: function() {
+                        return me._isExpanded;
+                    }
+                    ,
+                    setCaretPosition: function(pos) {
+                        var el = this.inputEl.dom;
+                        if (typeof(el.selectionStart) === "number") {
+                            el.focus();
+                            el.setSelectionRange(pos, pos);
+                        } else if (el.createTextRange) {
+                            var range = el.createTextRange();
+                            range.move("character", pos);
+                            range.select();
+                        } else {
+                            throw 'setCaretPosition() not supported';
+                        }
+                    }
+                    ,
+                    getCaretPosition: function() {
+                        var el = this.inputEl.dom;
+                        if (typeof(el.selectionStart) === "number") {
+                            return el.selectionStart;
+                        } else if (document.selection && el.createTextRange){
+                            var range = document.selection.createRange();
+                            range.collapse(true);
+                            range.moveStart("character", -el.value.length);
+                            return range.text.length;
+                        } else {
+                            throw 'getCaretPosition() not supported';
+                        }
+                    }
 				}
 				,
 				{
@@ -131,6 +163,22 @@ Ext.define('Workspace.editorjava.window.WindowFindResource', {
 		    		}
 		    	}));
 			}
+		} else {
+            var me = field;
+            var text = me.getValue();
+            var idx1 = text.indexOf('[');
+            var idx2 = text.indexOf(']');
+            var pos = me.getCaretPosition();
+
+            if (idx1 >= 0 && idx2 > 0 && pos <= idx2) {
+                me._isExpanded = false;
+                me.expand();
+                return;
+            } else if (idx1 >= 0) {
+                
+            }
+            // me._isExpanded = false;
+            me.collapse();
 		}
 	}
 	,
