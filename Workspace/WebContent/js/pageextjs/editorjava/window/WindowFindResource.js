@@ -48,12 +48,12 @@ Ext.define('Workspace.editorjava.window.WindowFindResource', {
         		    store: Ext.create('Workspace.common.form.combobox.data.StoreProjectExtjs4', {autoload: true}),
                     displayField:'project',
 				    listeners: {
-				    	keypress : me.onKeyPress
+				    	keypress : me.onKeyPress,
+			    		specialkey : me.onKeyPress,
+			    		beforeselect: me.onBeforeSelect
+
 				    },
-				    _isExpanded:  false, // true means block, false auto
-                    isExpanded: function() {
-                        return me._isExpanded;
-                    }
+                    isExpanded: true // true means block, false auto
                     ,
                     setCaretPosition: function(pos) {
                         var el = this.inputEl.dom;
@@ -138,9 +138,39 @@ Ext.define('Workspace.editorjava.window.WindowFindResource', {
 		me.callParent(arguments);
 	}
 	,
+	onBeforeSelect: function(combo, records, index, option) {
+        var me = combo;
+    	var value = records.data.project;
+        var text = me.getValue();
+        if (Ext.isDefined(text)) {
+            var idx1 = text.indexOf('[');
+            var idx2 = text.indexOf(']');
+            var pos = me.getCaretPosition();
+
+            if (idx1 >= 0 && idx2 > 0 && pos <= idx2) {
+                text = text.substring(0, idx1) + "[" + value + "]" + text.substring(idx2 + 1);
+            } else if (idx1 >= 0 && pos > idx1) {
+                text = text.substring(0, idx1) + "[" + value + "]" + text.substring(pos);
+            }
+        } else {
+            text = "[" + value + "]";
+        }
+        me.setValue(text);
+        
+        var pos = text.indexOf(']');
+        if (pos >= 0) {
+            me.setCaretPosition(pos + 1);
+        }
+        return false;
+    }
+	,
 	onKeyPress: function (field, event, option) {
+        var me = field;
 		var key = event.getKey();
 		if (key == event.ENTER) {
+		    if (me.isExpanded) {
+		        return false;
+		    }
 		    var nameFilter = Ext.getCmp('nameFilter').getValue();
 		    var contentFilter = Ext.getCmp('contentFilter').getValue();
 		    var extentionFilter = Ext.getCmp('extentionFilter').getValue();
@@ -164,21 +194,23 @@ Ext.define('Workspace.editorjava.window.WindowFindResource', {
 		    	}));
 			}
 		} else {
-            var me = field;
             var text = me.getValue();
-            var idx1 = text.indexOf('[');
-            var idx2 = text.indexOf(']');
-            var pos = me.getCaretPosition();
+            if (Ext.isDefined(text)) {
+                var idx1 = text.indexOf('[');
+                var idx2 = text.indexOf(']');
+                var pos = me.getCaretPosition();
 
-            if (idx1 >= 0 && idx2 > 0 && pos <= idx2) {
-                me._isExpanded = false;
-                me.expand();
-                return;
-            } else if (idx1 >= 0) {
-                
+                if (idx1 >= 0 && idx2 > 0 && pos <= idx2) {
+                    me.isExpanded = false;
+                    me.expand();
+                    return;
+                } else if (idx1 >= 0 && pos > idx1 && idx2 < 0) {
+                    me.isExpanded = false;
+                    me.expand();
+                    return;
+                }
+                me.collapse();
             }
-            // me._isExpanded = false;
-            me.collapse();
 		}
 	}
 	,
