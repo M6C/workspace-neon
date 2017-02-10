@@ -41,7 +41,20 @@ public class ToolDebug {
 
 	private ToolDebug() {
 	}
-	
+
+    public static void checkConnection(BeanDebug beanDebug) throws IOException, IllegalConnectorArgumentsException {
+		VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
+		if (virtualMachine != null) {
+		    try {
+		        virtualMachine.classesByName("java.lang.String");
+		    } catch (Exception ex) {
+		        virtualMachine = UtilJDI.createVirtualMachine(beanDebug.getHostname(), beanDebug.getPort());
+		    }
+		}
+        beanDebug.setVirtualMachine(virtualMachine);
+        recreateAllBreakpoint(beanDebug);
+    }
+
 	public static BreakpointRequest findBreakpoint(VirtualMachine virtualMachine, String classname, int line) {
 		BreakpointRequest ret = null;
 		Location location = null;
@@ -223,22 +236,22 @@ public class ToolDebug {
         	String application = beanDebug.getApplication();
         	String hostname = null;
         	int port = -1;
-        	int timeout = 30000; // Default 5 minutes
+        	int timeout = 5 * 60 * 1000; // Default 5 minutes
 
         	try {
             	hostname = AdpXmlDebug.getHostname(context, dom, application);
+            	try {
+            		port = AdpXmlDebug.getPort(context, dom, application);
+            	} catch (Exception ex) {
+            		System.out.println("Debug port not found in application '" + application + "'");
+            	}
+            	try {
+            		timeout = AdpXmlDebug.getTimeout(context, dom, application);
+            	} catch (Exception ex) {
+            		System.out.println("Debug timeout not found in application '" + application + "'");
+            	}
         	} catch (Exception ex) {
                 System.out.println("Debug hostname not found in application '" + application + "'");
-        	}
-        	try {
-        		port = AdpXmlDebug.getPort(context, dom, application);
-        	} catch (Exception ex) {
-        		System.out.println("Debug port not found in application '" + application + "'");
-        	}
-        	try {
-        		timeout = AdpXmlDebug.getTimeout(context, dom, application);
-        	} catch (Exception ex) {
-        		System.out.println("Debug timeout not found in application '" + application + "'");
         	}
         	System.out.println("Debug information hostname:'" + hostname + "' port:" + port + " timeout:" + timeout);
 
@@ -316,6 +329,8 @@ public class ToolDebug {
 				eventRequestManager.deleteEventRequest(brkR1);
 				brkR2 = eventRequestManager.createBreakpointRequest(brkR1.location());
 				if (brkR2!=null) {
+					// Stock la ligne dans le point d'arret
+					brkR2.putProperty("line", brkR1.getProperty("line"));
 					// Stock le nom de l'application dans le point d'arret
 					brkR2.putProperty("application", brkR1.getProperty("application"));
 					// Stock le chemin des sources de la class dans le point d'arret
