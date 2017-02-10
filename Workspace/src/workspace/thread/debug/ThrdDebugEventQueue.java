@@ -1,18 +1,22 @@
 package workspace.thread.debug;
 
-import java.io.PrintStream;
-import java.io.Serializable;
-
 import com.sun.jdi.VMDisconnectedException;
+import com.sun.jdi.VirtualMachine;
 import com.sun.jdi.event.Event;
 import com.sun.jdi.event.EventIterator;
 import com.sun.jdi.event.EventQueue;
 import com.sun.jdi.event.EventSet;
 import com.sun.jdi.event.LocatableEvent;
 import com.sun.jdi.event.StepEvent;
+import com.sun.jdi.request.BreakpointRequest;
 
 import framework.trace.Trace;
+
+import java.io.PrintStream;
+import java.io.Serializable;
+
 import workspace.bean.debug.BeanDebug;
+import workspace.thread.debug.ThrdDebugEventQueue;
 
 /**
  * a servlet handles upload request.<br> refer to http://www.ietf.org/rfc/rfc1867.txt
@@ -38,23 +42,54 @@ public class ThrdDebugEventQueue extends Thread implements Serializable {
     public void run() {
 		if (eventQ!=null) {
 			try {
+			    int timeout = beanDebug.getTimeout();
+			    Trace.DEBUG("==============) Debug timeout " + timeout + "ms");
 				while (running) {
 					EventSet eventSet=null;
 					try {
-						eventSet = eventQ.remove();
-						EventIterator eventIterator = eventSet.eventIterator();
-						while (eventIterator.hasNext()) {
-							Event event = eventIterator.nextEvent();
-							if (event instanceof StepEvent) {
-								beanDebug.setCurrentStepEvent((StepEvent) event);
-//								running = false;
-								break;
-							} else if (event instanceof LocatableEvent) {
-								beanDebug.setCurrentEvent(event);
-								// eventQ.virtualMachine().resume();
-//								running = false;
-								break;
-							}
+						eventSet = (timeout > 0) ? eventQ.remove(timeout) : eventQ.remove();
+						if (eventSet != null) {
+    						EventIterator eventIterator = eventSet.eventIterator();
+    						while (eventIterator.hasNext()) {
+    							Event event = eventIterator.nextEvent();
+    							if (event instanceof StepEvent) {
+    								beanDebug.setCurrentStepEvent((StepEvent) event);
+    //								running = false;
+    								break;
+    							} else if (event instanceof LocatableEvent) {
+    								beanDebug.setCurrentEvent(event);
+    								// eventQ.virtualMachine().resume();
+    //								running = false;
+    								break;
+    							}
+    						}
+						} else {
+						    Trace.DEBUG("==============) Target program was not ready after " + timeout + "ms");
+
+                			  Event currentEvent = beanDebug.getCurrentEvent();
+                			  if (currentEvent != null && currentEvent instanceof LocatableEvent) {
+						    Trace.DEBUG("==============) resume currentEvent");
+                    			  LocatableEvent brkE = (LocatableEvent)currentEvent;
+                    			  BreakpointRequest brkR = (BreakpointRequest) brkE.request();
+                    			  brkE.thread().resume();
+                			  }
+
+                			  StepEvent currentStep = beanDebug.getCurrentStepEvent();
+                			  if (currentStep!=null) {
+						    Trace.DEBUG("==============) resume currentStep");
+                				  currentStep.thread().resume();
+                			  }
+
+                			  VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
+                			  if (virtualMachine != null) {
+						    Trace.DEBUG("==============) resume virtualMachine");
+                				  virtualMachine.resume();
+                			  }
+
+                			  beanDebug.setCurrentEvent(null);
+                			  beanDebug.setCurrentStepEvent(null);
+
+						    running = false;
 						}
 					} catch (VMDisconnectedException e) {
 						Trace.ERROR(this, e);
@@ -68,7 +103,8 @@ public class ThrdDebugEventQueue extends Thread implements Serializable {
 				onException(e);
 			}
 			finally {
-				//try { eventQ.virtualMachine().dispose(); } catch (Exception ex) {onException(ex);}
+			    Trace.DEBUG("==============) resume eventQ virtualMachine");
+				try { eventQ.virtualMachine().dispose(); } catch (Exception ex) {onException(ex);}
 			}
 		}
     }
