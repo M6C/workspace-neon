@@ -3,8 +3,14 @@
 <channel>
 <title>Resolved</title>
 <description>RSS stream resolved</description>
-<pubDate>25/01/2017</pubDate>
+<pubDate>15/02/2017</pubDate>
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+<item>
+<title>Editeur Java : Recherche de ressource avec l'application.</title>
+<description>Pouvoir specifier une application de recherche dans le champ de saisie avec des '[' et ']'. Si poosible afficher les applications en mode completion en fonction de la saisie.</description>
+<pubDate>15/02/2017</pubDate>
+<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
+</item>
 <item>
 <title>Editeur Java : Ajout Ctrl+I Pour modifier l'import d'une classe</title>
 <description>Ajout Ctrl+I Pour modifier l'import d'une classe.</description>

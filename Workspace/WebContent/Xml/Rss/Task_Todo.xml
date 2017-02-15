@@ -12,12 +12,6 @@
 <link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
 </item>
 <item>
-<title>Editeur Java : Recherche de ressource avec l'application.</title>
-<description>Pouvoir specifier une application de recherche dans le champ de saisie avec des '[' et ']'. Si poosible afficher les applications en mode completion en fonction de la saisie.</description>
-<pubDate>24/01/2017</pubDate>
-<link>http://workspace.no-ip.info/Workspace/action.servlet?event=Index</link>
-</item>
-<item>
 <title>Editeur Java : Mode tablette/smartphone.</title>
 <description>Gerer l'utilisation sur tablette/smartphone. En particulier les evenements etc...</description>
 <pubDate>12/01/2017</pubDate>

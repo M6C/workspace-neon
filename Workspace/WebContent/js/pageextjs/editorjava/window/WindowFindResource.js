@@ -45,16 +45,27 @@ Ext.define('Workspace.editorjava.window.WindowFindResource', {
 				    enableKeyEvents: true,
 				    emptyText: 'Name Filter',
 				    value: me.nameFilter,
-        		    store: Ext.create('Workspace.common.form.combobox.data.StoreProjectExtjs4', {autoload: true}),
+        		    store: Ext.create('Workspace.common.form.combobox.data.StoreProjectExtjs4', {autoload: true, buffered: true,
+                        listeners: {
+    				    	load : function(store, records, successful, operation, options) {
+                                me.data = store.data;
+    				    	}
+    				    }
+    				    ,
+    				    getCount: function() {
+			    		    var me = this;
+    				        return me.data.getCount();//!Ext.isDefined(me.data) ? 0 : me.data.getCount();
+    				    }
+        		    }),
                     displayField:'project',
+                    // isExpanded: true // true means block, false auto
+                    // ,
 				    listeners: {
-				    	keypress : me.onKeyPress,
-			    		specialkey : me.onKeyPress,
-			    		beforeselect: me.onBeforeSelect
-
-				    },
-                    isExpanded: true // true means block, false auto
-                    ,
+				    	keyup : me.onKeyUp,
+			    		beforeselect: me.onBeforeSelect,
+			    		beforequery: function() {return Ext.isEmpty(this.store.data);}
+				    }
+				    ,
                     setCaretPosition: function(pos) {
                         var el = this.inputEl.dom;
                         if (typeof(el.selectionStart) === "number") {
@@ -142,7 +153,7 @@ Ext.define('Workspace.editorjava.window.WindowFindResource', {
         var me = combo;
     	var value = records.data.project;
         var text = me.getValue();
-        if (Ext.isDefined(text)) {
+        if (!Ext.isEmpty(text)) {
             var idx1 = text.indexOf('[');
             var idx2 = text.indexOf(']');
             var pos = me.getCaretPosition();
@@ -161,56 +172,83 @@ Ext.define('Workspace.editorjava.window.WindowFindResource', {
         if (pos >= 0) {
             me.setCaretPosition(pos + 1);
         }
+        if (Ext.isDefined(me.getPicker())) {
+            me.collapse();
+        }
+        me.fromSelect = true;
         return false;
     }
 	,
 	onKeyPress: function (field, event, option) {
         var me = field;
+        var wnd = me.up('window');
 		var key = event.getKey();
-		if (key == event.ENTER) {
-		    if (me.isExpanded) {
-		        return false;
-		    }
-		    var nameFilter = Ext.getCmp('nameFilter').getValue();
-		    var contentFilter = Ext.getCmp('contentFilter').getValue();
-		    var extentionFilter = Ext.getCmp('extentionFilter').getValue();
-			var grid=Ext.getCmp('gridFindResource');
-			var store = grid.getStore();
-			if (store.isLoading()) {
-				Workspace.common.tool.Pop.info(me, 'Find resource loading in progress.');
-			} else {
-			    var idx1 = nameFilter.indexOf('[');
-			    var idx2 = nameFilter.indexOf(']');
-			    if (idx1 == 0 && idx2 > 0) {
-			        
-			    }
-				grid.getStore().load(new Ext.data.Operation({
-		    		action : 'read',
-		    		params: {
-		    			nameFilter: nameFilter,
-		    			contentFilter: contentFilter,
-		    			extentionFilter: extentionFilter
-		    		}
-		    	}));
-			}
+	    if (key == event.ENTER) {
+            wnd.loadGrid();
+	    }
+	    return true;
+    }
+	,
+	onKeyUp: function (field, event, option) {
+        var me = field;
+        var wnd = me.up('window');
+		var key = event.getKey();
+		if (key == event.UP || key == event.DOWN) {
+		    return true;
+		}
+		else if (key == event.ENTER) {
+            if (me.fromSelect === true) {
+                me.fromSelect = false;
+                return false;
+            }
+            wnd.loadGrid();
 		} else {
             var text = me.getValue();
-            if (Ext.isDefined(text)) {
+            if (!Ext.isEmpty(text)) {
                 var idx1 = text.indexOf('[');
                 var idx2 = text.indexOf(']');
                 var pos = me.getCaretPosition();
 
-                if (idx1 >= 0 && idx2 > 0 && pos <= idx2) {
-                    me.isExpanded = false;
+                if (idx1 >= 0 && pos > idx1 && (pos <= idx2 || idx2 < 0)) {
+                    idx2 = (idx2 > idx1) ? idx2 : pos;
+                    var txtFilter = text.substring(idx1+1, idx2).toLowerCase();
+                    me.store.data = wnd.data.clone();
+                    me.store.data.sort({direction:"ASC",property:"project",root:"data"});
+                    me.store.filters.clear();
+                    var filter = new Ext.util.Filter({
+                        filterFn: function(item) {
+                            return Ext.isEmpty(txtFilter) || item.data.project.toLowerCase().indexOf(txtFilter) >= 0;
+                        }
+                    });
+                    me.store.filter(filter);
                     me.expand();
-                    return;
-                } else if (idx1 >= 0 && pos > idx1 && idx2 < 0) {
-                    me.isExpanded = false;
-                    me.expand();
+                    me.getPicker().show();
                     return;
                 }
+            }
+            if (Ext.isDefined(me.getPicker())) {
                 me.collapse();
             }
+		}
+	}
+	,
+	loadGrid() {
+	    var nameFilter = Ext.getCmp('nameFilter').getValue();
+	    var contentFilter = Ext.getCmp('contentFilter').getValue();
+	    var extentionFilter = Ext.getCmp('extentionFilter').getValue();
+		var grid=Ext.getCmp('gridFindResource');
+		var store = grid.getStore();
+		if (store.isLoading()) {
+			Workspace.common.tool.Pop.info(me, 'Find resource loading in progress.');
+		} else {
+			grid.getStore().load(new Ext.data.Operation({
+	    		action : 'read',
+	    		params: {
+	    			nameFilter: nameFilter,
+	    			contentFilter: contentFilter,
+	    			extentionFilter: extentionFilter
+	    		}
+	    	}));
 		}
 	}
 	,
