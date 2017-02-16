@@ -120,10 +120,7 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 	}
 	,
 	initializeButtonDebug: function() {
-		var me = this;
-		var debugging = me.isDebugging();
-		Ext.getCmp('btnDebugStart').setVisible(!debugging);
-		Ext.getCmp('btnDebugStop').setVisible(debugging);
+		Ext.getCmp('mainEstPanel').initializeButtonDebug();
 	}
 	,
 	callbackDebugStop: function(jsonData) {

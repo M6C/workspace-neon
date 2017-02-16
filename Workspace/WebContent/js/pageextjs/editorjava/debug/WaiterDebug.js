@@ -76,9 +76,11 @@ Ext.define('Workspace.editorjava.debug.WaiterDebug',  {
     				paramcallback(jsonData);
                 }
 			}
-			me._delay.delay(me._time, function() {
-				me._check(paramcallback);
-			});
+			if (Ext.isDefined(me._delay)) {
+    			me._delay.delay(me._time, function() {
+    				me._check(paramcallback);
+    			});
+			}
 		};
         Ext.create('Workspace.editorjava.debug.request.JsonDebugCheck', {application: me.application}).request(callback);
     }

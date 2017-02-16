@@ -1,9 +1,8 @@
 Ext.define('Workspace.editorjava.panel.PanelEst', {
-	// REQUIRED
 	requires: [
-	     'Workspace.editorjava.plugin.AddTabPluginCart'
-	],
-
+	     'Workspace.editorjava.plugin.DebugPlugin'
+	]
+	,
 	extend: 'Workspace.common.panel.TabPanelCollapsible'
 	,
 	alias: 'widget.panelEst',
@@ -24,10 +23,18 @@ Ext.define('Workspace.editorjava.panel.PanelEst', {
 	,
     initComponent : function(){
 		var me = this;
-//		Ext.apply(me, {
-//			plugins: [ Ext.create('Workspace.editorjava.plugin.AddTabPluginCart') ]
-//	    });
+		me.pluginDebug = Ext.create('Workspace.editorjava.plugin.DebugPlugin');
+
+		Ext.apply(me, {
+			plugins: [ me.pluginDebug ]
+	    });
+
 	    me.callParent(arguments);
+	}
+	,
+	initializeButtonDebug: function() {
+		var me = this;
+		me.pluginDebug.initializeButtonDebug();
 	}
 
 }, function() {Workspace.tool.Log.defined('Workspace.editorjava.panel.PanelEst');});

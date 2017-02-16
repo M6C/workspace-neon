@@ -48,24 +48,8 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 			        items: [
 						'<span style="color:#555555" title="'+titleTech+'">' + '<img src="'+DOMAIN_NAME_ROOT+'/imgExtJs/EditorJava/icon_info.gif" width="12px" height="12px"/>' + 
 						'</span>&nbsp;<span style="color:#4067B3" title="'+me.panelId+'">' + title + '</span>',
-					    '->',
-			            {
-					    	text: 'Debug',
-					    	id: 'btnDebugStart',
-					    	style: 'background-color:rgb(128, 204, 255)',
-					    	handler:  function(button, e) {
-					            me.debugStart();
-					    	}
-			            },
-			            {
-					    	text: 'Debug',
-					    	id: 'btnDebugStop',
-					    	style: 'background-color:rgb(255,100,100)',
-					    	handler:  function(button, e) {
-					            me.debugStop();
-					    	}
-			            },
-					    {xtype: 'tbseparator'},
+					    '->'
+					    ,
 					    {
 					    	text: 'Save', 
 					    	handler:  function(button, e) {
