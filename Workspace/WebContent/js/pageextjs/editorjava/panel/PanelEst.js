@@ -1,6 +1,7 @@
 Ext.define('Workspace.editorjava.panel.PanelEst', {
 	requires: [
-	     'Workspace.editorjava.plugin.DebugPlugin'
+	     'Workspace.editorjava.plugin.DebugPlugin',
+	     'Workspace.editorjava.debug.data.DataVariable'
 	]
 	,
 	extend: 'Workspace.common.panel.TabPanelCollapsible'
@@ -25,11 +26,33 @@ Ext.define('Workspace.editorjava.panel.PanelEst', {
 		var me = this;
 		me.pluginDebug = Ext.create('Workspace.editorjava.plugin.DebugPlugin');
 
+	    var panelDebugVariable = Ext.create('Workspace.editorjava.panel.est.PanelDebugVariable');
+        me.setData(Workspace.editorjava.debug.data.DataVariable.data);
+
 		Ext.apply(me, {
-			plugins: [ me.pluginDebug ]
+			plugins: [ me.pluginDebug ],
+			items: [
+			    panelDebugVariable
+			]
 	    });
 
 	    me.callParent(arguments);
+	}
+	,
+	setData: function(data) {
+        // panelDebugVariable.getLoader().load({
+        // panelDebugVariable.fireEvent('load', {
+        // panelDebugVariable.getStore().load([
+	    // panelDebugVariable.setRootNode({
+
+	    var panelDebugVariable = Ext.getCmp('PanelDebugVariable');
+        var root = panelDebugVariable.getRootNode();
+        root.removeAll();
+
+        var nodeList = (Ext.isEmpty(data.children) ? data : data.children);
+        if (Ext.isArray(nodeList) && !Ext.isEmpty(nodeList)) {
+	        root.appendChild(nodeList);
+        }
 	}
 	,
 	initializeButtonDebug: function() {

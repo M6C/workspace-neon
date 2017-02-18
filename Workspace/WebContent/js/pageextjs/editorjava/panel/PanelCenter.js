@@ -2,7 +2,8 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 	requires: [
 	     'Workspace.common.tool.Pop',
 	     'Workspace.editorjava.debug.WaiterDebug',
-  	     'Workspace.editorjava.panel.center.function.AddTabAce'
+  	     'Workspace.editorjava.panel.center.function.AddTabAce',
+  	     'Workspace.editorjava.debug.request.JsonDebugVariable'
   	]
   	,
 	extend: 'Workspace.widget.panel.WidgetPanelCenter'
@@ -114,6 +115,7 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 		var callbackVariable = function(jsonData) {
 		    if (!Ext.isEmpty(jsonData)) {
     		    Workspace.common.tool.Pop.info(me, 'Variable:', {toast: false, detail:jsonData});
+    		    Ext.getCmp('mainEstPanel').setData(jsonData);
 		    }
 		};
         Ext.create('Workspace.editorjava.debug.request.JsonDebugVariable').request(callbackVariable);

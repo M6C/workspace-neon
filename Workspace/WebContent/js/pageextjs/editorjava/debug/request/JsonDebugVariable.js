@@ -21,7 +21,7 @@ Ext.define('Workspace.editorjava.debug.request.JsonDebugVariable',  {
                 if (Ext.isDefined(paramCallBack)) {
                 	var jsonData;
     	    		if (success) {
-    	    			jsonData = response.responseText;//Ext.decode(response.responseText);
+    	    			jsonData = Ext.decode(response.responseText);
     	    		}
                 	paramCallBack(jsonData);
                 }
