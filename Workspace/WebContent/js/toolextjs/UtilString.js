@@ -139,6 +139,9 @@ Ext.define('Workspace.tool.UtilString', {
         }
         ,
         decodeUtf8: function(str) {
+        	if (str == undefined) {
+        		return "";
+        	}
             var ret = '';
             var cTmp = 0;
             for (var i = 0; i < str.length; i++) {

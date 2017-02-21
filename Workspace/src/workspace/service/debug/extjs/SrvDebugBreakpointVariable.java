@@ -1,6 +1,5 @@
 package workspace.service.debug.extjs;
 
-import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.URLEncoder;
@@ -21,7 +20,6 @@ import com.sun.jdi.event.LocatableEvent;
 import framework.beandata.BeanGenerique;
 import framework.service.SrvGenerique;
 import workspace.bean.debug.BeanDebug;
-import workspace.util.UtilFile;
 
 /**
  *
@@ -64,7 +62,6 @@ public class SrvDebugBreakpointVariable extends SrvGenerique {
 		    				  String sourcePath = "";
 		    				  String methode = "";
 		    				  String signature = "";
-		    				  boolean leaf = true;
 		    				  try {
 			    				  classname = frame.location().declaringType().name();
 			    				  sourcePath = frame.location().sourcePath();
@@ -78,20 +75,19 @@ public class SrvDebugBreakpointVariable extends SrvGenerique {
 		    				  try{methode = URLEncoder.encode(methode);}catch(Exception ex){}
 		    				  try{signature = URLEncoder.encode(signature);}catch(Exception ex){}
 
-		    				  sb.append("{\"text\":\"").append(classname).append("\"");
-		    				  sb.append(",\"expanded\":").append(cnt == 0? "true" : "false").append(",\"children\":[");
+		    				  sb.append("{")
+		    				  	.append("\"classname\":\"").append(classname).append("\",")
+					            .append("\"source\":\"").append(sourcePath).append("\",")
+					            .append("\"methode\":\"").append(methode).append("\",")
+					            .append("\"signature\":\"").append(signature).append("\",");
 
-				              sb.append("{\"text\":\"info\",\"expanded\":false,\"leaf\":false,\"children\":[");
-				              sb.append("{\"text\":\"sourcePath:").append(sourcePath).append("\",\"leaf\":true},");
-				              sb.append("{\"text\":\"methode:").append(methode).append("\",\"leaf\":true},");
-				              sb.append("{\"text\":\"signature:").append(signature).append("\",\"leaf\":true}");
-				              sb.append("]}");
+				              sb.append("\"variable\":[");
 		    				  
 		    				  try {
 			    				  List visibleVariables = frame.visibleVariables();
 					    		  if ((visibleVariables!=null)&&(!visibleVariables.isEmpty())) {
-					    			  leaf = false;
-					    			  String typename = "", valueText = "";
+					    			  int cntVar = 0;
+					    			  String variableName = "", typename = "", valueText = "";
 					    			  LocalVariable variable = null;
 					    			  Value value = null;
 					    			  Iterator itV = visibleVariables.iterator();
@@ -99,19 +95,24 @@ public class SrvDebugBreakpointVariable extends SrvGenerique {
 					    				  variable = (LocalVariable)itV.next();
 					    				  value = frame.getValue(variable);
 
+					    				  variableName = variable.name();
 					    				  try{typename = URLEncoder.encode(variable.typeName());}catch(Exception ex){}
 					    				  try{valueText = URLEncoder.encode(value.toString());}catch(Exception ex){}
 
-					    				  sb.append(",");
-					    				  sb.append("{\"text\":\"").append(variable.name()).append("\",\"expanded\":false,\"leaf\":false,\"children\":[");
-							              sb.append("{\"text\":\"type:").append(typename).append("\",\"leaf\":true},");
-							              sb.append("{\"text\":\"value:").append(valueText).append("\",\"leaf\":true}");
-							              sb.append("]}");
+					    				  if (cntVar > 0) {
+					    					  sb.append(",");
+					    				  }
+							              sb.append("{")
+							              	.append("\"name\":\"").append(variableName).append("\",")
+							              	.append("\"type\":\"").append(typename).append("\",")
+							              	.append("\"value\":\"").append(valueText).append("\"")
+							              	.append("}");
+							              cntVar++;
 					    			  }
 					    		  }
 		    				  }
 		    				  catch(Exception ex) {}
-		    				  sb.append("]").append(",\"leaf\":").append(leaf).append("}");
+				              sb.append("]}");
 		    				  cnt++;
 		    			  }
 		    		  }

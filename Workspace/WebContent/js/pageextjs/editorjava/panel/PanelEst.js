@@ -27,7 +27,7 @@ Ext.define('Workspace.editorjava.panel.PanelEst', {
 		me.pluginDebug = Ext.create('Workspace.editorjava.plugin.DebugPlugin');
 
 	    var panelDebugVariable = Ext.create('Workspace.editorjava.panel.est.PanelDebugVariable');
-        me.setData(Workspace.editorjava.debug.data.DataVariable.data);
+        me.setData(Workspace.editorjava.debug.data.DataVariable.getData());
 
 		Ext.apply(me, {
 			plugins: [ me.pluginDebug ],
@@ -49,7 +49,9 @@ Ext.define('Workspace.editorjava.panel.PanelEst', {
         var root = panelDebugVariable.getRootNode();
         root.removeAll();
 
-        var nodeList = (Ext.isEmpty(data.children) ? data : data.children);
+        data = Workspace.editorjava.debug.data.DataVariable.formatFromRequest(data);
+
+		var nodeList = (Ext.isEmpty(data.children) ? data : data.children);
         if (Ext.isArray(nodeList) && !Ext.isEmpty(nodeList)) {
 	        root.appendChild(nodeList);
         }
