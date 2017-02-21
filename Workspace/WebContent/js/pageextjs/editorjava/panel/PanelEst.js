@@ -12,7 +12,6 @@ Ext.define('Workspace.editorjava.panel.PanelEst', {
 	id: 'mainEstPanel',
 	region: 'east',
 	layout: 'fit',
-//	title: 'ClipBoard',
 	hideCollapseTool: true,
 	collapseMode: 'mini',
 	collapsed: true,
@@ -26,13 +25,10 @@ Ext.define('Workspace.editorjava.panel.PanelEst', {
 		var me = this;
 		me.pluginDebug = Ext.create('Workspace.editorjava.plugin.DebugPlugin');
 
-	    var panelDebugVariable = Ext.create('Workspace.editorjava.panel.est.PanelDebugVariable');
-        me.setData(Workspace.editorjava.debug.data.DataVariable.getData());
-
 		Ext.apply(me, {
 			plugins: [ me.pluginDebug ],
 			items: [
-			    panelDebugVariable
+			    Ext.create('Workspace.editorjava.panel.est.PanelDebugVariable')
 			]
 	    });
 
@@ -40,11 +36,6 @@ Ext.define('Workspace.editorjava.panel.PanelEst', {
 	}
 	,
 	setData: function(data) {
-        // panelDebugVariable.getLoader().load({
-        // panelDebugVariable.fireEvent('load', {
-        // panelDebugVariable.getStore().load([
-	    // panelDebugVariable.setRootNode({
-
 	    var panelDebugVariable = Ext.getCmp('PanelDebugVariable');
         var root = panelDebugVariable.getRootNode();
         root.removeAll();

@@ -45,6 +45,7 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 		var me = this;
 		me.waiterDebug.stop(me.callbackDebugStop);
 		me.initializeButtonDebug();
+        me.setDebugVariable();
 	}
 	,
 	isDebugging: function() {
@@ -64,7 +65,7 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 		var mainCenterPanel=Ext.getCmp('mainCenterPanel');
 
 		if (mainCenterPanel.waiterDebug.classname == classname && mainCenterPanel.waiterDebug.row == row) {
-    		Workspace.common.tool.Pop.info(me, "No debug change class:'" + classname + "' line:" + (row+1), {toast: false});
+    // 		Workspace.common.tool.Pop.info(me, "No debug change class:'" + classname + "' line:" + (row+1), {toast: false});
     		return;
 		}
 		mainCenterPanel.waiterDebug.classname = classname;
@@ -73,7 +74,8 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 		var application = Workspace.tool.UtilString.decodeUtf8(jsonData.application);
 		var sourceName = jsonData.sourceName;
 		if (Ext.isEmpty(sourceName)) {
-    		Workspace.common.tool.Pop.failure(me, "No Source found for class:'" + classname + "' line:" + (row+1));
+    		Workspace.common.tool.Pop.info(me, "No Source found for class:'" + classname + "' line:" + (row+1), {toast: false});
+            mainCenterPanel.updateDebugVariable();
 			return;
 		}
 		var sourceName = Workspace.tool.UtilString.decodeUtf8(jsonData.sourceName[0]);
@@ -112,13 +114,22 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 			Workspace.editorjava.panel.center.function.AddTabAce.call(raw);
 		}
 
+        mainCenterPanel.updateDebugVariable();
+	}
+	,
+	updateDebugVariable: function() {
+		var me = this;
+		var mainCenterPanel=Ext.getCmp('mainCenterPanel');
 		var callbackVariable = function(jsonData) {
 		    if (!Ext.isEmpty(jsonData)) {
-    		    Workspace.common.tool.Pop.info(me, 'Variable:', {toast: false, detail:jsonData});
-    		    Ext.getCmp('mainEstPanel').setData(jsonData);
+    		    mainCenterPanel.setDebugVariable(jsonData);
 		    }
 		};
         Ext.create('Workspace.editorjava.debug.request.JsonDebugVariable').request(callbackVariable);
+	}
+	,
+	setDebugVariable: function(jsonData) {
+	    Ext.getCmp('mainEstPanel').setData(jsonData);
 	}
 	,
 	initializeButtonDebug: function() {
