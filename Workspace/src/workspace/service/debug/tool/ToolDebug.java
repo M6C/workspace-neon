@@ -42,17 +42,53 @@ public class ToolDebug {
 	private ToolDebug() {
 	}
 
+	public static BeanDebug findBeanDebug(HttpSession session) throws IOException, IllegalConnectorArgumentsException {
+	    return (BeanDebug)session.getAttribute("beanDebug");
+	}
+
+	public static BeanDebug getBeanDebug(HttpSession session, String application) throws IOException, IllegalConnectorArgumentsException {
+        BeanDebug beanDebug = findBeanDebug(session);
+        if (beanDebug==null && application == null) {
+        	System.err.println("BeanDebug not found and can't create it for empty application");
+        	return beanDebug;
+        }
+        try {
+            if (beanDebug==null) {
+	        	beanDebug = createBeanDebug(application);
+		        initializeBeanDebugData(session, beanDebug);
+		        session.setAttribute("beanDebug", beanDebug);
+            } else {
+                checkConnection(beanDebug);
+            }
+            initializeBeanDebug(beanDebug);
+        } catch (Exception ex) {
+            resume(beanDebug);
+        	throw ex;
+        }
+
+        return beanDebug;
+	}
+
     public static void checkConnection(BeanDebug beanDebug) throws IOException, IllegalConnectorArgumentsException {
 		VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
 		if (virtualMachine != null) {
+		    System.out.println("ToolDebug.checkConnection");
 		    try {
 		        virtualMachine.classesByName("java.lang.String");
 		    } catch (Exception ex) {
+        		System.out.println("ToolDebug.checkConnection error message:" + ex.getMessage());
+        		System.out.println("ToolDebug.checkConnection error resume");
+                resume(beanDebug);
+        		System.out.println("ToolDebug.checkConnection error recreate VirtualMachine");
 		        virtualMachine = UtilJDI.createVirtualMachine(beanDebug.getHostname(), beanDebug.getPort());
+                beanDebug.setVirtualMachine(virtualMachine);
+        		System.out.println("ToolDebug.checkConnection error recreate all breakpoint start");
+                recreateAllBreakpoint(beanDebug);
+        		System.out.println("ToolDebug.checkConnection error recreate all breakpoint end");
 		    }
+		} else {
+		    System.out.println("ToolDebug.checkConnection virtualMachine is null");
 		}
-        beanDebug.setVirtualMachine(virtualMachine);
-        recreateAllBreakpoint(beanDebug);
     }
 
 	public static BreakpointRequest findBreakpoint(VirtualMachine virtualMachine, String classname, int line) {
@@ -105,43 +141,26 @@ public class ToolDebug {
         return className;
 	}
 
-	public static BeanDebug getBeanDebug(HttpSession session, String application) throws IOException, IllegalConnectorArgumentsException {
-        BeanDebug beanDebug = (BeanDebug)session.getAttribute("beanDebug");
-        if (beanDebug==null && application == null) {
-        	System.err.println("BeanDebug not found and can't create it for empty application");
-        	return beanDebug;
-        }
-        try {
-            if (beanDebug==null) {
-	        	beanDebug = createBeanDebug(application);
-		        initializeBeanDebugData(session, beanDebug);
-		        session.setAttribute("beanDebug", beanDebug);
-            }
-            initializeBeanDebug(beanDebug);
-        } catch (Exception ex) {
-            if (beanDebug!=null) {
-	    		Event currentEvent = beanDebug.getCurrentEvent();
-	    		if ((currentEvent!=null)&&(currentEvent instanceof LocatableEvent)) {
-	    			LocatableEvent brkE = (LocatableEvent)currentEvent;
-	    			EventRequest brkR = (EventRequest) brkE.request();
-	    			StepEvent currentStep = beanDebug.getCurrentStepEvent();
-	
-	    			if (currentStep!=null)
-	    				currentStep.thread().resume();
-	    			brkE.thread().resume();
-	
-	    			beanDebug.setCurrentEvent(null);
-	    			beanDebug.setCurrentStepEvent(null);
-	    		}
-	    		if (beanDebug.getVirtualMachine() != null) {
-	    			beanDebug.getVirtualMachine().resume();
-	    		}
-            }
-        	throw ex;
-        }
+    public static void resume(BeanDebug beanDebug) {
+        if (beanDebug!=null) {
+    		Event currentEvent = beanDebug.getCurrentEvent();
+    		if ((currentEvent!=null)&&(currentEvent instanceof LocatableEvent)) {
+    			LocatableEvent brkE = (LocatableEvent)currentEvent;
+    			EventRequest brkR = (EventRequest) brkE.request();
+    			StepEvent currentStep = beanDebug.getCurrentStepEvent();
 
-        return beanDebug;
-	}
+    			if (currentStep!=null)
+    				currentStep.thread().resume();
+    			brkE.thread().resume();
+
+    			beanDebug.setCurrentEvent(null);
+    			beanDebug.setCurrentStepEvent(null);
+    		}
+    		if (beanDebug.getVirtualMachine() != null) {
+    			beanDebug.getVirtualMachine().resume();
+    		}
+        }
+    }
 
 	public static List<String> getPathExistInApplication(BeanDebug beanDebug, String path) {
 		List<String> ret = new ArrayList<>();

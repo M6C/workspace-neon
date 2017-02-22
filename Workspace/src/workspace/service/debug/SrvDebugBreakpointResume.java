@@ -34,31 +34,23 @@ public class SrvDebugBreakpointResume extends SrvGenerique {
   	  HttpSession session = request.getSession();
 	  try {
 		  String application = (String)bean.getParameterDataByName("application");
-          BeanDebug beanDebug = ToolDebug.getBeanDebug(session, application);
+          BeanDebug beanDebug = ToolDebug.findBeanDebug(session);
     	  if (beanDebug!=null) {
+              ToolDebug.resume(beanDebug);
+
     		  Event currentEvent = beanDebug.getCurrentEvent();
     		  if ((currentEvent!=null)&&(currentEvent instanceof LocatableEvent)) {
-    			  VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
     			  LocatableEvent brkE = (LocatableEvent)currentEvent;
     			  BreakpointRequest brkR = (BreakpointRequest) brkE.request();
-    			  StepEvent currentStep = beanDebug.getCurrentStepEvent();
-
-    			  if (currentStep!=null)
-    				  currentStep.thread().resume();
-				  brkE.thread().resume();
-    			  virtualMachine.resume();
-
-    			  beanDebug.setCurrentEvent(null);
-    			  beanDebug.setCurrentStepEvent(null);
-//    			  beanDebug.setThrdDebugEventQueue(null);
 
     			  // Recréé le point d'arret
                   BreakpointRequest brkR2 = ToolDebug.recreateBreakpoint(beanDebug, brkR);
 				  copyBreakpointProperties(brkR, brkR2);
 
-    			  PrintWriter out = response.getWriter();
-    			  out.print("resume");
     		  }
+
+			  PrintWriter out = response.getWriter();
+			  out.print("resume");
     	  } else {
     		  System.err.println("BeanDebug not found. Can't Resume Breakpoint.");
     		  return;
