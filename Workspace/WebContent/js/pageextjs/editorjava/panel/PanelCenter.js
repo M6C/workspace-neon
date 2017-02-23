@@ -17,8 +17,16 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 		
 		me.waiterDebug = Ext.create('Workspace.editorjava.debug.WaiterDebug');
 
+
 	    me.callParent(arguments);
 	}
+	,
+    listeners : {
+    	'render': function(panel, option) {
+		    var me = panel;
+    		me.initializeButtonDebug();
+		}
+    }
 	,
 	// Overrided
 	onAddTab(raw) {

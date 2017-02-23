@@ -30,6 +30,7 @@ Ext.define('Workspace.editorjava.plugin.DebugPlugin', {
             text: 'Debug',
             cls: 'btn_debug_stop',
 	    	id: 'btnDebugStop',
+	    	hidden: true,
 	    	handler:  function(button, e) {
 	            me.debugStop();
 	    	}

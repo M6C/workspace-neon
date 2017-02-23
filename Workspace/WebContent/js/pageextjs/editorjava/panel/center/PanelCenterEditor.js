@@ -73,8 +73,6 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 		    listeners : {
 		    	'show': function(tab, option) {
 
-		    		Ext.getCmp('mainCenterPanel').initializeButtonDebug();
-
 		    		var editor = ace.edit(me.panelEditorId);
 		    		Ext.apply(editor, {
 		    			id: me.panelEditorId,
