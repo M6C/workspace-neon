@@ -16,7 +16,10 @@ Ext.define('Workspace.editorjava.panel.est.PanelDebugVariable', {
         	    draggable: false,
         	    id: 'root',
         	    expanded: true,
-        	    text: 'Current'
+        	    text: 'Current',
+        	    children: [
+        	        {leaf:true, text:'No variable.'}
+        	    ]
         	}    
         });
 

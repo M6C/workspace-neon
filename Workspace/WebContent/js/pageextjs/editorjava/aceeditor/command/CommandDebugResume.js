@@ -26,6 +26,7 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandDebugResume',  {
 
 			var mainCenterPanel = Ext.getCmp('mainCenterPanel');
             mainCenterPanel.initializeButtonDebug();
+            mainCenterPanel.setDebugVariable();
 
             Workspace.common.tool.Pop.info(me, 'Resume');
 		}

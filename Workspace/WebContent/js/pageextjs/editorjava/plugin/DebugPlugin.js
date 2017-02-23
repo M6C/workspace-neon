@@ -4,6 +4,7 @@ Ext.define('Workspace.editorjava.plugin.DebugPlugin', {
     init: function(tp) {
         var me = this;
         me.mainCenterPanel = Ext.getCmp('mainCenterPanel');
+        me.mainEstPanel = Ext.getCmp('mainEstPanel');
 
 	    if (tp instanceof Ext.TabPanel) {
 	        tp.onRender = Ext.Function.createSequence(tp.onRender, this.onTabPanelRender(this, tp));
@@ -44,6 +45,7 @@ Ext.define('Workspace.editorjava.plugin.DebugPlugin', {
 	,
 	debugStop: function() {
 		this.mainCenterPanel.debugStop();
+		this.mainEstPanel.collapse(Ext.Component.DIRECTION_RIGHT, true);
 	}
 	,
 	initializeButtonDebug: function() {
