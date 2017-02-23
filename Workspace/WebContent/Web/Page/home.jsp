@@ -37,10 +37,10 @@
                                 <table width="100%">
                                     <tr>
                                         <td class="treeviewMain">
-                                            <a href="action.servlet?event=EditorJavaPageExtJsAce">Editeur Java</a><!--&nbsp;<a href="action.servlet?event=EditorJavaPageExtJs">Editeur Java</a>-->
+                                            <a href="action.servlet?event=EditorJavaPageExtJsAce">Editeur Java</a>
                                         </td>
                                         <td class="treeviewMain">
-                                            <a href="action.servlet?event=DebuggerPageExtJs">Debugger</a>
+                                            <a href="action.servlet?event=AdminPageExtJs">Administration</a>
                                         </td>
                                     </tr>
                                     <tr>
@@ -53,7 +53,7 @@
                                     </tr>
                                     <tr>
                                         <td class="treeviewMain">
-                                            <a href="action.servlet?event=AdminPageExtJs">Administration</a>
+                                            <%--a href="action.servlet?event=DebuggerPageExtJs">Debugger</a--%>
                                         </td>
                                         <td class="treeviewMain">
                                             <%--a href="action.servlet?event=ImageViewerPage">Visionneur d'image</a--%>
@@ -83,6 +83,7 @@
                     </table>
                 </td>
             </tr>
+<%--
             <tr>
                 <td>
                     <table class="treeview" id="theTableToDo">
@@ -128,13 +129,13 @@
                                         <td class="treeviewMain" colspan="2">
                                             <a href="action.servlet?event=HbnGeneratorJspTable">Hibernate&nbsp;Generator</a>
                                         </td>
-                                        <%--
+                                        <!%--
                                         <td class="treeviewMain">
                                             <a href="javascript:openPopup('action.servlet?event=Home', '', screen.width*0.90 , screen.height*0.70, null, 'status=1');window.close();">popup</a>
                                             &nbsp;
                                             <a href="javascript:openPopup('action.servlet?event=Home', '', document.body.clientWidth, document.body.clientHeight, null, 'status=1');">popup</a>
                                         </td>
-                                        --%>
+                                        --%!>
                                     </tr>
                                 </table>
                             </td>
@@ -148,6 +149,7 @@
                     </table>
                 </td>
             </tr>
+--%>
             <tr>
                 <td>
                     <xml:TagXsl xml="/Xml/Rss/Task_Todo.xml" xsl="/Xsl/Rss/News_Todo.xsl">
