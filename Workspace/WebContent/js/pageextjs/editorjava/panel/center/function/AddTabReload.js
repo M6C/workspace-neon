@@ -6,22 +6,20 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabReload',  {
 	,
 	statics: {
 
-		call : function() {
+		call : function(editor, callBackSuccess) {
 		    console.info('Workspace.editorjava.panel.center.function.AddTabReload.call');
 		    var me = this;
 			var mainCenterPanel=Ext.getCmp('mainCenterPanel');
             var tab = mainCenterPanel.getActiveTab();
 
-			var editor = ace.edit(me.panelEditorId);
+// 			var callBackSuccess = function() {
 
-			var callBackSuccess = function() {
+// 			    editor.focus();
+// 			    editor.scrollToLine(1, true, false, function(){});
+// 				editor.gotoLine(1, 0, false);
 
-			    editor.focus();
-			    editor.scrollToLine(1, true, false, function(){});
-				editor.gotoLine(1, 0, false);
-
-			    Workspace.common.tool.Pop.info(me, 'Reload success');
-			}
+// 			    Workspace.common.tool.Pop.info(me, 'Reload success');
+// 			}
 
     		var loadRequest = Ext.create('Workspace.editorjava.request.JsonEditLoadFile', {
     			panelId: tab.panelId,

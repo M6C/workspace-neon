@@ -65,6 +65,9 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 					Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandReopenLastTab');
 				    Workspace.editorjava.aceeditor.command.CommandReopenLastTab.addCommand(editor);
 
+					Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandReload');
+				    Workspace.editorjava.aceeditor.command.CommandReload.addCommand(editor);
+
 					Ext.Loader.syncRequire('Workspace.editorjava.debug.ApplyDebug');
 				    Workspace.editorjava.debug.ApplyDebug.apply(editor);
 				}

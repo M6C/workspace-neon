@@ -26,11 +26,6 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 			id: me.panelEditorId
 		});
 
-		var loadRequest = Ext.create('Workspace.editorjava.request.JsonEditLoadFile', {
-			panelId: me.panelId,
-			panelEditorId: me.panelEditorId
-		});
-
         var titleTech = me.raw.contentType;
         if (me.raw.build == 'true') {
             titleTech += '&nbsp;|&nbsp;build';
@@ -60,8 +55,7 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 			            {
 					    	text: 'Reload',
 					    	handler:  function(button, e) {
-					            var editor = ace.edit(me.panelEditorId);
-					    		Workspace.editorjava.panel.center.function.AddTabReload.call(editor)
+					    	    me.reload(true)
 					    	}
 			            }
 			        ]
@@ -109,15 +103,11 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 	                    }
 		    			me.initialized = true;
 		    		}
-					var callBackSuccess = function() {
-					    me.editorFocusAndScroll(me);
-					    me.expandTree(tab);
-					}
 
 					if (!editor.dirty) {
-						loadRequest.request(callBackSuccess);
+						me.reload();
 					} else {
-						callBackSuccess();
+						me.callBackReloadSuccess(me);
 					}
 		    	}
 				,
@@ -154,6 +144,25 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 		    }
 	    });
 		me.callParent(arguments);
+	}
+	,
+	reload: function(pop) {
+	    var me = this;
+        var editor = ace.edit(me.panelEditorId);
+		Workspace.editorjava.panel.center.function.AddTabReload.call(editor, function(){me.callBackReloadSuccess(me, pop)})
+	}
+	,
+	callBackReloadSuccess: function(me, pop) {
+	    me.editorFocusAndScroll(me);
+	    me.expandTree(me);
+	    
+		var editor = ace.edit(me.panelEditorId);
+		if (!editor.dirty) {
+	        me.setTitle(me.raw.text);
+		}
+	    if (pop === true) {
+	        Workspace.common.tool.Pop.info(me, 'Reload success');
+	    }
 	}
 	,
 	debugStart: function() {
