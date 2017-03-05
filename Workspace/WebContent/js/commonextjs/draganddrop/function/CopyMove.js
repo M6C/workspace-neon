@@ -27,24 +27,24 @@ Ext.define('Workspace.common.draganddrop.function.CopyMove',  {
 			    var nb = data.records.length;
 			
 			    console.info('Workspace.common.draganddrop.function.CopyMove.check CopyMove to:'+itemPathDst+' data.records.length:'+data.records.length);
-			
-			    for(i=0 ; i<nb ; i++) {
-					var raw = data.records[i].raw;//data.records[i].data;
-					var itemPathSrc = raw.id;//raw.getKey();
+
+			 //   for(i=0 ; i<nb ; i++) {
+				// 	var raw = data.records[i].raw;//data.records[i].data;
+				// 	var itemPathSrc = raw.id;//raw.getKey();
 	
-					console.info('Workspace.common.draganddrop.function.CopyMove.check CopyMove itemPathSrc:'+itemPathSrc);
+				// 	console.info('Workspace.common.draganddrop.function.CopyMove.check CopyMove itemPathSrc:'+itemPathSrc+' itemPathDst:'+itemPathDst);
 			
-				    if (Workspace.tool.UtilString.isNotEqualPath(itemPathDst, itemPathSrc)) {
-				    	// TODO Check if file do not already exist on server at destination path
+				//     if (Workspace.tool.UtilString.isNotEqualPath(itemPathDst, itemPathSrc)) {
+				//     	// TODO Check if file do not already exist on server at destination path
 				    	
-				    	console.info('Workspace.common.draganddrop.function.CopyMove.check success ' + dropAction + ' from:'+itemPathSrc+ ' to:'+itemPathDst);
-				    }
-				    else {
-				    	var text = 'No ' + dropAction + ' because destination path and source path can not be same. from:'+itemPathSrc + ' to:'+itemPathDst;
-				        Workspace.common.tool.Pop.error('Workspace.common.draganddrop.function.CopyMove.check', text);
-				        ret = false;
-				    }
-				}
+				//     	console.info('Workspace.common.draganddrop.function.CopyMove.check success ' + dropAction + ' from:'+itemPathSrc+ ' to:'+itemPathDst);
+				//     }
+				//     else {
+				//     	var text = 'No ' + dropAction + ' because destination path and source path can not be same. from:'+itemPathSrc + ' to:'+itemPathDst;
+				//         Workspace.common.tool.Pop.error('Workspace.common.draganddrop.function.CopyMove.check', text);
+				//         ret = false;
+				//     }
+				// }
             }
             else {
 		        var text = 'No ' + dropAction + ' because ne destination panel find.';
@@ -54,8 +54,7 @@ Ext.define('Workspace.common.draganddrop.function.CopyMove',  {
 	    	return ret;
 		}
 		,
-		request : function(grid, node, data, callBackSuccess = null, callBackFailure = null) {
-		    var itemPathDst = node.viewRecordId;//mainCenterTab.id;
+		request : function(grid, node, itemPathDst, data, callBackSuccess = null, callBackFailure = null) {
 		    var nb = data.records.length;
 			
 			var dropAction = data.copy ? 'copy' : 'move';
@@ -91,6 +90,28 @@ Ext.define('Workspace.common.draganddrop.function.CopyMove',  {
 	    		    }
 	    		});
 		    }
+		}
+		,
+		getData: function(grid, nodeEl) {
+		    var me = Workspace.common.draganddrop.function.CopyMove;
+            var dataDst = {};
+		    if (!Ext.isDefined(nodeEl) || !Ext.isDefined(nodeEl.viewRecordId)) {
+		        var application = Ext.getCmp('project').value;
+				nodeEl.viewRecordId = '[' + application + ']';
+				dataDst.internalId = nodeEl.viewRecordId;
+				dataDst.data = {
+					contentType: 'directory'
+				};
+			} else {
+				dataDst = grid.store.data.getByKey(nodeEl.viewRecordId);
+    			if (!Ext.isDefined(dataDst) || !Ext.isDefined(dataDst.data)) {
+    		        return null;
+    			}
+			}
+			if (dataDst.data.contentType != 'directory') {
+		        return me.getData(grid, nodeEl.parentNode);
+			}
+	        return dataDst;
 		}
 	}
 

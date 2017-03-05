@@ -1,6 +1,7 @@
 Ext.define('Workspace.editorjava.tree.TreeFileExplorer', {
 	requires: [
-  	     'Workspace.editorjava.aceeditor.command.CommandFindResource'
+  	     'Workspace.editorjava.aceeditor.command.CommandFindResource',
+  	     'Workspace.tool.Log'
   	],
 	extend: 'Workspace.widget.tree.WidgetTreeExplorer'
 	,
@@ -17,8 +18,12 @@ Ext.define('Workspace.editorjava.tree.TreeFileExplorer', {
 		Ext.Loader.syncRequire('Workspace.editorjava.panel.center.function.AddTabAce');
 		Workspace.editorjava.panel.center.function.AddTabAce.call(record.raw);
 	},
-	// Overrided
+	// Override
 	onItemKeyDown: function(view, record, item, index, event, eOpts) {
+	   // if (!this.listnered) {
+	   //     Workspace.tool.Log.logAllEvent(this);
+	   //     this.listnered = true;
+	   // }
 		console.info('Workspace.editorjava.tree.TreeFileExplorer onItemKeyDown');
 		var superMethod = this.superclass.onItemKeyDown;
 		if (event.ctrlKey && event.shiftKey && event.keyCode == Ext.EventObject.R) {
@@ -28,7 +33,9 @@ Ext.define('Workspace.editorjava.tree.TreeFileExplorer', {
 		    Workspace.editorjava.aceeditor.command.CommandFindResource.openFindResourceContentFilter(view);
 		    event.stopEvent();
 		} else {
-		    superMethod(view, record, item, index, event, eOpts);
+		    var parent = Workspace.widget.tree.WidgetTreeExplorer;
+		  //  parent.prototype.onItemKeyDown.call(this, view, record, item, index, event, eOpts);
+		    parent.prototype.onItemKeyDown(view, record, item, index, event, eOpts);
 		}
     }
 }, function() {Workspace.tool.Log.defined('Workspace.editorjava.tree.TreeFileExplorer');});

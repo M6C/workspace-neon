@@ -25,6 +25,7 @@ Ext.define('Workspace.widget.tree.WidgetTreeExplorer', {
 	// Can be overrided
 	onItemKeyDown: function(view, record, item, index, event, eOpts) {
 		console.info('Workspace.widget.tree.WidgetTreeExplorer onItemKeyDown');
+        var me = this;
 		var key = event.keyCode;
 		switch (key) {
 			case Ext.EventObject.ENTER: 	// code:13
@@ -125,6 +126,10 @@ Ext.define('Workspace.widget.tree.WidgetTreeExplorer', {
 		'add' : function ( container, component, index, eOpts ) {
 			console.info('Workspace.widget.tree.WidgetTreeExplorer add');
 		    var me = this;
+    	   // if (!this.listnered) {
+    	        Workspace.tool.Log.logAllEvent(component);
+    	   //     this.listnered = true;
+    	   // }
 			component.on('itemkeydown', me.onItemKeyDown);
 		}
 		,

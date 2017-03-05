@@ -7,16 +7,28 @@ Ext.define('Workspace.common.draganddrop.event.OnDropExplorer',  {
 		    console.info('Workspace.common.draganddrop.event.OnDropExplorer.call OnDropExplorer');
 		    var me = Workspace.common.draganddrop.event.OnDropExplorer;
 
+            var dataDst = Workspace.common.draganddrop.function.CopyMove.getData(grid, node);
+			var dropAction = data.copy ? 'copy' : 'move';
 		    var nb = data.records.length;
 		    var itemPathSrc = nb + ' files';
+		    var itemPathDst = dataDst.viewRecordId;//mainCenterTab.id;
 		    if (nb == 1) {
-			    var itemPathSrc = 'from:' + data.records[0].internalId;//raw.id;//raw.getKey();
+			    itemPathSrc = data.records[0].internalId;//raw.id;//raw.getKey();
+			    if (Workspace.tool.UtilString.isEqualPath(itemPathDst, itemPathSrc)) {
+			        dropAction = 'copy';
+
+		            var idx = itemPathSrc.lastIndexOf('.');
+		            if (idx >= 0) {
+		                itemPathDst = itemPathSrc.substring(0, idx) + '-Copy' + itemPathSrc.substring(idx);
+		            } else {
+		                itemPathDst = itemPathSrc + '-Copy';
+		            }
+			    }
+			    itemPathSrc = 'from:' + itemPathSrc;
 		    }
-		    var itemPathDst = node.viewRecordId;//mainCenterTab.id;
-			var dropAction = data.copy ? 'copy' : 'move';
         	Ext.Msg.confirm('Confirm', dropAction + ' ' + itemPathSrc + ' to:' + itemPathDst + ' ?', function(btn, text){
         	    if (btn == 'yes'){
-        		    Workspace.common.draganddrop.function.CopyMove.request(grid, node, data, me.callBackSuccess, me.callBackFailure);
+        		    Workspace.common.draganddrop.function.CopyMove.request(grid, node, itemPathDst, data, me.callBackSuccess, me.callBackFailure);
         	    } else {
         	        me.callBackSuccess(grid, node, data);
         	        return false;
