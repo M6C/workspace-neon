@@ -62,7 +62,7 @@ Ext.define('Workspace.common.draganddrop.function.CopyMove',  {
 
 		    for(i=0 ; i<nb ; i++) {
 				var raw = data.records[i];//data.records[i].raw;//data.records[i].data;
-				var itemPathSrc = raw.internalId;//raw.id;//raw.getKey();
+				var itemPathSrc = raw.id;//raw.internalId;//raw.getKey();
 
 		        Ext.Ajax.request({
 		        	url: DOMAIN_NAME_ROOT + '/action.servlet?event=FileBrowserCopyMove',
@@ -109,7 +109,18 @@ Ext.define('Workspace.common.draganddrop.function.CopyMove',  {
     			}
 			}
 			if (dataDst.data.contentType != 'directory') {
-		        return me.getData(grid, nodeEl.parentNode);
+			    var node = undefined;
+
+			    var path = nodeEl.viewRecordId;
+			    var idx = path.lastIndexOf('/');
+			    if (idx < 0) {
+			        idx = path.lastIndexOf('\\');
+			    }
+			    if (idx >= 0) {
+			        node = {viewRecordId:path.substring(0, idx)};
+			    }
+
+		        return me.getData(grid, node);
 			}
 	        return dataDst;
 		}

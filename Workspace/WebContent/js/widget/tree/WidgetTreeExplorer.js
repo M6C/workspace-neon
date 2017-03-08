@@ -1,12 +1,26 @@
 Ext.define('Workspace.widget.tree.WidgetTreeExplorer', {
 	requires: [
   	     'Workspace.common.tool.Delete',
-  	     'Workspace.common.tool.Rename'
-  	],
+  	     'Workspace.common.tool.Rename',
+  	     'Workspace.tool.UtilComponent',
+  	     'Workspace.common.draganddrop.ApplyDragAndDropCopyMove',
+  	     'Workspace.tool.Log'
+  	]
+  	,
 	extend: 'Workspace.common.tree.TreeFileExplorerExtjs4'
 	,
 	alias: 'widget.widgetTreeExplorer',
 	alternateClassName: 'WorkspaceWidgetTreeExplorer'
+	,
+    initComponent : function(){
+		var me = this;
+
+        Workspace.tool.UtilComponent.addListener(me, 'load', me.listenerLoad);
+        Workspace.tool.UtilComponent.addListener(me, 'add', me.listenerAdd);
+        Workspace.tool.UtilComponent.addListener(me, 'itemdblclick', me.listenerItemdblclick);
+
+		me.callParent(arguments);
+	}
 	,
 	// Must be overrided
 	onActionOpen(view, record, item, index, event, eOpts) {
@@ -46,9 +60,34 @@ Ext.define('Workspace.widget.tree.WidgetTreeExplorer', {
 		}
 	},
 	// Can be overrided
+	listenerLoad: function(store, records, successful, operation, eOpts) {
+		if (successful) {
+			var view = this.getView();
+			var node = records;
+			if (node.parentNode == undefined && node.firstChild != undefined) {
+				view.select(node.firstChild);
+			}
+			view.focus();
+		}
+	},
+	// Can be overrided
+	listenerAdd: function(container, component, index, eOpts) {
+		console.info('Workspace.widget.tree.WidgetTreeExplorer add');
+	    var me = this;
+	   // if (!this.listnered) {
+	       // Workspace.tool.Log.logAllEvent(component);
+	   //     this.listnered = true;
+	   // }
+		component.on('itemkeydown', me.onItemKeyDown);
+	},
+	// Can be overrided
+	listenerItemdblclick: function(view, record, item, index, event, eOpts) {
+	    var me = this;
+		me.onActionOpen(view, record, item, index, event, eOpts);
+	},
+	// Can be overrided
 	applyDragAndDrop: function(me) {
 		// Explicit load required library (Mandatory for extending this class)
-		Ext.Loader.syncRequire('Workspace.common.draganddrop.ApplyDragAndDropCopyMove');
 		Workspace.common.draganddrop.ApplyDragAndDropCopyMove.apply(me);
 	}
 	,
@@ -110,32 +149,4 @@ Ext.define('Workspace.widget.tree.WidgetTreeExplorer', {
         var task = new Ext.util.DelayedTask(delayedFn);
 		task.delay(0);
     }
-    ,
-	listeners: {
-		'load' : function(store, records, successful, operation, eOpts) {
-			if (successful) {
-				var view = this.getView();
-				var node = records;
-				if (node.parentNode == undefined && node.firstChild != undefined) {
-					view.select(node.firstChild);
-				}
-				view.focus();
-			}
-		}
-		,
-		'add' : function ( container, component, index, eOpts ) {
-			console.info('Workspace.widget.tree.WidgetTreeExplorer add');
-		    var me = this;
-    	   // if (!this.listnered) {
-    	        Workspace.tool.Log.logAllEvent(component);
-    	   //     this.listnered = true;
-    	   // }
-			component.on('itemkeydown', me.onItemKeyDown);
-		}
-		,
-		'itemdblclick' : function(view, record, item, index, event, eOpts) {
-		    var me = this;
-			me.onActionOpen(view, record, item, index, event, eOpts);
-	    }
-	}
 }, function() {Workspace.tool.Log.defined('Workspace.widget.tree.WidgetTreeExplorer');});

@@ -35,11 +35,13 @@ Ext.define('Workspace.common.tool.Rename', {
         		    		   url: requestUrl,
         		    		   params: {oldName:oldFileName, newName:fileName},
         		    		   success: function(result, request){
-        		    			   Workspace.common.window.WindowWaiting.manageWindowWaiting(wndWait, 'Rename successfull.', index, allItems.length-1, component);
-				                    Workspace.common.tool.Pop.info(me, 'Rename successfull.');
+                                    Workspace.common.window.WindowWaiting.manageWindowWaiting(wndWait, 'Rename successfull.', index, allItems.length-1, component);
+                                    Workspace.common.tool.Pop.info(me, 'Rename successfull.');
+                                    // Reload Parent Node
+                                    Workspace.tool.UtilTree.reloadParent(item);
         		    		   },
         		    		   failure: function (result, request) {
-        		    			   Workspace.common.window.WindowWaiting.manageWindowWaiting(wndWait, 'Rename failed.', index, allItems.length-1, component);
+                                    Workspace.common.window.WindowWaiting.manageWindowWaiting(wndWait, 'Rename failed.', index, allItems.length-1, component);
 				                    Workspace.common.tool.Pop.error(me, 'Rename failed.');
         		    		   }
         		    		});

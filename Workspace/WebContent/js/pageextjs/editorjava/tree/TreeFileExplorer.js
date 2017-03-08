@@ -1,8 +1,9 @@
 Ext.define('Workspace.editorjava.tree.TreeFileExplorer', {
 	requires: [
   	     'Workspace.editorjava.aceeditor.command.CommandFindResource',
-  	     'Workspace.tool.Log'
-  	],
+  	     'Workspace.editorjava.panel.center.function.AddTabAce'
+  	]
+	,
 	extend: 'Workspace.widget.tree.WidgetTreeExplorer'
 	,
 	alias: 'widget.editorjavaTreeFileExplorer',
@@ -14,16 +15,10 @@ Ext.define('Workspace.editorjava.tree.TreeFileExplorer', {
 	onActionOpen(view, record, item, index, event, eOpts) {
 		console.info('Workspace.editorjava.tree.TreeFileExplorer actionItem');
 
-		// Explicit load required library (Mandatory for extending this class)
-		Ext.Loader.syncRequire('Workspace.editorjava.panel.center.function.AddTabAce');
 		Workspace.editorjava.panel.center.function.AddTabAce.call(record.raw);
 	},
 	// Override
 	onItemKeyDown: function(view, record, item, index, event, eOpts) {
-	   // if (!this.listnered) {
-	   //     Workspace.tool.Log.logAllEvent(this);
-	   //     this.listnered = true;
-	   // }
 		console.info('Workspace.editorjava.tree.TreeFileExplorer onItemKeyDown');
 		var superMethod = this.superclass.onItemKeyDown;
 		if (event.ctrlKey && event.shiftKey && event.keyCode == Ext.EventObject.R) {
@@ -38,4 +33,16 @@ Ext.define('Workspace.editorjava.tree.TreeFileExplorer', {
 		    parent.prototype.onItemKeyDown(view, record, item, index, event, eOpts);
 		}
     }
+//     ,
+// 	tools: [
+//         {
+//         	xtype: 'editorjavaComboProject',
+//   		    id: 'comboProject'
+//         },
+//           {	//Balise cachee
+//   		    xtype: 'hidden',
+//   		    id: 'project',
+//   		    name: 'project'
+//   		}
+// 	]
 }, function() {Workspace.tool.Log.defined('Workspace.editorjava.tree.TreeFileExplorer');});

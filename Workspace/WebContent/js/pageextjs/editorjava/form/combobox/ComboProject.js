@@ -27,7 +27,7 @@ Ext.define('Workspace.editorjava.form.combobox.ComboProject', {
                 method: 'GET',
                 params: {application: application},
                 success: function() {
-    		        Workspace.common.tool.Pop.info(me, "Initialize Project '" + application + "' success.");
+    		        Workspace.common.tool.Pop.success(me, "Initialize Project '" + application + "' success.");
                 },
                 failure: function() {
     		        Workspace.common.tool.Pop.error(me, "Initialize Project '" + application + "' failure.");

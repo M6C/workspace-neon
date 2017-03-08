@@ -1,6 +1,7 @@
 Ext.define('Workspace.common.tool.Delete', {
 	requires: [
 	     'Workspace.common.tool.Pop',
+	     'Workspace.tool.UtilTree',
 	     'Workspace.common.window.WindowWaiting'
 	]
 	,
@@ -33,6 +34,9 @@ Ext.define('Workspace.common.tool.Delete', {
 		    		   url: requestUrl,
 		    		   params: {fileName:item.internalId},
 		    		   success: function(result, request){
+		    			   Ext.Array.each(selectionModel.getSelection(), function(node, index) {
+		    			       Workspace.tool.UtilTree.reloadParent(node);
+		    			   });
 		    			   Workspace.common.window.WindowWaiting.manageWindowWaiting(wndWait, 'Delete successfull.', index, allItems.length-1, component);
 		    		   },
 		    		   failure: function (result, request) {

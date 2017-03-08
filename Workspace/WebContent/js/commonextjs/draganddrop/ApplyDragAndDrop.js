@@ -1,9 +1,10 @@
 Ext.define('Workspace.common.draganddrop.ApplyDragAndDrop', {
 	statics: {
 
-		apply : function(cmp, onBeforeDrop, onDrop) {
-		    console.info('Workspace.common.draganddrop.ApplyDragAndDrop apply');
-			Ext.apply(cmp, {
+		apply : function(cmp, onBeforeDrop, onDrop, option) {
+		    var type = cmp.isXType('treepanel') ? 'treeviewdragdrop' : 'gridviewdragdrop';
+		    console.info('Workspace.common.draganddrop.ApplyDragAndDrop apply type:' + type);
+		    var config = {
 				draggable: true,
 				viewConfig: {
 		    		allowCopy: true,
@@ -16,7 +17,7 @@ Ext.define('Workspace.common.draganddrop.ApplyDragAndDrop', {
 //					}
 //					,
 					plugins: {
-				        ptype: 'gridviewdragdrop',
+				        ptype: type,
 						ddGroup:'GridDDGroup',
 				        stripeRows : true
 				        ,dropZone:{
@@ -86,7 +87,11 @@ Ext.define('Workspace.common.draganddrop.ApplyDragAndDrop', {
 //				        }//end handleNodeDrop
 //				      }//end dropZone
 				}
-		      });
+		      };
+		    if (Ext.isDefined(option)) {
+			    Ext.apply(config, option);
+		    }
+			Ext.apply(cmp, config);
 		}
 		,
 		decorateNode(data) {

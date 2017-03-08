@@ -1,5 +1,9 @@
 Ext.define('Workspace.common.draganddrop.event.OnDropExplorer',  {
-	requires: ['Workspace.common.draganddrop.function.CopyMove']
+	requires: [
+   	    'Workspace.common.tool.Pop',
+   	    'Workspace.tool.UtilTree',
+   	    'Workspace.common.draganddrop.function.CopyMove'
+	]
 	,
 	statics: {
 
@@ -8,50 +12,63 @@ Ext.define('Workspace.common.draganddrop.event.OnDropExplorer',  {
 		    var me = Workspace.common.draganddrop.event.OnDropExplorer;
 
             var dataDst = Workspace.common.draganddrop.function.CopyMove.getData(grid, node);
-			var dropAction = data.copy ? 'copy' : 'move';
-		    var nb = data.records.length;
-		    var itemPathSrc = nb + ' files';
-		    var itemPathDst = dataDst.viewRecordId;//mainCenterTab.id;
-		    if (nb == 1) {
-			    itemPathSrc = data.records[0].internalId;//raw.id;//raw.getKey();
-			    if (Workspace.tool.UtilString.isEqualPath(itemPathDst, itemPathSrc)) {
-			        dropAction = 'copy';
-
-		            var idx = itemPathSrc.lastIndexOf('.');
-		            if (idx >= 0) {
-		                itemPathDst = itemPathSrc.substring(0, idx) + '-Copy' + itemPathSrc.substring(idx);
-		            } else {
-		                itemPathDst = itemPathSrc + '-Copy';
-		            }
+            if (Ext.isDefined(dataDst)) {
+				var dropAction = data.copy ? 'copy' : 'move';
+			    var nb = data.records.length;
+			    var itemPathSrc = nb + ' files';
+			    var itemPathDst = dataDst.internalId;//mainCenterTab.id;
+			    if (nb == 1) {
+				    itemPathSrc = data.records[0].id;//data.records[0].internalId;//raw.id;//raw.getKey();
+				    if (Workspace.tool.UtilString.isEqualPath(itemPathDst, itemPathSrc)) {
+				        dropAction = 'copy';
+	
+			            var idx = itemPathSrc.lastIndexOf('.');
+			            if (idx >= 0) {
+			                itemPathDst = itemPathSrc.substring(0, idx) + '-Copy' + itemPathSrc.substring(idx);
+			            } else {
+			                itemPathDst = itemPathSrc + '-Copy';
+			            }
+				    }
+				    itemPathSrc = 'from:' + itemPathSrc;
 			    }
-			    itemPathSrc = 'from:' + itemPathSrc;
-		    }
-        	Ext.Msg.confirm('Confirm', dropAction + ' ' + itemPathSrc + ' to:' + itemPathDst + ' ?', function(btn, text){
-        	    if (btn == 'yes'){
-        		    Workspace.common.draganddrop.function.CopyMove.request(grid, node, itemPathDst, data, me.callBackSuccess, me.callBackFailure);
-        	    } else {
-        	        me.callBackSuccess(grid, node, data);
-        	        return false;
-        	    }
-        	});
+	        	Ext.Msg.confirm('Confirm', dropAction + ' ' + itemPathSrc + ' to:' + itemPathDst + ' ?', function(btn, text){
+	        	    if (btn == 'yes'){
+	        		    Workspace.common.draganddrop.function.CopyMove.request(grid, node, itemPathDst, data, me.callBackSuccess, me.callBackFailure);
+	        	    } else {
+	        	        me.callBackSuccess(grid, node, data);
+	        	        return false;
+	        	    }
+	        	});
+            } else {
+ 		        var text = 'No destination defined.';
+ 		        Workspace.common.tool.Pop.error(me, text, {toast: false});
+            	return false;
+            }
 
 		    return true;
 		}
 		,
 		callBackSuccess(grid, node, data) {
-			var treeviewDirectory = grid;
-			var treeDirectory = treeviewDirectory.ownerCt;
-			Ext.each(treeviewDirectory.all.elements, function(element) {
-				Ext.each(data.records, function(record) {
-					if (record.internalId == element.viewRecordId) {
-			        	element.remove(true);
-			        	var d = treeviewDirectory.store.data.get(element.viewRecordId);
-			        	treeviewDirectory.store.data.remove(d);
-					}
-				});
-			});
-			treeviewDirectory.store.sync();
-	    	treeviewDirectory.refresh();
+//		    grid.store.load({node:node});
+			var dataNode = grid.store.data.getByKey(node.viewRecordId);
+
+			// Reload Parent Node
+            Workspace.tool.UtilTree.reloadParent(dataNode);
+
+//			var treeviewDirectory = grid;
+//			var treeDirectory = treeviewDirectory.ownerCt;
+//			Ext.each(treeviewDirectory.all.elements, function(element) {
+//				Ext.each(data.records, function(record) {
+//					if (record.internalId == element.viewRecordId) {
+//			        	element.remove(true);
+//			        	var d = treeviewDirectory.store.data.get(element.viewRecordId);
+//			        	treeviewDirectory.store.data.remove(d);
+//					}
+//				});
+//			});
+//			treeviewDirectory.store.sync();
+//	    	treeviewDirectory.refresh();
+//			parent.expand();
 
 //			Ext.each(data.records, function(record) {
 //	        	var d = treeviewDirectory.store.data.get(record.viewRecordId);

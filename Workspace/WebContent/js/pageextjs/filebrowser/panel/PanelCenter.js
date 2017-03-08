@@ -24,10 +24,10 @@ Ext.define('Workspace.filebrowser.panel.PanelCenter', {
 	},
 	getSelectedItem: function() {
 		var ret = null;
-	    var mainCenterPanel = Ext.getCmp('mainCenterPanel');
-        var mainCenterTab = mainCenterPanel.getActiveTab();
-        if (!Ext.isEmpty(mainCenterTab)) {
-            ret = mainCenterTab.raw;
+	    var treeDirectory = Ext.getCmp('treeDirectory');
+        var selection = treeDirectory.getSelectionModel().selected;
+        if (selection.getCount() == 1) {
+        	ret = selection.get(0);
         }
         return ret;
 	}

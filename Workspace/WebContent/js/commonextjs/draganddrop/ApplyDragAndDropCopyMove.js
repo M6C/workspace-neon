@@ -1,4 +1,9 @@
 Ext.define('Workspace.common.draganddrop.ApplyDragAndDropCopyMove', {
+	requires: [
+  	     'Workspace.common.draganddrop.event.OnBeforeDropExplorer',
+  	     'Workspace.common.draganddrop.event.OnDropExplorer'
+  	]
+  	,
 	extend: 'Workspace.common.draganddrop.ApplyDragAndDrop'
 	,
 	statics: {
@@ -8,14 +13,12 @@ Ext.define('Workspace.common.draganddrop.ApplyDragAndDropCopyMove', {
 
 		    var me = Workspace.common.draganddrop.ApplyDragAndDropCopyMove;
 
-		    Ext.Loader.syncRequire('Workspace.common.draganddrop.ApplyDragAndDrop');
 			Workspace.common.draganddrop.ApplyDragAndDrop.apply(cmp, me.onBeforeDrop, me.onDrop);
 		}
 		,
 		onBeforeDrop : function(cmp, node, data) {
 			console.info('Workspace.common.draganddrop.ApplyDragAndDropCopyMove onBeforeDrop');
 
-			Ext.Loader.syncRequire('Workspace.common.draganddrop.event.OnBeforeDropExplorer');
 		    return Workspace.common.draganddrop.event.OnBeforeDropExplorer.call(cmp, node, data);
 		}
 		,
@@ -24,7 +27,6 @@ Ext.define('Workspace.common.draganddrop.ApplyDragAndDropCopyMove', {
 
 			Ext.apply(overModel.data, overModel.raw);
 
-		    Ext.Loader.syncRequire('Workspace.common.draganddrop.event.OnDropExplorer');
 		    return Workspace.common.draganddrop.event.OnDropExplorer.call(cmp, node, data, overModel, dropPosition, option);
 		}
 	}

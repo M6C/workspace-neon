@@ -1,6 +1,9 @@
 Ext.define('Workspace.common.tree.TreeFileExplorerExtjs4', {
-
-	requiers: ['Workspace.common.tree.data.StoreFileExplorerExtjs4']
+	requiers: [
+        'Workspace.tool.UtilComponent',
+        'Workspace.common.draganddrop.ApplyDragAndDrop',
+        'Workspace.common.tree.data.StoreFileExplorerExtjs4'
+	]
 	,
 	extend: 'Ext.tree.Panel'
 	,
@@ -13,6 +16,8 @@ Ext.define('Workspace.common.tree.TreeFileExplorerExtjs4', {
 		me.applyStore(me);
 
 		me.applyDragAndDrop(me);
+
+        Workspace.tool.UtilComponent.addListener(me, 'render', me.listenerRender);
 
 		me.callParent(arguments);
 	}
@@ -50,11 +55,14 @@ Ext.define('Workspace.common.tree.TreeFileExplorerExtjs4', {
 		    	]
 			})
         });
+	},
+	// Can be overrided
+	listenerRender: function(tree, options) {
+        // Hide Title after render
+        tree.header.setVisible(false);
 	}
-	,
+    ,
 	applyDragAndDrop: function(me) {
-		// Explicit load required library (Mandatory for extending this class)
-		Ext.Loader.syncRequire('Workspace.common.draganddrop.ApplyDragAndDrop');
 		Workspace.common.draganddrop.ApplyDragAndDrop.apply(me, me.onBeforeDrop, me.onDrop);
 	}
 	,
@@ -65,6 +73,8 @@ Ext.define('Workspace.common.tree.TreeFileExplorerExtjs4', {
     containerScroll: true,
     border: false,
     collapsible: false,
-    rootVisible: false
+    rootVisible: false,
+    // If no title set an error occure on scroll. Title will be hidden after rendering higher.
+    title: 'Title'
 
 }, function() {Workspace.tool.Log.defined('Workspace.common.tree.TreeFileExplorerExtjs4');});
