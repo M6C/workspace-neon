@@ -43,11 +43,16 @@ Ext.define('Workspace.editorjava.debug.ApplyDebug', {
     	    if (!Ext.isDefined(jsonData) || !Ext.isDefined(jsonData.success || !jsonData.success)) {
 				return;
 			}
-		
+
+		    var mainCenterPanel=Ext.getCmp('mainCenterPanel');
+		    var raw = editor.raw;
+		    var brkData = {application:raw.application, filename: raw.path, classname:raw.className, line:row};
 		    var breakpoints = editor.session.getBreakpoints();
 		    if(typeof breakpoints[row] === typeof undefined) {
 		    	if (jsonData.text == 'added') {
 		            editor.session.setBreakpoint(row);
+
+		            mainCenterPanel.addDebugBreakpoint(brkData);
 		    	} else {
 		    		Workspace.common.tool.Pop.failure(me, 'Breakpoint has not be added', {toast: false, detail: Ext.encode(jsonData)});
 		    	}
@@ -55,6 +60,7 @@ Ext.define('Workspace.editorjava.debug.ApplyDebug', {
 		    else {
 		    	if (jsonData.text == 'deleted') {
 		    		editor.session.clearBreakpoint(row);
+		            mainCenterPanel.removeDebugBreakpoint(brkData);
 		    	} else {
 		    		Workspace.common.tool.Pop.failure(me, 'Breakpoint has not be removed', {toast: false, detail: Ext.encode(jsonData)});
 		    	}

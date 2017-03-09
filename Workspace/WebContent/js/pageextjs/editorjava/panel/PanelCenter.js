@@ -137,7 +137,19 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 	}
 	,
 	setDebugVariable: function(jsonData) {
-	    Ext.getCmp('mainEstPanel').setData(jsonData);
+	    Ext.getCmp('mainEstPanel').setDebugVariable(jsonData);
+	}
+	,
+	setDebugBreakpoint: function(jsonData) {
+	    Ext.getCmp('mainEstPanel').setDebugBreakpoint(jsonData);
+	}
+	,
+	addDebugBreakpoint: function(jsonData) {
+	    Ext.getCmp('mainEstPanel').addDebugBreakpoint(jsonData);
+	}
+	,
+	removeDebugBreakpoint: function(jsonData) {
+	    Ext.getCmp('mainEstPanel').removeDebugBreakpoint(jsonData);
 	}
 	,
 	initializeButtonDebug: function() {

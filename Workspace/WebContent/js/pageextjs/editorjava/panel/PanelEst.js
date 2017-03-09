@@ -28,14 +28,15 @@ Ext.define('Workspace.editorjava.panel.PanelEst', {
 		Ext.apply(me, {
 			plugins: [ me.pluginDebug ],
 			items: [
-			    Ext.create('Workspace.editorjava.panel.est.PanelDebugVariable')
+			    Ext.create('Workspace.editorjava.panel.est.PanelDebugVariable'),
+			    Ext.create('Workspace.editorjava.panel.est.PanelDebugBreakpoint')
 			]
 	    });
 
 	    me.callParent(arguments);
 	}
 	,
-	setData: function(data) {
+	setDebugVariable: function(data) {
 	    var panelDebugVariable = Ext.getCmp('PanelDebugVariable');
         var root = panelDebugVariable.getRootNode();
         root.removeAll();
@@ -46,6 +47,21 @@ Ext.define('Workspace.editorjava.panel.PanelEst', {
         } else {
         	root.appendChild([{leaf:true, text:'No variable.'}]);
         }
+	}
+	,
+	setDebugBreakpoint: function(data) {
+	    var panelDebugVariable = Ext.getCmp('PanelDebugBreakpoint');
+        panelDebugVariable.setDebugBreakpoint(data);
+	}
+	,
+	addDebugBreakpoint: function(data) {
+	    var panelDebugVariable = Ext.getCmp('PanelDebugBreakpoint');
+        panelDebugVariable.addDebugBreakpoint(data);
+	}
+	,
+	removeDebugBreakpoint: function(data) {
+	    var panelDebugVariable = Ext.getCmp('PanelDebugBreakpoint');
+        panelDebugVariable.removeDebugBreakpoint(data);
 	}
 	,
 	initializeButtonDebug: function() {
