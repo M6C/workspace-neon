@@ -301,6 +301,10 @@
         <BEAN Name="BeanDebuggerCheck" Scope="session" Service="workspace.service.debug.extjs.SrvDebugBreakpointCheck"/>
             <PARAM Name="application" Type="STRING"/>
     </SERVLET>
+    <SERVLET Name="DebuggerBreakpointListExtJs" Target="" TargetError="">
+        <BEAN Name="BeanDebuggerCheck" Scope="session" Service="workspace.service.debug.extjs.SrvDebugBreakpointList"/>
+            <PARAM Name="application" Type="STRING"/>
+    </SERVLET>
     <SERVLET Name="DebuggerBreakpointStepExtJs" Target="" TargetError="">
         <BEAN Name="BeanDebuggerStep" Scope="session" Service="workspace.service.debug.extjs.SrvDebugBreakpointStep">
             <PARAM Name="application" Type="STRING"/>

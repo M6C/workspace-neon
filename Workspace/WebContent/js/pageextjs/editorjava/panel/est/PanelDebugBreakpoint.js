@@ -25,14 +25,33 @@ Ext.define('Workspace.editorjava.panel.est.PanelDebugBreakpoint', {
 		me.callParent(arguments);
 	}
 	,
+	/**
+	 * @param data : object/array of format : {application:, line:, classname:, filename:}
+	 */
 	setDebugBreakpoint: function(data) {
+		var me = this;
+        var root = me.getRootNode();
+        root.removeAll(true);
+	    if (!Ext.isEmpty(data)) {
+    	    if (!Ext.isArray(data)) {
+    	        data = [data];
+    	    }
+    	    Ext.each(data, function(item) {
+    	        me.addDebugBreakpoint(item, {manageEmptyNode:false});
+    	    });
+	    }
+        me._manageEmptyNode();
 	}
 	,
 	/**
-	 * @param data : format : {application:, line:, classname:}
+	 * @param data : format : {application:, line:, classname:, filename:}
 	 */
-	addDebugBreakpoint: function(data) {
+	addDebugBreakpoint: function(data, option) {
 	    var me = this;
+	    if (!Ext.isDefined(option)) {
+	        option = {manageEmptyNode:true};
+	    }
+
         var root = me.getRootNode();
         var id = '[' + data.application + ']' + data.filename + ':' + data.line;
         var text = '[' + data.application + ']&nbsp;<span style="color:#4067B3">' + data.classname + '</span>&nbsp;' + data.line;
@@ -42,14 +61,20 @@ Ext.define('Workspace.editorjava.panel.est.PanelDebugBreakpoint', {
         if (Ext.isEmpty(node)) {
     	    root.appendChild([{leaf:true, text:text, id:id, qtip:qtip}]);
         }
-        me._manageEmptyNode();
+	    if (Ext.isDefined(option.manageEmptyNode) && option.manageEmptyNode) {
+            me._manageEmptyNode();
+	    }
 	}
 	,
 	/**
-	 * @param data : format : {application:, line:, classname:}
+	 * @param data : format : {application:, line:, classname:, filename:}
 	 */
-	removeDebugBreakpoint: function(data) {
+	removeDebugBreakpoint: function(data, option) {
 	    var me = this;
+	    if (!Ext.isDefined(option)) {
+	        option = {manageEmptyNode:true};
+	    }
+
         var root = me.getRootNode();
         var id = '[' + data.application + ']' + data.filename + ':' + data.line;
         var node = root.findChild('id', id);
@@ -57,7 +82,9 @@ Ext.define('Workspace.editorjava.panel.est.PanelDebugBreakpoint', {
         if (!Ext.isEmpty(node)) {
             root.removeChild(node);
         }
-        me._manageEmptyNode();
+	    if (Ext.isDefined(option.manageEmptyNode) && option.manageEmptyNode) {
+            me._manageEmptyNode();
+	    }
 	}
 	,
 	/**
