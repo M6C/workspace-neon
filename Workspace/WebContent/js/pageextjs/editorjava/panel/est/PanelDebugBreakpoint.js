@@ -20,7 +20,7 @@ Ext.define('Workspace.editorjava.panel.est.PanelDebugBreakpoint', {
         	}    
         });
 
-        me._manageEmptyNode(false);
+        me._manageEmptyNode();
 
 		me.callParent(arguments);
 	}
@@ -42,7 +42,7 @@ Ext.define('Workspace.editorjava.panel.est.PanelDebugBreakpoint', {
         if (Ext.isEmpty(node)) {
     	    root.appendChild([{leaf:true, text:text, id:id, qtip:qtip}]);
         }
-        me._manageEmptyNode(true);
+        me._manageEmptyNode();
 	}
 	,
 	/**
@@ -57,23 +57,23 @@ Ext.define('Workspace.editorjava.panel.est.PanelDebugBreakpoint', {
         if (!Ext.isEmpty(node)) {
             root.removeChild(node);
         }
-        me._manageEmptyNode(false);
+        me._manageEmptyNode();
 	}
 	,
 	/**
 	 * @private
-	 * @param add : true for add or false to remove
 	 */
-	_manageEmptyNode: function(add) {
+	_manageEmptyNode: function() {
 	    var me = this;
         var root = me.getRootNode();
         var id = 0;
         var node = root.findChild('id', id);
+        var cnt = (!Ext.isEmpty(root.childNodes)) ? root.childNodes.length : 0;
 
-        if (Ext.isEmpty(node) && !add) {
+        if (Ext.isEmpty(node) && cnt==0) {
             var text = id;
     	    root.appendChild([{leaf:true, text:'No breakpoint.', id:id}]);
-        } else if (!Ext.isEmpty(node) && add) {
+        } else if (!Ext.isEmpty(node) && cnt>0) {
             root.removeChild(node);
         }
 	}
