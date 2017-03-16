@@ -36,8 +36,8 @@ Ext.define('Workspace.editorjava.form.combobox.ComboProject', {
                             var cnt = 0;
                             var detail = 'No breakpoint found.';
                             if (Ext.isDefined(result) && !Ext.isEmpty(result.responseText)) {
-                                cnt = jsonData.children.length;
     	    		            var jsonData = Ext.decode(result.responseText);
+    	    		            cnt = jsonData.children.length;
                 				var mainCenterPanel=Ext.getCmp('mainCenterPanel');
                 				mainCenterPanel.setDebugBreakpoint(jsonData.children);
                                 if (cnt == 1) {

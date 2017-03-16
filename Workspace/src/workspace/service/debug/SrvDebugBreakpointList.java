@@ -1,11 +1,5 @@
 package workspace.service.debug;
 
-import com.sun.jdi.event.LocatableEvent;
-import com.sun.jdi.request.BreakpointRequest;
-
-import framework.beandata.BeanGenerique;
-import framework.service.SrvGenerique;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.URLEncoder;
@@ -15,20 +9,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.sun.jdi.request.BreakpointRequest;
+
+import framework.beandata.BeanGenerique;
+import framework.service.SrvGenerique;
 import workspace.bean.debug.BeanDebug;
 import workspace.service.debug.tool.ToolDebug;
 
 public class SrvDebugBreakpointList extends SrvGenerique {
-
-	public void init() {
-	}
 
 	public void execute(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean) throws Exception {
 		HttpSession session = request.getSession();
 		String application = (String)bean.getParameterDataByName("application");
 		BeanDebug beanDebug = null;
 		try {
-			beanDebug = ToolDebug.findBeanDebug(session);
+			beanDebug = ToolDebug.getBeanDebug(session, application);
 		} catch (Exception ex) {
 			StringWriter sw = new StringWriter();
 			ex.printStackTrace(new PrintWriter(sw));

@@ -28,12 +28,11 @@ public class SrvDebugBreakpointList extends workspace.service.debug.SrvDebugBrea
                     }
     
             		// Recupere le nom de l'application du point d'arret
-            		String application = URLEncoder.encode((String) brkR.getProperty("application"), "UTF-8");
+            		String application = getProperty(brkR, "application");
             		// Recupere le chemin des sources de la class du point d'arret
-            		String path = URLEncoder.encode((String) brkR.getProperty("path"), "UTF-8");
-            		String sourceName = URLEncoder.encode((String) brkR.getProperty("fileName"), "UTF-8");
-            		String className = URLEncoder.encode((String) brkR.getProperty("className"), "UTF-8");
-            		String line = URLEncoder.encode((String) brkR.getProperty("line"), "UTF-8");
+            		String sourceName = getProperty(brkR, "fileName");
+            		String className = getProperty(brkR, "className");
+            		String line = getProperty(brkR, "line");
 
             		ret += "{application:'" + application + "',line:" + line + ",classname:'" + className + "',filename:'" + sourceName + "'}";
                 }
@@ -46,4 +45,13 @@ public class SrvDebugBreakpointList extends workspace.service.debug.SrvDebugBrea
 	    }
 	}
 
+	private String getProperty(BreakpointRequest brkR, String name) {
+		String ret = "";
+		try {
+			ret = URLEncoder.encode((String) brkR.getProperty(name), "UTF-8");
+		} catch(Exception ex) {
+        	System.err.println("SrvDebugBreakpointList getProperty '" + name + "' error message:" + ex.getMessage());
+		}
+		return ret;
+	}
 }

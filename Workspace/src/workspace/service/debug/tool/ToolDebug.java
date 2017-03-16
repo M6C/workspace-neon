@@ -56,11 +56,13 @@ public class ToolDebug {
             if (beanDebug==null) {
 	        	beanDebug = createBeanDebug(application);
 		        initializeBeanDebugData(session, beanDebug);
+                initializeBeanDebug(beanDebug);
+		        initializeBeanDebugBreakpoint(beanDebug);
 		        session.setAttribute("beanDebug", beanDebug);
             } else {
                 checkConnection(beanDebug);
+                initializeBeanDebug(beanDebug);
             }
-            initializeBeanDebug(beanDebug);
         } catch (Exception ex) {
             resume(beanDebug);
         	throw ex;
@@ -68,28 +70,6 @@ public class ToolDebug {
 
         return beanDebug;
 	}
-
-    public static void checkConnection(BeanDebug beanDebug) throws IOException, IllegalConnectorArgumentsException {
-		VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
-		if (virtualMachine != null) {
-		    System.out.println("ToolDebug.checkConnection");
-		    try {
-		        virtualMachine.classesByName("java.lang.String");
-		    } catch (Exception ex) {
-        		System.out.println("ToolDebug.checkConnection error message:" + ex.getMessage());
-        		System.out.println("ToolDebug.checkConnection error resume");
-                resume(beanDebug);
-        		System.out.println("ToolDebug.checkConnection error recreate VirtualMachine");
-		        virtualMachine = UtilJDI.createVirtualMachine(beanDebug.getHostname(), beanDebug.getPort());
-                beanDebug.setVirtualMachine(virtualMachine);
-        		System.out.println("ToolDebug.checkConnection error recreate all breakpoint start");
-                recreateAllBreakpoint(beanDebug);
-        		System.out.println("ToolDebug.checkConnection error recreate all breakpoint end");
-		    }
-		} else {
-		    System.out.println("ToolDebug.checkConnection virtualMachine is null");
-		}
-    }
 
 	public static BreakpointRequest findBreakpoint(VirtualMachine virtualMachine, String classname, int line) {
 		BreakpointRequest ret = null;
@@ -218,6 +198,27 @@ public class ToolDebug {
         return new BeanDebug(application);
 	}
 
+    private static void checkConnection(BeanDebug beanDebug) throws IOException, IllegalConnectorArgumentsException {
+		VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
+		if (virtualMachine != null) {
+		    System.out.println("ToolDebug.checkConnection");
+		    try {
+		        virtualMachine.classesByName("java.lang.String");
+		    } catch (Exception ex) {
+        		System.out.println("ToolDebug.checkConnection error message:" + ex.getMessage());
+        		System.out.println("ToolDebug.checkConnection error resume");
+                resume(beanDebug);
+        		System.out.println("ToolDebug.checkConnection error recreate VirtualMachine");
+                initializeBeanDebug(beanDebug);
+        		System.out.println("ToolDebug.checkConnection error recreate all breakpoint start");
+                recreateAllBreakpoint(beanDebug);
+        		System.out.println("ToolDebug.checkConnection error recreate all breakpoint end");
+		    }
+		} else {
+		    System.out.println("ToolDebug.checkConnection virtualMachine is null");
+		}
+    }
+
 	private static void initializeBeanDebug(BeanDebug beanDebug) throws IOException, IllegalConnectorArgumentsException {
 		VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
 		if (virtualMachine == null) {
@@ -278,6 +279,25 @@ public class ToolDebug {
         	beanDebug.setPort(port);
         	beanDebug.setTimeout(timeout);
         }
+	}
+
+	private static void initializeBeanDebugBreakpoint(BeanDebug beanDebug) {
+		VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
+		if (virtualMachine != null) {
+		    Hashtable<String, BreakpointRequest> tableBreakpoint = beanDebug.getTableBreakpoint();
+		    tableBreakpoint.clear();
+
+            EventRequestManager eventRequestManager = virtualMachine.eventRequestManager();
+            List<?> breakpointRequests = eventRequestManager.breakpointRequests();
+            int size = breakpointRequests.size();
+            for(int i=0 ; i<size ; i++) {
+                BreakpointRequest brkR = (BreakpointRequest)breakpointRequests.get(i);
+        		String rowNum = (String) brkR.getProperty("line");
+        		String className = (String) brkR.getProperty("className");
+		        String key = className+":"+rowNum;
+		        tableBreakpoint.put(key, brkR);
+            }
+		}
 	}
 
 	public static BreakpointRequest recreateBreakpoint(BeanDebug beanDebug, BreakpointRequest brkR) throws NumberFormatException, AbsentInformationException {
