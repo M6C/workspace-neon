@@ -125,19 +125,33 @@ public class ToolDebug {
         if (beanDebug!=null) {
     		Event currentEvent = beanDebug.getCurrentEvent();
     		if ((currentEvent!=null)&&(currentEvent instanceof LocatableEvent)) {
-    			LocatableEvent brkE = (LocatableEvent)currentEvent;
-    			EventRequest brkR = (EventRequest) brkE.request();
-    			StepEvent currentStep = beanDebug.getCurrentStepEvent();
 
-    			if (currentStep!=null)
-    				currentStep.thread().resume();
-    			brkE.thread().resume();
+    			StepEvent currentStep = beanDebug.getCurrentStepEvent();
+    			if (currentStep!=null) {
+	    			try {
+	    				currentStep.thread().resume();
+	    			} catch (Exception ex) {
+	    				//Catch hide delete raison
+	    			}
+	    			beanDebug.setCurrentStepEvent(null);
+    			}
+
+    			LocatableEvent brkE = (LocatableEvent)currentEvent;
+    			try {
+        			brkE.thread().resume();
+				} catch (Exception ex) {
+					//Catch hide delete raison
+				}
 
     			beanDebug.setCurrentEvent(null);
-    			beanDebug.setCurrentStepEvent(null);
     		}
-    		if (beanDebug.getVirtualMachine() != null) {
-    			beanDebug.getVirtualMachine().resume();
+    		VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
+			if (virtualMachine != null) {
+    			try {
+        			beanDebug.getVirtualMachine().resume();
+				} catch (Exception ex) {
+					//Catch hide delete raison
+				}
     		}
         }
     }

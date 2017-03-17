@@ -63,7 +63,12 @@ public class SrvDebugBreakpointAdd extends SrvGenerique {
       boolean success = false;
       if (UtilString.isNotEmpty(szLigne)){
           HttpSession session = request.getSession();
-          VirtualMachine virtualMachine = null;
+          BeanDebug beanDebug = ToolDebug.getBeanDebug(session, application);
+          if (beanDebug==null) {
+          	System.err.println("BeanDebug not found. Can't Add Breakpoint.");
+          	return;
+          }
+          VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
           try {
               String text = "";
     
@@ -89,12 +94,6 @@ public class SrvDebugBreakpointAdd extends SrvGenerique {
               }
 
               Integer rowNum = new Integer(szLigne);
-              BeanDebug beanDebug = ToolDebug.getBeanDebug(session, application);
-              if (beanDebug==null) {
-              	System.err.println("BeanDebug not found. Can't Add Breakpoint.");
-              	return;
-              }
-              virtualMachine = beanDebug.getVirtualMachine();
 
               Hashtable<String, BreakpointRequest> tableBreakpoint = beanDebug.getTableBreakpoint();
               EventRequestManager eventRequestManager = virtualMachine.eventRequestManager();
@@ -138,6 +137,17 @@ addToJNDI(ctx, "/workspace/debug/breakpoint", request.getSession().getId(), thre
               if (virtualMachine!=null) {
                   virtualMachine.resume();
               }
+//              Event currentEvent = beanDebug.getCurrentEvent();
+//              if (currentEvent == null) {
+//            	  beanDebug.setVirtualMachine(null);
+//            	  ThrdDebugEventQueue thrdDebug = beanDebug.getThrdDebugEventQueue();
+//            	  if (thrdDebug != null) {
+//            		  thrdDebug.resume();
+//            	  }
+//            	  beanDebug.setThrdDebugEventQueue(null);
+//              } else if (virtualMachine!=null) {
+//            	  virtualMachine.dispose();
+//              }
               doResponse(request, response, bean, result, success);
           }
       }
