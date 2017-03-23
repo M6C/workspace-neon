@@ -158,6 +158,8 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 	,
 	callbackDebugStop: function(jsonData) {
 		var mainCenterPanel = Ext.getCmp('mainCenterPanel');
+		mainCenterPanel.waiterDebug.classname = undefined;
+		mainCenterPanel.waiterDebug.row = undefined;
 		mainCenterPanel.initializeButtonDebug();
 	}
 }, function() {Workspace.tool.Log.defined('Workspace.editorjava.panel.PanelCenter');});

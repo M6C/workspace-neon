@@ -27,6 +27,7 @@ import javax.servlet.http.HttpSession;
 import org.w3c.dom.Document;
 
 import com.sun.jdi.VirtualMachine;
+import com.sun.jdi.event.Event;
 import com.sun.jdi.request.BreakpointRequest;
 import com.sun.jdi.request.EventRequestManager;
 
@@ -37,6 +38,7 @@ import framework.service.SrvGenerique;
 import workspace.adaptateur.application.AdpXmlApplication;
 import workspace.bean.debug.BeanDebug;
 import workspace.service.debug.tool.ToolDebug;
+import workspace.thread.debug.ThrdDebugEventQueue;
 import workspace.util.UtilPath;
 
 /**
@@ -95,16 +97,18 @@ public class SrvDebugBreakpointAdd extends SrvGenerique {
 
               Integer rowNum = new Integer(szLigne);
 
+              String key = className+":"+szLigne;
               Hashtable<String, BreakpointRequest> tableBreakpoint = beanDebug.getTableBreakpoint();
               EventRequestManager eventRequestManager = virtualMachine.eventRequestManager();
-              BreakpointRequest brkR = ToolDebug.findBreakpoint(virtualMachine, className, rowNum.intValue());
+//              BreakpointRequest brkR = ToolDebug.findBreakpoint(virtualMachine, className, rowNum.intValue());
+              BreakpointRequest brkR = tableBreakpoint.get(key);
               if (brkR==null) {
 //TODO The method createVirtualMachine(String, Integer) from the type UtilJDI refers to the missing type VirtualMachine
                  brkR = UtilJDI.createBreakpointRequest(virtualMachine, className, rowNum);
                  if (brkR!=null) {
                 	 initBreakpointProperties(bean, brkR);
                      
-                     tableBreakpoint.put(className+":"+szLigne, brkR);
+                     tableBreakpoint.put(key, brkR);
                      
                      text = "added";
                      success = true;
@@ -113,8 +117,9 @@ public class SrvDebugBreakpointAdd extends SrvGenerique {
                      text = URLEncoder.encode("Can't create breakpoint", "UTF-8");
                  }
               } else {
+            	  brkR.disable();
                   eventRequestManager.deleteEventRequest(brkR);
-                  tableBreakpoint.remove(className+":"+szLigne);
+                  tableBreakpoint.remove(key);
                   text = "deleted";
                   success = true;
               }
@@ -134,20 +139,10 @@ addToJNDI(ctx, "/workspace/debug/breakpoint", request.getSession().getId(), thre
               throw ex;
           }
           finally {
-              if (virtualMachine!=null) {
-                  virtualMachine.resume();
+              Event currentEvent = beanDebug.getCurrentEvent();
+              if (currentEvent == null) {
+            	  ToolDebug.dispose(beanDebug);
               }
-//              Event currentEvent = beanDebug.getCurrentEvent();
-//              if (currentEvent == null) {
-//            	  beanDebug.setVirtualMachine(null);
-//            	  ThrdDebugEventQueue thrdDebug = beanDebug.getThrdDebugEventQueue();
-//            	  if (thrdDebug != null) {
-//            		  thrdDebug.resume();
-//            	  }
-//            	  beanDebug.setThrdDebugEventQueue(null);
-//              } else if (virtualMachine!=null) {
-//            	  virtualMachine.dispose();
-//              }
               doResponse(request, response, bean, result, success);
           }
       }

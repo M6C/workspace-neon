@@ -32,6 +32,7 @@ import com.sun.jdi.request.EventRequestManager;
 import framework.ressource.util.UtilFile;
 import framework.ressource.util.UtilString;
 import framework.ressource.util.jdi.UtilJDI;
+import framework.trace.Trace;
 import workspace.adaptateur.application.AdpXmlApplication;
 import workspace.adaptateur.application.AdpXmlDebug;
 import workspace.bean.debug.BeanDebug;
@@ -57,7 +58,6 @@ public class ToolDebug {
 	        	beanDebug = createBeanDebug(application);
 		        initializeBeanDebugData(session, beanDebug);
                 initializeBeanDebug(beanDebug);
-		        initializeBeanDebugBreakpoint(beanDebug);
 		        session.setAttribute("beanDebug", beanDebug);
             } else {
                 checkConnection(beanDebug);
@@ -156,6 +156,21 @@ public class ToolDebug {
         }
     }
 
+    public static void dispose(BeanDebug beanDebug) {
+		if (beanDebug != null) {
+			VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
+			ThrdDebugEventQueue thrdDebug = beanDebug.getThrdDebugEventQueue();
+			if (thrdDebug != null) {
+				try {thrdDebug.stopRunning();} catch (Exception ex) {}
+			}
+			if (virtualMachine != null) {
+				try {virtualMachine.dispose();} catch (Exception ex) {}
+			}
+			beanDebug.setThrdDebugEventQueue(null);
+			beanDebug.setVirtualMachine(null);
+		}
+    }
+
 	public static List<String> getPathExistInApplication(BeanDebug beanDebug, String path) {
 		List<String> ret = new ArrayList<>();
 		Map<String, String[]> mapApplicationPath = beanDebug.getMapApplicationPath();
@@ -186,8 +201,8 @@ public class ToolDebug {
 	public static String getPathExistInApplicationJson(BeanDebug beanDebug, LocatableEvent brkE) throws AbsentInformationException {
 		try {
 			return getPathExistInApplicationJson(beanDebug, brkE, null);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+		} catch (UnsupportedEncodingException ex) {
+        	Trace.ERROR(ToolDebug.class, ex);
 		}
 		return null;
 	}
@@ -220,8 +235,8 @@ public class ToolDebug {
 		        virtualMachine.classesByName("java.lang.String");
 		    } catch (Exception ex) {
         		System.out.println("ToolDebug.checkConnection error message:" + ex.getMessage());
-        		System.out.println("ToolDebug.checkConnection error resume");
-                resume(beanDebug);
+        		System.out.println("ToolDebug.checkConnection error dispose");
+                dispose(beanDebug);
         		System.out.println("ToolDebug.checkConnection error recreate VirtualMachine");
                 initializeBeanDebug(beanDebug);
         		System.out.println("ToolDebug.checkConnection error recreate all breakpoint start");
@@ -238,6 +253,7 @@ public class ToolDebug {
 		if (virtualMachine == null) {
 			virtualMachine = UtilJDI.createVirtualMachine(beanDebug.getHostname(), beanDebug.getPort());
 	        beanDebug.setVirtualMachine(virtualMachine);
+	        initializeBeanDebugBreakpoint(beanDebug);
 		}
 		if (beanDebug.getThrdDebugEventQueue() == null) {
            ThrdDebugEventQueue thread = new ThrdDebugEventQueue(beanDebug, virtualMachine.eventQueue());
@@ -262,8 +278,8 @@ public class ToolDebug {
 					src = AdpXmlApplication.getPathSource(context, dom, module);
 					path = UtilFile.formatPath(main, src);
 					beanDebug.getMapApplicationPath().put(module, new String[]{src, path});
-				} catch (TransformerException e) {
-					e.printStackTrace();
+				} catch (TransformerException ex) {
+		        	Trace.ERROR(ToolDebug.class, ex);
 				}
         	}
 
@@ -296,22 +312,22 @@ public class ToolDebug {
 	}
 
 	private static void initializeBeanDebugBreakpoint(BeanDebug beanDebug) {
-		VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
-		if (virtualMachine != null) {
-		    Hashtable<String, BreakpointRequest> tableBreakpoint = beanDebug.getTableBreakpoint();
-		    tableBreakpoint.clear();
-
-            EventRequestManager eventRequestManager = virtualMachine.eventRequestManager();
-            List<?> breakpointRequests = eventRequestManager.breakpointRequests();
-            int size = breakpointRequests.size();
-            for(int i=0 ; i<size ; i++) {
-                BreakpointRequest brkR = (BreakpointRequest)breakpointRequests.get(i);
-        		String rowNum = (String) brkR.getProperty("line");
-        		String className = (String) brkR.getProperty("className");
-		        String key = className+":"+rowNum;
-		        tableBreakpoint.put(key, brkR);
-            }
-		}
+//		VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
+//		if (virtualMachine != null) {
+//		    Hashtable<String, BreakpointRequest> tableBreakpoint = beanDebug.getTableBreakpoint();
+//		    tableBreakpoint.clear();
+//
+//            EventRequestManager eventRequestManager = virtualMachine.eventRequestManager();
+//            List<?> breakpointRequests = eventRequestManager.breakpointRequests();
+//            int size = breakpointRequests.size();
+//            for(int i=0 ; i<size ; i++) {
+//                BreakpointRequest brkR = (BreakpointRequest)breakpointRequests.get(i);
+//        		String rowNum = (String) brkR.getProperty("line");
+//        		String className = (String) brkR.getProperty("className");
+//		        String key = className+":"+rowNum;
+//		        tableBreakpoint.put(key, brkR);
+//            }
+//		}
 	}
 
 	public static BreakpointRequest recreateBreakpoint(BeanDebug beanDebug, BreakpointRequest brkR) throws NumberFormatException, AbsentInformationException {
@@ -343,9 +359,16 @@ public class ToolDebug {
 			Object key = null;
 			Enumeration<String> enumKeys = tableBreakpoint.keys();
 			while(enumKeys.hasMoreElements()) {
-				key = enumKeys.nextElement();
-				brkR = (BreakpointRequest)tableBreakpoint.get(key);
-				eventRequestManager.deleteEventRequest(brkR);
+				try {
+					key = enumKeys.nextElement();
+					brkR = (BreakpointRequest)tableBreakpoint.get(key);
+					if (brkR.isEnabled()) {
+						brkR.disable();
+					}
+					eventRequestManager.deleteEventRequest(brkR);
+				} catch(Exception ex) {
+		        	Trace.ERROR(ToolDebug.class, ex);
+				}
 			}
 		}
 	}

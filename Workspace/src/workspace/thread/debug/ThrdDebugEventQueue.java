@@ -104,7 +104,7 @@ public class ThrdDebugEventQueue extends Thread implements Serializable {
 			}
 			finally {
 			    Trace.DEBUG("==============) resume eventQ virtualMachine");
-				try { eventQ.virtualMachine().dispose(); } catch (Exception ex) {onException(ex);}
+				try {eventQ.virtualMachine().dispose();} catch (Exception ex) {}
 			}
 		}
     }
