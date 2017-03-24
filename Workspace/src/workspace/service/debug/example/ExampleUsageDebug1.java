@@ -46,6 +46,8 @@ import com.sun.jdi.request.StepRequest;
 import workspace.service.debug.event.EventWaiter;
 
 /**
+ * http://alvinalexander.com/java/jwarehouse/eclipse/org.eclipse.jdt.debug.jdi.tests/tests/org/eclipse/debug/jdi/tests/AbstractJDITest.java.shtml
+ * 
  * Tests for com.sun.jdi.* and JDWP commands.
  * These tests assume that the target program is 
  * "org.eclipse.debug.jdi.tests.program.MainClass".
