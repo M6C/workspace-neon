@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +32,7 @@ import com.sun.jdi.request.EventRequestManager;
 import framework.ressource.util.UtilFile;
 import framework.ressource.util.UtilString;
 import framework.ressource.util.jdi.UtilJDI;
+import framework.trace.Trace;
 import workspace.adaptateur.application.AdpXmlApplication;
 import workspace.adaptateur.application.AdpXmlDebug;
 import workspace.bean.debug.BeanDebug;
@@ -163,6 +163,21 @@ public class ToolDebug {
         }
     }
 
+    public static void dispose(BeanDebug beanDebug) {
+		if (beanDebug != null) {
+			VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
+			ThrdDebugEventQueue thrdDebug = beanDebug.getThrdDebugEventQueue();
+			if (thrdDebug != null) {
+				try {thrdDebug.stopRunning();} catch (Exception ex) {}
+			}
+			if (virtualMachine != null) {
+				try {virtualMachine.dispose();} catch (Exception ex) {}
+			}
+			beanDebug.setThrdDebugEventQueue(null);
+			beanDebug.setVirtualMachine(null);
+		}
+    }
+
 	public static List<String> getPathExistInApplication(BeanDebug beanDebug, String path) {
 		List<String> ret = new ArrayList<>();
 		Map<String, String[]> mapApplicationPath = beanDebug.getMapApplicationPath();
@@ -193,8 +208,8 @@ public class ToolDebug {
 	public static String getPathExistInApplicationJson(BeanDebug beanDebug, LocatableEvent brkE) throws AbsentInformationException {
 		try {
 			return getPathExistInApplicationJson(beanDebug, brkE, null);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+		} catch (UnsupportedEncodingException ex) {
+			Trace.ERROR(ToolDebug.class, ex);
 		}
 		return null;
 	}
@@ -227,8 +242,8 @@ public class ToolDebug {
 		        virtualMachine.classesByName("java.lang.String");
 		    } catch (Exception ex) {
         		System.out.println("ToolDebug.checkConnection error message:" + ex.getMessage());
-        		System.out.println("ToolDebug.checkConnection error resume");
-                resume(beanDebug);
+        		System.out.println("ToolDebug.checkConnection error dispose");
+                dispose(beanDebug);
         		System.out.println("ToolDebug.checkConnection error recreate VirtualMachine");
                 initializeBeanDebug(beanDebug);
         		System.out.println("ToolDebug.checkConnection error recreate all breakpoint start");
@@ -269,8 +284,8 @@ public class ToolDebug {
 					src = AdpXmlApplication.getPathSource(context, dom, module);
 					path = UtilFile.formatPath(main, src);
 					beanDebug.getMapApplicationPath().put(module, new String[]{src, path});
-				} catch (TransformerException e) {
-					e.printStackTrace();
+				} catch (TransformerException ex) {
+					Trace.ERROR(ToolDebug.class, ex);
 				}
         	}
 
@@ -334,6 +349,9 @@ public class ToolDebug {
 		String className = (String) brkR.getProperty("className");
 		// Supprime le point d'arret du beanDebug
 		try {
+			if (brkR.isEnabled()) {
+				brkR.disable();
+			}
 			eventRequestManager.deleteEventRequest(brkR);
 		} catch(Exception ex) {
 			//Catch hide delete raison
@@ -346,7 +364,20 @@ public class ToolDebug {
 	public static void deleteBreakpoint(BeanDebug beanDebug) throws NumberFormatException, AbsentInformationException {
 		VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
 		EventRequestManager eventRequestManager = virtualMachine.eventRequestManager();
-		eventRequestManager.deleteAllBreakpoints();
+
+		List<?> breakpointRequests = eventRequestManager.breakpointRequests();
+		int size = breakpointRequests.size();
+		for(int i=0 ; i<size ; i++) {
+			BreakpointRequest brkR = (BreakpointRequest)breakpointRequests.get(i);
+			try {
+				if (brkR.isEnabled()) {
+					brkR.disable();
+				}
+				eventRequestManager.deleteEventRequest(brkR);
+			} catch(Exception ex) {
+				//Catch hide delete raison
+			}
+		}
 
 		beanDebug.getTableBreakpoint().clear();
 	}

@@ -25,6 +25,8 @@ Ext.define('Workspace.editorjava.aceeditor.command.CommandDebugResume',  {
 			var me = Workspace.editorjava.aceeditor.command.CommandDebugResume;
 
 			var mainCenterPanel = Ext.getCmp('mainCenterPanel');
+			mainCenterPanel.waiterDebug.classname = undefined;
+			mainCenterPanel.waiterDebug.row = undefined;
             mainCenterPanel.initializeButtonDebug();
             mainCenterPanel.setDebugVariable();
 

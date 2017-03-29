@@ -22,7 +22,7 @@ public class SrvDebugBreakpointList extends workspace.service.debug.SrvDebugBrea
             int cnt = 0;
             try {
                 for(Properties propertie : tableBreakpoint.values()) {
-                    if (cnt > 0) {
+                    if (cnt++ > 0) {
                         ret += ",";
                     }
     

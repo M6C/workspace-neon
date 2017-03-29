@@ -33,15 +33,11 @@ public class SrvDebugStop extends SrvGenerique {
     	  HttpSession session = request.getSession();
           PrintWriter out = response.getWriter();
     	  VirtualMachine virtualMachine = null;
-    	  ThrdDebugEventQueue thrdDebugEventQueue = null;
+    	  String application = (String)bean.getParameterDataByName("application");
+    	  BeanDebug beanDebug = ToolDebug.getBeanDebug(session, application);
     	  try {
-    		  String application = (String)bean.getParameterDataByName("application");
-			  BeanDebug beanDebug = ToolDebug.getBeanDebug(session, application);
 			  if (beanDebug!=null) {
-
 				  virtualMachine = beanDebug.getVirtualMachine();
-
-				  thrdDebugEventQueue = beanDebug.getThrdDebugEventQueue();
 
 	    		  Event currentEvent = beanDebug.getCurrentEvent();
 	    		  if (currentEvent instanceof BreakpointEvent) {
@@ -56,8 +52,6 @@ public class SrvDebugStop extends SrvGenerique {
 
 				  beanDebug.setCurrentEvent(null);
     			  beanDebug.setCurrentStepEvent(null);
-    			  beanDebug.setThrdDebugEventQueue(null);
-    			  beanDebug.setVirtualMachine(null);
 
     			  if (beanDebug.getTableBreakpoint().size() == 0) {
     				  session.removeAttribute("beanDebug");
@@ -75,12 +69,7 @@ public class SrvDebugStop extends SrvGenerique {
     		  throw ex;
     	  }
     	  finally {
-    		  if (virtualMachine!=null) {
-    			  virtualMachine.dispose();
-    		  }
-			  if (thrdDebugEventQueue!=null) {
-				  thrdDebugEventQueue.stopRunning();
-			  }
+        	  ToolDebug.dispose(beanDebug);
     	  }
     }
 }

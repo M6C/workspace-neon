@@ -96,6 +96,7 @@ public class SrvDebugBreakpointAdd extends SrvGenerique {
 
               Integer rowNum = new Integer(szLigne);
 
+              String key = className+":"+szLigne;
               Hashtable<String, Properties> tableBreakpoint = beanDebug.getTableBreakpoint();
               EventRequestManager eventRequestManager = virtualMachine.eventRequestManager();
               BreakpointRequest brkR = ToolDebug.findBreakpoint(virtualMachine, className, rowNum.intValue());
@@ -105,7 +106,7 @@ public class SrvDebugBreakpointAdd extends SrvGenerique {
                  if (brkR!=null) {
                 	 Properties prop = initBreakpointProperties(bean, brkR);
                      
-                     tableBreakpoint.put(className+":"+szLigne, prop);
+                     tableBreakpoint.put(key, prop);
                      
                      text = "added";
                      success = true;
@@ -115,7 +116,7 @@ public class SrvDebugBreakpointAdd extends SrvGenerique {
                  }
               } else {
                   eventRequestManager.deleteEventRequest(brkR);
-                  tableBreakpoint.remove(className+":"+szLigne);
+                  tableBreakpoint.remove(key);
                   text = "deleted";
                   success = true;
               }
@@ -126,7 +127,7 @@ Context ctx = new InitialContext();
 addToJNDI(ctx, "/workspace/debug/breakpoint", request.getSession().getId(), thread);
 //          addToQueue(ctx, "/queue", request.getSession().getId(), thread);
 */
-              result = className+":"+szLigne+":"+text;
+              result = key+":"+text;
           }
           catch(Exception ex) {
               StringWriter sw = new StringWriter();
