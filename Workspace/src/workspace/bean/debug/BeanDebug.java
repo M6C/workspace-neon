@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import com.sun.jdi.IncompatibleThreadStateException;
 import com.sun.jdi.StackFrame;
@@ -20,7 +21,7 @@ public class BeanDebug
 {
     private VirtualMachine virtualMachine;
     private Event currentEvent;
-    private Hashtable tableBreakpoint = new Hashtable();
+    private Hashtable<String, Properties> tableBreakpoint = new Hashtable<String, Properties>();
     private ThrdDebugEventQueue thrdDebugEventQueue;
     private StepEvent currentStepEvent;
     private String application;
@@ -38,7 +39,6 @@ public class BeanDebug
     }
 
     public BeanDebug(VirtualMachine pVirtualMachine) {
-        tableBreakpoint = new Hashtable();
         virtualMachine = pVirtualMachine;
     }
 
@@ -101,12 +101,8 @@ public class BeanDebug
         return ret;
     }
 
-    public Hashtable getTableBreakpoint() {
+    public Hashtable<String, Properties> getTableBreakpoint() {
         return tableBreakpoint;
-    }
-
-    public void setTableBreakpoint(Hashtable tableBreakpoint) {
-        this.tableBreakpoint = tableBreakpoint;
     }
 
     public VirtualMachine getVirtualMachine() {

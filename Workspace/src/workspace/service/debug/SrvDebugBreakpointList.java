@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.URLEncoder;
 import java.util.Hashtable;
+import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,18 +37,18 @@ public class SrvDebugBreakpointList extends SrvGenerique {
 
 	protected void doResponse(HttpServletRequest request, HttpServletResponse response, BeanDebug beanDebug) throws Exception {
 	    if (beanDebug != null) {
-            Hashtable<String, BreakpointRequest> tableBreakpoint = beanDebug.getTableBreakpoint();
+            Hashtable<String, Properties> tableBreakpoint = beanDebug.getTableBreakpoint();
             String ret = null;
             try {
-                for(BreakpointRequest brkR : tableBreakpoint.values()) {
+                for(Properties propertie : tableBreakpoint.values()) {
     
             		// Recupere le nom de l'application du point d'arret
-            		String application = URLEncoder.encode((String) brkR.getProperty("application"), "UTF-8");
+            		String application = URLEncoder.encode((String) propertie.getProperty("application"), "UTF-8");
             		// Recupere le chemin des sources de la class du point d'arret
-            		String path = URLEncoder.encode((String) brkR.getProperty("path"), "UTF-8");
-            		String sourceName = URLEncoder.encode((String) brkR.getProperty("fileName"), "UTF-8");
-            		String className = URLEncoder.encode((String) brkR.getProperty("className"), "UTF-8");
-            		String line = URLEncoder.encode((String) brkR.getProperty("line"), "UTF-8");
+            		String path = URLEncoder.encode((String) propertie.getProperty("path"), "UTF-8");
+            		String sourceName = URLEncoder.encode((String) propertie.getProperty("fileName"), "UTF-8");
+            		String className = URLEncoder.encode((String) propertie.getProperty("className"), "UTF-8");
+            		String line = URLEncoder.encode((String) propertie.getProperty("line"), "UTF-8");
 
                     ret = (ret == null) ? "" : ret + ";";
             		ret += application + ":" + path + ":" + sourceName + ":" + className + ":" + line;

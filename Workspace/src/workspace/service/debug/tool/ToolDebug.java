@@ -11,6 +11,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -69,6 +70,12 @@ public class ToolDebug {
         }
 
         return beanDebug;
+	}
+
+	public static BreakpointRequest findBreakpoint(VirtualMachine virtualMachine, Properties propertie) {
+		String classname = propertie.getProperty("className");
+		int line = Integer.parseInt(propertie.getProperty("line"));
+		return findBreakpoint(virtualMachine, classname, line);
 	}
 
 	public static BreakpointRequest findBreakpoint(VirtualMachine virtualMachine, String classname, int line) {
@@ -296,28 +303,33 @@ public class ToolDebug {
 	}
 
 	private static void initializeBeanDebugBreakpoint(BeanDebug beanDebug) {
-		VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
-		if (virtualMachine != null) {
-		    Hashtable<String, BreakpointRequest> tableBreakpoint = beanDebug.getTableBreakpoint();
-		    tableBreakpoint.clear();
+//		VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
+//		if (virtualMachine != null) {
+//		    Hashtable<String, Properties> tableBreakpoint = beanDebug.getTableBreakpoint();
+//		    tableBreakpoint.clear();
+//
+//            EventRequestManager eventRequestManager = virtualMachine.eventRequestManager();
+//            List<?> breakpointRequests = eventRequestManager.breakpointRequests();
+//            int size = breakpointRequests.size();
+//            for(int i=0 ; i<size ; i++) {
+//                BreakpointRequest brkR = (BreakpointRequest)breakpointRequests.get(i);
+//        		String rowNum = (String) brkR.getProperty("line");
+//        		String className = (String) brkR.getProperty("className");
+//		        String key = className+":"+rowNum;
+//		        tableBreakpoint.put(key, brkR);
+//            }
+//		}
+	}
 
-            EventRequestManager eventRequestManager = virtualMachine.eventRequestManager();
-            List<?> breakpointRequests = eventRequestManager.breakpointRequests();
-            int size = breakpointRequests.size();
-            for(int i=0 ; i<size ; i++) {
-                BreakpointRequest brkR = (BreakpointRequest)breakpointRequests.get(i);
-        		String rowNum = (String) brkR.getProperty("line");
-        		String className = (String) brkR.getProperty("className");
-		        String key = className+":"+rowNum;
-		        tableBreakpoint.put(key, brkR);
-            }
+	public static void initializeBreakpointPropertie(Properties properties, BreakpointRequest brkR) {
+		for (Object key : properties.keySet()) {
+			brkR.putProperty(key, properties.get(key));
 		}
 	}
 
 	public static BreakpointRequest recreateBreakpoint(BeanDebug beanDebug, BreakpointRequest brkR) throws NumberFormatException, AbsentInformationException {
 		VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
 		EventRequestManager eventRequestManager = virtualMachine.eventRequestManager();
-		Hashtable<String, BreakpointRequest> tableBreakpoint = beanDebug.getTableBreakpoint();
 		String rowNum = (String) brkR.getProperty("line");
 		String className = (String) brkR.getProperty("className");
 		// Supprime le point d'arret du beanDebug
@@ -326,35 +338,17 @@ public class ToolDebug {
 		} catch(Exception ex) {
 			//Catch hide delete raison
 		}
-		tableBreakpoint.remove(className+":"+rowNum);
 		// Cree un nouveau point d'arret
 		BreakpointRequest ret = UtilJDI.createBreakpointRequest(virtualMachine, className, Integer.parseInt(rowNum));
-		// Ajoute le point d'arret au beanDebug
-		tableBreakpoint.put(className+":"+rowNum, ret);
 		return ret;
 	}
 
 	public static void deleteBreakpoint(BeanDebug beanDebug) throws NumberFormatException, AbsentInformationException {
 		VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
 		EventRequestManager eventRequestManager = virtualMachine.eventRequestManager();
-		Hashtable<String, BreakpointRequest> tableBreakpoint = beanDebug.getTableBreakpoint();
-		if (tableBreakpoint!=null) {
-			BreakpointRequest brkR = null;
-			Object key = null;
-			Enumeration<String> enumKeys = tableBreakpoint.keys();
-			while(enumKeys.hasMoreElements()) {
-				key = enumKeys.nextElement();
-				brkR = (BreakpointRequest)tableBreakpoint.get(key);
-				eventRequestManager.deleteEventRequest(brkR);
-			}
-		}
-	}
-
-	// NOT USED
-	public static void deleteAllBreakpoint(BeanDebug beanDebug) throws NumberFormatException, AbsentInformationException {
-		VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
-		EventRequestManager eventRequestManager = virtualMachine.eventRequestManager();
 		eventRequestManager.deleteAllBreakpoints();
+
+		beanDebug.getTableBreakpoint().clear();
 	}
 
 	// NOT USED
@@ -365,36 +359,28 @@ public class ToolDebug {
 		  }
 	}
 
-	// NOT USED
 	public static void recreateAllBreakpoint(BeanDebug beanDebug) {
 		VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
 		EventRequestManager eventRequestManager = virtualMachine.eventRequestManager();
 		// Recréé la totalitée des points d'arret
-		Hashtable<String, BreakpointRequest> tableBreakpoint = beanDebug.getTableBreakpoint();
+		Hashtable<String, Properties> tableBreakpoint = beanDebug.getTableBreakpoint();
 		if (tableBreakpoint!=null) {
 			BreakpointRequest brkR1 = null, brkR2 = null;
-			String key = null;
-			Enumeration enumKeys = tableBreakpoint.keys();
-			while(enumKeys.hasMoreElements()) {
-				key = (String) enumKeys.nextElement();
-				brkR1 = (BreakpointRequest)tableBreakpoint.get(key);
-				// Suppression du point d'arret
-				eventRequestManager.deleteEventRequest(brkR1);
-				brkR2 = eventRequestManager.createBreakpointRequest(brkR1.location());
-				if (brkR2!=null) {
-					// Stock la ligne dans le point d'arret
-					brkR2.putProperty("line", brkR1.getProperty("line"));
-					// Stock le nom de l'application dans le point d'arret
-					brkR2.putProperty("application", brkR1.getProperty("application"));
-					// Stock le chemin des sources de la class dans le point d'arret
-					brkR2.putProperty("path", brkR1.getProperty("path"));
-					// Stock le nom de la class dans le point d'arret
-					brkR2.putProperty("className", brkR1.getProperty("className"));
-					// Stock le nom du fichier dans le point d'arret
-					brkR2.putProperty("fileName", brkR1.getProperty("fileName"));
-					brkR2.enable();
+			Properties propertie = null;
+			for(String key : tableBreakpoint.keySet()) {
+				propertie = tableBreakpoint.get(key);
+				brkR1 = findBreakpoint(virtualMachine, propertie);
+				if (brkR1 != null) {
+					// Suppression du point d'arret
+					eventRequestManager.deleteEventRequest(brkR1);
+					brkR2 = eventRequestManager.createBreakpointRequest(brkR1.location());
+					if (brkR2!=null) {
+						initializeBreakpointPropertie(propertie, brkR2);
+						brkR2.enable();
+					}
+				} else {
+					tableBreakpoint.remove(key);
 				}
-				tableBreakpoint.put(key, brkR2);
 			}
 		}
 	}

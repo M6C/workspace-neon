@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.io.StringWriter;
 import java.net.URLEncoder;
 import java.util.Hashtable;
+import java.util.Properties;
 import java.util.StringTokenizer;
 
 import javax.jms.JMSException;
@@ -95,16 +96,16 @@ public class SrvDebugBreakpointAdd extends SrvGenerique {
 
               Integer rowNum = new Integer(szLigne);
 
-              Hashtable<String, BreakpointRequest> tableBreakpoint = beanDebug.getTableBreakpoint();
+              Hashtable<String, Properties> tableBreakpoint = beanDebug.getTableBreakpoint();
               EventRequestManager eventRequestManager = virtualMachine.eventRequestManager();
               BreakpointRequest brkR = ToolDebug.findBreakpoint(virtualMachine, className, rowNum.intValue());
               if (brkR==null) {
 //TODO The method createVirtualMachine(String, Integer) from the type UtilJDI refers to the missing type VirtualMachine
                  brkR = UtilJDI.createBreakpointRequest(virtualMachine, className, rowNum);
                  if (brkR!=null) {
-                	 initBreakpointProperties(bean, brkR);
+                	 Properties prop = initBreakpointProperties(bean, brkR);
                      
-                     tableBreakpoint.put(className+":"+szLigne, brkR);
+                     tableBreakpoint.put(className+":"+szLigne, prop);
                      
                      text = "added";
                      success = true;
@@ -153,24 +154,29 @@ addToJNDI(ctx, "/workspace/debug/breakpoint", request.getSession().getId(), thre
       }
     }
 
-    protected void initBreakpointProperties(BeanGenerique bean, BreakpointRequest brkR) throws Exception {
+    protected Properties initBreakpointProperties(BeanGenerique bean, BreakpointRequest brkR) throws Exception {
+    	Properties ret = new Properties();
         String line = (String)bean.getParameterDataByName("breakpointLine");
         String application = (String)bean.getParameterDataByName("application");
         String path = (String)bean.getParameterDataByName("pathToExpand");
         String className = (String)bean.getParameterDataByName("className");
 
         // Stock le numero de ligne du point d'arret
-        brkR.putProperty("line", line);
+        ret.put("line", line);
         // Stock le nom de l'application dans le point d'arret
-        brkR.putProperty("application", application);
+        ret.put("application", application);
         // Stock le chemin des sources de la class dans le point d'arret
-        brkR.putProperty("path", path);
+        ret.put("path", path);
         // Stock le nom de la class dans le point d'arret
-        brkR.putProperty("className", className);
+        ret.put("className", className);
         if (file != null) {
             // Stock le nom du fichier dans le point d'arret
-            brkR.putProperty("fileName", file.getName());
+        	ret.put("fileName", file.getName());
         }
+
+        ToolDebug.initializeBreakpointPropertie(ret, brkR);
+
+        return ret;
     }
         
     protected void doResponse(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean, String result, boolean success) throws Exception {

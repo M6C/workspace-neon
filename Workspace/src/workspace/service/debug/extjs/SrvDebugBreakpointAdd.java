@@ -1,25 +1,17 @@
 package workspace.service.debug.extjs;
 
-import framework.beandata.BeanGenerique;
 import java.io.OutputStream;
+import java.util.Properties;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sun.jdi.request.BreakpointRequest;
 
+import framework.beandata.BeanGenerique;
+import workspace.service.debug.tool.ToolDebug;
+
 public class SrvDebugBreakpointAdd extends workspace.service.debug.SrvDebugBreakpointAdd {
-
-    protected void initBreakpointProperties(BeanGenerique bean, BreakpointRequest brkR) throws Exception {
-        String line = (String)bean.getParameterDataByName("breakpointLine");
-        String className = (String)bean.getParameterDataByName("className");
-        String application = (String)bean.getParameterDataByName("application");
-        String fileName = (String)bean.getParameterDataByName("FileName");
-
-        brkR.putProperty("line", line);
-        brkR.putProperty("className", className);
-        brkR.putProperty("application", application);
-        brkR.putProperty("fileName", fileName);
-    }
 
     protected void doResponse(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean, String result, boolean success) throws Exception {
         String jsonData = null;
@@ -55,5 +47,22 @@ public class SrvDebugBreakpointAdd extends workspace.service.debug.SrvDebugBreak
 	        os.close();
         }
         return;
+    }
+
+    protected Properties initBreakpointProperties(BeanGenerique bean, BreakpointRequest brkR) throws Exception {
+    	Properties ret = new Properties();
+        String line = (String)bean.getParameterDataByName("breakpointLine");
+        String className = (String)bean.getParameterDataByName("className");
+        String application = (String)bean.getParameterDataByName("application");
+        String fileName = (String)bean.getParameterDataByName("FileName");
+
+        ret.put("line", line);
+        ret.put("className", className);
+        ret.put("application", application);
+        ret.put("fileName", fileName);
+
+        ToolDebug.initializeBreakpointPropertie(ret, brkR);
+
+        return ret;
     }
 }
