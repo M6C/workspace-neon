@@ -92,9 +92,10 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 		var text = sourceName.substring(sourceName.lastIndexOf(sep) + 1);
 		var panelId = sourceName;
 
+		var editor;
 		var panel = mainCenterPanel.getActiveTab();
 		if (panel.id == panelId) {
-			var editor = ace.edit(panel.panelEditorId);
+			editor = ace.edit(panel.panelEditorId);
 	    	Ext.apply(editor, {
 	    		cursorRow: row,
 	    		cursorCol: 0,
@@ -119,8 +120,11 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 	
 			// Explicit load required library (Mandatory for extending this class)
 			Ext.Loader.syncRequire('Workspace.editorjava.panel.center.function.AddTabAce');
-			Workspace.editorjava.panel.center.function.AddTabAce.call(raw);
+			panel = Workspace.editorjava.panel.center.function.AddTabAce.call(raw);
+
+			editor = ace.edit(panel.panelEditorId);
 		}
+		editor.getSession().addMarker(new Range(row,0,row,200),"ace_active_line","background");
 
         mainCenterPanel.updateDebugVariable();
 	}

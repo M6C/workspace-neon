@@ -112,7 +112,7 @@ public class SrvDebugBreakpointAdd extends SrvGenerique {
                      success = true;
                  }
                  else {
-                     text = URLEncoder.encode("Can't create breakpoint", "UTF-8");
+                     text = URLEncoder.encode("Can't create breakpoint class '" + className + "' not found.", "UTF-8");
                  }
               } else {
                   eventRequestManager.deleteEventRequest(brkR);
@@ -150,6 +150,9 @@ addToJNDI(ctx, "/workspace/debug/breakpoint", request.getSession().getId(), thre
 //              } else if (virtualMachine!=null) {
 //            	  virtualMachine.dispose();
 //              }
+              if (success) {
+            	  ToolDebug.writeBeanDebugBreakpoint(session, beanDebug);
+              }
               doResponse(request, response, bean, result, success);
           }
       }

@@ -2,8 +2,13 @@ package workspace.service.debug.tool;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -40,6 +45,8 @@ import workspace.thread.debug.ThrdDebugEventQueue;
 
 public class ToolDebug {
 
+	private final static String FILE_BREAKPOINT_PROPERTIE = "brkpntprop.sav";
+
 	private ToolDebug() {
 	}
 
@@ -58,7 +65,7 @@ public class ToolDebug {
 	        	beanDebug = createBeanDebug(application);
 		        initializeBeanDebugData(session, beanDebug);
                 initializeBeanDebug(beanDebug);
-		        initializeBeanDebugBreakpoint(beanDebug);
+		        initializeBeanDebugBreakpoint(session, beanDebug);
 		        session.setAttribute("beanDebug", beanDebug);
             } else {
                 checkConnection(beanDebug);
@@ -66,7 +73,6 @@ public class ToolDebug {
             }
         } catch (Exception ex) {
             resume(beanDebug);
-        	throw ex;
         }
 
         return beanDebug;
@@ -317,23 +323,70 @@ public class ToolDebug {
         }
 	}
 
-	private static void initializeBeanDebugBreakpoint(BeanDebug beanDebug) {
-//		VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
-//		if (virtualMachine != null) {
-//		    Hashtable<String, Properties> tableBreakpoint = beanDebug.getTableBreakpoint();
-//		    tableBreakpoint.clear();
-//
-//            EventRequestManager eventRequestManager = virtualMachine.eventRequestManager();
-//            List<?> breakpointRequests = eventRequestManager.breakpointRequests();
-//            int size = breakpointRequests.size();
-//            for(int i=0 ; i<size ; i++) {
-//                BreakpointRequest brkR = (BreakpointRequest)breakpointRequests.get(i);
-//        		String rowNum = (String) brkR.getProperty("line");
-//        		String className = (String) brkR.getProperty("className");
-//		        String key = className+":"+rowNum;
-//		        tableBreakpoint.put(key, brkR);
-//            }
-//		}
+	private static void initializeBeanDebugBreakpoint(HttpSession session, BeanDebug beanDebug) {
+		ServletContext context = session.getServletContext();
+        Document dom = (Document)session.getAttribute("resultDom");
+    	FileInputStream fos;
+    	ObjectInputStream oos = null;
+        try {
+        	String application = beanDebug.getApplication();
+			String pathMain = AdpXmlApplication.getFormatedPathMain(context, dom, application);
+            if(UtilString.isNotEmpty(pathMain)) {
+    	    	File fileMain = new File(pathMain, FILE_BREAKPOINT_PROPERTIE);
+    	    	if (fileMain.exists() && fileMain.isFile()) {
+    	    		fos = new FileInputStream(fileMain);
+    	    		oos = new ObjectInputStream(fos);
+    	    		Hashtable<String, Properties> tableBreakpoint = (Hashtable<String, Properties>)oos.readObject();
+
+    	    		beanDebug.getTableBreakpoint().clear();
+    	    		beanDebug.getTableBreakpoint().putAll(tableBreakpoint);
+    	    	}
+            }
+		} catch (TransformerException e) {
+			Trace.ERROR(ToolDebug.class, e);
+	    } catch(IOException e){
+			Trace.ERROR(ToolDebug.class, e);
+		} catch (ClassNotFoundException e) {
+			Trace.ERROR(ToolDebug.class, e);
+		} finally {
+            if (oos != null) {
+				try {
+		            oos.close();
+				} catch (IOException e) {
+					Trace.ERROR(ToolDebug.class, e);
+				}
+			}
+		}
+	}
+
+	public static void writeBeanDebugBreakpoint(HttpSession session, BeanDebug beanDebug) {
+		ServletContext context = session.getServletContext();
+        Document dom = (Document)session.getAttribute("resultDom");
+    	FileOutputStream fos;
+    	ObjectOutputStream oos = null;
+        try {
+        	String application = beanDebug.getApplication();
+			String pathMain = AdpXmlApplication.getFormatedPathMain(context, dom, application);
+            if(UtilString.isNotEmpty(pathMain)) {
+    	    	File fileMain = new File(pathMain, FILE_BREAKPOINT_PROPERTIE);
+    	        fos = new FileOutputStream(fileMain);
+    	        oos = new ObjectOutputStream(fos);
+    			oos.writeObject(beanDebug.getTableBreakpoint());
+            }
+		} catch (TransformerException e) {
+			Trace.ERROR(ToolDebug.class, e);
+	    } catch(IOException e){
+			Trace.ERROR(ToolDebug.class, e);
+		} finally {
+            if (oos != null) {
+				try {
+		            oos.flush();
+		            oos.close();
+				} catch (IOException e) {
+					Trace.ERROR(ToolDebug.class, e);
+				}
+			}
+		}
 	}
 
 	public static void initializeBreakpointPropertie(Properties properties, BreakpointRequest brkR) {
@@ -409,8 +462,6 @@ public class ToolDebug {
 						initializeBreakpointPropertie(propertie, brkR2);
 						brkR2.enable();
 					}
-				} else {
-					tableBreakpoint.remove(key);
 				}
 			}
 		}

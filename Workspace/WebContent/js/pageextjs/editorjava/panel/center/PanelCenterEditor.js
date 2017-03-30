@@ -163,6 +163,33 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 	    if (pop === true) {
 	        Workspace.common.tool.Pop.info(me, 'Reload success');
 	    }
+
+	    var application = '';
+	    var classname = '';
+        var callback = function(jsonData, success) {
+        	if (!success) {
+		        Workspace.common.tool.Pop.error(me, "Initialize Breakpoint Project '" + application + "' Class '" + classname + "' failure.", {toast: false});
+		        return;
+        	}
+
+            var detail = 'No breakpoint found.';
+            if (Ext.isDefined(jsonData)) {
+            	var cnt = jsonData.children.length;
+                if (cnt == 1) {
+                    detail = '1 breakpoint found.';
+                } else if (cnt > 1) {
+                    detail = (cnt + ' breakpoints founds.');
+                }
+
+                Ext.Array.each(jsonData.children, function(item) {
+                    editor.getSession().addGutterDecoration(item.line,"ace_active_line");
+                });
+
+            }
+	        Workspace.common.tool.Pop.success(me, "Initialize Breakpoint Project '" + application + "' Class '" + classname + "' success.", {toast: false, detail:detail});
+        };
+
+        Ext.create('Workspace.editorjava.debug.request.JsonDebugList', {application: application, classname: classname}).request(callback);
 	}
 	,
 	debugStart: function() {

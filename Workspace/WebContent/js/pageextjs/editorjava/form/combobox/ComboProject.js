@@ -1,6 +1,7 @@
 Ext.define('Workspace.editorjava.form.combobox.ComboProject', {
 	requires: [
 	    'Workspace.common.tool.Pop',
+	    'Workspace.editorjava.debug.request.JsonDebugCheck',
         'Workspace.editorjava.aceeditor.command.CommandFindResource'
   	]
   	,
@@ -28,30 +29,28 @@ Ext.define('Workspace.editorjava.form.combobox.ComboProject', {
                 params: {application: application},
                 success: function() {
     		        Workspace.common.tool.Pop.success(me, "Initialize Project '" + application + "' success.", {detail: 'Waiting for Debug initialization..'});
-                    Ext.Ajax.request({
-                        url: DOMAIN_NAME_ROOT + '/action.servlet?event=DebuggerBreakpointListExtJs',
-                        method: 'GET',
-                        params: {application: application},
-                        success: function(result, request) {
-                            var cnt = 0;
-                            var detail = 'No breakpoint found.';
-                            if (Ext.isDefined(result) && !Ext.isEmpty(result.responseText)) {
-    	    		            var jsonData = Ext.decode(result.responseText);
-    	    		            cnt = jsonData.children.length;
-                				var mainCenterPanel=Ext.getCmp('mainCenterPanel');
-                				mainCenterPanel.setDebugBreakpoint(jsonData.children);
-                                if (cnt == 1) {
-                                    detail = '1 breakpoint found.';
-                                } else if (cnt > 1) {
-                                    detail = (cnt + ' breakpoints founds.');
-                                }
+
+    		        var callback = function(jsonData, success) {
+    		        	if (!success) {
+    				        Workspace.common.tool.Pop.error(me, "Initialize Debug Project '" + application + "' failure.");
+    				        return;
+    		        	}
+
+                        var detail = 'No breakpoint found.';
+                        if (Ext.isDefined(jsonData)) {
+                        	var cnt = jsonData.children.length;
+            				var mainCenterPanel=Ext.getCmp('mainCenterPanel');
+            				mainCenterPanel.setDebugBreakpoint(jsonData.children);
+                            if (cnt == 1) {
+                                detail = '1 breakpoint found.';
+                            } else if (cnt > 1) {
+                                detail = (cnt + ' breakpoints founds.');
                             }
-            		        Workspace.common.tool.Pop.success(me, "Initialize Debug Project '" + application + "' success.", {detail:detail});
-                        },
-                        failure: function() {
-            		        Workspace.common.tool.Pop.error(me, "Initialize Debug Project '" + application + "' failure.");
                         }
-                    });
+        		        Workspace.common.tool.Pop.success(me, "Initialize Debug Project '" + application + "' success.", {detail:detail});
+    		        };
+
+    		        Ext.create('Workspace.editorjava.debug.request.JsonDebugList', {application: application}).request(callback);
                 },
                 failure: function() {
     		        Workspace.common.tool.Pop.error(me, "Initialize Project '" + application + "' failure.");
