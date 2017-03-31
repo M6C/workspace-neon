@@ -252,9 +252,9 @@ public class ToolDebug {
                 dispose(beanDebug);
         		System.out.println("ToolDebug.checkConnection error recreate VirtualMachine");
                 initializeBeanDebug(beanDebug);
-        		System.out.println("ToolDebug.checkConnection error recreate all breakpoint start");
-                recreateAllBreakpoint(beanDebug);
-        		System.out.println("ToolDebug.checkConnection error recreate all breakpoint end");
+//        		System.out.println("ToolDebug.checkConnection error recreate all breakpoint start");
+//                recreateAllBreakpoint(beanDebug);
+//        		System.out.println("ToolDebug.checkConnection error recreate all breakpoint end");
 		    }
 		} else {
 		    System.out.println("ToolDebug.checkConnection virtualMachine is null");
@@ -396,12 +396,23 @@ public class ToolDebug {
 	}
 
 	public static BreakpointRequest recreateBreakpoint(BeanDebug beanDebug, BreakpointRequest brkR) throws NumberFormatException, AbsentInformationException {
+		int rowNum = Integer.parseInt((String) brkR.getProperty("line"));
+		String className = (String) brkR.getProperty("className");
+		return recreateBreakpoint(beanDebug, className, rowNum);
+	}
+
+	public static BreakpointRequest recreateBreakpoint(BeanDebug beanDebug, Properties propertie) throws NumberFormatException, AbsentInformationException {
+		int rowNum = Integer.parseInt(propertie.getProperty("line"));
+		String className = propertie.getProperty("className");
+		return recreateBreakpoint(beanDebug, className, rowNum);
+	}
+
+	public static BreakpointRequest recreateBreakpoint(BeanDebug beanDebug, String className, int rowNum) throws AbsentInformationException {
 		VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
 		EventRequestManager eventRequestManager = virtualMachine.eventRequestManager();
-		String rowNum = (String) brkR.getProperty("line");
-		String className = (String) brkR.getProperty("className");
 		// Supprime le point d'arret du beanDebug
 		try {
+			BreakpointRequest brkR = findBreakpoint(virtualMachine, className, rowNum);
 			if (brkR.isEnabled()) {
 				brkR.disable();
 			}
@@ -410,8 +421,31 @@ public class ToolDebug {
 			//Catch hide delete raison
 		}
 		// Cree un nouveau point d'arret
-		BreakpointRequest ret = UtilJDI.createBreakpointRequest(virtualMachine, className, Integer.parseInt(rowNum));
+		BreakpointRequest ret = UtilJDI.createBreakpointRequest(virtualMachine, className, rowNum);
 		return ret;
+	}
+
+	public static void recreateAllBreakpoint(BeanDebug beanDebug) {
+		// Recréé la totalitée des points d'arret
+		Hashtable<String, Properties> tableBreakpoint = beanDebug.getTableBreakpoint();
+		if (tableBreakpoint!=null) {
+			BreakpointRequest brkR = null;
+			Properties propertie = null;
+			for(String key : tableBreakpoint.keySet()) {
+				propertie = tableBreakpoint.get(key);
+				try {
+					brkR = recreateBreakpoint(beanDebug, propertie);
+					if (brkR!=null) {
+						initializeBreakpointPropertie(propertie, brkR);
+						brkR.enable();
+					}
+				} catch (NumberFormatException e) {
+					Trace.ERROR(ToolDebug.class, e);
+				} catch (AbsentInformationException e) {
+					Trace.ERROR(ToolDebug.class, e);
+				}
+			}
+		}
 	}
 
 	public static void deleteBreakpoint(BeanDebug beanDebug) throws NumberFormatException, AbsentInformationException {
@@ -441,29 +475,5 @@ public class ToolDebug {
 		  if (thrdDebugEventQueue!=null) {
 			  thrdDebugEventQueue.stopRunning();
 		  }
-	}
-
-	public static void recreateAllBreakpoint(BeanDebug beanDebug) {
-		VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
-		EventRequestManager eventRequestManager = virtualMachine.eventRequestManager();
-		// Recréé la totalitée des points d'arret
-		Hashtable<String, Properties> tableBreakpoint = beanDebug.getTableBreakpoint();
-		if (tableBreakpoint!=null) {
-			BreakpointRequest brkR1 = null, brkR2 = null;
-			Properties propertie = null;
-			for(String key : tableBreakpoint.keySet()) {
-				propertie = tableBreakpoint.get(key);
-				brkR1 = findBreakpoint(virtualMachine, propertie);
-				if (brkR1 != null) {
-					// Suppression du point d'arret
-					eventRequestManager.deleteEventRequest(brkR1);
-					brkR2 = eventRequestManager.createBreakpointRequest(brkR1.location());
-					if (brkR2!=null) {
-						initializeBreakpointPropertie(propertie, brkR2);
-						brkR2.enable();
-					}
-				}
-			}
-		}
 	}
 }
