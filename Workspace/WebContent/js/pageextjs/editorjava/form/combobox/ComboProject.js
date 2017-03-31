@@ -1,7 +1,8 @@
 Ext.define('Workspace.editorjava.form.combobox.ComboProject', {
 	requires: [
 	    'Workspace.common.tool.Pop',
-	    'Workspace.editorjava.debug.request.JsonDebugCheck',
+	    'Workspace.tool.UtilComponent',
+	    'Workspace.editorjava.constant.ConstantState',
         'Workspace.editorjava.aceeditor.command.CommandFindResource'
   	]
   	,
@@ -23,19 +24,19 @@ Ext.define('Workspace.editorjava.form.combobox.ComboProject', {
 
         if (!Ext.isEmpty(application)) {
             Workspace.common.tool.Pop.info(me, "Initialize Project '" + application + "'.", {detail: 'Waiting for complet.'});
+            Workspace.editorjava.constant.ConstantState.inProgressInitialize(true);
             Ext.Ajax.request({
                 url: DOMAIN_NAME_ROOT + '/action.servlet?event=JsonInitializeProject',
                 method: 'GET',
                 params: {application: application},
                 success: function() {
-    		        Workspace.common.tool.Pop.success(me, "Initialize Project '" + application + "' success.", {detail: 'Waiting for Debug initialization..'});
-
+    		        Workspace.common.tool.Pop.info(me, "Initialize Project '" + application + "' success.", {detail: 'Waiting for Debug initialization..'});
     		        var callback = function(jsonData, success) {
+                    	Workspace.editorjava.constant.ConstantState.inProgressInitialize(false);
     		        	if (!success) {
     				        Workspace.common.tool.Pop.error(me, "Initialize Debug Project '" + application + "' failure.");
     				        return;
     		        	}
-
                         var detail = 'No breakpoint found.';
                         if (Ext.isDefined(jsonData)) {
                         	var cnt = jsonData.children.length;
@@ -53,6 +54,7 @@ Ext.define('Workspace.editorjava.form.combobox.ComboProject', {
     		        Ext.create('Workspace.editorjava.debug.request.JsonDebugList', {application: application}).request(callback);
                 },
                 failure: function() {
+                	Workspace.editorjava.constant.ConstantState.inProgressInitialize(false);
     		        Workspace.common.tool.Pop.error(me, "Initialize Project '" + application + "' failure.");
                 }
             });
@@ -78,8 +80,18 @@ Ext.define('Workspace.editorjava.form.combobox.ComboProject', {
 		var me = this;
 
         Workspace.editorjava.aceeditor.command.CommandFindResource.addListener(me);
+        
+        Workspace.tool.UtilComponent.addListener(me, 'beforeselect', me.listenerBeforeSelect);
 
 		me.callParent(arguments);
+	},
+	listenerBeforeSelect: function (combo, record, index, option) {
+	    var me = this;
+	    me.doActionItem = !Workspace.editorjava.constant.ConstantState.inProgressBuild();
+	    if (!me.doActionItem) {
+	        Workspace.common.tool.Pop.failure(me, "Can't change Project during building process.", {toast:false});
+	    }
+	    return me.doActionItem;
 	}
 	,
 	manageTab: function(key) {

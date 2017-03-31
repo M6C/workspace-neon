@@ -5,7 +5,7 @@ Ext.define('Workspace.editorjava.debug.request.JsonDebugList',  {
 	
 	    Ext.apply(me, config);
 	
-		me.params  = {application: me.application};
+		me.params  = {application: me.application, className: me.className};
 
 		me.callParent();
 	}

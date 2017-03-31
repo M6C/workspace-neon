@@ -64,8 +64,8 @@ public class ToolDebug {
             if (beanDebug==null) {
 	        	beanDebug = createBeanDebug(application);
 		        initializeBeanDebugData(session, beanDebug);
-                initializeBeanDebug(beanDebug);
 		        initializeBeanDebugBreakpoint(session, beanDebug);
+                initializeBeanDebug(beanDebug);
 		        session.setAttribute("beanDebug", beanDebug);
             } else {
                 checkConnection(beanDebug);

@@ -8,6 +8,8 @@ import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import framework.beandata.BeanGenerique;
+import framework.ressource.util.UtilString;
 import workspace.bean.debug.BeanDebug;
 
 public class SrvDebugBreakpointList extends workspace.service.debug.SrvDebugBreakpointList {
@@ -15,14 +17,15 @@ public class SrvDebugBreakpointList extends workspace.service.debug.SrvDebugBrea
 	public void init() {
 	}
 
-	protected void doResponse(HttpServletRequest request, HttpServletResponse response, BeanDebug beanDebug) throws Exception {
+	protected void doResponse(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean, BeanDebug beanDebug) throws Exception {
 	    if (beanDebug != null) {
+			String beanClassName = (String)bean.getParameterDataByName("className");
             Hashtable<String, Properties> tableBreakpoint = beanDebug.getTableBreakpoint();
             String ret = "{\"success\":true,\"children\":[";
             int cnt = 0;
             try {
                 for(Properties propertie : tableBreakpoint.values()) {
-                    if (cnt++ > 0) {
+                    if (cnt > 0) {
                         ret += ",";
                     }
     
@@ -33,7 +36,10 @@ public class SrvDebugBreakpointList extends workspace.service.debug.SrvDebugBrea
             		String className = getProperty(propertie, "className");
             		String line = getProperty(propertie, "line");
 
-            		ret += "{application:'" + application + "',line:" + line + ",classname:'" + className + "',filename:'" + sourceName + "'}";
+            		if (UtilString.isEmpty(beanClassName) || UtilString.isEquals(className, beanClassName)) {
+	            		ret += "{application:'" + application + "',line:" + line + ",classname:'" + className + "',filename:'" + sourceName + "'}";
+	            		cnt++;
+            		}
                 }
             } finally {
                 ret += "]}";

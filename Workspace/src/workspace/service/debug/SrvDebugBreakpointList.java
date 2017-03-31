@@ -10,9 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.sun.jdi.request.BreakpointRequest;
-
 import framework.beandata.BeanGenerique;
+import framework.ressource.util.UtilString;
 import framework.service.SrvGenerique;
 import workspace.bean.debug.BeanDebug;
 import workspace.service.debug.tool.ToolDebug;
@@ -31,12 +30,13 @@ public class SrvDebugBreakpointList extends SrvGenerique {
 			request.setAttribute("msgText", sw.toString());
 			throw ex;
 		} finally {
-			doResponse(request, response, beanDebug);
+			doResponse(request, response, bean, beanDebug);
 		}
 	}
 
-	protected void doResponse(HttpServletRequest request, HttpServletResponse response, BeanDebug beanDebug) throws Exception {
+	protected void doResponse(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean, BeanDebug beanDebug) throws Exception {
 	    if (beanDebug != null) {
+	    	String beanClassName = (String)bean.getParameterDataByName("className");
             Hashtable<String, Properties> tableBreakpoint = beanDebug.getTableBreakpoint();
             String ret = null;
             try {
@@ -50,8 +50,10 @@ public class SrvDebugBreakpointList extends SrvGenerique {
             		String className = URLEncoder.encode((String) propertie.getProperty("className"), "UTF-8");
             		String line = URLEncoder.encode((String) propertie.getProperty("line"), "UTF-8");
 
-                    ret = (ret == null) ? "" : ret + ";";
-            		ret += application + ":" + path + ":" + sourceName + ":" + className + ":" + line;
+            		if (UtilString.isEmpty(beanClassName) || UtilString.isEquals(className, beanClassName)) {
+            			ret = (ret == null) ? "" : ret + ";";
+            			ret += application + ":" + path + ":" + sourceName + ":" + className + ":" + line;
+            		}
                 }
             } finally {
         		PrintWriter out = response.getWriter();

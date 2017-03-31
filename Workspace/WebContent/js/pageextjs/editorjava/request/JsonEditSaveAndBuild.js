@@ -6,6 +6,7 @@
 Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
 	requires: [
 		'Workspace.common.tool.Pop',
+	    'Workspace.editorjava.constant.ConstantState',
 		'Workspace.common.window.WindowResultText'
    	]
 	,
@@ -25,12 +26,14 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
     	var me = this;
 
 		if (me.build == 'true') {
+            Workspace.editorjava.constant.ConstantState.inProgressBuild(true);
 			Ext.Ajax.request({
 				method:'POST',
 				url:DOMAIN_NAME_ROOT + '/action.servlet?event=JsonEditCompileProject',
 				callback:function(options, success, responseCompile) {
 					var jsonData = Ext.JSON.decode(responseCompile.responseText);
 					if (!Ext.isDefined(jsonData)) {
+                        Workspace.editorjava.constant.ConstantState.inProgressBuild(false);
     					Workspace.common.tool.Pop.info(me, "Building data not found.");
     					return;
 					}
@@ -43,9 +46,12 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
     		    				callback:me.callbackAutoDeploy,
     		    				params:{application:me.application}
     		    			});
+						} else {
+                            Workspace.editorjava.constant.ConstantState.inProgressBuild(false);
 						}
     					Workspace.common.tool.Pop.info(me, msg);
 					} else {
+                        Workspace.editorjava.constant.ConstantState.inProgressBuild(false);
     					Ext.create('Workspace.common.window.WindowTextCompile', {modal:false, data:jsonData}).show();
 					}
 				},
@@ -68,6 +74,7 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
 		}
 	},
     callbackAutoDeploy: function(opts, success, response) {
+        Workspace.editorjava.constant.ConstantState.inProgressBuild(false);
         var me = Workspace.editorjava.request.JsonEditSaveAndBuild;
 		var jsonData = Ext.JSON.decode(response.responseText);
 		if (jsonData.results > 0) {

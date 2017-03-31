@@ -13,6 +13,7 @@ import com.sun.jdi.event.LocatableEvent;
 import com.sun.jdi.request.BreakpointRequest;
 
 import framework.beandata.BeanGenerique;
+import framework.ressource.util.UtilString;
 import framework.service.SrvGenerique;
 import workspace.bean.debug.BeanDebug;
 import workspace.service.debug.tool.ToolDebug;
@@ -52,20 +53,23 @@ public class SrvDebugBreakpointCheck extends SrvGenerique {
 			request.setAttribute("msgText", sw.toString());
 			throw ex;
 		} finally {
-			doResponse(request, response, beanDebug, brkE);
+			doResponse(request, response, bean, beanDebug, brkE);
 		}
 	}
 
-	protected void doResponse(HttpServletRequest request, HttpServletResponse response, BeanDebug beanDebug, LocatableEvent brkE) throws Exception {
+	protected void doResponse(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean, BeanDebug beanDebug, LocatableEvent brkE) throws Exception {
+		String BeanApplication = (String)bean.getParameterDataByName("application");
 		BreakpointRequest brkR = (BreakpointRequest) brkE.request();
 		// Recupere le nom de l'application du point d'arret
 		String application = URLEncoder.encode((String) brkR.getProperty("application"), "UTF-8");
-		// Recupere le chemin des sources de la class du point d'arret
-		String path = URLEncoder.encode((String) brkR.getProperty("path"), "UTF-8");
-		String sourceName = URLEncoder.encode(brkR.location().sourceName(), "UTF-8");
-		int lineNumber = brkE.location().lineNumber();
-		PrintWriter out = response.getWriter();
-		out.print(application + ":" + path + ":" + sourceName + ":" + lineNumber);
+		if (UtilString.isEmpty(BeanApplication) || UtilString.isEquals(application, BeanApplication)) {
+			// Recupere le chemin des sources de la class du point d'arret
+			String path = URLEncoder.encode((String) brkR.getProperty("path"), "UTF-8");
+			String sourceName = URLEncoder.encode(brkR.location().sourceName(), "UTF-8");
+			int lineNumber = brkE.location().lineNumber();
+			PrintWriter out = response.getWriter();
+			out.print(application + ":" + path + ":" + sourceName + ":" + lineNumber);
+		}
 	}
 
 }

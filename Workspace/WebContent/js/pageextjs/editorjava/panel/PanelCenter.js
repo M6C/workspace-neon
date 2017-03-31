@@ -124,7 +124,12 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 
 			editor = ace.edit(panel.panelEditorId);
 		}
-		editor.getSession().addMarker(new Range(row,0,row,200),"ace_active_line","background");
+
+		var session = editor.getSession();
+		Ext.each(session.getMarkers(), function(marker) {
+			session.removeMarker(marker);
+		});
+		session.addMarker(new Range(row,0,row,200),"ace_active_line","background");
 
         mainCenterPanel.updateDebugVariable();
 	}
