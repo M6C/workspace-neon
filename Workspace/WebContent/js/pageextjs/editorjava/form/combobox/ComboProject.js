@@ -89,7 +89,7 @@ Ext.define('Workspace.editorjava.form.combobox.ComboProject', {
 	    var me = this;
 	    me.doActionItem = !Workspace.editorjava.constant.ConstantState.inProgressBuild();
 	    if (!me.doActionItem) {
-	        Workspace.common.tool.Pop.failure(me, "Can't change Project during building process.", {toast:false});
+	        Workspace.editorjava.constant.ConstantState.inProgressBuildMessage();
 	    }
 	    return me.doActionItem;
 	}

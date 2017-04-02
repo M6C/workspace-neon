@@ -1,6 +1,7 @@
 Ext.define('Workspace.editorjava.panel.PanelCenter', {
 	requires: [
 	     'Workspace.common.tool.Pop',
+	     'Workspace.editorjava.constant.ConstantState',
 	     'Workspace.editorjava.debug.WaiterDebug',
   	     'Workspace.editorjava.panel.center.function.AddTabAce',
   	     'Workspace.editorjava.debug.request.JsonDebugVariable'
@@ -45,6 +46,10 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 	,
 	debugStart: function() {
 		var me = this;
+		if (Workspace.editorjava.constant.ConstantState.inProgressInitialize()) {
+	        Workspace.editorjava.constant.ConstantState.inProgressInitializeMessage();
+		    return;
+		}
 		me.waiterDebug.start(me.callbackDebugStart);
 		me.initializeButtonDebug();
 	}
