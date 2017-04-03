@@ -91,7 +91,12 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
             mainCenterPanel.updateDebugVariable();
 			return;
 		}
-		var sourceName = Workspace.tool.UtilString.decodeUtf8(jsonData.sourceName[0]);
+
+        // Find the source name for the application. Or keap the last.
+		Ext.each(jsonData.sourceName, function(item, index, all) {
+            sourceName = Workspace.tool.UtilString.decodeUtf8(item);
+		    return !(sourceName.indexOf('[' + application + ']') == 0);
+		});
 
 		var sep = (sourceName.indexOf('/')>=0 ? '/' : '\\');
 		var text = sourceName.substring(sourceName.lastIndexOf(sep) + 1);
