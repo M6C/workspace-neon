@@ -72,6 +72,7 @@ public class ToolDebug {
                 initializeBeanDebug(beanDebug);
             }
         } catch (Exception ex) {
+        	beanDebug.setMessageError(ex.getMessage());
             resume(beanDebug);
         }
 

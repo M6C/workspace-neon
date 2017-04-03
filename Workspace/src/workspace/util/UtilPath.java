@@ -82,13 +82,13 @@ public class UtilPath {
     }
 
     public static String formatPath(ServletContext context, Document dom, String application, Hashtable hash, String pathSrc, char separator) throws IOException {
-        Trace.DEBUG(getInstance(), (new StringBuilder("formatPath context:")).append(context).append(" dom:").append(dom).append(" application:").append(application).append(" hash:").append(hash).append(" pathSrc:").append(pathSrc).append(" separator:").append(separator).toString());
+        // Trace.DEBUG(getInstance(), (new StringBuilder("formatPath context:")).append(context).append(" dom:").append(dom).append(" application:").append(application).append(" hash:").append(hash).append(" pathSrc:").append(pathSrc).append(" separator:").append(separator).toString());
         String ret = null;
         try
         {
             String listPathSrc[] = UtilString.split(pathSrc, separator);
             int len = UtilSafe.safeListSize(listPathSrc);
-            Trace.DEBUG(getInstance(), (new StringBuilder("formatPath listPathSrc:")).append(listPathSrc).append(" len:").append(len).toString());
+            // Trace.DEBUG(getInstance(), (new StringBuilder("formatPath listPathSrc:")).append(listPathSrc).append(" len:").append(len).toString());
             if(len > 0)
             {
                 File filePath = null;
@@ -104,7 +104,7 @@ public class UtilPath {
                     {
                         iDeb = path.indexOf('[', 0);
                         iFin = path.indexOf(']', iDeb);
-                        Trace.DEBUG(getInstance(), (new StringBuilder("formatPath path:")).append(path).append(" iPos:").append(iPos).append(" iDeb:").append(iDeb).append(" iFin:").append(iFin).toString());
+                        // Trace.DEBUG(getInstance(), (new StringBuilder("formatPath path:")).append(path).append(" iPos:").append(iPos).append(" iDeb:").append(iDeb).append(" iFin:").append(iFin).toString());
                         if(iDeb >= 0 && iFin >= 0)
                         {
                             String szApplication = path.substring(iDeb + 1, iFin);
@@ -114,10 +114,10 @@ public class UtilPath {
                                     filePathMain = AdpXmlApplication.getPathMain(dom, szApplication);
                                 else
                                     filePathMain = AdpXmlApplication.getFormatedPathMain(context, dom, szApplication);
-                            Trace.DEBUG(getInstance(), (new StringBuilder("formatPath szApplication:")).append(szApplication).append(" filePathMain:").append(filePathMain).toString());
+                            // Trace.DEBUG(getInstance(), (new StringBuilder("formatPath szApplication:")).append(szApplication).append(" filePathMain:").append(filePathMain).toString());
                             if(UtilString.isNotEmpty(filePathMain))
                             {
-                                Trace.DEBUG(getInstance(), (new StringBuilder("formatPath filePathMain isNotEmpty:")).append(filePathMain).toString());
+                                // Trace.DEBUG(getInstance(), (new StringBuilder("formatPath filePathMain isNotEmpty:")).append(filePathMain).toString());
                                 hash.put(szApplication, filePathMain);
                                 if(!filePathMain.toUpperCase().startsWith("FTP://"))
                                 {
@@ -131,7 +131,7 @@ public class UtilPath {
                         } else
                         if(UtilString.isNotEmpty(application) && !UtilFile.isPathAbsolute(path))
                         {
-                            Trace.DEBUG(getInstance(), (new StringBuilder("formatPath application isNotEmpty:")).append(application).toString());
+                            // Trace.DEBUG(getInstance(), (new StringBuilder("formatPath application isNotEmpty:")).append(application).toString());
                             String filePathApp = null;
                             if(context == null)
                                 filePathApp = AdpXmlApplication.getPathMain(dom, application);
@@ -139,7 +139,7 @@ public class UtilPath {
                                 filePathApp = AdpXmlApplication.getFormatedPathMain(context, dom, application);
                             path = (new File(filePathApp, path)).getCanonicalPath();
                         }
-                        Trace.DEBUG(getInstance(), (new StringBuilder("formatPath path:")).append(path).toString());
+                        // Trace.DEBUG(getInstance(), (new StringBuilder("formatPath path:")).append(path).toString());
                     }
 
                     if(stb.length() > 0)

@@ -81,13 +81,13 @@ public class SrvTreeDirectory extends SrvGenerique {
                 boolean bIgnoreCase = (recursive == null ? false : Boolean.valueOf(ignoreCase));
                 boolean bRecursive = (recursive == null ? false : Boolean.valueOf(recursive));
                 boolean bWithSubDirectory = (withSubDirectory == null ? true : Boolean.valueOf(withSubDirectory));
-                Trace.DEBUG(this, new StringBuilder("execute pathMain:").append(pathMain).toString());
-                Trace.DEBUG(this, new StringBuilder("execute pathSrc:").append(pathSrc).toString());
-                Trace.DEBUG(this, new StringBuilder("execute ignoreCase:").append(bIgnoreCase).append(" recursive:").append(bRecursive).append(" withSubDirectory:").append(bWithSubDirectory).toString());
+                // Trace.DEBUG(this, new StringBuilder("execute pathMain:").append(pathMain).toString());
+                // Trace.DEBUG(this, new StringBuilder("execute pathSrc:").append(pathSrc).toString());
+                // Trace.DEBUG(this, new StringBuilder("execute ignoreCase:").append(bIgnoreCase).append(" recursive:").append(bRecursive).append(" withSubDirectory:").append(bWithSubDirectory).toString());
                 if(UtilString.isNotEmpty(pathMain)) {
                     if(pathMain.toUpperCase().startsWith("FTP://"))
                     {
-                        Trace.DEBUG("NYI");
+                        // Trace.DEBUG("NYI");
                     } else
                     {
                         File fileMain = new File(pathMain);
@@ -157,7 +157,7 @@ public class SrvTreeDirectory extends SrvGenerique {
                             for(int i = 0; i < j; i++)
                             {
                                 File file = (File) vListFile.get(i);
-                                Trace.DEBUG(this, (new StringBuilder("execute file:")).append(file.getName()).append(" isFile:").append(file.isFile()).append(" isDirectory:").append(file.isDirectory()).toString());
+                                // Trace.DEBUG(this, (new StringBuilder("execute file:")).append(file.getName()).append(" isFile:").append(file.isFile()).append(" isDirectory:").append(file.isDirectory()).toString());
                                 String pathRelative = UtilFile.getPathRelative(fileMain, file);
                                 if (!file.getAbsolutePath().equals(pathFormated)) {
 	                                if(pathRelative.indexOf('\\') >= 0)
@@ -224,10 +224,10 @@ public class SrvTreeDirectory extends SrvGenerique {
         } catch(Exception ex) {
             Trace.ERROR(this, ex);
         }
-        Trace.DEBUG(this, (new StringBuilder("execute application:")).append(application).append(" path:").append(path).append(" pathFormated:").append(pathFormated).toString());
-        Trace.DEBUG(this, (new StringBuilder("execute pathMain:")).append(pathMain).append(" pathSrc:").append(pathSrc).toString());
-        Trace.DEBUG(this, (new StringBuilder("execute withContentType:")).append(withContentType).append(" noContentType:").append(noContentType).toString());
-        Trace.DEBUG(this, (new StringBuilder("execute jsonData:")).append(jsonData).toString());
+        // Trace.DEBUG(this, (new StringBuilder("execute application:")).append(application).append(" path:").append(path).append(" pathFormated:").append(pathFormated).toString());
+        // Trace.DEBUG(this, (new StringBuilder("execute pathMain:")).append(pathMain).append(" pathSrc:").append(pathSrc).toString());
+        // Trace.DEBUG(this, (new StringBuilder("execute withContentType:")).append(withContentType).append(" noContentType:").append(noContentType).toString());
+        // Trace.DEBUG(this, (new StringBuilder("execute jsonData:")).append(jsonData).toString());
     }
 
     private boolean isTextFile(File file) {

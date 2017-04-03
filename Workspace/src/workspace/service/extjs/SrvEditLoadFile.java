@@ -41,7 +41,7 @@ public class SrvEditLoadFile extends SrvGenerique {
                             int nb = lines.length;
                             for (int i = 0; i < nb; i++) {
                                 line = simpleFormat(lines[i]);
-                                Trace.DEBUG("SrvEditLoadFile execute lines[" + i + "]:" + line);
+                                // Trace.DEBUG("SrvEditLoadFile execute lines[" + i + "]:" + line);
                                 if (jsonData == null) {
                                     jsonData = "{results:" + nb + ", encoding:'" + encoding + "', data:[";
                                 } else {
@@ -65,7 +65,7 @@ public class SrvEditLoadFile extends SrvGenerique {
             jsonData = "{results:0,data:[]}";
         }
         Trace.DEBUG(this, "SrvEditLoadFile execute filename:" + filename + " filenameFormated:" + filenameFormated);
-        Trace.DEBUG(this, "SrvEditLoadFile execute jsonData:" + jsonData);
+        // Trace.DEBUG(this, "SrvEditLoadFile execute jsonData:" + jsonData);
         OutputStream os = response.getOutputStream();
         response.setContentType("text/json");
         os.write(jsonData.getBytes());

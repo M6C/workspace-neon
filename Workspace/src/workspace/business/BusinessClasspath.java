@@ -32,11 +32,11 @@ import workspace.util.UtilPath;
 public class BusinessClasspath {
 
 	public static void initializeApplication(HttpServletRequest request, String application, Document domXml) throws TransformerException, IOException {
-		Trace.DEBUG(BusinessClasspath.class, "BusinessClasspath initializeApplication application:" + application + " getClassPath");
+		// Trace.DEBUG(BusinessClasspath.class, "BusinessClasspath initializeApplication application:" + application + " getClassPath");
         getClassPath(request, application, domXml);
-		Trace.DEBUG(BusinessClasspath.class, "BusinessClasspath initializeApplication application:" + application + " getClassPathList");
+		// Trace.DEBUG(BusinessClasspath.class, "BusinessClasspath initializeApplication application:" + application + " getClassPathList");
 	    getClassPathList(request, application, domXml);
-		Trace.DEBUG(BusinessClasspath.class, "BusinessClasspath initializeApplication application:" + application + " getClassList");
+		// Trace.DEBUG(BusinessClasspath.class, "BusinessClasspath initializeApplication application:" + application + " getClassList");
 	    getClassList(request, application, domXml);
 	}
 
@@ -133,15 +133,15 @@ public class BusinessClasspath {
         for(int i=0 ; i<size ; i++) {
             String path = listPath.get(i);
             if (UtilString.isEmpty(path)) {
-    			Trace.DEBUG("SrvOptimizeImport getClassList empty path");
+    			Trace.DEBUG("BusinessClasspath getClassList empty path");
             	continue;
             }
             File file = new File(path);
             if (!file.exists()) {
-    			Trace.DEBUG("SrvOptimizeImport getClassList '"+path+"' do not exist");
+    			Trace.DEBUG("BusinessClasspath getClassList '"+path+"' do not exist");
             	continue;
             }
-            //Trace.DEBUG("SrvOptimizeImport file[" + i + "/" + size + "]:" + file.getAbsolutePath());
+            //Trace.DEBUG("BusinessClasspath file[" + i + "/" + size + "]:" + file.getAbsolutePath());
             if (file.isDirectory()) {
 				Vector listClass = UtilFile.dir(path, true, ext + ";.jar", true);
 		        int max = UtilVector.safeSize(listClass);
@@ -158,7 +158,7 @@ public class BusinessClasspath {
             } else {
                 ZipEntry[] entries = UtilPackageResource.getZipEntries(file);
                 if (entries == null) {
-        			Trace.DEBUG("SrvOptimizeImport getClassList '"+path+"' has no entrie");
+        			// Trace.DEBUG("BusinessClasspath getClassList '"+path+"' has no entrie");
                 	continue;
                 }
                 int entriesLen = entries.length;
@@ -169,7 +169,7 @@ public class BusinessClasspath {
                         String entryNameLow = entryName.toLowerCase();
                         if (entryNameLow.endsWith(ext) && entryNameLow.indexOf('$') < 0) {
                         	String className = entryName.replaceAll("[/\\\\]", ".").substring(0, entryName.length()-extLen);
-                        	//Trace.DEBUG("SrvOptimizeImport file[" + j + "/" + entriesLen + "] className:" + className);
+                        	//Trace.DEBUG("BusinessClasspath file[" + j + "/" + entriesLen + "] className:" + className);
                             addClass(mapPathClass, path, className);
                         }
                     }

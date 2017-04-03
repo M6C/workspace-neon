@@ -1,6 +1,7 @@
 package workspace.service.debug.extjs;
 
 import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,9 +37,9 @@ public class SrvDebugBreakpointAdd extends workspace.service.debug.SrvDebugBreak
         } finally {
 	        jsonData = "{"+
                 "'success':" + success + ","+
-            	"'classname':'" + szClassName + "',"+
-            	"'response':'" + szResponse + "',"+
-            	"'text':'" + szText + "'"+
+            	"'classname':'" + encode(szClassName) + "',"+
+            	"'response':'" + encode(szResponse) + "',"+
+            	"'text':'" + encode(szText) + "'"+
             "}";
 
 	        OutputStream os = response.getOutputStream();
@@ -65,4 +66,14 @@ public class SrvDebugBreakpointAdd extends workspace.service.debug.SrvDebugBreak
 
         return ret;
     }
+
+    private String encode(String text) {
+		String ret = "";
+		try {
+			ret = URLEncoder.encode(text, "UTF-8");
+		} catch(Exception ex) {
+        	System.err.println("SrvDebugBreakpointAdd text error message:" + ex.getMessage());
+		}
+		return ret;
+	}
 }

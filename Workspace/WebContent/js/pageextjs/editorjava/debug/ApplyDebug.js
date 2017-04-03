@@ -58,13 +58,13 @@ Ext.define('Workspace.editorjava.debug.ApplyDebug', {
 		    	}
 		    }
 		    else {
-		    	if (jsonData.text == 'deleted') {
-		    		editor.session.clearBreakpoint(row);
-
-		    		mainCenterPanel.removeDebugBreakpoint(brkData);
-		    	} else {
+		    	if (jsonData.text != 'deleted') {
 		    		Workspace.common.tool.Pop.failure(me, 'Breakpoint has not be removed', {toast: false, detail: Ext.encode(jsonData)});
 		    	}
+		    	// Clear Breakpoint Anyway
+	    		editor.session.clearBreakpoint(row);
+
+	    		mainCenterPanel.removeDebugBreakpoint(brkData);
 		    }
 		}
         ,

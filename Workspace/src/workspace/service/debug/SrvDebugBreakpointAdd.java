@@ -35,6 +35,7 @@ import framework.beandata.BeanGenerique;
 import framework.ressource.util.UtilString;
 import framework.ressource.util.jdi.UtilJDI;
 import framework.service.SrvGenerique;
+import framework.trace.Trace;
 import workspace.adaptateur.application.AdpXmlApplication;
 import workspace.bean.debug.BeanDebug;
 import workspace.service.debug.tool.ToolDebug;
@@ -60,18 +61,32 @@ public class SrvDebugBreakpointAdd extends SrvGenerique {
       String path = (String)bean.getParameterDataByName("pathToExpand");
       String fileName = (String)bean.getParameterDataByName("FileName");
       String className = (String)bean.getParameterDataByName("className");
-      String result = "";
       boolean success = false;
       if (UtilString.isNotEmpty(szLigne)){
           HttpSession session = request.getSession();
           BeanDebug beanDebug = ToolDebug.getBeanDebug(session, application);
-          if (beanDebug==null) {
-          	System.err.println("BeanDebug not found. Can't Add Breakpoint.");
-          	return;
-          }
-          VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
+          VirtualMachine virtualMachine = null;
+          Hashtable<String, Properties> tableBreakpoint = null;
+          String result = "";
+          String text = "";
+          String key = className+":"+szLigne;
           try {
-              String text = "";
+	          if (beanDebug==null) {
+	        	text = "BeanDebug not found. Can't Add Breakpoint.";
+	          	Trace.WARNING(this, text);
+	          	return;
+	          }
+	          tableBreakpoint = beanDebug.getTableBreakpoint();
+	          virtualMachine = beanDebug.getVirtualMachine();
+	          if (virtualMachine==null) {
+	          	text = "VirtualMachine not found. Can't Add Breakpoint.";
+	          	if (UtilString.isNotEmpty(beanDebug.getMessageError())) {
+	          		text += " " + beanDebug.getMessageError();
+	          		beanDebug.setMessageError(null);
+	          	}
+	          	Trace.WARNING(this, text);
+	        	return;
+	          }
     
               Document domXml = (Document)session.getAttribute("resultDom");
               boolean readFile = false;
@@ -96,8 +111,6 @@ public class SrvDebugBreakpointAdd extends SrvGenerique {
 
               Integer rowNum = new Integer(szLigne);
 
-              String key = className+":"+szLigne;
-              Hashtable<String, Properties> tableBreakpoint = beanDebug.getTableBreakpoint();
               EventRequestManager eventRequestManager = virtualMachine.eventRequestManager();
               BreakpointRequest brkR = ToolDebug.findBreakpoint(virtualMachine, className, rowNum.intValue());
               if (brkR==null) {
@@ -127,7 +140,6 @@ Context ctx = new InitialContext();
 addToJNDI(ctx, "/workspace/debug/breakpoint", request.getSession().getId(), thread);
 //          addToQueue(ctx, "/queue", request.getSession().getId(), thread);
 */
-              result = key+":"+text;
           }
           catch(Exception ex) {
               StringWriter sw = new StringWriter();
@@ -136,6 +148,7 @@ addToJNDI(ctx, "/workspace/debug/breakpoint", request.getSession().getId(), thre
               throw ex;
           }
           finally {
+              result = key+":"+text;
               if (virtualMachine!=null) {
                   virtualMachine.resume();
               }
@@ -150,9 +163,10 @@ addToJNDI(ctx, "/workspace/debug/breakpoint", request.getSession().getId(), thre
 //              } else if (virtualMachine!=null) {
 //            	  virtualMachine.dispose();
 //              }
-              if (success) {
-            	  ToolDebug.writeBeanDebugBreakpoint(session, beanDebug);
+              if (!success && tableBreakpoint != null) {
+                 tableBreakpoint.remove(key);
               }
+        	  ToolDebug.writeBeanDebugBreakpoint(session, beanDebug);
               doResponse(request, response, bean, result, success);
           }
       }

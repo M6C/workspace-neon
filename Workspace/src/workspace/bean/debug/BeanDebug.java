@@ -28,6 +28,7 @@ public class BeanDebug
     private String hostname;
     private int port;
     private int timeout;
+    private String messageError;
 
     private Map<String, String[]> mapApplicationPath = new HashMap<String, String[]>();
 
@@ -172,4 +173,12 @@ public class BeanDebug
     public void setTimeout(int timeout) {
         this.timeout = timeout;
     }
+
+	public String getMessageError() {
+		return messageError;
+	}
+
+	public void setMessageError(String messageError) {
+		this.messageError = messageError;
+	}
 }
