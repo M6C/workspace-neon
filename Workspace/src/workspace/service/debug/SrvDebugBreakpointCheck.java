@@ -2,7 +2,7 @@ package workspace.service.debug;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.net.URLEncoder;
+import java.net.URLDecoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -61,11 +61,11 @@ public class SrvDebugBreakpointCheck extends SrvGenerique {
 		String BeanApplication = (String)bean.getParameterDataByName("application");
 		BreakpointRequest brkR = (BreakpointRequest) brkE.request();
 		// Recupere le nom de l'application du point d'arret
-		String application = URLEncoder.encode((String) brkR.getProperty("application"), "UTF-8");
+		String application = URLDecoder.decode((String)brkR.getProperty("application"), "UTF-8");
 		if (UtilString.isEmpty(BeanApplication) || UtilString.isEquals(application, BeanApplication)) {
 			// Recupere le chemin des sources de la class du point d'arret
-			String path = URLEncoder.encode((String) brkR.getProperty("path"), "UTF-8");
-			String sourceName = URLEncoder.encode(brkR.location().sourceName(), "UTF-8");
+			String path = URLDecoder.decode((String) brkR.getProperty("path"), "UTF-8");
+			String sourceName = URLDecoder.decode(brkR.location().sourceName(), "UTF-8");
 			int lineNumber = brkE.location().lineNumber();
 			PrintWriter out = response.getWriter();
 			out.print(application + ":" + path + ":" + sourceName + ":" + lineNumber);

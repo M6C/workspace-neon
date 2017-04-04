@@ -14,7 +14,9 @@ import com.sun.jdi.VirtualMachine;
 import com.sun.jdi.request.BreakpointRequest;
 
 import framework.beandata.BeanGenerique;
+import framework.ressource.util.UtilString;
 import framework.service.SrvGenerique;
+import framework.trace.Trace;
 import workspace.bean.debug.BeanDebug;
 import workspace.service.debug.tool.ToolDebug;
 
@@ -35,22 +37,34 @@ public class SrvDebugStart extends SrvGenerique {
           PrintWriter out = response.getWriter();
           String application = (String)bean.getParameterDataByName("application");
           BeanDebug beanDebug = ToolDebug.getBeanDebug(session, application);
+          String text = "";
           if (beanDebug==null) {
-        	  System.err.println("BeanDebug not found. Can't Start Debug.");
-        	  return;
+	        text = "BeanDebug not found. Can't Start Debug.";
+	        Trace.WARNING(this, text);
+        	return;
+          }
+          if (beanDebug.getVirtualMachine()==null) {
+          	text = "VirtualMachine not found. Can't Start Debug.";
+          	if (UtilString.isNotEmpty(beanDebug.getMessageError())) {
+          		text += " " + beanDebug.getMessageError();
+          		beanDebug.setMessageError(null);
+          	}
+          	Trace.WARNING(this, text);
+        	return;
           }
     	  try {
 			  ToolDebug.recreateAllBreakpoint(beanDebug);
-
-			  out.print("Started");
+			  text = "Started";
     	  }
     	  catch(Exception ex) {
     		  StringWriter sw = new StringWriter();
     		  ex.printStackTrace(new PrintWriter(sw));
-    		  request.setAttribute("msgText", sw.toString());
+    		  text += " " + sw.toString();
+    		  request.setAttribute("msgText", text);
     		  throw ex;
     	  }
     	  finally {
+			  out.print(text);
     		  VirtualMachine virtualMachine = beanDebug.getVirtualMachine();
     		  if (virtualMachine!=null)
     			  virtualMachine.resume();

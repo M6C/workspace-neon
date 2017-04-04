@@ -1,5 +1,8 @@
 Ext.define('Workspace.editorjava.debug.request.JsonDebugList',  {
-
+	requires: [
+	     'Workspace.tool.UtilString'
+  	]
+  	,
 	constructor: function(config) {
 	    var me = this;
 	
@@ -22,6 +25,18 @@ Ext.define('Workspace.editorjava.debug.request.JsonDebugList',  {
 	            	var jsonData;
 		    		if (success) {
 		    			jsonData = Ext.decode(response.responseText);
+
+		    		    var data = jsonData.children;
+                	    if (!Ext.isEmpty(data)) {
+                    	    if (!Ext.isArray(data)) {
+                    	        data = [data];
+                    	    }
+                    	    Ext.each(data, function(item) {
+            	    			item.application = Workspace.tool.UtilString.decodeUtf8(item.application);
+            	    			item.classname = Workspace.tool.UtilString.decodeUtf8(item.classname);
+            	    			item.filename = Workspace.tool.UtilString.decodeUtf8(item.filename);
+                    	    });
+                	    }
 		    		}
 	            	paramCallBack(jsonData, success);
 	            }

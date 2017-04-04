@@ -1,10 +1,19 @@
 package workspace.service.debug;
 
+import com.sun.jdi.VirtualMachine;
+import com.sun.jdi.request.BreakpointRequest;
+import com.sun.jdi.request.EventRequestManager;
+
+import framework.beandata.BeanGenerique;
+import framework.ressource.util.UtilString;
+import framework.ressource.util.jdi.UtilJDI;
+import framework.service.SrvGenerique;
+import framework.trace.Trace;
+
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.io.StringWriter;
-import java.net.URLEncoder;
 import java.util.Hashtable;
 import java.util.Properties;
 import java.util.StringTokenizer;
@@ -18,6 +27,7 @@ import javax.jms.QueueSender;
 import javax.jms.QueueSession;
 import javax.jms.Session;
 import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.naming.NameAlreadyBoundException;
 import javax.naming.NameNotFoundException;
 import javax.naming.NamingException;
@@ -27,15 +37,6 @@ import javax.servlet.http.HttpSession;
 
 import org.w3c.dom.Document;
 
-import com.sun.jdi.VirtualMachine;
-import com.sun.jdi.request.BreakpointRequest;
-import com.sun.jdi.request.EventRequestManager;
-
-import framework.beandata.BeanGenerique;
-import framework.ressource.util.UtilString;
-import framework.ressource.util.jdi.UtilJDI;
-import framework.service.SrvGenerique;
-import framework.trace.Trace;
 import workspace.adaptateur.application.AdpXmlApplication;
 import workspace.bean.debug.BeanDebug;
 import workspace.service.debug.tool.ToolDebug;
@@ -125,7 +126,7 @@ public class SrvDebugBreakpointAdd extends SrvGenerique {
                      success = true;
                  }
                  else {
-                     text = URLEncoder.encode("Can't create breakpoint class '" + className + "' not found.", "UTF-8");
+                     text = "Can't create breakpoint class '" + className + "' not found.";
                  }
               } else {
                   eventRequestManager.deleteEventRequest(brkR);
@@ -133,7 +134,6 @@ public class SrvDebugBreakpointAdd extends SrvGenerique {
                   text = "deleted";
                   success = true;
               }
-              
 /*
 // get the initial context, refer to your app server docs for this
 Context ctx = new InitialContext();

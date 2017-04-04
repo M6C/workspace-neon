@@ -1,5 +1,8 @@
 Ext.define('Workspace.editorjava.debug.request.JsonDebugBreakpointAdd',  {
-
+	requires: [
+	     'Workspace.tool.UtilString'
+  	]
+  	,
     constructor: function(config) {
         var me = this;
 
@@ -22,6 +25,7 @@ Ext.define('Workspace.editorjava.debug.request.JsonDebugBreakpointAdd',  {
                 	var jsonData;
     	    		if (success) {
     	    			jsonData = Ext.decode(response.responseText);
+    	    			jsonData.text = Workspace.tool.UtilString.decodeUtf8(jsonData.text);
     	    		}
                 	paramCallBack(jsonData, me.params);
                 }

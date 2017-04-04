@@ -1,6 +1,7 @@
 Ext.define('Workspace.editorjava.panel.PanelCenter', {
 	requires: [
 	     'Workspace.common.tool.Pop',
+	     'Workspace.tool.UtilString',
 	     'Workspace.editorjava.constant.ConstantState',
 	     'Workspace.editorjava.debug.WaiterDebug',
   	     'Workspace.editorjava.panel.center.function.AddTabAce',
@@ -95,7 +96,8 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
         // Find the source name for the application. Or keap the last.
 		Ext.each(jsonData.sourceName, function(item, index, all) {
             sourceName = Workspace.tool.UtilString.decodeUtf8(item);
-		    return !(sourceName.indexOf('[' + application + ']') == 0);
+            // Continue (return false) if application is not find on sourceName start
+		    return sourceName.indexOf('[' + application + ']') != 0;
 		});
 
 		var sep = (sourceName.indexOf('/')>=0 ? '/' : '\\');
