@@ -20,6 +20,8 @@ Ext.define('Workspace.editorjava.panel.est.PanelDebugBreakpoint', {
         	}    
         });
 
+        Workspace.tool.UtilComponent.addListener(me, 'itemdblclick', me.listenerItemdblclick);
+
         me._manageEmptyNode();
 
 		me.callParent(arguments);
@@ -43,6 +45,26 @@ Ext.define('Workspace.editorjava.panel.est.PanelDebugBreakpoint', {
         me._manageEmptyNode();
 	}
 	,
+	listenerItemdblclick: function(view, record, item, index, event, eOpts) {
+	    var me = this;
+        var root = view.node;
+        var node = root.childNodes[index];
+	    var data = node.data.data;
+
+	    if (!Ext.isDefined(data)) {
+	        return;
+	    }
+
+        var mainCenterPanel=Ext.getCmp('mainCenterPanel');
+
+        if (mainCenterPanel.waiterDebug.classname == data.className) {
+            mainCenterPanel.waiterDebug.classname = undefined;
+            mainCenterPanel.waiterDebug.row = undefined;
+        }
+
+        mainCenterPanel.callbackDebugStart(data);
+	}
+	,
 	/**
 	 * @param data : format : {application:, line:, classname:, filename:}
 	 */
@@ -59,7 +81,14 @@ Ext.define('Workspace.editorjava.panel.est.PanelDebugBreakpoint', {
         var node = root.findChild('id', id);
 
         if (Ext.isEmpty(node)) {
-    	    root.appendChild([{leaf:true, text:text, id:id, qtip:qtip}]);
+            var jsonData = {
+                application:data.application,
+                line:data.line,
+                className:data.classname,
+                sourceName:data.filename
+            };
+            console.log("addDebugBreakpoint jsonData:" + jsonData)
+    	    root.appendChild([{leaf:true, text:text, id:id, qtip:qtip, data: jsonData}]);
         }
 	    if (Ext.isDefined(option.manageEmptyNode) && option.manageEmptyNode) {
             me._manageEmptyNode();

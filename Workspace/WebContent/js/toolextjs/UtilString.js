@@ -168,6 +168,23 @@ Ext.define('Workspace.tool.UtilString', {
         	}
             return ret;
         }
+        ,
+        getSeparator: function(path) {
+            return path.indexOf('/')>=0 ? '/' : '\\';
+        }
+        ,
+        makeSamePathSeparator: function(path, mainPath) {
+		    var sepMain = Workspace.tool.UtilString.getSeparator(mainPath);
+		    var sep = Workspace.tool.UtilString.getSeparator(path);
+            if (sep != sepMain) {
+                path = Workspace.tool.UtilString.replaceAll(path, sep, sepMain);
+            }
+            return path;
+        }
+        ,
+        replaceAll: function(text, what, by) {
+            return text.split(what).join(by);
+        }
 	}
 
 }, function() {Workspace.tool.Log.defined('Workspace.tool.UtilString');});

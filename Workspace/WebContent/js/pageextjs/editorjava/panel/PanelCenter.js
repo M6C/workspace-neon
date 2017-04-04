@@ -100,12 +100,13 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 		    return sourceName.indexOf('[' + application + ']') != 0;
 		});
 
-		var sep = (sourceName.indexOf('/')>=0 ? '/' : '\\');
-		var text = sourceName.substring(sourceName.lastIndexOf(sep) + 1);
-		var panelId = sourceName;
-
 		var editor;
 		var panel = mainCenterPanel.getActiveTab();
+		var panelId = sourceName;
+		var sep = Workspace.tool.UtilString.getSeparator(panelId);
+		var text = panelId.substring(panelId.lastIndexOf(sep) + 1);
+
+        panelId = Workspace.tool.UtilString.makeSamePathSeparator(panelId, panel.id);
 		if (panel.id == panelId) {
 			editor = ace.edit(panel.panelEditorId);
 	    	Ext.apply(editor, {
