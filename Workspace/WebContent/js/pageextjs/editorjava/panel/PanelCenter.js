@@ -101,13 +101,16 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
 		});
 
 		var editor;
-		var panel = mainCenterPanel.getActiveTab();
+		var isFind = false;
 		var panelId = sourceName;
-		var sep = Workspace.tool.UtilString.getSeparator(panelId);
-		var text = panelId.substring(panelId.lastIndexOf(sep) + 1);
+		var panel = mainCenterPanel.getActiveTab();
 
-        panelId = Workspace.tool.UtilString.makeSamePathSeparator(panelId, panel.id);
-		if (panel.id == panelId) {
+        if (!Ext.isEmpty(panel)) {
+            panelId = Workspace.tool.UtilString.makeSamePathSeparator(panelId, panel.id);
+            isFind = (panel.id == panelId);
+        }
+
+		if (isFind) {
 			editor = ace.edit(panel.panelEditorId);
 	    	Ext.apply(editor, {
 	    		cursorRow: row,
@@ -117,6 +120,8 @@ Ext.define('Workspace.editorjava.panel.PanelCenter', {
     		});
 	    	panel.editorFocusAndScroll(panel);
 		} else {
+		    var sep = Workspace.tool.UtilString.getSeparator(panelId);
+		    var text = panelId.substring(panelId.lastIndexOf(sep) + 1);
 			var raw = {
 				'text':text,
 				'id':panelId,
