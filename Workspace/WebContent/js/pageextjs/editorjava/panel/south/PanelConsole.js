@@ -10,7 +10,7 @@ Ext.define('Workspace.editorjava.panel.south.PanelConsole', {
     initComponent : function() {
 		var me = this;
 
-        Workspace.tool.UtilComponent.addListener(me, 'activate', me.listenerActivate);
+        Workspace.tool.UtilComponent.addListener(me, 'show', me.listenerShow);
 
 		me.callParent(arguments);
 	},
@@ -24,9 +24,9 @@ Ext.define('Workspace.editorjava.panel.south.PanelConsole', {
         anchor    : '100%'
     }]
     ,
-    listenerActivate: function(me, options) {
-        // var fieldConsole=me.child('fieldConsole');
-        // fieldConsole.focus();
+    listenerShow: function(me, options) {
+        var fieldConsole=Ext.getCmp('fieldConsole');
+        fieldConsole.focus(false, true);
     }
 	,
     useArrows: true,
