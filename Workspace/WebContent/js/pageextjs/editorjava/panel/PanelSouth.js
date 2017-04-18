@@ -1,8 +1,7 @@
 // DOUBLON A MUTUALISER
 Ext.define('Workspace.editorjava.panel.PanelSouth', {
-	// REQUIRED
 
-	extend: 'Workspace.common.panel.PanelCollapsible'
+	extend: 'Workspace.common.panel.TabPanelCollapsible'
 	,
 	alias: 'widget.panelSouth',
 	alternateClassName: 'PanelSouth'
@@ -23,7 +22,8 @@ Ext.define('Workspace.editorjava.panel.PanelSouth', {
 		var me = this;
 		Ext.apply(me, {
             items : [
-				Ext.create('Workspace.editorjava.grid.GridTrace', {id: 'editorjavaGridTrace'})
+				Ext.create('Workspace.editorjava.grid.GridTrace', {id: 'editorjavaGridTrace', title:'Log'}),
+				Ext.create('Workspace.editorjava.panel.south.PanelConsole', {id: 'editorjavaConsole'})
             ]
 			,
 			listeners: {

@@ -12,3 +12,9 @@ background-image: none;
 background-color: rgb(255, 100, 100);
 background-image: none;
 }
+
+.console {
+    background-color:black;
+    color:white;
+    background-image: none;
+}
