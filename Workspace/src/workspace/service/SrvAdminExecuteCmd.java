@@ -2,11 +2,12 @@ package workspace.service;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,25 +25,31 @@ public class SrvAdminExecuteCmd extends SrvGenerique {
 	public void execute(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean) throws Exception {
         String commandLine = (String) bean.getParameterDataByName("commandLine");
         String result = "";
+    	File cmdFile = File.createTempFile("Exec_Cmd_" + Long.toString(new Date().getTime()), ".cmd");
+    	String line = cmdFile.getAbsolutePath(); //"cmd /C " + cmdFile.getAbsolutePath();
         try {
             if (UtilString.isNotEmpty(commandLine)) {
                 StringBuffer stb = new StringBuffer();
-            	List<String> listCmd = new ArrayList<>();
 
-            	for(String cmd : commandLine.split("\n")) {
-            		cmd = cmd.trim();
-            		if (UtilString.isNotEmpty(cmd) && !cmd.startsWith(OUT_PREFIX) && !cmd.startsWith(ERR_PREFIX)) {
-            			listCmd.add(cmd);
+            	FileWriter out = new FileWriter(cmdFile);
+            	try {
+	            	for(String cmd : commandLine.split("\n")) {
+	            		cmd = cmd.trim();
+	            		if (UtilString.isNotEmpty(cmd) && !cmd.startsWith(OUT_PREFIX) && !cmd.startsWith(ERR_PREFIX)) {
+	            			out.append(cmd + "\r\n");
+	            		}
+	            	}
+            		out.close();
+            		out = null;
+	
+					execCmd(line, stb);
+	
+	            	result = stb.toString();
+            	} finally {
+            		if (out != null) {
+            			out.close();
             		}
             	}
-
-            	int cnt = listCmd.size() - 1;
-            	for(int i=0 ; i<listCmd.size() ; i++) {
-            		String cmd = listCmd.get(i);
-            		execCmd(cmd, (i == cnt) ? stb : null);
-            	}
-
-            	result = stb.toString();
             }
         }
         catch(Exception ex) {
@@ -57,6 +64,8 @@ public class SrvAdminExecuteCmd extends SrvGenerique {
         	}
         	doResponse(request, response, bean, result);
         	Trace.DEBUG(this, (new StringBuilder("execute commandLine:'")).append(commandLine).append("'").toString());
+        	Trace.DEBUG(this, (new StringBuilder("execute temp script:'")).append(line).append("'").toString());
+        	Trace.DEBUG(this, (new StringBuilder("execute result:'")).append(result).append("'").toString());
         }
     }
 
