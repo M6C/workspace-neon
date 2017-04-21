@@ -1,56 +1,80 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   SrvAdminExecuteCmd.java
-
 package workspace.service;
 
-import framework.beandata.BeanGenerique;
-import framework.service.SrvGenerique;
-import framework.trace.Trace;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class SrvAdminExecuteCmd extends SrvGenerique
-{
+import framework.beandata.BeanGenerique;
+import framework.ressource.util.UtilString;
+import framework.service.SrvGenerique;
+import framework.trace.Trace;
 
-    public SrvAdminExecuteCmd()
-    {
-    }
+public class SrvAdminExecuteCmd extends SrvGenerique {
 
-    public void init()
-    {
-    }
+    protected static final String OUT_PREFIX = "[OUT] ";
+    protected static final String ERR_PREFIX = "[ERR] ";
 
-    public void execute(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean)
-        throws Exception
-    {
-        String commandLine = request.getParameter("commandLine");
-        try
-        {
-            if(commandLine != null && !commandLine.equals(""))
-            {
-                BufferedReader out = null;
+	public void execute(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean) throws Exception {
+        String commandLine = (String) bean.getParameterDataByName("commandLine");
+        String result = "";
+        try {
+            if (UtilString.isNotEmpty(commandLine)) {
                 StringBuffer stb = new StringBuffer();
-                Process p = Runtime.getRuntime().exec(commandLine);
-                p.waitFor();
-                out = new BufferedReader(new InputStreamReader(p.getInputStream()));
-                for(String str = out.readLine(); str != null; str = out.readLine())
-                    stb.append(str).append("\r\n");
+            	List<String> listCmd = new ArrayList<>();
 
-                request.setAttribute("resultCommandLine", stb.toString());
-                p.destroy();
+            	for(String cmd : commandLine.split("\n")) {
+            		cmd = cmd.trim();
+            		if (UtilString.isNotEmpty(cmd) && !cmd.startsWith(OUT_PREFIX) && !cmd.startsWith(ERR_PREFIX)) {
+            			listCmd.add(cmd);
+            		}
+            	}
+
+            	int cnt = listCmd.size() - 1;
+            	for(int i=0 ; i<listCmd.size() ; i++) {
+            		String cmd = listCmd.get(i);
+            		execCmd(cmd, (i == cnt) ? stb : null);
+            	}
+
+            	result = stb.toString();
             }
         }
-        catch(Exception ex)
-        {
+        catch(Exception ex) {
             ByteArrayOutputStream streamLog = new ByteArrayOutputStream();
             PrintStream psLog = new PrintStream(streamLog);
             ex.printStackTrace(psLog);
-            request.setAttribute("resultCommandLine", streamLog.toString());
+            result = ERR_PREFIX + streamLog.toString();
             Trace.ERROR(this, ex);
+        } finally {
+        	if (UtilString.isEmpty(result)) {
+        		result = OUT_PREFIX;
+        	}
+        	doResponse(request, response, bean, result);
+        	Trace.DEBUG(this, (new StringBuilder("execute commandLine:'")).append(commandLine).append("'").toString());
         }
-        Trace.DEBUG(this, (new StringBuilder("execute commandLine:'")).append(commandLine).append("'").toString());
+    }
+
+    protected void doResponse(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean, String content) throws Exception {
+        request.setAttribute("resultCommandLine", content);
+    }
+
+    private void execCmd(String commandLine, StringBuffer stb) throws IOException, InterruptedException {
+        if (UtilString.isNotEmpty(commandLine)) {
+            Process p = Runtime.getRuntime().exec(commandLine);
+            p.waitFor();
+            if (stb != null) {
+                BufferedReader out = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                for(String str = out.readLine(); str != null; str = out.readLine()) {
+                    stb.append(OUT_PREFIX).append(str).append("\r\n");
+                }
+            }
+            p.destroy();
+        }
     }
 }

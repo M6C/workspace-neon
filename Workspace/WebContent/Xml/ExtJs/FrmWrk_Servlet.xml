@@ -322,7 +322,9 @@
     <!-- ADMIN -->
     <SERVLET Name="AdminPageExtJs" Target="/Web/PageExtJs/Admin/Page.jsp" TargetError="/Web/Page/index.jsp"/>
     <SERVLET Name="AdminPageExecCmdValiderExtJs" Target="" TargetError="/Web/Page/index.jsp">
-        <BEAN Name="BeanExecCmd" Scope="request" Service="workspace.service.extjs.SrvAdminExecuteCmd"/>
+        <BEAN Name="BeanExecCmd" Scope="request" Service="workspace.service.extjs.SrvAdminExecuteCmd">
+            <PARAM Name="commandLine" Type="STRING"/>
+        </BEAN>
     </SERVLET>
     <SERVLET Name="AdminFrameworkReloadExtJs" Target="/Web/PageExtJs/ReloadFrmWrk.jsp" TargetError="/Web/Page/index.jsp"/>
     <SERVLET Name="JsonUserDetail" Target="" TargetError="">
