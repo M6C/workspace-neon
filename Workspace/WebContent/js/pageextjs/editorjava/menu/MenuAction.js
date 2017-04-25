@@ -202,6 +202,28 @@ function autoDeploy() {
     });
 }
 
+function managerConsoleVisibility() {
+    var mainEstPanel = Ext.getCmp('mainSouthPanel');
+    var tabPanelConsole = mainEstPanel.getComponent('editorjavaConsole');//mainEstPanel.down('#editorjavaConsole').tab;
+    var tabPanelTrace = mainEstPanel.getComponent('editorjavaGridTrace');//mainEstPanel.down('#editorjavaGridTrace').tab;
+    var visibility = tabPanelConsole.isVisible();
+
+    var tp = mainEstPanel;
+    var tabA, tabI;
+    if (visibility) {
+        tabA = tabPanelTrace;
+        tabPanelConsole.tab.hide();
+    } else {
+        tabA = tabPanelConsole;
+        tabPanelConsole.tab.show();
+    }
+
+    tabA.closeRequest = false;
+    tp.setActiveTab(tabA);
+    tabA.fireEvent('activate');
+    Ext.get(tabA.tab.el).frame();
+}
+
 //function formatFont(str) {
 //   var fontStart = "";
 //   var fontEnd = "";

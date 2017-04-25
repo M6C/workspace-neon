@@ -23,7 +23,7 @@ Ext.define('Workspace.editorjava.panel.PanelSouth', {
 		Ext.apply(me, {
             items : [
 				Ext.create('Workspace.editorjava.grid.GridTrace', {id: 'editorjavaGridTrace', title:'Log'}),
-				Ext.create('Workspace.editorjava.panel.south.PanelConsole', {id: 'editorjavaConsole'})
+				Ext.create('Workspace.editorjava.panel.south.PanelConsole', {id: 'editorjavaConsole', hidden: true, autoDestroy: false})
             ]
 			,
 			listeners: {

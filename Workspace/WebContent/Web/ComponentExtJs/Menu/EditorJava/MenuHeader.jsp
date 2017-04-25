@@ -134,6 +134,9 @@ function showMenuLevel(tableId, trId) {
                     <td class="menuLevel02">
                         <html:TagA attrClass="menuLevel02" attrHref="javascript:showToolXmlXsl()">Xml/Xsl</html:TagA>
                     </td>
+                    <td class="menuLevel02">
+                        <html:TagA attrClass="menuLevel02" attrHref="javascript:managerConsoleVisibility()">Show/Hide Console</html:TagA>
+                    </td>
                     <%--
                     <td class="menuLevel02">
                         <html:TagA attrClass="menuLevel02" attrHref="javascript:openPopup('action.servlet?event=EditorJavaSplitFile&application=#R$application#', 'EditorJavaSplitFile', 640, 200)">Split&nbsp;File</html:TagA>
