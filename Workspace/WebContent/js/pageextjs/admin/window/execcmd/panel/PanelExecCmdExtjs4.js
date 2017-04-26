@@ -1,5 +1,4 @@
 Ext.define('Workspace.admin.window.execcmd.panel.PanelExecCmdExtjs4', {
-	// REQUIRED
 
 	extend: 'Ext.form.Panel'
 	,
@@ -15,8 +14,9 @@ Ext.define('Workspace.admin.window.execcmd.panel.PanelExecCmdExtjs4', {
 			        grow      : true,
 			        name      : 'commandLine',
 			        id        : 'commandLine',
-			        fieldLabel: 'Command',
-			        anchor    : '100%'
+                    fieldCls  : 'console',
+			        anchor    : '100%',
+			        margin    : '0 0 0 0'
 			    }
 			],
 		    // Reset and Submit buttons
@@ -38,10 +38,10 @@ Ext.define('Workspace.admin.window.execcmd.panel.PanelExecCmdExtjs4', {
 			                form.submit({
 				            	url : DOMAIN_NAME_ROOT + '/action.servlet?event=AdminPageExecCmdValiderExtJs',
 			                    success: function(form, action) {
-			                       Ext.Msg.alert('Success', action.result.msg);
+                        	        me.updateResponse(true, action.result);
 			                    },
 			                    failure: function(form, action) {
-			                        Ext.Msg.alert('Failed', action.result.msg);
+                        	        me.updateResponse(false, action.result);
 			                    }
 			                });
 			            }
@@ -51,15 +51,25 @@ Ext.define('Workspace.admin.window.execcmd.panel.PanelExecCmdExtjs4', {
 	    });
 	    me.callParent(arguments);
 	}
+    ,
+    updateResponse: function (success, result) {
+    	var field = Ext.getCmp('commandLine');
+    	var msg = '';
+    	if (Ext.isDefined(result)) {
+    		msg = result.msg;
+    	}
+    	field.setValue(field.getValue() + Workspace.tool.UtilString.decodeUtf8(msg));
+    }
 	,
     // Fields will be arranged vertically, stretched to full width
-    layout: 'anchor',
+    layout: 'fit',
     defaults: {
         anchor: '100%'
     },
 	buttonAlign : 'center',
-    bodyPadding: 5,
 	border:false,
-    width: 350
+    width: 350,
+	margin    : '0 0 0 0',
+	bodyPadding: '0 0 0 0'
 
 }, function() {Workspace.tool.Log.defined('Workspace.admin.window.execcmd.panel.PanelExecCmdExtjs4');});

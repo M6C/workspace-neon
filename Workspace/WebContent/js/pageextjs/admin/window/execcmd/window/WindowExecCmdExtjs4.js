@@ -6,6 +6,8 @@ Ext.define('Workspace.admin.window.execcmd.window.WindowExecCmdExtjs4', {
 	alias: 'workspace.WindowExecCmd',
 	alternateClassName: 'WorkspaceWindowExecCmd'
 	,
+	title: 'Console'
+	,
     initComponent : function(){
 		var me = this;
 		Ext.apply(me, {
@@ -15,5 +17,7 @@ Ext.define('Workspace.admin.window.execcmd.window.WindowExecCmdExtjs4', {
 	    });
 	    me.callParent(arguments);
 	}
+	,
+	layout: 'fit'
 
 }, function() {Workspace.tool.Log.defined('Workspace.admin.window.execcmd.window.WindowExecCmdExtjs4');});

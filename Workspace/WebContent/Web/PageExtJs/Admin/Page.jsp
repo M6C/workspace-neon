@@ -4,6 +4,7 @@
   <title>Administration</title>
     <link rel="stylesheet" type="text/css" href="<%=DOMAIN_NAME_ROOT%>/jsFramework/ext-4.0.7/resources/css/ext-all-gray.css" />
     <link rel="stylesheet" type="text/css" href="<%=DOMAIN_NAME_ROOT%>/css/componentextjs/menu/MenuHeader.css" />
+    <link rel="stylesheet" type="text/css" href="<%=DOMAIN_NAME_ROOT%>/css/componentextjs/Console.css" />
     <link rel="stylesheet" type="text/css" href="<%=DOMAIN_NAME_ROOT%>/css/pageextjs/admin/styles.css"/>
 
     <script type="text/javascript" src="<%=DOMAIN_NAME_ROOT%>/jsFramework/ext-4.0.7/ext-all-debug-w-comments.js"></script>
