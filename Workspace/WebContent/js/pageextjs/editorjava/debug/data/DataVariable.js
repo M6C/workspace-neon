@@ -72,7 +72,7 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
         			var variable = {
         				text: variableItem.name,
         				expanded: stackItem.expanded,
-        				leaf: true
+        				leaf: !variableItem.objectReference
         			};
 
         			var type = Workspace.tool.UtilString.decodeUtf8(variableItem.type);
@@ -104,27 +104,32 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"request",
 		               "type":"javax.servlet.http.HttpServletRequest",
-		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29"
+		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"response",
 		               "type":"javax.servlet.http.HttpServletResponse",
-		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29"
+		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"bean",
 		               "type":"framework.beandata.BeanGenerique",
-		               "value":"instance+of+framework.beandata.BeanGenerique%28id%3D37%29"
+		               "value":"instance+of+framework.beandata.BeanGenerique%28id%3D37%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"session",
 		               "type":"javax.servlet.http.HttpSession",
-		               "value":"instance+of+org.apache.catalina.session.StandardSessionFacade%28id%3D39%29"
+		               "value":"instance+of+org.apache.catalina.session.StandardSessionFacade%28id%3D39%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"context",
 		               "type":"javax.servlet.ServletContext",
-		               "value":"instance+of+org.apache.catalina.core.ApplicationContextFacade%28id%3D41%29"
+		               "value":"instance+of+org.apache.catalina.core.ApplicationContextFacade%28id%3D41%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -137,22 +142,26 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"request",
 		               "type":"javax.servlet.http.HttpServletRequest",
-		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29"
+		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"response",
 		               "type":"javax.servlet.http.HttpServletResponse",
-		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29"
+		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"beanData",
 		               "type":"framework.ressource.bean.BeanData",
-		               "value":"instance+of+framework.ressource.bean.BeanData%28id%3D43%29"
+		               "value":"instance+of+framework.ressource.bean.BeanData%28id%3D43%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"bean",
 		               "type":"framework.beandata.BeanGenerique",
-		               "value":"instance+of+framework.beandata.BeanGenerique%28id%3D37%29"
+		               "value":"instance+of+framework.beandata.BeanGenerique%28id%3D37%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -165,22 +174,26 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"request",
 		               "type":"javax.servlet.http.HttpServletRequest",
-		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29"
+		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"response",
 		               "type":"javax.servlet.http.HttpServletResponse",
-		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29"
+		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"beanData",
 		               "type":"framework.ressource.bean.BeanData",
-		               "value":"instance+of+framework.ressource.bean.BeanData%28id%3D43%29"
+		               "value":"instance+of+framework.ressource.bean.BeanData%28id%3D43%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"bean",
 		               "type":"framework.beandata.BeanGenerique",
-		               "value":"instance+of+framework.beandata.BeanGenerique%28id%3D37%29"
+		               "value":"instance+of+framework.beandata.BeanGenerique%28id%3D37%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -193,47 +206,56 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"request",
 		               "type":"javax.servlet.http.HttpServletRequest",
-		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29"
+		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"response",
 		               "type":"javax.servlet.http.HttpServletResponse",
-		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29"
+		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"session",
 		               "type":"javax.servlet.http.HttpSession",
-		               "value":"instance+of+org.apache.catalina.session.StandardSessionFacade%28id%3D39%29"
+		               "value":"instance+of+org.apache.catalina.session.StandardSessionFacade%28id%3D39%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"szEvent",
 		               "type":"java.lang.String",
-		               "value":"%22EditorJavaPageExtJsAce%22"
+		               "value":"%22EditorJavaPageExtJsAce%22",
+		               "objectReference":false
 		            },
 		            {  
 		               "name":"beanServlet",
 		               "type":"framework.ressource.bean.BeanServlet",
-		               "value":"instance+of+framework.ressource.bean.BeanServlet%28id%3D46%29"
+		               "value":"instance+of+framework.ressource.bean.BeanServlet%28id%3D46%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"i",
 		               "type":"int",
-		               "value":"0"
+		               "value":"0",
+		               "objectReference":false
 		            },
 		            {  
 		               "name":"beanData",
 		               "type":"framework.ressource.bean.BeanData",
-		               "value":"instance+of+framework.ressource.bean.BeanData%28id%3D43%29"
+		               "value":"instance+of+framework.ressource.bean.BeanData%28id%3D43%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"szScope",
 		               "type":"java.lang.String",
-		               "value":"%22request%22"
+		               "value":"%22request%22",
+		               "objectReference":false
 		            },
 		            {  
 		               "name":"bean",
 		               "type":"framework.beandata.BeanGenerique",
-		               "value":"instance+of+framework.beandata.BeanGenerique%28id%3D37%29"
+		               "value":"instance+of+framework.beandata.BeanGenerique%28id%3D37%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -246,22 +268,26 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"req",
 		               "type":"javax.servlet.http.HttpServletRequest",
-		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29"
+		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"resp",
 		               "type":"javax.servlet.http.HttpServletResponse",
-		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29"
+		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"method",
 		               "type":"java.lang.String",
-		               "value":"%22GET%22"
+		               "value":"%22GET%22",
+		               "objectReference":false
 		            },
 		            {  
 		               "name":"lastModified",
 		               "type":"long",
-		               "value":"-1"
+		               "value":"-1",
+		               "objectReference":false
 		            }
 		         ]
 		      },
@@ -274,22 +300,26 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"req",
 		               "type":"javax.servlet.ServletRequest",
-		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29"
+		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"res",
 		               "type":"javax.servlet.ServletResponse",
-		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29"
+		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"request",
 		               "type":"javax.servlet.http.HttpServletRequest",
-		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29"
+		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"response",
 		               "type":"javax.servlet.http.HttpServletResponse",
-		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29"
+		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -329,62 +359,74 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"request",
 		               "type":"javax.servlet.http.HttpServletRequest",
-		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29"
+		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"response",
 		               "type":"javax.servlet.http.HttpServletResponse",
-		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29"
+		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"szEvent",
 		               "type":"java.lang.String",
-		               "value":"%22EditorJavaPageExtJsAce%22"
+		               "value":"%22EditorJavaPageExtJsAce%22",
+		               "objectReference":false
 		            },
 		            {  
 		               "name":"redirect",
 		               "type":"java.lang.String",
-		               "value":"%22EditorJavaPageExtJsAce%22"
+		               "value":"%22EditorJavaPageExtJsAce%22",
+		               "objectReference":false
 		            },
 		            {  
 		               "name":"bean",
 		               "type":"framework.ressource.bean.BeanServlet",
-		               "value":"instance+of+framework.ressource.bean.BeanServlet%28id%3D46%29"
+		               "value":"instance+of+framework.ressource.bean.BeanServlet%28id%3D46%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"servletClass",
 		               "type":"java.lang.String",
-		               "value":"%22framework.action.ActionGenerique%22"
+		               "value":"%22framework.action.ActionGenerique%22",
+		               "objectReference":false
 		            },
 		            {  
 		               "name":"ok",
 		               "type":"boolean",
-		               "value":"false"
+		               "value":"false",
+		               "objectReference":false
 		            },
 		            {  
 		               "name":"classloader",
 		               "type":"java.lang.ClassLoader",
-		               "value":"instance+of+org.glassfish.web.loader.WebappClassLoader%28id%3D51%29"
+		               "value":"instance+of+org.glassfish.web.loader.WebappClassLoader%28id%3D51%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"classe",
 		               "type":"java.lang.Class",
-		               "value":"instance+of+java.lang.Class%28reflected+class%3Dframework.action.ActionGenerique%2C+id%3D4%29"
+		               "value":"instance+of+java.lang.Class%28reflected+class%3Dframework.action.ActionGenerique%2C+id%3D4%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"param1",
 		               "type":"java.lang.Class",
-		               "value":"instance+of+java.lang.Class%28reflected+class%3Djavax.servlet.ServletRequest%2C+id%3D54%29"
+		               "value":"instance+of+java.lang.Class%28reflected+class%3Djavax.servlet.ServletRequest%2C+id%3D54%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"param2",
 		               "type":"java.lang.Class",
-		               "value":"instance+of+java.lang.Class%28reflected+class%3Djavax.servlet.ServletResponse%2C+id%3D55%29"
+		               "value":"instance+of+java.lang.Class%28reflected+class%3Djavax.servlet.ServletResponse%2C+id%3D55%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"method",
 		               "type":"java.lang.reflect.Method",
-		               "value":"instance+of+java.lang.reflect.Method%28id%3D56%29"
+		               "value":"instance+of+java.lang.reflect.Method%28id%3D56%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -397,22 +439,26 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"req",
 		               "type":"javax.servlet.http.HttpServletRequest",
-		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29"
+		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"resp",
 		               "type":"javax.servlet.http.HttpServletResponse",
-		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29"
+		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"method",
 		               "type":"java.lang.String",
-		               "value":"%22GET%22"
+		               "value":"%22GET%22",
+		               "objectReference":false
 		            },
 		            {  
 		               "name":"lastModified",
 		               "type":"long",
-		               "value":"-1"
+		               "value":"-1",
+		               "objectReference":false
 		            }
 		         ]
 		      },
@@ -425,22 +471,26 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"req",
 		               "type":"javax.servlet.ServletRequest",
-		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29"
+		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"res",
 		               "type":"javax.servlet.ServletResponse",
-		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29"
+		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"request",
 		               "type":"javax.servlet.http.HttpServletRequest",
-		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29"
+		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"response",
 		               "type":"javax.servlet.http.HttpServletResponse",
-		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29"
+		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -453,22 +503,26 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"request",
 		               "type":"javax.servlet.ServletRequest",
-		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29"
+		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"response",
 		               "type":"javax.servlet.ServletResponse",
-		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29"
+		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"serv",
 		               "type":"javax.servlet.Servlet",
-		               "value":"instance+of+workspace.action.ActionServlet%28id%3D57%29"
+		               "value":"instance+of+workspace.action.ActionServlet%28id%3D57%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"supp",
 		               "type":"org.apache.catalina.util.InstanceSupport",
-		               "value":"instance+of+org.apache.catalina.util.InstanceSupport%28id%3D59%29"
+		               "value":"instance+of+org.apache.catalina.util.InstanceSupport%28id%3D59%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -481,17 +535,20 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"request",
 		               "type":"javax.servlet.ServletRequest",
-		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29"
+		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"response",
 		               "type":"javax.servlet.ServletResponse",
-		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29"
+		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"support",
 		               "type":"org.apache.catalina.util.InstanceSupport",
-		               "value":"instance+of+org.apache.catalina.util.InstanceSupport%28id%3D59%29"
+		               "value":"instance+of+org.apache.catalina.util.InstanceSupport%28id%3D59%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -504,12 +561,14 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"request",
 		               "type":"javax.servlet.ServletRequest",
-		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29"
+		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"response",
 		               "type":"javax.servlet.ServletResponse",
-		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29"
+		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -522,37 +581,44 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"request",
 		               "type":"javax.servlet.ServletRequest",
-		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29"
+		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"response",
 		               "type":"javax.servlet.ServletResponse",
-		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29"
+		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"chain",
 		               "type":"javax.servlet.FilterChain",
-		               "value":"instance+of+org.apache.catalina.core.ApplicationFilterChain%28id%3D61%29"
+		               "value":"instance+of+org.apache.catalina.core.ApplicationFilterChain%28id%3D61%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"bean",
 		               "type":"framework.beandata.BeanGenerique",
-		               "value":"instance+of+framework.beandata.BeanGenerique%28id%3D62%29"
+		               "value":"instance+of+framework.beandata.BeanGenerique%28id%3D62%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"req",
 		               "type":"javax.servlet.http.HttpServletRequest",
-		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29"
+		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"szInputName",
 		               "type":"java.lang.String",
-		               "value":"%22EventAuthentification%22"
+		               "value":"%22EventAuthentification%22",
+		               "objectReference":false
 		            },
 		            {  
 		               "name":"szEventAuthentification",
 		               "type":"java.lang.String",
-		               "value":"%22true%22"
+		               "value":"%22true%22",
+		               "objectReference":false
 		            }
 		         ]
 		      },
@@ -565,27 +631,32 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"request",
 		               "type":"javax.servlet.ServletRequest",
-		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29"
+		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"response",
 		               "type":"javax.servlet.ServletResponse",
-		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29"
+		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"support",
 		               "type":"org.apache.catalina.util.InstanceSupport",
-		               "value":"instance+of+org.apache.catalina.util.InstanceSupport%28id%3D59%29"
+		               "value":"instance+of+org.apache.catalina.util.InstanceSupport%28id%3D59%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"filterConfig",
 		               "type":"org.apache.catalina.core.ApplicationFilterConfig",
-		               "value":"instance+of+org.apache.catalina.core.ApplicationFilterConfig%28id%3D65%29"
+		               "value":"instance+of+org.apache.catalina.core.ApplicationFilterConfig%28id%3D65%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"filter",
 		               "type":"javax.servlet.Filter",
-		               "value":"instance+of+workspace.filter.FilterSecurity%28id%3D67%29"
+		               "value":"instance+of+workspace.filter.FilterSecurity%28id%3D67%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -598,12 +669,14 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"request",
 		               "type":"javax.servlet.ServletRequest",
-		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29"
+		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"response",
 		               "type":"javax.servlet.ServletResponse",
-		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29"
+		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -616,27 +689,32 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"request",
 		               "type":"javax.servlet.ServletRequest",
-		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29"
+		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"response",
 		               "type":"javax.servlet.ServletResponse",
-		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29"
+		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"chain",
 		               "type":"javax.servlet.FilterChain",
-		               "value":"instance+of+org.apache.catalina.core.ApplicationFilterChain%28id%3D61%29"
+		               "value":"instance+of+org.apache.catalina.core.ApplicationFilterChain%28id%3D61%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"bean",
 		               "type":"framework.ressource.bean.BeanServlet",
-		               "value":"instance+of+framework.ressource.bean.BeanServlet%28id%3D46%29"
+		               "value":"instance+of+framework.ressource.bean.BeanServlet%28id%3D46%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"event",
 		               "type":"java.lang.String",
-		               "value":"%22EditorJavaPageExtJsAce%22"
+		               "value":"%22EditorJavaPageExtJsAce%22",
+		               "objectReference":false
 		            }
 		         ]
 		      },
@@ -649,27 +727,32 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"request",
 		               "type":"javax.servlet.ServletRequest",
-		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29"
+		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"response",
 		               "type":"javax.servlet.ServletResponse",
-		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29"
+		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"support",
 		               "type":"org.apache.catalina.util.InstanceSupport",
-		               "value":"instance+of+org.apache.catalina.util.InstanceSupport%28id%3D59%29"
+		               "value":"instance+of+org.apache.catalina.util.InstanceSupport%28id%3D59%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"filterConfig",
 		               "type":"org.apache.catalina.core.ApplicationFilterConfig",
-		               "value":"instance+of+org.apache.catalina.core.ApplicationFilterConfig%28id%3D68%29"
+		               "value":"instance+of+org.apache.catalina.core.ApplicationFilterConfig%28id%3D68%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"filter",
 		               "type":"javax.servlet.Filter",
-		               "value":"instance+of+framework.filter.FilterAuthentification%28id%3D69%29"
+		               "value":"instance+of+framework.filter.FilterAuthentification%28id%3D69%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -682,12 +765,14 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"request",
 		               "type":"javax.servlet.ServletRequest",
-		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29"
+		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"response",
 		               "type":"javax.servlet.ServletResponse",
-		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29"
+		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -700,72 +785,86 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"request",
 		               "type":"org.apache.catalina.Request",
-		               "value":"instance+of+com.sun.enterprise.web.pwc.connector.coyote.PwcCoyoteRequest%28id%3D70%29"
+		               "value":"instance+of+com.sun.enterprise.web.pwc.connector.coyote.PwcCoyoteRequest%28id%3D70%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"response",
 		               "type":"org.apache.catalina.Response",
-		               "value":"instance+of+com.sun.enterprise.web.connector.coyote.PECoyoteResponse%28id%3D72%29"
+		               "value":"instance+of+com.sun.enterprise.web.connector.coyote.PECoyoteResponse%28id%3D72%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"unavailable",
 		               "type":"boolean",
-		               "value":"false"
+		               "value":"false",
+		               "objectReference":false
 		            },
 		            {  
 		               "name":"throwable",
 		               "type":"java.lang.Throwable",
-		               "value":"false"
+		               "value":"false",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"servlet",
 		               "type":"javax.servlet.Servlet",
-		               "value":"instance+of+workspace.action.ActionServlet%28id%3D57%29"
+		               "value":"instance+of+workspace.action.ActionServlet%28id%3D57%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"wrapper",
 		               "type":"org.apache.catalina.core.StandardWrapper",
-		               "value":"instance+of+org.apache.catalina.core.StandardWrapper%28id%3D74%29"
+		               "value":"instance+of+org.apache.catalina.core.StandardWrapper%28id%3D74%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"context",
 		               "type":"org.apache.catalina.Context",
-		               "value":"instance+of+com.sun.enterprise.web.WebModule%28id%3D75%29"
+		               "value":"instance+of+com.sun.enterprise.web.WebModule%28id%3D75%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"hrequest",
 		               "type":"org.apache.catalina.HttpRequest",
-		               "value":"instance+of+com.sun.enterprise.web.pwc.connector.coyote.PwcCoyoteRequest%28id%3D70%29"
+		               "value":"instance+of+com.sun.enterprise.web.pwc.connector.coyote.PwcCoyoteRequest%28id%3D70%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"hreq",
 		               "type":"org.apache.catalina.connector.RequestFacade",
-		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29"
+		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"hres",
 		               "type":"javax.servlet.http.HttpServletResponse",
-		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29"
+		               "value":"instance+of+org.apache.catalina.connector.ResponseFacade%28id%3D35%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"requestPathMB",
 		               "type":"org.glassfish.grizzly.http.util.DataChunk",
-		               "value":"instance+of+org.glassfish.grizzly.http.util.DataChunk%28id%3D77%29"
+		               "value":"instance+of+org.glassfish.grizzly.http.util.DataChunk%28id%3D77%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"factory",
 		               "type":"org.apache.catalina.core.ApplicationFilterFactory",
-		               "value":"instance+of+org.apache.catalina.core.ApplicationFilterFactory%28id%3D79%29"
+		               "value":"instance+of+org.apache.catalina.core.ApplicationFilterFactory%28id%3D79%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"filterChain",
 		               "type":"org.apache.catalina.core.ApplicationFilterChain",
-		               "value":"instance+of+org.apache.catalina.core.ApplicationFilterChain%28id%3D61%29"
+		               "value":"instance+of+org.apache.catalina.core.ApplicationFilterChain%28id%3D61%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"jspFile",
 		               "type":"java.lang.String",
-		               "value":"instance+of+org.apache.catalina.core.ApplicationFilterChain%28id%3D61%29"
+		               "value":"instance+of+org.apache.catalina.core.ApplicationFilterChain%28id%3D61%29",
+		               "objectReference":false
 		            }
 		         ]
 		      },
@@ -778,22 +877,26 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"request",
 		               "type":"org.apache.catalina.Request",
-		               "value":"instance+of+com.sun.enterprise.web.pwc.connector.coyote.PwcCoyoteRequest%28id%3D70%29"
+		               "value":"instance+of+com.sun.enterprise.web.pwc.connector.coyote.PwcCoyoteRequest%28id%3D70%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"response",
 		               "type":"org.apache.catalina.Response",
-		               "value":"instance+of+com.sun.enterprise.web.connector.coyote.PECoyoteResponse%28id%3D72%29"
+		               "value":"instance+of+com.sun.enterprise.web.connector.coyote.PECoyoteResponse%28id%3D72%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"wrapper",
 		               "type":"org.apache.catalina.Wrapper",
-		               "value":"instance+of+org.apache.catalina.core.StandardWrapper%28id%3D74%29"
+		               "value":"instance+of+org.apache.catalina.core.StandardWrapper%28id%3D74%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"basic",
 		               "type":"org.glassfish.web.valve.GlassFishValve",
-		               "value":"instance+of+org.apache.catalina.core.StandardWrapperValve%28id%3D81%29"
+		               "value":"instance+of+org.apache.catalina.core.StandardWrapperValve%28id%3D81%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -806,42 +909,50 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"request",
 		               "type":"org.apache.catalina.Request",
-		               "value":"instance+of+com.sun.enterprise.web.pwc.connector.coyote.PwcCoyoteRequest%28id%3D70%29"
+		               "value":"instance+of+com.sun.enterprise.web.pwc.connector.coyote.PwcCoyoteRequest%28id%3D70%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"response",
 		               "type":"org.apache.catalina.Response",
-		               "value":"instance+of+com.sun.enterprise.web.connector.coyote.PECoyoteResponse%28id%3D72%29"
+		               "value":"instance+of+com.sun.enterprise.web.connector.coyote.PECoyoteResponse%28id%3D72%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"chaining",
 		               "type":"boolean",
-		               "value":"false"
+		               "value":"false",
+		               "objectReference":false
 		            },
 		            {  
 		               "name":"status",
 		               "type":"int",
-		               "value":"1"
+		               "value":"1",
+		               "objectReference":false
 		            },
 		            {  
 		               "name":"i",
 		               "type":"int",
-		               "value":"1"
+		               "value":"1",
+		               "objectReference":false
 		            },
 		            {  
 		               "name":"savedValves",
 		               "type":"org.glassfish.web.valve.GlassFishValve%5B%5D",
-		               "value":"instance+of+org.glassfish.web.valve.GlassFishValve%5B1%5D+%28id%3D82%29"
+		               "value":"instance+of+org.glassfish.web.valve.GlassFishValve%5B1%5D+%28id%3D82%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"req",
 		               "type":"org.apache.catalina.Request",
-		               "value":"instance+of+com.sun.enterprise.web.pwc.connector.coyote.PwcCoyoteRequest%28id%3D70%29"
+		               "value":"instance+of+com.sun.enterprise.web.pwc.connector.coyote.PwcCoyoteRequest%28id%3D70%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"resp",
 		               "type":"org.apache.catalina.Response",
-		               "value":"instance+of+com.sun.enterprise.web.connector.coyote.PECoyoteResponse%28id%3D72%29"
+		               "value":"instance+of+com.sun.enterprise.web.connector.coyote.PECoyoteResponse%28id%3D72%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -854,12 +965,14 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"request",
 		               "type":"org.apache.catalina.Request",
-		               "value":"instance+of+com.sun.enterprise.web.pwc.connector.coyote.PwcCoyoteRequest%28id%3D70%29"
+		               "value":"instance+of+com.sun.enterprise.web.pwc.connector.coyote.PwcCoyoteRequest%28id%3D70%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"response",
 		               "type":"org.apache.catalina.Response",
-		               "value":"instance+of+com.sun.enterprise.web.connector.coyote.PECoyoteResponse%28id%3D72%29"
+		               "value":"instance+of+com.sun.enterprise.web.connector.coyote.PECoyoteResponse%28id%3D72%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -872,22 +985,26 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"request",
 		               "type":"org.apache.catalina.Request",
-		               "value":"instance+of+com.sun.enterprise.web.pwc.connector.coyote.PwcCoyoteRequest%28id%3D70%29"
+		               "value":"instance+of+com.sun.enterprise.web.pwc.connector.coyote.PwcCoyoteRequest%28id%3D70%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"response",
 		               "type":"org.apache.catalina.Response",
-		               "value":"instance+of+com.sun.enterprise.web.connector.coyote.PECoyoteResponse%28id%3D72%29"
+		               "value":"instance+of+com.sun.enterprise.web.connector.coyote.PECoyoteResponse%28id%3D72%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"hreq",
 		               "type":"javax.servlet.http.HttpServletRequest",
-		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29"
+		               "value":"instance+of+org.apache.catalina.connector.RequestFacade%28id%3D33%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"realm",
 		               "type":"org.apache.catalina.Realm",
-		               "value":"instance+of+com.sun.web.security.RealmAdapter%28id%3D84%29"
+		               "value":"instance+of+com.sun.web.security.RealmAdapter%28id%3D84%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -900,17 +1017,20 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"request",
 		               "type":"org.apache.catalina.Request",
-		               "value":"instance+of+com.sun.enterprise.web.pwc.connector.coyote.PwcCoyoteRequest%28id%3D70%29"
+		               "value":"instance+of+com.sun.enterprise.web.pwc.connector.coyote.PwcCoyoteRequest%28id%3D70%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"response",
 		               "type":"org.apache.catalina.Response",
-		               "value":"instance+of+com.sun.enterprise.web.connector.coyote.PECoyoteResponse%28id%3D72%29"
+		               "value":"instance+of+com.sun.enterprise.web.connector.coyote.PECoyoteResponse%28id%3D72%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"context",
 		               "type":"org.apache.catalina.Context",
-		               "value":"instance+of+com.sun.enterprise.web.WebModule%28id%3D75%29"
+		               "value":"instance+of+com.sun.enterprise.web.WebModule%28id%3D75%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -923,37 +1043,44 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"req",
 		               "type":"org.glassfish.grizzly.http.server.Request",
-		               "value":"instance+of+org.glassfish.grizzly.http.server.Request%28id%3D86%29"
+		               "value":"instance+of+org.glassfish.grizzly.http.server.Request%28id%3D86%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"request",
 		               "type":"org.apache.catalina.connector.Request",
-		               "value":"instance+of+com.sun.enterprise.web.pwc.connector.coyote.PwcCoyoteRequest%28id%3D70%29"
+		               "value":"instance+of+com.sun.enterprise.web.pwc.connector.coyote.PwcCoyoteRequest%28id%3D70%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"res",
 		               "type":"org.glassfish.grizzly.http.server.Response",
-		               "value":"instance+of+org.glassfish.grizzly.http.server.Response%28id%3D88%29"
+		               "value":"instance+of+org.glassfish.grizzly.http.server.Response%28id%3D88%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"response",
 		               "type":"org.apache.catalina.connector.Response",
-		               "value":"instance+of+com.sun.enterprise.web.connector.coyote.PECoyoteResponse%28id%3D72%29"
+		               "value":"instance+of+com.sun.enterprise.web.connector.coyote.PECoyoteResponse%28id%3D72%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"v3Enabled",
 		               "type":"boolean",
-		               "value":"false"
+		               "value":"false",
+		               "objectReference":false
 		            },
 		            {  
 		               "name":"authPassthroughEnabled",
 		               "type":"boolean",
-		               "value":"false"
+		               "value":"false",
+		               "objectReference":false
 		            },
 		            {  
 		               "name":"proxyHandler",
 		               "type":"com.sun.appserv.ProxyHandler",
-		               "value":"instance+of+com.sun.enterprise.web.ProxyHandlerImpl%28id%3D90%29"
+		               "value":"instance+of+com.sun.enterprise.web.ProxyHandlerImpl%28id%3D90%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"container",
@@ -963,12 +1090,14 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"host",
 		               "type":"org.apache.catalina.Host",
-		               "value":"instance+of+com.sun.enterprise.web.VirtualServer%28id%3D94%29"
+		               "value":"instance+of+com.sun.enterprise.web.VirtualServer%28id%3D94%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"hostValve",
 		               "type":"org.glassfish.web.valve.GlassFishValve",
-		               "value":"instance+of+org.apache.catalina.core.StandardHostValve%28id%3D96%29"
+		               "value":"instance+of+org.apache.catalina.core.StandardHostValve%28id%3D96%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -981,32 +1110,38 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"req",
 		               "type":"org.glassfish.grizzly.http.server.Request",
-		               "value":"instance+of+org.glassfish.grizzly.http.server.Request%28id%3D86%29"
+		               "value":"instance+of+org.glassfish.grizzly.http.server.Request%28id%3D86%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"res",
 		               "type":"org.glassfish.grizzly.http.server.Response",
-		               "value":"instance+of+org.glassfish.grizzly.http.server.Response%28id%3D88%29"
+		               "value":"instance+of+org.glassfish.grizzly.http.server.Response%28id%3D88%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"request",
 		               "type":"org.apache.catalina.connector.Request",
-		               "value":"instance+of+com.sun.enterprise.web.pwc.connector.coyote.PwcCoyoteRequest%28id%3D70%29"
+		               "value":"instance+of+com.sun.enterprise.web.pwc.connector.coyote.PwcCoyoteRequest%28id%3D70%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"response",
 		               "type":"org.apache.catalina.connector.Response",
-		               "value":"instance+of+com.sun.enterprise.web.connector.coyote.PECoyoteResponse%28id%3D72%29"
+		               "value":"instance+of+com.sun.enterprise.web.connector.coyote.PECoyoteResponse%28id%3D72%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"md",
 		               "type":"org.glassfish.grizzly.http.server.util.MappingData",
-		               "value":"instance+of+com.sun.enterprise.web.connector.coyote.PECoyoteResponse%28id%3D72%29"
+		               "value":"instance+of+com.sun.enterprise.web.connector.coyote.PECoyoteResponse%28id%3D72%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"v3Enabled",
 		               "type":"boolean",
-		               "value":"false"
+		               "value":"false",
+		               "objectReference":false
 		            }
 		         ]
 		      },
@@ -1028,17 +1163,20 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"request",
 		               "type":"org.glassfish.grizzly.http.server.Request",
-		               "value":"instance+of+org.glassfish.grizzly.http.server.Request%28id%3D86%29"
+		               "value":"instance+of+org.glassfish.grizzly.http.server.Request%28id%3D86%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"response",
 		               "type":"org.glassfish.grizzly.http.server.Response",
-		               "value":"instance+of+org.glassfish.grizzly.http.server.Response%28id%3D88%29"
+		               "value":"instance+of+org.glassfish.grizzly.http.server.Response%28id%3D88%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"handler",
 		               "type":"java.util.concurrent.Callable",
-		               "value":"instance+of+com.sun.enterprise.v3.services.impl.ContainerMapper%24HttpHandlerCallable%28id%3D97%29"
+		               "value":"instance+of+com.sun.enterprise.v3.services.impl.ContainerMapper%24HttpHandlerCallable%28id%3D97%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -1051,32 +1189,38 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"request",
 		               "type":"org.glassfish.grizzly.http.server.Request",
-		               "value":"instance+of+org.glassfish.grizzly.http.server.Request%28id%3D86%29"
+		               "value":"instance+of+org.glassfish.grizzly.http.server.Request%28id%3D86%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"response",
 		               "type":"org.glassfish.grizzly.http.server.Response",
-		               "value":"instance+of+org.glassfish.grizzly.http.server.Response%28id%3D88%29"
+		               "value":"instance+of+org.glassfish.grizzly.http.server.Response%28id%3D88%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"threadPool",
 		               "type":"java.util.concurrent.Executor",
-		               "value":"instance+of+org.glassfish.grizzly.http.server.Response%28id%3D88%29"
+		               "value":"instance+of+org.glassfish.grizzly.http.server.Response%28id%3D88%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"httpServerFilter",
 		               "type":"org.glassfish.grizzly.http.server.HttpServerFilter",
-		               "value":"instance+of+org.glassfish.grizzly.http.server.HttpServerFilter%28id%3D98%29"
+		               "value":"instance+of+org.glassfish.grizzly.http.server.HttpServerFilter%28id%3D98%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"connection",
 		               "type":"org.glassfish.grizzly.Connection",
-		               "value":"instance+of+org.glassfish.grizzly.nio.transport.TCPNIOConnection%28id%3D99%29"
+		               "value":"instance+of+org.glassfish.grizzly.nio.transport.TCPNIOConnection%28id%3D99%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"suspendStatus",
 		               "type":"org.glassfish.grizzly.http.server.SuspendStatus",
-		               "value":"instance+of+org.glassfish.grizzly.http.server.SuspendStatus%28id%3D101%29"
+		               "value":"instance+of+org.glassfish.grizzly.http.server.SuspendStatus%28id%3D101%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -1089,22 +1233,26 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"request",
 		               "type":"org.glassfish.grizzly.http.server.Request",
-		               "value":"instance+of+org.glassfish.grizzly.http.server.Request%28id%3D86%29"
+		               "value":"instance+of+org.glassfish.grizzly.http.server.Request%28id%3D86%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"response",
 		               "type":"org.glassfish.grizzly.http.server.Response",
-		               "value":"instance+of+org.glassfish.grizzly.http.server.Response%28id%3D88%29"
+		               "value":"instance+of+org.glassfish.grizzly.http.server.Response%28id%3D88%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"httpRequestPacket",
 		               "type":"org.glassfish.grizzly.http.HttpRequestPacket",
-		               "value":"instance+of+org.glassfish.grizzly.http.HttpServerFilter%24ServerHttpRequestImpl%28id%3D103%29"
+		               "value":"instance+of+org.glassfish.grizzly.http.HttpServerFilter%24ServerHttpRequestImpl%28id%3D103%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"requestURIRef",
 		               "type":"org.glassfish.grizzly.http.util.RequestURIRef",
-		               "value":"instance+of+org.glassfish.grizzly.http.util.RequestURIRef%28id%3D105%29"
+		               "value":"instance+of+org.glassfish.grizzly.http.util.RequestURIRef%28id%3D105%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -1117,57 +1265,68 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"ctx",
 		               "type":"org.glassfish.grizzly.filterchain.FilterChainContext",
-		               "value":"instance+of+org.glassfish.grizzly.filterchain.FilterChainContext%28id%3D107%29"
+		               "value":"instance+of+org.glassfish.grizzly.filterchain.FilterChainContext%28id%3D107%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"message",
 		               "type":"java.lang.Object",
-		               "value":"instance+of+org.glassfish.grizzly.http.HttpContent%28id%3D109%29"
+		               "value":"instance+of+org.glassfish.grizzly.http.HttpContent%28id%3D109%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"connection",
 		               "type":"org.glassfish.grizzly.Connection",
-		               "value":"instance+of+org.glassfish.grizzly.nio.transport.TCPNIOConnection%28id%3D99%29"
+		               "value":"instance+of+org.glassfish.grizzly.nio.transport.TCPNIOConnection%28id%3D99%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"httpContent",
 		               "type":"org.glassfish.grizzly.http.HttpContent",
-		               "value":"instance+of+org.glassfish.grizzly.http.HttpContent%28id%3D109%29"
+		               "value":"instance+of+org.glassfish.grizzly.http.HttpContent%28id%3D109%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"context",
 		               "type":"org.glassfish.grizzly.http.HttpContext",
-		               "value":"instance+of+org.glassfish.grizzly.http.HttpContext%28id%3D111%29"
+		               "value":"instance+of+org.glassfish.grizzly.http.HttpContext%28id%3D111%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"handlerRequest",
 		               "type":"org.glassfish.grizzly.http.server.Request",
-		               "value":"instance+of+org.glassfish.grizzly.http.server.Request%28id%3D86%29"
+		               "value":"instance+of+org.glassfish.grizzly.http.server.Request%28id%3D86%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"request",
 		               "type":"org.glassfish.grizzly.http.HttpRequestPacket",
-		               "value":"instance+of+org.glassfish.grizzly.http.HttpServerFilter%24ServerHttpRequestImpl%28id%3D103%29"
+		               "value":"instance+of+org.glassfish.grizzly.http.HttpServerFilter%24ServerHttpRequestImpl%28id%3D103%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"response",
 		               "type":"org.glassfish.grizzly.http.HttpResponsePacket",
-		               "value":"instance+of+org.glassfish.grizzly.http.HttpResponsePacketImpl%28id%3D113%29"
+		               "value":"instance+of+org.glassfish.grizzly.http.HttpResponsePacketImpl%28id%3D113%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"handlerResponse",
 		               "type":"org.glassfish.grizzly.http.server.Response",
-		               "value":"instance+of+org.glassfish.grizzly.http.server.Response%28id%3D88%29"
+		               "value":"instance+of+org.glassfish.grizzly.http.server.Response%28id%3D88%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"wasSuspended",
 		               "type":"boolean",
-		               "value":"false"
+		               "value":"false",
+		               "objectReference":false
 		            },
 		            {  
 		               "name":"httpHandlerLocal",
 		               "type":"org.glassfish.grizzly.http.server.HttpHandler",
-		               "value":"instance+of+com.sun.enterprise.v3.services.impl.ContainerMapper%28id%3D115%29"
+		               "value":"instance+of+com.sun.enterprise.v3.services.impl.ContainerMapper%28id%3D115%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -1180,12 +1339,14 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"filter",
 		               "type":"org.glassfish.grizzly.filterchain.Filter",
-		               "value":"instance+of+org.glassfish.grizzly.http.server.HttpServerFilter%28id%3D98%29"
+		               "value":"instance+of+org.glassfish.grizzly.http.server.HttpServerFilter%28id%3D98%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"context",
 		               "type":"org.glassfish.grizzly.filterchain.FilterChainContext",
-		               "value":"instance+of+org.glassfish.grizzly.filterchain.FilterChainContext%28id%3D107%29"
+		               "value":"instance+of+org.glassfish.grizzly.filterchain.FilterChainContext%28id%3D107%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -1198,17 +1359,20 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"executor",
 		               "type":"org.glassfish.grizzly.filterchain.FilterExecutor",
-		               "value":"instance+of+org.glassfish.grizzly.filterchain.ExecutorResolver%249%28id%3D116%29"
+		               "value":"instance+of+org.glassfish.grizzly.filterchain.ExecutorResolver%249%28id%3D116%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"currentFilter",
 		               "type":"org.glassfish.grizzly.filterchain.Filter",
-		               "value":"instance+of+org.glassfish.grizzly.http.server.HttpServerFilter%28id%3D98%29"
+		               "value":"instance+of+org.glassfish.grizzly.http.server.HttpServerFilter%28id%3D98%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"ctx",
 		               "type":"org.glassfish.grizzly.filterchain.FilterChainContext",
-		               "value":"instance+of+org.glassfish.grizzly.filterchain.FilterChainContext%28id%3D107%29"
+		               "value":"instance+of+org.glassfish.grizzly.filterchain.FilterChainContext%28id%3D107%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -1221,47 +1385,56 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"ctx",
 		               "type":"org.glassfish.grizzly.filterchain.FilterChainContext",
-		               "value":"instance+of+org.glassfish.grizzly.filterchain.FilterChainContext%28id%3D107%29"
+		               "value":"instance+of+org.glassfish.grizzly.filterchain.FilterChainContext%28id%3D107%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"executor",
 		               "type":"org.glassfish.grizzly.filterchain.FilterExecutor",
-		               "value":"instance+of+org.glassfish.grizzly.filterchain.ExecutorResolver%249%28id%3D116%29"
+		               "value":"instance+of+org.glassfish.grizzly.filterchain.ExecutorResolver%249%28id%3D116%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"start",
 		               "type":"int",
-		               "value":"0"
+		               "value":"0",
+		               "objectReference":false
 		            },
 		            {  
 		               "name":"end",
 		               "type":"int",
-		               "value":"6"
+		               "value":"6",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"filtersState",
 		               "type":"org.glassfish.grizzly.filterchain.DefaultFilterChain%24FiltersState",
-		               "value":"instance+of+org.glassfish.grizzly.filterchain.DefaultFilterChain%24FiltersState%28id%3D117%29"
+		               "value":"instance+of+org.glassfish.grizzly.filterchain.DefaultFilterChain%24FiltersState%28id%3D117%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"i",
 		               "type":"int",
-		               "value":"5"
+		               "value":"5",
+		               "objectReference":false
 		            },
 		            {  
 		               "name":"currentFilter",
 		               "type":"org.glassfish.grizzly.filterchain.Filter",
-		               "value":"instance+of+org.glassfish.grizzly.http.server.HttpServerFilter%28id%3D98%29"
+		               "value":"instance+of+org.glassfish.grizzly.http.server.HttpServerFilter%28id%3D98%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"lastNextActionType",
 		               "type":"int",
-		               "value":"0"
+		               "value":"0",
+		               "objectReference":false
 		            },
 		            {  
 		               "name":"lastNextAction",
 		               "type":"org.glassfish.grizzly.filterchain.NextAction",
-		               "value":"instance+of+org.glassfish.grizzly.filterchain.InvokeAction%28id%3D119%29"
+		               "value":"instance+of+org.glassfish.grizzly.filterchain.InvokeAction%28id%3D119%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -1274,27 +1447,32 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"ctx",
 		               "type":"org.glassfish.grizzly.filterchain.FilterChainContext",
-		               "value":"instance+of+org.glassfish.grizzly.filterchain.FilterChainContext%28id%3D107%29"
+		               "value":"instance+of+org.glassfish.grizzly.filterchain.FilterChainContext%28id%3D107%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"executor",
 		               "type":"org.glassfish.grizzly.filterchain.FilterExecutor",
-		               "value":"instance+of+org.glassfish.grizzly.filterchain.ExecutorResolver%249%28id%3D116%29"
+		               "value":"instance+of+org.glassfish.grizzly.filterchain.ExecutorResolver%249%28id%3D116%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"connection",
 		               "type":"org.glassfish.grizzly.Connection",
-		               "value":"instance+of+org.glassfish.grizzly.nio.transport.TCPNIOConnection%28id%3D99%29"
+		               "value":"instance+of+org.glassfish.grizzly.nio.transport.TCPNIOConnection%28id%3D99%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"filtersState",
 		               "type":"org.glassfish.grizzly.filterchain.DefaultFilterChain%24FiltersState",
-		               "value":"instance+of+org.glassfish.grizzly.filterchain.DefaultFilterChain%24FiltersState%28id%3D117%29"
+		               "value":"instance+of+org.glassfish.grizzly.filterchain.DefaultFilterChain%24FiltersState%28id%3D117%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"end",
 		               "type":"int",
-		               "value":"6"
+		               "value":"6",
+		               "objectReference":false
 		            }
 		         ]
 		      },
@@ -1307,17 +1485,20 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"context",
 		               "type":"org.glassfish.grizzly.Context",
-		               "value":"instance+of+org.glassfish.grizzly.filterchain.InternalContextImpl%28id%3D121%29"
+		               "value":"instance+of+org.glassfish.grizzly.filterchain.InternalContextImpl%28id%3D121%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"internalContext",
 		               "type":"org.glassfish.grizzly.filterchain.InternalContextImpl",
-		               "value":"instance+of+org.glassfish.grizzly.filterchain.InternalContextImpl%28id%3D121%29"
+		               "value":"instance+of+org.glassfish.grizzly.filterchain.InternalContextImpl%28id%3D121%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"filterChainContext",
 		               "type":"org.glassfish.grizzly.filterchain.FilterChainContext",
-		               "value":"instance+of+org.glassfish.grizzly.filterchain.FilterChainContext%28id%3D107%29"
+		               "value":"instance+of+org.glassfish.grizzly.filterchain.FilterChainContext%28id%3D107%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -1330,7 +1511,8 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"context",
 		               "type":"org.glassfish.grizzly.Context",
-		               "value":"instance+of+org.glassfish.grizzly.filterchain.InternalContextImpl%28id%3D121%29"
+		               "value":"instance+of+org.glassfish.grizzly.filterchain.InternalContextImpl%28id%3D121%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -1343,17 +1525,20 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"ioEvent",
 		               "type":"org.glassfish.grizzly.IOEvent",
-		               "value":"instance+of+org.glassfish.grizzly.IOEvent%28id%3D123%29"
+		               "value":"instance+of+org.glassfish.grizzly.IOEvent%28id%3D123%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"connection",
 		               "type":"org.glassfish.grizzly.Connection",
-		               "value":"instance+of+org.glassfish.grizzly.nio.transport.TCPNIOConnection%28id%3D99%29"
+		               "value":"instance+of+org.glassfish.grizzly.nio.transport.TCPNIOConnection%28id%3D99%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"listener",
 		               "type":"org.glassfish.grizzly.IOEventLifeCycleListener",
-		               "value":"instance+of+org.glassfish.grizzly.strategies.AbstractIOStrategy%24EnableInterestLifeCycleListener%28id%3D125%29"
+		               "value":"instance+of+org.glassfish.grizzly.strategies.AbstractIOStrategy%24EnableInterestLifeCycleListener%28id%3D125%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -1366,22 +1551,26 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"connection",
 		               "type":"org.glassfish.grizzly.Connection",
-		               "value":"instance+of+org.glassfish.grizzly.nio.transport.TCPNIOConnection%28id%3D99%29"
+		               "value":"instance+of+org.glassfish.grizzly.nio.transport.TCPNIOConnection%28id%3D99%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"ioEvent",
 		               "type":"org.glassfish.grizzly.IOEvent",
-		               "value":"instance+of+org.glassfish.grizzly.IOEvent%28id%3D123%29"
+		               "value":"instance+of+org.glassfish.grizzly.IOEvent%28id%3D123%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"listener",
 		               "type":"org.glassfish.grizzly.IOEventLifeCycleListener",
-		               "value":"instance+of+org.glassfish.grizzly.strategies.AbstractIOStrategy%24EnableInterestLifeCycleListener%28id%3D125%29"
+		               "value":"instance+of+org.glassfish.grizzly.strategies.AbstractIOStrategy%24EnableInterestLifeCycleListener%28id%3D125%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"logger",
 		               "type":"java.util.logging.Logger",
-		               "value":"instance+of+java.util.logging.Logger%28id%3D127%29"
+		               "value":"instance+of+java.util.logging.Logger%28id%3D127%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -1394,17 +1583,20 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"connection",
 		               "type":"org.glassfish.grizzly.Connection",
-		               "value":"instance+of+org.glassfish.grizzly.nio.transport.TCPNIOConnection%28id%3D99%29"
+		               "value":"instance+of+org.glassfish.grizzly.nio.transport.TCPNIOConnection%28id%3D99%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"ioEvent",
 		               "type":"org.glassfish.grizzly.IOEvent",
-		               "value":"instance+of+org.glassfish.grizzly.IOEvent%28id%3D123%29"
+		               "value":"instance+of+org.glassfish.grizzly.IOEvent%28id%3D123%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"lifeCycleListener",
 		               "type":"org.glassfish.grizzly.IOEventLifeCycleListener",
-		               "value":"instance+of+org.glassfish.grizzly.strategies.AbstractIOStrategy%24EnableInterestLifeCycleListener%28id%3D125%29"
+		               "value":"instance+of+org.glassfish.grizzly.strategies.AbstractIOStrategy%24EnableInterestLifeCycleListener%28id%3D125%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -1417,17 +1609,20 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"x0",
 		               "type":"org.glassfish.grizzly.Connection",
-		               "value":"instance+of+org.glassfish.grizzly.nio.transport.TCPNIOConnection%28id%3D99%29"
+		               "value":"instance+of+org.glassfish.grizzly.nio.transport.TCPNIOConnection%28id%3D99%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"x1",
 		               "type":"org.glassfish.grizzly.IOEvent",
-		               "value":"instance+of+org.glassfish.grizzly.IOEvent%28id%3D123%29"
+		               "value":"instance+of+org.glassfish.grizzly.IOEvent%28id%3D123%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"x2",
 		               "type":"org.glassfish.grizzly.IOEventLifeCycleListener",
-		               "value":"instance+of+org.glassfish.grizzly.strategies.AbstractIOStrategy%24EnableInterestLifeCycleListener%28id%3D125%29"
+		               "value":"instance+of+org.glassfish.grizzly.strategies.AbstractIOStrategy%24EnableInterestLifeCycleListener%28id%3D125%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
@@ -1449,17 +1644,20 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
 		            {  
 		               "name":"thread",
 		               "type":"java.lang.Thread",
-		               "value":"instance+of+org.glassfish.grizzly.threadpool.DefaultWorkerThread%28name%3D%27http-listener-1%281%29%27%2C+id%3D2%29"
+		               "value":"instance+of+org.glassfish.grizzly.threadpool.DefaultWorkerThread%28name%3D%27http-listener-1%281%29%27%2C+id%3D2%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"r",
 		               "type":"java.lang.Runnable",
-		               "value":"instance+of+org.glassfish.grizzly.strategies.WorkerThreadIOStrategy%24WorkerThreadRunnable%28id%3D130%29"
+		               "value":"instance+of+org.glassfish.grizzly.strategies.WorkerThreadIOStrategy%24WorkerThreadRunnable%28id%3D130%29",
+		               "objectReference":true
 		            },
 		            {  
 		               "name":"error",
 		               "type":"java.lang.Throwable",
-		               "value":"instance+of+org.glassfish.grizzly.strategies.WorkerThreadIOStrategy%24WorkerThreadRunnable%28id%3D130%29"
+		               "value":"instance+of+org.glassfish.grizzly.strategies.WorkerThreadIOStrategy%24WorkerThreadRunnable%28id%3D130%29",
+		               "objectReference":true
 		            }
 		         ]
 		      },
