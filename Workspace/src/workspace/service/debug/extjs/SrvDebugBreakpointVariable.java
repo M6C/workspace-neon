@@ -94,7 +94,7 @@ public class SrvDebugBreakpointVariable extends SrvGenerique {
 					            .append("\"signature\":\"").append(signature).append("\",");
 
 		    				  if (UtilString.isNotEmpty(variableName)) {
-			    				  	sb.append(",\"variableName\":\"").append(variableName).append("\",");
+			    				  	sb.append("\"variableName\":\"").append(variableName).append("\",");
 		    				  }
 
 				              sb.append("\"variable\":[");

@@ -81,6 +81,8 @@ Ext.define('Workspace.editorjava.debug.data.DataVariable', {
     				var sep = (value.indexOf("instance of") < 0) ? ":" : "";
     				variable.text = type + "&nbsp;<b>" + name + "</b>" + sep + "&nbsp;<font style='color:#4067B3'>" + value + "</font>";
 
+                    variable.data = variableItem;
+
         			stack.children.push(variable);
         		});
 				ret.children.push(stack);

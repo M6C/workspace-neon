@@ -10,9 +10,9 @@ Ext.define('Workspace.editorjava.panel.est.PanelDebugVariable', {
     initComponent : function() {
 		var me = this;
 
-        me.store = Ext.create('Ext.data.TreeStore', {
+        var store = Ext.create('Ext.data.TreeStore', {
         	root: {
-        	    nodeType: 'async',
+        	   // nodeType: 'async',
         	    draggable: false,
         	    id: 'root',
         	    expanded: true,
@@ -20,12 +20,69 @@ Ext.define('Workspace.editorjava.panel.est.PanelDebugVariable', {
         	    children: [
         	        {leaf:true, text:'No variable.'}
         	    ]
-        	}    
+        	}
+        	,
+        	autoLoad: true,
+        	autoSync: true
+        	,
+            proxy: {
+                type: 'ajax',
+    			url : DOMAIN_NAME_ROOT + '/action.servlet?event=DebuggerBreakpointVariableExtJs',
+    			headers: {'Content-Type': 'application/json; charset=UTF-8'},
+    			method: 'GET',
+                reader: {
+                    type: 'json'
+                }
+                ,
+                afterRequest: function(response, success) {
+                    var i=0;
+                    i++;
+                }
+            }
+            ,
+            listeners:{
+        	    //scope: this, //yourScope
+        	    'beforeload': function(store, operation, options) {
+        			if (!operation.node.isRoot()) {
+        				console.info('Workspace.editor.panel.est.data.StoreDebugVariable beforeload:'+operation.node.internalId);
+        				store.getProxy().extraParams.variableName = operation.node.raw.data.name;
+        			}
+        	    }
+        	}
         });
+        
+		store.onProxyLoad = Ext.Function.createSequence(me.onProxyLoad, store.onProxyLoad);;
+
+        me.store = store;
 
 		me.callParent(arguments);
 	}
 	,
+    onProxyLoad: function(result) {
+        var me = this;
+    	var text = result.response.responseText;
+    	if (!Ext.isEmpty(text)) {
+		    var node = result.node;
+    		var jsonData = Ext.decode(text);
+            var records = Workspace.editorjava.debug.data.DataVariable.formatFromRequest(jsonData);
+            var data = records.children;
+
+            result.resultSet = new Ext.data.ResultSet({
+                records: data,
+                count: data.length,
+                loaded: true,
+                success: records.success,
+                total: data.length
+            });
+
+	        result.response.responseText = Ext.encode(records);
+
+			// node.removeAll();
+// 	        node.appendChild(records.children);
+// 	        node.expand();
+    	}
+    }
+    ,
     useArrows: true,
     autoScroll: false,
     animate: true,

@@ -44,8 +44,10 @@ Ext.define('Workspace.editorjava.panel.PanelEst', {
         if (!Ext.isEmpty(data)) {
             data = Workspace.editorjava.debug.data.DataVariable.formatFromRequest(data);
 	        root.appendChild(data.children);
+        	panelDebugVariable.store.autoLoad = true;
         } else {
         	root.appendChild([{leaf:true, text:'No variable.'}]);
+        	panelDebugVariable.store.autoLoad = false;
         }
 	}
 	,
