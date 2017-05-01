@@ -317,7 +317,7 @@
     <SERVLET Name="DebuggerBreakpointVariableExtJs" Target="" TargetError="">
         <BEAN Name="BeanDebuggerVariable" Scope="request" Service="workspace.service.debug.extjs.SrvDebugBreakpointVariable">
             <PARAM Name="application" Type="STRING"/>
-            <PARAM Name="variableName" Type="STRING"/>
+            <PARAM Name="variableId" Type="STRING"/>
         </BEAN>
     </SERVLET>
     <!-- ADMIN -->

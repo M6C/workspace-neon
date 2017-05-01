@@ -142,6 +142,7 @@ addToJNDI(ctx, "/workspace/debug/breakpoint", request.getSession().getId(), thre
 */
           }
           catch(Exception ex) {
+        	  session.removeAttribute("beanDebug");
               StringWriter sw = new StringWriter();
               ex.printStackTrace(new PrintWriter(sw));
               request.setAttribute("msgText", sw.toString());

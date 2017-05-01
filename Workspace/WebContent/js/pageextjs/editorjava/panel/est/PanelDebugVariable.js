@@ -44,8 +44,9 @@ Ext.define('Workspace.editorjava.panel.est.PanelDebugVariable', {
         	    //scope: this, //yourScope
         	    'beforeload': function(store, operation, options) {
         			if (!operation.node.isRoot()) {
-        				console.info('Workspace.editor.panel.est.data.StoreDebugVariable beforeload:'+operation.node.internalId);
-        				store.getProxy().extraParams.variableName = operation.node.raw.data.name;
+        			    var id = operation.node.raw.data.id;
+        				console.info('Workspace.editor.panel.est.data.StoreDebugVariable beforeload id:'+id);
+        				store.getProxy().extraParams.variableId = id;
         			}
         	    }
         	}
@@ -65,7 +66,7 @@ Ext.define('Workspace.editorjava.panel.est.PanelDebugVariable', {
 		    var node = result.node;
     		var jsonData = Ext.decode(text);
             var records = Workspace.editorjava.debug.data.DataVariable.formatFromRequest(jsonData);
-            var data = records.children;
+            var data = records.children.variable;
 
             result.resultSet = new Ext.data.ResultSet({
                 records: data,

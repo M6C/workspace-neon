@@ -48,7 +48,8 @@ public class SrvDebugBreakpointVariable extends SrvGenerique {
     	  HttpSession session = request.getSession();
     	  StringBuffer sb = new StringBuffer("{\"success\":true,\"children\":[");
     	  try {
-    		  String variableName = (String) bean.getParameterDataByName("variableName");
+    		  boolean stop = false;
+    		  String variableId = (String) bean.getParameterDataByName("variableId");
 	    	  BeanDebug beanDebug = (BeanDebug)session.getAttribute("beanDebug");
 	    	  if (beanDebug!=null) {
 //	    		  Event currentEvent = beanDebug.getCurrentEvent();
@@ -74,6 +75,7 @@ public class SrvDebugBreakpointVariable extends SrvGenerique {
 		    				  String sourcePath = "";
 		    				  String methode = "";
 		    				  String signature = "";
+		    				  String id = "";
 		    				  try {
 			    				  classname = frame.location().declaringType().name();
 			    				  sourcePath = frame.location().sourcePath();
@@ -87,14 +89,15 @@ public class SrvDebugBreakpointVariable extends SrvGenerique {
 		    				  try{methode = URLEncoder.encode(methode);}catch(Exception ex){}
 		    				  try{signature = URLEncoder.encode(signature);}catch(Exception ex){}
 
+                              id = classname + ":" + methode + ":" + signature;
 		    				  sb.append("{")
 		    				  	.append("\"classname\":\"").append(classname).append("\",")
 					            .append("\"source\":\"").append(sourcePath).append("\",")
 					            .append("\"methode\":\"").append(methode).append("\",")
 					            .append("\"signature\":\"").append(signature).append("\",");
 
-		    				  if (UtilString.isNotEmpty(variableName)) {
-			    				  	sb.append("\"variableName\":\"").append(variableName).append("\",");
+		    				  if (UtilString.isNotEmpty(variableId)) {
+			    				  	sb.append("\"variableId\":\"").append(variableId).append("\",");
 		    				  }
 
 				              sb.append("\"variable\":[");
@@ -103,19 +106,26 @@ public class SrvDebugBreakpointVariable extends SrvGenerique {
 			    				  List<LocalVariable> visibleVariables = frame.visibleVariables();
 					    		  if ((visibleVariables!=null)&&(!visibleVariables.isEmpty())) {
 					    			  int cntVar = 0;
-					    			  String varName = "", typename = "", valueText = "";
+					    			  String varId = "", varName = "", typename = "", valueText = "";
 					    			  Value value = null;
 					    			  for(LocalVariable variable : visibleVariables) {
 					    				  value = frame.getValue(variable);
 					    				  varName = variable.name();
 					    				  boolean isObjectReference = !(value instanceof StringReference || value instanceof PrimitiveValue);
 
-					    				  if (UtilString.isNotEmpty(variableName)) {
-					    					  if (UtilString.isEquals(varName, variableName)) {
-							    				  if (isObjectReference) {
-							    					  ObjectReference objectReference = (ObjectReference) value;
-							    					  inspectObjectReference(sb, objectReference);
+                                           if (value instanceof ObjectReference) {
+						    					  ObjectReference objectReference = (ObjectReference) value;
+						    					  varId = Long.toString(objectReference.uniqueID());
+                                           } else {
+                                                varId = id + ":" + varName;
+                                           }
 
+					    				  if (UtilString.isNotEmpty(variableId)) {
+					    					  if (UtilString.isEquals(varId, variableId)) {
+    						    				  if (isObjectReference) {
+    						    					  ObjectReference objectReference = (ObjectReference) value;
+							    					  inspectObjectReference(sb, id, objectReference);
+							    					  stop = true;
 							    					  break;
 							    				  }
 					    					  }
@@ -127,6 +137,7 @@ public class SrvDebugBreakpointVariable extends SrvGenerique {
 						    					  sb.append(",");
 						    				  }
 								              sb.append("{")
+								              	.append("\"id\":\"").append(varId).append("\",")
 								              	.append("\"name\":\"").append(varName).append("\",")
 								              	.append("\"type\":\"").append(typename).append("\",")
 								              	.append("\"value\":\"").append(valueText).append("\",")
@@ -140,6 +151,9 @@ public class SrvDebugBreakpointVariable extends SrvGenerique {
 		    				  catch(Exception ex) {}
 				              sb.append("]}");
 		    				  cnt++;
+		    				  if (stop) {
+		    					  break;
+		    				  }
 		    			  }
 		    		  }
 	    		  }
@@ -159,8 +173,9 @@ public class SrvDebugBreakpointVariable extends SrvGenerique {
 //          try{UtilFile.write(file, sb.toString());}catch(Exception ex){ex.printStackTrace();}
     }
 
+    // http://www.programcreek.com/java-api-examples/index.php?api=com.sun.jdi.LocalVariable
 	// http://alvinalexander.com/java/jwarehouse/eclipse/org.eclipse.jdt.debug.jdi.tests/tests/org/eclipse/debug/jdi/tests/ObjectReferenceTest.java.shtml
-	private void inspectObjectReference(StringBuffer sb, ObjectReference fObject) {
+	private void inspectObjectReference(StringBuffer sb, String id, ObjectReference fObject) {
 		// setup
 		ReferenceType type = fObject.referenceType();
 		List<Field> fields = type.fields();
@@ -172,7 +187,7 @@ public class SrvDebugBreakpointVariable extends SrvGenerique {
 
 		Map<Field, Value> values = fObject.getValues(instanceFields);
 		int cntVar = 0;
-		String varName = "", typename = "", valueText = "";
+		String varId = "", varName = "", typename = "", valueText = "";
 		for (Field field : instanceFields) {
 			Value value = (Value) values.get(field);
 			  boolean isObjectReference = !(value instanceof StringReference || value instanceof PrimitiveValue);
@@ -180,10 +195,12 @@ public class SrvDebugBreakpointVariable extends SrvGenerique {
 			try {typename = URLEncoder.encode(field.typeName());} catch (Exception ex) {}
 			try {valueText = URLEncoder.encode(value.toString());} catch (Exception ex) {}
 
+            varId = id + ":" + varName;
 			if (cntVar > 0) {
 				sb.append(",");
 			}
 			sb.append("{")
+				.append("\"id\":\"").append(varId).append("\",")
 				.append("\"name\":\"").append(varName).append("\",")
 				.append("\"type\":\"").append(typename).append("\",")
 				.append("\"value\":\"").append(valueText).append("\",")
