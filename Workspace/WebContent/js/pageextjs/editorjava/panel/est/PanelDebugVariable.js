@@ -43,11 +43,12 @@ Ext.define('Workspace.editorjava.panel.est.PanelDebugVariable', {
             listeners:{
         	    //scope: this, //yourScope
         	    'beforeload': function(store, operation, options) {
-        			if (!operation.node.isRoot()) {
-        			    var id = operation.node.raw.data.id;
-        				console.info('Workspace.editor.panel.est.data.StoreDebugVariable beforeload id:'+id);
-        				store.getProxy().extraParams.variableId = id;
-        			}
+        	    	if (operation.node.isRoot() || !Ext.isDefined(operation.node.raw)) {
+        	    		return false;
+        	    	}
+    			    var id = operation.node.raw.data.id;
+    				console.info('Workspace.editor.panel.est.data.StoreDebugVariable beforeload id:'+id);
+    				store.getProxy().extraParams.variableId = id;
         	    }
         	}
         });
@@ -66,15 +67,18 @@ Ext.define('Workspace.editorjava.panel.est.PanelDebugVariable', {
 		    var node = result.node;
     		var jsonData = Ext.decode(text);
             var records = Workspace.editorjava.debug.data.DataVariable.formatFromRequest(jsonData);
-            var data = records.children.variable;
-
-            result.resultSet = new Ext.data.ResultSet({
-                records: data,
-                count: data.length,
-                loaded: true,
-                success: records.success,
-                total: data.length
-            });
+            
+            if (!Ext.isEmpty(records.children)) {
+	            var data = records.children[0].children;
+	
+	            result.resultSet = new Ext.data.ResultSet({
+	                records: data,
+	                count: data.length,
+	                loaded: true,
+	                success: records.success,
+	                total: data.length
+	            });
+            }
 
 	        result.response.responseText = Ext.encode(records);
 

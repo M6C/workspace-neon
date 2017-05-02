@@ -181,7 +181,7 @@ public class SrvDebugBreakpointVariable extends SrvGenerique {
 		List<Field> fields = type.fields();
 		List<Field> instanceFields = new LinkedList<>();
 		for (Field field : fields) {
-			if (!field.isStatic())
+//			if (!field.isStatic())
 				instanceFields.add(field);
 		}
 
@@ -192,10 +192,16 @@ public class SrvDebugBreakpointVariable extends SrvGenerique {
 			Value value = (Value) values.get(field);
 			  boolean isObjectReference = !(value instanceof StringReference || value instanceof PrimitiveValue);
 
+			try {varName = URLEncoder.encode(field.name());} catch (Exception ex) {}
 			try {typename = URLEncoder.encode(field.typeName());} catch (Exception ex) {}
 			try {valueText = URLEncoder.encode(value.toString());} catch (Exception ex) {}
 
-            varId = id + ":" + varName;
+            if (value instanceof ObjectReference) {
+				  ObjectReference objectReference = (ObjectReference) value;
+				  varId = Long.toString(objectReference.uniqueID());
+            } else {
+                 varId = id + ":" + varName;
+            }
 			if (cntVar > 0) {
 				sb.append(",");
 			}
