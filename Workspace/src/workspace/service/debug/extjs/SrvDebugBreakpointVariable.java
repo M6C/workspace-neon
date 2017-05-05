@@ -4,22 +4,15 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.URLEncoder;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.sun.jdi.ClassNotLoadedException;
-import com.sun.jdi.Field;
-import com.sun.jdi.InvalidTypeException;
 import com.sun.jdi.LocalVariable;
 import com.sun.jdi.ObjectReference;
 import com.sun.jdi.PrimitiveValue;
-import com.sun.jdi.ReferenceType;
 import com.sun.jdi.StackFrame;
 import com.sun.jdi.StringReference;
 import com.sun.jdi.ThreadReference;
@@ -49,7 +42,6 @@ public class SrvDebugBreakpointVariable extends SrvGenerique {
     	  StringBuffer sb = new StringBuffer("{\"success\":true,\"children\":[");
     	  try {
     		  boolean stop = false;
-    		  String variableId = (String) bean.getParameterDataByName("variableId");
 	    	  BeanDebug beanDebug = (BeanDebug)session.getAttribute("beanDebug");
 	    	  if (beanDebug!=null) {
 //	    		  Event currentEvent = beanDebug.getCurrentEvent();
@@ -71,81 +63,42 @@ public class SrvDebugBreakpointVariable extends SrvGenerique {
 				              if (cnt > 0) {
 				                sb.append(",");
 				              }
-		    				  String classname = "";
-		    				  String sourcePath = "";
-		    				  String methode = "";
-		    				  String signature = "";
-		    				  String id = "";
-		    				  try {
-			    				  classname = frame.location().declaringType().name();
-			    				  sourcePath = frame.location().sourcePath();
-			    				  methode = frame.location().method().name();
-			    				  signature = frame.location().method().signature();
-		    				  }
-		    				  catch(Exception ex) {}
+				    		  sb.append("{");
 
-		    				  try{classname = URLEncoder.encode(classname);}catch(Exception ex){}
-		    				  try{sourcePath = URLEncoder.encode(sourcePath);}catch(Exception ex){}
-		    				  try{methode = URLEncoder.encode(methode);}catch(Exception ex){}
-		    				  try{signature = URLEncoder.encode(signature);}catch(Exception ex){}
-
-                              id = classname + ":" + methode + ":" + signature;
-		    				  sb.append("{")
-		    				  	.append("\"classname\":\"").append(classname).append("\",")
-					            .append("\"source\":\"").append(sourcePath).append("\",")
-					            .append("\"methode\":\"").append(methode).append("\",")
-					            .append("\"signature\":\"").append(signature).append("\",");
-
-		    				  if (UtilString.isNotEmpty(variableId)) {
-			    				  	sb.append("\"variableId\":\"").append(variableId).append("\",");
-		    				  }
+				    		  addFrameInfo(sb, frame);
 
 				              sb.append("\"variable\":[");
 		    				  
 		    				  try {
 			    				  List<LocalVariable> visibleVariables = frame.visibleVariables();
 					    		  if ((visibleVariables!=null)&&(!visibleVariables.isEmpty())) {
-					    			  int cntVar = 0;
-					    			  String varId = "", varName = "", typename = "", valueText = "";
-					    			  Value value = null;
-					    			  for(LocalVariable variable : visibleVariables) {
-					    				  value = frame.getValue(variable);
-					    				  varName = variable.name();
-					    				  boolean isObjectReference = !(value instanceof StringReference || value instanceof PrimitiveValue);
+									int cntVar = 0;
+									String varName = "", typename = "", valueText = "";
+									Value value = null;
+									for (LocalVariable variable : visibleVariables) {
+										value = frame.getValue(variable);
+										varName = variable.name();
 
-                                           if (value instanceof ObjectReference) {
-						    					  ObjectReference objectReference = (ObjectReference) value;
-						    					  varId = Long.toString(objectReference.uniqueID());
-                                           } else {
-                                                varId = id + ":" + varName;
-                                           }
+										String varId = "";
+										if (value instanceof ObjectReference) {
+											ObjectReference objectReference = (ObjectReference) value;
+											varId = Long.toString(objectReference.uniqueID());
+										}
 
-					    				  if (UtilString.isNotEmpty(variableId)) {
-					    					  if (UtilString.isEquals(varId, variableId)) {
-    						    				  if (isObjectReference) {
-    						    					  ObjectReference objectReference = (ObjectReference) value;
-							    					  inspectObjectReference(sb, id, objectReference);
-							    					  stop = true;
-							    					  break;
-							    				  }
-					    					  }
-					    				  } else {
-						    				  try{typename = URLEncoder.encode(variable.typeName());}catch(Exception ex){}
-						    				  try{valueText = URLEncoder.encode(value.toString());}catch(Exception ex){}
-	
-						    				  if (cntVar > 0) {
-						    					  sb.append(",");
-						    				  }
-								              sb.append("{")
-								              	.append("\"id\":\"").append(varId).append("\",")
-								              	.append("\"name\":\"").append(varName).append("\",")
-								              	.append("\"type\":\"").append(typename).append("\",")
-								              	.append("\"value\":\"").append(valueText).append("\",")
-								              	.append("\"objectReference\":").append(isObjectReference)
-								              	.append("}");
-								              cntVar++;
-					    				  }
-					    			  }
+										try {typename = URLEncoder.encode(variable.typeName());} catch (Exception ex) {}
+										try {valueText = URLEncoder.encode(value.toString());} catch (Exception ex) {}
+
+										boolean isObjectReference = !(UtilString.isEmpty(varId) || value instanceof StringReference || value instanceof PrimitiveValue);
+										if (cntVar > 0) {
+											sb.append(",");
+										}
+										sb.append("{").append("\"id\":\"").append(varId).append("\",")
+												.append("\"name\":\"").append(varName).append("\",")
+												.append("\"type\":\"").append(typename).append("\",")
+												.append("\"value\":\"").append(valueText).append("\",")
+												.append("\"objectReference\":").append(isObjectReference).append("}");
+										cntVar++;
+									}
 					    		  }
 		    				  }
 		    				  catch(Exception ex) {}
@@ -173,76 +126,27 @@ public class SrvDebugBreakpointVariable extends SrvGenerique {
 //          try{UtilFile.write(file, sb.toString());}catch(Exception ex){ex.printStackTrace();}
     }
 
-    // http://www.programcreek.com/java-api-examples/index.php?api=com.sun.jdi.LocalVariable
-	// http://alvinalexander.com/java/jwarehouse/eclipse/org.eclipse.jdt.debug.jdi.tests/tests/org/eclipse/debug/jdi/tests/ObjectReferenceTest.java.shtml
-	private void inspectObjectReference(StringBuffer sb, String id, ObjectReference fObject) {
-		// setup
-		ReferenceType type = fObject.referenceType();
-		List<Field> fields = type.fields();
-		List<Field> instanceFields = new LinkedList<>();
-		for (Field field : fields) {
-//			if (!field.isStatic())
-				instanceFields.add(field);
-		}
+	protected void addFrameInfo(StringBuffer sb, StackFrame frame) {
+		String classname = "";
+		  String sourcePath = "";
+		  String methode = "";
+		  String signature = "";
+		  try {
+			  classname = frame.location().declaringType().name();
+			  sourcePath = frame.location().sourcePath();
+			  methode = frame.location().method().name();
+			  signature = frame.location().method().signature();
+		  }
+		  catch(Exception ex) {}
 
-		Map<Field, Value> values = fObject.getValues(instanceFields);
-		int cntVar = 0;
-		String varId = "", varName = "", typename = "", valueText = "";
-		for (Field field : instanceFields) {
-			Value value = (Value) values.get(field);
-			  boolean isObjectReference = !(value instanceof StringReference || value instanceof PrimitiveValue);
+		  try{classname = URLEncoder.encode(classname);}catch(Exception ex){}
+		  try{sourcePath = URLEncoder.encode(sourcePath);}catch(Exception ex){}
+		  try{methode = URLEncoder.encode(methode);}catch(Exception ex){}
+		  try{signature = URLEncoder.encode(signature);}catch(Exception ex){}
 
-			try {varName = URLEncoder.encode(field.name());} catch (Exception ex) {}
-			try {typename = URLEncoder.encode(field.typeName());} catch (Exception ex) {}
-			try {valueText = URLEncoder.encode(value.toString());} catch (Exception ex) {}
-
-            if (value instanceof ObjectReference) {
-				  ObjectReference objectReference = (ObjectReference) value;
-				  varId = Long.toString(objectReference.uniqueID());
-            } else {
-                 varId = id + ":" + varName;
-            }
-			if (cntVar > 0) {
-				sb.append(",");
-			}
-			sb.append("{")
-				.append("\"id\":\"").append(varId).append("\",")
-				.append("\"name\":\"").append(varName).append("\",")
-				.append("\"type\":\"").append(typename).append("\",")
-				.append("\"value\":\"").append(valueText).append("\",")
-				.append("\"objectReference\":").append(isObjectReference)
-				.append("}");
-			cntVar++;
-		}
-
-//		 setValue(Field,Value)
-//		 Value newValue = fVM.mirrorOf('b');
-//		 try {
-//		 fObject.setValue(field, newValue);
-//		 } catch (ClassNotLoadedException e) {
-//		 assertTrue("4.1", false);
-//		 } catch (InvalidTypeException e) {
-//		 assertTrue("4.2", false);
-//		 }
-//		
-//		 getValue(Field)
-//		 assertEquals("5", fObject.getValue(field), newValue);
-//
-//		 assertEquals("6", "fString2", field.name());
-//		 try {
-//		 fObject.setValue(field, null);
-//		 } catch (ClassNotLoadedException e) {
-//		 assertTrue("7.1", false);
-//		 } catch (InvalidTypeException e) {
-//		 assertTrue("7.2", false);
-//		 }
-//
-//		 getValue(Field)
-//		 assertEquals("8", fObject.getValue(field), null);
-//
-//		 test get final value.
-//		 The value is null and should be because it's final
-//		 assertEquals("10", fVM.mirrorOf("HEY"), fObject.getValue(field));
-
+		  sb.append("\"classname\":\"").append(classname).append("\",")
+		    .append("\"source\":\"").append(sourcePath).append("\",")
+		    .append("\"methode\":\"").append(methode).append("\",")
+		    .append("\"signature\":\"").append(signature).append("\",");
 	}
 }

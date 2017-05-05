@@ -27,7 +27,7 @@ Ext.define('Workspace.editorjava.panel.est.PanelDebugVariable', {
         	,
             proxy: {
                 type: 'ajax',
-    			url : DOMAIN_NAME_ROOT + '/action.servlet?event=DebuggerBreakpointVariableExtJs',
+    			url : DOMAIN_NAME_ROOT + '/action.servlet?event=DebuggerBreakpointVariableIdExtJs',
     			headers: {'Content-Type': 'application/json; charset=UTF-8'},
     			method: 'GET',
                 reader: {
@@ -43,10 +43,12 @@ Ext.define('Workspace.editorjava.panel.est.PanelDebugVariable', {
             listeners:{
         	    //scope: this, //yourScope
         	    'beforeload': function(store, operation, options) {
-        	    	if (operation.node.isRoot() || !Ext.isDefined(operation.node.raw)) {
+        	    	var raw = Ext.isDefined(operation.node.raw) ? operation.node.raw : operation.node.data;
+        	    	if (operation.node.isRoot() || !Ext.isDefined(raw) || 
+        	    		!Ext.isDefined(raw.data) || Ext.isEmpty(raw.data.id)) {
         	    		return false;
         	    	}
-    			    var id = operation.node.raw.data.id;
+    			    var id = raw.data.id;
     				console.info('Workspace.editor.panel.est.data.StoreDebugVariable beforeload id:'+id);
     				store.getProxy().extraParams.variableId = id;
         	    }
@@ -62,29 +64,31 @@ Ext.define('Workspace.editorjava.panel.est.PanelDebugVariable', {
 	,
     onProxyLoad: function(result) {
         var me = this;
+    	if (!Ext.isDefined(result.response)) {
+    		return;
+    	}
     	var text = result.response.responseText;
     	if (!Ext.isEmpty(text)) {
 		    var node = result.node;
     		var jsonData = Ext.decode(text);
             var records = Workspace.editorjava.debug.data.DataVariable.formatFromRequest(jsonData);
             
+            var data = [];
             if (!Ext.isEmpty(records.children)) {
-	            var data = records.children[0].children;
-	
-	            result.resultSet = new Ext.data.ResultSet({
-	                records: data,
-	                count: data.length,
-	                loaded: true,
-	                success: records.success,
-	                total: data.length
-	            });
+	            data = records.children[0].children;
+            } else {
+            	records = {};
             }
 
-	        result.response.responseText = Ext.encode(records);
+            result.resultSet = new Ext.data.ResultSet({
+                records: data,
+                count: data.length,
+                loaded: true,
+                success: records.success,
+                total: data.length
+            });
 
-			// node.removeAll();
-// 	        node.appendChild(records.children);
-// 	        node.expand();
+	        result.response.responseText = Ext.encode(records);
     	}
     }
     ,
