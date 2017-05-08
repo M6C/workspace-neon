@@ -87,9 +87,9 @@ a.menuLevel02 {
   border: 1px solid #888888;
   text-decoration: none;
   text-wrap: no-wrap;
+  cursor: default;
   margin-left: 5px;
   margin-right: 5px;
   padding-left: 4px;
   padding-right: 4px;
-  cursor: default;
 }

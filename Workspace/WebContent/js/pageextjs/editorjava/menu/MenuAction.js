@@ -1,5 +1,6 @@
 Ext.require([
 	'Workspace.common.window.WindowText',
+	'Workspace.editorjava.window.WindowAutoDeploy',
 	'Workspace.common.tool.Pop'
 ]);
 
@@ -200,6 +201,26 @@ function autoDeploy() {
 		}).callbackBuild(undefined, true, undefined);
       }
     });
+}
+
+function autoDeployProject() {
+	var me = this;
+	var onItemSelected = function(combo, newValue, oldValue, option) {
+    	var application = newValue;
+    
+    	Workspace.common.tool.Pop.info(me, 'AutoDeploy in progress.<br>Waiting to building complet.');
+    	Ext.create('Workspace.editorjava.request.JsonEditSaveAndBuild',
+    	{
+    		application:application,
+    		build:'true',
+    		autoDeploy:true
+    	}).callbackBuild(undefined, true, undefined);
+    };
+    
+	Ext.create('Workspace.editorjava.window.WindowAutoDeploy', {
+	    onItemSelected : onItemSelected
+	}).show();
+
 }
 
 function managerConsoleVisibility() {
