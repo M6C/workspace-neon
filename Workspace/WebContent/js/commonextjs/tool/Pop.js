@@ -10,6 +10,12 @@ Ext.define('Workspace.common.tool.Pop', {
 		,
 		info : function(from, message, option) {
 			var me = Workspace.common.tool.Pop;
+			// By default no toast for info message
+			if (!Ext.isDefined(option)) {
+			    option = {toast: false};
+			} else if (!Ext.isDefined(option.toast)) {
+			    Ext.apply(option, {toast: false});
+			}
 			return me.doPop('info', from, message, option);
 		}
 		,
