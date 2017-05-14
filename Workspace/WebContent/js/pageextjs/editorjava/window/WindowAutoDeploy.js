@@ -1,6 +1,7 @@
 Ext.define('Workspace.editorjava.window.WindowAutoDeploy', {
 	requires: [
-   	    'Workspace.common.tool.Pop'
+   	    'Workspace.common.tool.Pop',
+	    'Workspace.common.form.combobox.ComboProjectExtjs4'
    	]
    	,
 	extend: 'Ext.Window'
@@ -16,6 +17,17 @@ Ext.define('Workspace.editorjava.window.WindowAutoDeploy', {
 	initComponent : function(){
 		var me = this;
 
+        var combo = Ext.create('Workspace.common.form.combobox.ComboProjectExtjs4', {
+            anchor: '100% 10%', 
+		    id: 'nameFilter',
+		    name: 'nameFilter',
+            // value: me.application,
+            valueField: me.application
+        });
+
+        Workspace.tool.UtilComponent.addListener(me, 'change', me.onItemSelected);
+        // Workspace.tool.UtilComponent.addListener(me.store, 'load', function() {me.focus();});
+
 		Ext.apply(me, {
 			layout: {
 			    type: 'anchor',
@@ -23,38 +35,19 @@ Ext.define('Workspace.editorjava.window.WindowAutoDeploy', {
 			}
 			,
 		    items : [
-				{
-				    anchor: '100% 10%',
-					xtype: 'combo',
-				    id: 'nameFilter',
-				    name: 'nameFilter',
-				    fieldLabel: '',
-				    allowBlank: false,
-				    enableKeyEvents: true,
-				    emptyText: 'Name Filter',
-				    value: me.application,
-        		    store: Ext.create('Workspace.common.form.combobox.data.StoreProjectExtjs4', {autoload: true, buffered: true}),
-                    displayField:'project'
-                	,
-                    initComponent : function(){
-                		var me = this;
-                
-                        Workspace.tool.UtilComponent.addListener(me, 'change', me.listenerChange);
-                
-                		me.callParent(arguments);
-                	}
-                	,
-                	listenerChange: function (combo, newValue, oldValue, option) {
-                	    if (!Ext.isEmpty(newValue)) {
-                    	    me.onActionItem(combo, newValue, oldValue, option);
-                	    }
-                	}
-				}
+		        combo
 		    ]
 			,
 			listeners : {
 				'show' : function (wnd) {
 					console.info('Workspace.editorjava.window.WindowAutoDeploy show');
+					new Ext.util.DelayedTask().delay(100, function() {
+                        combo.setRawValue(me.application);
+    					new Ext.util.DelayedTask().delay(100, function() {
+                            combo.setSelectText(0,0);
+                            combo.focus(false, true);
+    					});
+					});
 				}
 			}
 		});

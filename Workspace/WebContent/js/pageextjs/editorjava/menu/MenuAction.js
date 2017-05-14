@@ -216,8 +216,10 @@ function autoDeployProject() {
     		autoDeploy:true
     	}).callbackBuild(undefined, true, undefined);
     };
-    
+
+	var application = Ext.getCmp('project').value;
 	Ext.create('Workspace.editorjava.window.WindowAutoDeploy', {
+	    application : application,
 	    onItemSelected : onItemSelected
 	}).show();
 
