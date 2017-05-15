@@ -34,11 +34,11 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
 					var jsonData = Ext.JSON.decode(responseCompile.responseText);
 					if (!Ext.isDefined(jsonData)) {
                         Workspace.editorjava.constant.ConstantState.inProgressBuild(false);
-    					Workspace.common.tool.Pop.info(me, "Building data not found.");
+    					Workspace.common.tool.Pop.info(me, "Building ["+me.application+"] data not found.");
     					return;
 					}
 					if (jsonData.success) {
-                        var msg = "Building complete.";
+                        var msg = "Building '"+me.application+"' complete.";
 						if (me.autoDeploy == true) {
                             msg += "<br>Waiting for deploy complet."
     		    			Ext.Ajax.request({
@@ -77,6 +77,7 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
         Workspace.editorjava.constant.ConstantState.inProgressBuild(false);
         var me = Workspace.editorjava.request.JsonEditSaveAndBuild;
 		var jsonData = Ext.JSON.decode(response.responseText);
+		var application = opts.params.application;
 		if (jsonData.results > 0) {
 			var cntSuccess = 0, cntFailure = 0;
 			var messageSuccess = '';
@@ -92,17 +93,17 @@ Ext.define('Workspace.editorjava.request.JsonEditSaveAndBuild',  {
 					messageSuccess += data.src + "=>" +  data.dst + "<br>";
 				}
 			}
-			me.showMessage('success', cntSuccess, messageSuccess);
-			me.showMessage('failure', cntFailure, messageFailure);
+			me.showMessage('success', cntSuccess, messageSuccess, application);
+			me.showMessage('failure', cntFailure, messageFailure, application);
 		} else {
-			Workspace.common.tool.Pop.info(me, 'AutoDeploy No file deployed.');
+			Workspace.common.tool.Pop.info(me, 'AutoDeploy \''+application+'\' No file deployed.');
 		}
 	},
 	statics: {
-		showMessage: function(type, cnt, message) {
+		showMessage: function(type, cnt, message, application) {
 			var me = this;
 			if (cnt > 0) {
-				Workspace.common.tool.Pop.show(type, me, 'AutoDeploy ' + type + ' ' + cnt + ' file'+(cnt > 1 ? 's' : '')+'.', {detail:message});
+				Workspace.common.tool.Pop.show(type, me, 'AutoDeploy  \''+application+'\' ' + type + ' ' + cnt + ' file'+(cnt > 1 ? 's' : '')+'.', {detail:message});
 			}
 		}
 	}

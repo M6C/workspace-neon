@@ -22,7 +22,37 @@ Ext.define('Workspace.editorjava.window.WindowAutoDeploy', {
 		    id: 'nameFilter',
 		    name: 'nameFilter',
             // value: me.application,
-            valueField: me.application
+            valueField: me.application,
+		    enableKeyEvents: true,
+		    listeners: {
+		    	keydown : function(field, event, option) {
+                    var key = event.getKey();
+                    if (key == event.ENTER) {
+		                console.info('Workspace.editorjava.window.WindowAutoDeploy field.isExpanded:' + field.isExpanded);
+                        if (!field.isExpanded == true) {
+                            me.buttonCallBack({itemId:'yes'}, 'Yes');
+                        } else {
+                            return false;
+                        }
+                    } else if (key == event.ESC) {
+                        me.close();
+                        return false;
+                    }
+		    	}
+		    }
+
+        });
+
+        var bottomTb = Ext.create('Ext.toolbar.Toolbar', {
+            ui: 'footer',
+            dock: 'bottom',
+            layout: {
+                pack: 'center'
+            },
+            items: [
+                {text: 'Yes', itemId: 'yes', scope: me, minWidth: 75, handler: me.buttonCallBack},
+                {text: 'No', itemId: 'no', scope: me, minWidth: 75, handler: me.buttonCallBack}
+            ]
         });
 
         Workspace.tool.UtilComponent.addListener(me, 'change', me.onItemSelected);
@@ -37,6 +67,8 @@ Ext.define('Workspace.editorjava.window.WindowAutoDeploy', {
 		    items : [
 		        combo
 		    ]
+		    ,
+		    dockedItems: [bottomTb]
 			,
 			listeners : {
 				'show' : function (wnd) {
@@ -44,8 +76,8 @@ Ext.define('Workspace.editorjava.window.WindowAutoDeploy', {
 					new Ext.util.DelayedTask().delay(100, function() {
                         combo.setRawValue(me.application);
     					new Ext.util.DelayedTask().delay(100, function() {
-                            combo.setSelectText(0,0);
                             combo.focus(false, true);
+                            combo.setSelectText(0,0);
     					});
 					});
 				}
@@ -55,20 +87,21 @@ Ext.define('Workspace.editorjava.window.WindowAutoDeploy', {
 		me.callParent(arguments);
 	}
 	,
-	onKeyPress: function (field, event, option) {
-        var me = field;
-        var wnd = me.up('window');
-		var key = event.getKey();
-	    if (key == event.ENTER) {
-            wnd.onItemSelected(field.getText());
-	    }
-	    return true;
+	buttonCallBack : function(btn, text) {
+        var me = this;
+        if (btn.itemId == 'yes'){
+            var combo = me.getComponent('nameFilter');
+            var application = combo.getRawValue();
+
+            me.onItemSelected(combo, application, me.application);
+        }
+        me.close();
     }
 	,
 	title: 'Auto Deploy',
 	layout:'fit',
-	width:730,
-	height:300,
+	width:200,
+	height:50,
 	//autoHeight: true,        //hauteur de la fen?tre
 	modal: true
 	/*,             //Grise automatiquement le fond de la page

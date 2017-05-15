@@ -122,8 +122,7 @@ function showMenuLevel(tableId, trId) {
                     </td>
                     <td class="separatorLevel02">&nbsp;</td>
                     <td class="menuLevel02">
-                  <html:TagA attrClass="menuLevel02" attrHref="javascript:autoDeploy()">Auto Deploy</html:TagA>
-                  <html:TagA attrClass="menuLevel02" attrHref="javascript:autoDeployProject()">></html:TagA>
+                  <html:TagA attrClass="menuLevel02" attrHref="javascript:autoDeployProject()">Auto Deploy</html:TagA>
                     </td>
                     <td width="*">&nbsp;
                     </td>

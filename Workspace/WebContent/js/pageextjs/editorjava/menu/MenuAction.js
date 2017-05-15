@@ -192,7 +192,7 @@ function autoDeploy() {
       if (btn == 'yes'){
     	var application = Ext.getCmp('project').value;
 
-		Workspace.common.tool.Pop.info(me, 'AutoDeploy in progress.<br>Waiting to building complet.');
+		Workspace.common.tool.Pop.info(me, 'AutoDeploy \''+application+'\' in progress.<br>Waiting to building complet.');
 		Ext.create('Workspace.editorjava.request.JsonEditSaveAndBuild',
 		{
 			application:application,
@@ -208,7 +208,7 @@ function autoDeployProject() {
 	var onItemSelected = function(combo, newValue, oldValue, option) {
     	var application = newValue;
     
-    	Workspace.common.tool.Pop.info(me, 'AutoDeploy in progress.<br>Waiting to building complet.');
+    	Workspace.common.tool.Pop.info(me, 'AutoDeploy \''+application+'\' in progress.<br>Waiting to building complet.');
     	Ext.create('Workspace.editorjava.request.JsonEditSaveAndBuild',
     	{
     		application:application,
