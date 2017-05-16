@@ -59,11 +59,6 @@ Ext.define('Workspace.editorjava.window.WindowAutoDeploy', {
         // Workspace.tool.UtilComponent.addListener(me.store, 'load', function() {me.focus();});
 
 		Ext.apply(me, {
-			layout: {
-			    type: 'anchor',
-                align: 'stretch'
-			}
-			,
 		    items : [
 		        combo
 		    ]
@@ -99,14 +94,17 @@ Ext.define('Workspace.editorjava.window.WindowAutoDeploy', {
     }
 	,
 	title: 'Auto Deploy',
-	layout:'fit',
-	width:200,
-	height:50,
+	layout: {
+        type: 'vbox',
+        align: 'stretch',
+        pack: 'center'
+    },
+	width:300,
+	height:70,
 	//autoHeight: true,        //hauteur de la fen?tre
 	modal: true
-	/*,             //Grise automatiquement le fond de la page
-	closeAction:'hide',
-	plain: true
-	*/
-
+	,             //Grise automatiquement le fond de la page
+// 	closeAction:'hide',
+    border: 0,
+    plain: true
 }, function() {Workspace.tool.Log.defined('Workspace.editorjava.window.WindowAutoDeploy');});
