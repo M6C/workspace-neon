@@ -68,6 +68,12 @@ Ext.define('Workspace.editorjava.panel.center.function.AddTabAce',  {
 					Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandReload');
 				    Workspace.editorjava.aceeditor.command.CommandReload.addCommand(editor);
 
+					Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandDeploy');
+				    Workspace.editorjava.aceeditor.command.CommandDeploy.addCommand(editor);
+
+					Ext.Loader.syncRequire('Workspace.editorjava.aceeditor.command.CommandShortcut');
+				    Workspace.editorjava.aceeditor.command.CommandShortcut.addCommand(editor);
+
 					Ext.Loader.syncRequire('Workspace.editorjava.debug.ApplyDebug');
 				    Workspace.editorjava.debug.ApplyDebug.apply(editor);
 				}

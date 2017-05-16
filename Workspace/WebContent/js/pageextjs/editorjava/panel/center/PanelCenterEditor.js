@@ -4,7 +4,8 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 	  'Workspace.editorjava.panel.center.function.AddTabSaveAll',
 	  'Workspace.editorjava.panel.center.function.AddTabReload',
 	  'Workspace.editorjava.debug.ApplyDebug',
-	  'Workspace.editorjava.request.JsonEditLoadFile'
+	  'Workspace.editorjava.request.JsonEditLoadFile',
+	  'Workspace.editorjava.aceeditor.command.CommandShortcut'
 	]
 	,
 	extend: 'Ext.panel.Panel'
@@ -45,17 +46,28 @@ Ext.define('Workspace.editorjava.panel.center.PanelCenterEditor', {
 						'</span>&nbsp;<span style="color:#4067B3" title="'+me.panelId+'">' + title + '</span>',
 					    '->'
 					    ,
-					    {
+/*
+                        {
 					    	text: 'Save', 
 					    	handler:  function(button, e) {
 					            var editor = ace.edit(me.panelEditorId);
 					    		Workspace.editorjava.panel.center.function.AddTabSave.call(editor)
 				    		}
-					    },
+					    }
+					    ,
 			            {
 					    	text: 'Reload',
 					    	handler:  function(button, e) {
 					    	    me.reload(true)
+					    	}
+			            }
+					    ,
+*/			            {
+					    	text: 'S<u>h</u>ortcuts',
+					    	tooltip: Workspace.editorjava.aceeditor.command.CommandShortcut.command(),
+					    	handler:  function(button, e) {
+		    		            var editor = ace.edit(me.panelEditorId);
+					    	    editor.execCommand('editorShortcut');
 					    	}
 			            }
 			        ]
