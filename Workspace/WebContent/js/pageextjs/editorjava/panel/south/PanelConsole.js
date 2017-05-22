@@ -21,6 +21,12 @@ Ext.define('Workspace.editorjava.panel.south.PanelConsole', {
 // 	layout: 'fit',
     items: [
         {
+            xtype: 'hiddenfield',
+            id: 'application',
+            name: 'application'
+        }
+        ,
+        {
         xtype     : 'textareafield',
         id        : 'fieldConsole',
         name      : 'commandLine',
@@ -33,16 +39,7 @@ Ext.define('Workspace.editorjava.panel.south.PanelConsole', {
             keyup: function(me, event, eOpts) {
         		var key = event.getKey();
         	    if (key == event.ENTER) {
-                    var form = me.up('form').getForm();
-                    form.submit({
-                        url : DOMAIN_NAME_ROOT + '/action.servlet?event=AdminPageExecCmdValiderExtJs',
-                        success: function(form, action) {
-                        	me.updateResponse(true, action.result);
-                        },
-                        failure: function(form, action) {
-                        	me.updateResponse(false, action.result);
-                        }
-                    });
+        	        me.exec(me);
         	    }
 //        	    else if (key == event.LEFT) {
 //        	    } else if (key == event.RIGHT) {
@@ -54,13 +51,27 @@ Ext.define('Workspace.editorjava.panel.south.PanelConsole', {
             }
         }
         ,
-        updateResponse: function (success, result) {
-        	var field = Ext.getCmp('fieldConsole');
+        exec: function(me) {
+            var form = me.up('form').getForm();
+            form.submit({
+                url : DOMAIN_NAME_ROOT + '/action.servlet?event=AdminPageExecCmdValiderExtJs',
+                success: function(form, action) {
+                	me.updateResponse(me, true, action.result);
+                },
+                failure: function(form, action) {
+                	me.updateResponse(me, false, action.result);
+                }
+            });
+        }
+        ,
+        updateResponse: function (me, success, result) {
         	var msg = '';
         	if (Ext.isDefined(result)) {
         		msg = result.msg;
         	}
-        	field.setValue(field.getValue() + Workspace.tool.UtilString.decodeUtf8(msg));
+        	if (!Ext.isEmpty(result)) {
+            	me.setValue(/*me.getValue() + */Workspace.tool.UtilString.decodeUtf8(msg));
+        	}
 //        	Ext.Msg.alert(success ? 'Success' : 'Failed', msg);
         }
     }]
@@ -68,6 +79,9 @@ Ext.define('Workspace.editorjava.panel.south.PanelConsole', {
     listenerShow: function(me, options) {
         var fieldConsole=Ext.getCmp('fieldConsole');
         fieldConsole.focus(false, true);
+
+        me.getComponent('application').setValue(Ext.getCmp('comboProject').value);
+        fieldConsole.exec(fieldConsole);
     }
 	,
     useArrows: true,

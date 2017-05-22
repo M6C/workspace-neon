@@ -1,8 +1,5 @@
-/*
+/**
  * Cramp;eacute;amp;eacute; le 23 juil. 2004
- *
- * Pour changer le modèle de ce fichier gamp;eacute;namp;eacute;ramp;eacute;, allez à :
- * Fenêtre&gt;Pramp;eacute;famp;eacute;rences&gt;Java&gt;Gamp;eacute;namp;eacute;ration de code&gt;Code et commentaires
  */
 package workspace.service;
 
@@ -48,9 +45,6 @@ import framework.trace.Trace;
 
 /**
  * @author rocada
- *
- * Pour changer le modèle de ce commentaire de type gamp;eacute;namp;eacute;ramp;eacute;, allez à :
- * Fenêtre&gt;Pramp;eacute;famp;eacute;rences&gt;Java&gt;Gamp;eacute;namp;eacute;ration de code&gt;Code et commentaires
  */
 public class SrvEditorJavaSplitFile extends SrvGenerique {
 

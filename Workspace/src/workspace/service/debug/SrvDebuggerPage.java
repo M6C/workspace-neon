@@ -1,8 +1,5 @@
-/*
- * Créé le 23 juil. 2004
- *
- * Pour changer le modèle de ce fichier généré, allez à :
- * Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
+/**
+ * Cree le 23 juil. 2004
  */
 package workspace.service.debug;
 
@@ -21,9 +18,6 @@ import framework.trace.Trace;
 
 /**
  * @author rocada
- *
- * Pour changer le modèle de ce commentaire de type généré, allez à :
- * Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
  */
 public class SrvDebuggerPage extends SrvGenerique {
 
@@ -38,7 +32,7 @@ public class SrvDebuggerPage extends SrvGenerique {
                     String filePathMain = AdpXmlApplication.getPathMain(dom, application);
                     if (filePathMain!=null && !filePathMain.equals("")) {
                     	File fileMain = new File(filePathMain);
-	                    // Initialise les paramètres de la requète
+	                    // Initialise les parametres de la requete
 	                    request.setAttribute("path", fileMain.toURI().getPath());
                     }
                   }

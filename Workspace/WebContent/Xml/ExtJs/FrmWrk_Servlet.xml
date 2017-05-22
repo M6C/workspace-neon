@@ -329,6 +329,7 @@
     <SERVLET Name="AdminPageExtJs" Target="/Web/PageExtJs/Admin/Page.jsp" TargetError="/Web/Page/index.jsp"/>
     <SERVLET Name="AdminPageExecCmdValiderExtJs" Target="" TargetError="/Web/Page/index.jsp">
         <BEAN Name="BeanExecCmd" Scope="request" Service="workspace.service.extjs.SrvAdminExecuteCmd">
+            <PARAM Name="application" Type="STRING"/>
             <PARAM Name="commandLine" Type="STRING"/>
         </BEAN>
     </SERVLET>
@@ -597,23 +598,38 @@
     <SERVLET Name="AdminPage" Target="/Web/Page/Admin/Page.jsp" TargetError="/Web/Page/index.jsp"/>
     <SERVLET Name="AdminPageExecCmd" Target="/Web/Page/Admin/PageExecCmd.jsp" TargetError="/Web/Page/index.jsp"/>
     <SERVLET Name="AdminPageExecCmdValider" Target="/Web/Page/Admin/PageExecCmd.jsp" TargetError="/Web/Page/index.jsp">
-        <BEAN Name="BeanExecCmd" Scope="request" Service="workspace.service.SrvAdminExecuteCmd"/>
+        <BEAN Name="BeanExecCmd" Scope="request" Service="workspace.service.extjs.SrvAdminExecuteCmd">
+            <PARAM Name="application" Type="STRING"/>
+            <PARAM Name="commandLine" Type="STRING"/>
+        </BEAN>
     </SERVLET>
     <SERVLET Name="AdminPageExecShutdown" Target="/Web/Page/Admin/PageExecShutdown.jsp" TargetError="/Web/Page/index.jsp"/>
     <SERVLET Name="AdminPageExecShutdownValider" Target="/Web/Page/Admin/PageExecShutdown.jsp" TargetError="/Web/Page/index.jsp">
-        <BEAN Name="BeanExecCmd" Scope="request" Service="workspace.service.SrvAdminExecuteCmd"/>
+        <BEAN Name="BeanExecCmd" Scope="request" Service="workspace.service.extjs.SrvAdminExecuteCmd">
+            <PARAM Name="application" Type="STRING"/>
+            <PARAM Name="commandLine" Type="STRING"/>
+        </BEAN>
     </SERVLET>
     <SERVLET Name="AdminPageDBShutdown" Target="/Web/Page/Admin/PageDBShutdown.jsp" TargetError="/Web/Page/index.jsp"/>
     <SERVLET Name="AdminPageDBShutdownValider" Target="/Web/Page/Admin/PageDBShutdown.jsp" TargetError="/Web/Page/index.jsp">
-        <BEAN Name="BeanExecCmd" Scope="request" Service="workspace.service.SrvAdminExecuteCmd"/>
+        <BEAN Name="BeanExecCmd" Scope="request" Service="workspace.service.extjs.SrvAdminExecuteCmd">
+            <PARAM Name="application" Type="STRING"/>
+            <PARAM Name="commandLine" Type="STRING"/>
+        </BEAN>
     </SERVLET>
     <SERVLET Name="AdminPageDBStartup" Target="/Web/Page/Admin/PageDBStartup.jsp" TargetError="/Web/Page/index.jsp"/>
     <SERVLET Name="AdminPageDBStartupValider" Target="/Web/Page/Admin/PageDBStartup.jsp" TargetError="/Web/Page/index.jsp">
-        <BEAN Name="BeanExecCmd" Scope="request" Service="workspace.service.SrvAdminExecuteCmd"/>
+        <BEAN Name="BeanExecCmd" Scope="request" Service="workspace.service.extjs.SrvAdminExecuteCmd">
+            <PARAM Name="application" Type="STRING"/>
+            <PARAM Name="commandLine" Type="STRING"/>
+        </BEAN>
     </SERVLET>
     <SERVLET Name="AdminPageExecReboot" Target="/Web/Page/Admin/PageExecReboot.jsp" TargetError="/Web/Page/index.jsp"/>
     <SERVLET Name="AdminPageExecRebootValider" Target="/Web/Page/Admin/PageExecReboot.jsp" TargetError="/Web/Page/index.jsp">
-        <BEAN Name="BeanExecCmd" Scope="request" Service="workspace.service.SrvAdminExecuteCmd"/>
+        <BEAN Name="BeanExecCmd" Scope="request" Service="workspace.service.extjs.SrvAdminExecuteCmd">
+            <PARAM Name="application" Type="STRING"/>
+            <PARAM Name="commandLine" Type="STRING"/>
+        </BEAN>
     </SERVLET>
     <SERVLET Name="AdminPageScreenShoot" Target="/Web/Page/Common/PageScreenShoot.jsp" TargetError="/Web/Page/index.jsp"/>
     <SERVLET Name="AdminScreenMousePress">

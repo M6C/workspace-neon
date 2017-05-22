@@ -16,9 +16,6 @@ import framework.ressource.util.UtilString;
 
 /**
  * @author rocada
- *
- * Pour changer le modèle de ce commentaire de type gamp;eacute;namp;eacute;ramp;eacute;, allez à :
- * Fenêtre&gt;Pramp;eacute;famp;eacute;rences&gt;Java&gt;Gamp;eacute;namp;eacute;ration de code&gt;Code et commentaires
  */
 public class SrvCVSIgnoreAdd extends SrvCVS {
 

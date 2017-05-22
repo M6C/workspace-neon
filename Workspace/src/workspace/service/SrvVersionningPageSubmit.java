@@ -1,8 +1,5 @@
-/*
- * Créé le 23 juil. 2004
- *
- * Pour changer le modèle de ce fichier généré, allez à :
- * Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
+/**
+ * Cree le 23 juil. 2004
  */
 package workspace.service;
 
@@ -28,9 +25,6 @@ import framework.trace.Trace;
 
 /**
  * @author rocada
- *
- * Pour changer le modèle de ce commentaire de type généré, allez à :
- * Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
  */
 public class SrvVersionningPageSubmit extends SrvCVS {
 
@@ -46,7 +40,7 @@ public class SrvVersionningPageSubmit extends SrvCVS {
 
     init(req, bean);
 
-    // Initialise les paramètres de la requète
+    // Initialise les parametres de la requete
     req.setAttribute("path", getFilePathMain().toURI().getPath());
 
     try {
