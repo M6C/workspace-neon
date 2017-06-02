@@ -1,0 +1,10 @@
+version: '3'
+services:
+
+  glassfish:
+    container_name: glassfish
+    image: glassfish
+    expose:
+      - "8080"
+    ports:
+      - "8181:8080"
