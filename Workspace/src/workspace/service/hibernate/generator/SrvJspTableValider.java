@@ -1,4 +1,4 @@
-package workspace.service.hibernate.generator;
+﻿package workspace.service.hibernate.generator;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -318,7 +318,7 @@ public class SrvJspTableValider extends SrvGenerique {
                                 sbSqlCol.append(" ").append(szColumnName);
                                 iSqlCol++;
 
-                                //Ajout les colonnes de mise � jour
+                                //Ajout les colonnes de mise à jour
                                 if (iSqlUpd>0)
                                     sbSqlUpd.append(" ,"); 
                                 //sbSqlUpd.append(" ").append(szColumnName).append(" = :").append(szFieldName);
