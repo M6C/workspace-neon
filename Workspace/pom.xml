@@ -16,6 +16,12 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.5.1.RELEASE</version>
 	</parent>	
+
+	<properties>
+		  <!-- maven-compiler-plugin , aka JAVA Compiler 1.7 -->
+		  <maven.compiler.target>1.7</maven.compiler.target>
+		  <maven.compiler.source>1.7</maven.compiler.source>
+	</properties>
 	
 	<dependencies>
 		<dependency>
@@ -23,6 +29,49 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+		<!-- org.cameleon FrameWork 1.0 -->
+		<dependency>
+			<groupId>org.cameleon</groupId>
+			<artifactId>FrameWork</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/WebContent/WEB-INF/lib/FrameWork.jar</systemPath>
+		</dependency>
+
+		<!-- org.cameleon FrameWork_TagLib 1.0 -->
+		<dependency>
+			<groupId>org.cameleon</groupId>
+			<artifactId>FrameWork_TagLib</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/WebContent/WEB-INF/lib/FrameWork_TagLib.jar</systemPath>
+		</dependency>
+
+		<!-- org.cameleon FrameWork_Trace 1.0 -->
+		<dependency>
+			<groupId>org.cameleon</groupId>
+			<artifactId>FrameWork_Trace</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/WebContent/WEB-INF/lib/FrameWork_Trace.jar</systemPath>
+		</dependency>
+
+		<!-- org.cameleon FrameWork_Util 1.0 -->
+		<dependency>
+			<groupId>org.cameleon</groupId>
+			<artifactId>FrameWork_Util</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/WebContent/WEB-INF/lib/FrameWork_Util.jar</systemPath>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/javax.servlet.jsp/javax.servlet.jsp-api -->
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
+			<version>2.3.2-b02</version>
+			<scope>provided</scope>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.ant/ant -->
 		<dependency>
 			<groupId>org.apache.ant</groupId>
@@ -259,6 +308,8 @@
 			<groupId>javax.jms</groupId>
 			<artifactId>jms</artifactId>
 			<version>1.0.2b</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/WebContent/WEB-INF/lib/javax.jms.jar</systemPath>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/javax.jdo/jdo2-api -->
 		<!-- jdo2-api-2.3-eb.jar -->
@@ -341,7 +392,7 @@
 		<dependency>
 			<groupId>com.sun</groupId>
 			<artifactId>tools</artifactId>
-			<version>1.5.0</version>
+			<version>1.8.0</version>
 			<scope>system</scope>
 			<systemPath>${basedir}/WebContent/WEB-INF/lib/tools.jar</systemPath>
 		</dependency>
