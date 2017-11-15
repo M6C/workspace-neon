@@ -29,11 +29,11 @@ public class TestCommit extends SrvGenerique
     public void execute(HttpServletRequest request, HttpServletResponse response, BeanGenerique bean)
         throws Exception
     {
-        main(null);
-    }
+//        main(null);
+//    }
 
-    public static void main(String args[])
-    {
+//    public static void main(String args[])
+//    {
         setupLibrary();
         try
         {
