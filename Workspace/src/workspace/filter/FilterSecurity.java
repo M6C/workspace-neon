@@ -1,8 +1,8 @@
 /*
  * Cramp;eacute;amp;eacute; le 1 damp;eacute;c. 2004
  *
- * Pour changer le modèle de ce fichier gamp;eacute;namp;eacute;ramp;eacute;, allez à :
- * Fenêtre&gt;Pramp;eacute;famp;eacute;rences&gt;Java&gt;Gamp;eacute;namp;eacute;ration de code&gt;Code et commentaires
+ * Pour changer le modele de ce fichier gamp;eacute;namp;eacute;ramp;eacute;, allez a :
+ * Fenetre&gt;Pramp;eacute;famp;eacute;rences&gt;Java&gt;Gamp;eacute;namp;eacute;ration de code&gt;Code et commentaires
  */
 package workspace.filter;
 
@@ -21,8 +21,8 @@ import framework.beandata.BeanGenerique;
 /**
  * @author rocada
  *
- * Pour changer le modèle de ce commentaire de type gamp;eacute;namp;eacute;ramp;eacute;, allez à :
- * Fenêtre&gt;Pramp;eacute;famp;eacute;rences&gt;Java&gt;Gamp;eacute;namp;eacute;ration de code&gt;Code et commentaires
+ * Pour changer le modele de ce commentaire de type gamp;eacute;namp;eacute;ramp;eacute;, allez a :
+ * Fenetre&gt;Pramp;eacute;famp;eacute;rences&gt;Java&gt;Gamp;eacute;namp;eacute;ration de code&gt;Code et commentaires
  */
 public class FilterSecurity implements Filter {
 
@@ -49,7 +49,7 @@ public class FilterSecurity implements Filter {
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
     BeanGenerique bean = null;
     HttpServletRequest req = (HttpServletRequest) request;
-    // Lecture du nom du paramètre qui indique si l'evenement à besoin d'une authentification
+    // Lecture du nom du parametre qui indique si l'evenement a besoin d'une authentification
     String szInputName = filterConfig.getInitParameter("InputName");
     String szEventAuthentification = (String)filterConfig.getServletContext().getAttribute(szInputName);
     // Verifi si il y a besoin d'une authentification
@@ -68,7 +68,7 @@ public class FilterSecurity implements Filter {
       }
       finally {
         if (bean == null) {
-          // Lecture de l'url par defaut si le bean d'authentification n'a pas été trouvé
+          // Lecture de l'url par defaut si le bean d'authentification n'a pas ete trouve
           String szDefaultUrl = filterConfig.getInitParameter("DefaultUrl");
           filterConfig.getServletContext().getRequestDispatcher(szDefaultUrl).forward(request, response); ;
         }

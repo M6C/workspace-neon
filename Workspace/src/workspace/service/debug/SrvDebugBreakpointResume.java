@@ -43,7 +43,7 @@ public class SrvDebugBreakpointResume extends SrvGenerique {
     			  LocatableEvent brkE = (LocatableEvent)currentEvent;
     			  BreakpointRequest brkR = (BreakpointRequest) brkE.request();
 
-    			  // Recréé le point d'arret
+    			  // Recree le point d'arret
                   BreakpointRequest brkR2 = ToolDebug.recreateBreakpoint(beanDebug, brkR);
 				  copyBreakpointProperties(brkR, brkR2);
 

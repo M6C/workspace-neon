@@ -77,10 +77,10 @@ public class SrvTreeDirectory extends SrvGenerique {
                 Document dom = (Document)request.getSession().getAttribute("resultDom");
                 pathMain = AdpXmlApplication.getFormatedPathMain(context, dom, application);
                 pathSrc = AdpXmlApplication.getPathSource(context, dom, application);
-	            boolean isAutoDeploy = AdpXmlServer.isAutoDeploy(context, dom, application);
-                boolean bIgnoreCase = (recursive == null ? false : Boolean.valueOf(ignoreCase));
-                boolean bRecursive = (recursive == null ? false : Boolean.valueOf(recursive));
-                boolean bWithSubDirectory = (withSubDirectory == null ? true : Boolean.valueOf(withSubDirectory));
+	            final boolean isAutoDeploy = AdpXmlServer.isAutoDeploy(context, dom, application);
+                final boolean bIgnoreCase = (recursive == null ? false : Boolean.valueOf(ignoreCase));
+                final boolean bRecursive = (recursive == null ? false : Boolean.valueOf(recursive));
+                final boolean bWithSubDirectory = (withSubDirectory == null ? true : Boolean.valueOf(withSubDirectory));
                 // Trace.DEBUG(this, new StringBuilder("execute pathMain:").append(pathMain).toString());
                 // Trace.DEBUG(this, new StringBuilder("execute pathSrc:").append(pathSrc).toString());
                 // Trace.DEBUG(this, new StringBuilder("execute ignoreCase:").append(bIgnoreCase).append(" recursive:").append(bRecursive).append(" withSubDirectory:").append(bWithSubDirectory).toString());

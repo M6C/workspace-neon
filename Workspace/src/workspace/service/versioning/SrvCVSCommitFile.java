@@ -18,8 +18,8 @@ import framework.beandata.BeanGenerique;
 /**
  * @author rocada
  *
- * Pour changer le modèle de ce commentaire de type gamp;eacute;namp;eacute;ramp;eacute;, allez à :
- * Fenêtre&gt;Pramp;eacute;famp;eacute;rences&gt;Java&gt;Gamp;eacute;namp;eacute;ration de code&gt;Code et commentaires
+ * Pour changer le modele de ce commentaire de type gamp;eacute;namp;eacute;ramp;eacute;, allez a :
+ * Fenetre&gt;Pramp;eacute;famp;eacute;rences&gt;Java&gt;Gamp;eacute;namp;eacute;ration de code&gt;Code et commentaires
  */
 public class SrvCVSCommitFile extends SrvCVS {
 

@@ -100,7 +100,7 @@ public class TagStatusList02 extends BodyTagSupport {
                   f = s.getFile();
                   if (f.isDirectory() && UtilString.isNotEqualsIgnoreCase(f.getName(), "CVS")) {
 /*
-                    // Recherche si le fichier ou repertoire doit être ignoré
+                    // Recherche si le fichier ou repertoire doit etre ignore
                     File fileIgnore = null;
                     File tmpF = f;
                     File parent = tmpF.getParentFile();

@@ -427,7 +427,7 @@ public class ToolDebug {
 	}
 
 	public static void recreateAllBreakpoint(BeanDebug beanDebug) {
-		// Recréé la totalitée des points d'arret
+		// RecrÃ©Ã© la totalitÃ©e des points d'arret
 		Hashtable<String, Properties> tableBreakpoint = beanDebug.getTableBreakpoint();
 		if (tableBreakpoint!=null) {
 			BreakpointRequest brkR = null;

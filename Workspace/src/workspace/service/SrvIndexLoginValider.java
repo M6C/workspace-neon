@@ -1,8 +1,8 @@
 /*
- * Créé le 23 juil. 2004
+ * Cree le 23 juil. 2004
  *
- * Pour changer le modèle de ce fichier généré, allez à :
- * Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
+ * Pour changer le modele de ce fichier genere, allez a :
+ * Fenetre&gt;Prerences&gt;Java&gt;Geration de code&gt;Code et commentaires
  */
 package workspace.service;
 
@@ -32,8 +32,8 @@ import framework.trace.Trace;
 /**
  * @author rocada
  *
- * Pour changer le modèle de ce commentaire de type généré, allez à :
- * Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
+ * Pour changer le modele de ce commentaire de type gdndrd, allez a :
+ * Fenetre&gt;Preferences&gt;Java&gt;Generation de code&gt;Code et commentaires
  */
 public class SrvIndexLoginValider extends SrvGenerique {
 

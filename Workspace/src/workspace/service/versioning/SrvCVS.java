@@ -1,8 +1,8 @@
 /*
  * Cramp;eacute;amp;eacute; le 23 juil. 2004
  *
- * Pour changer le modèle de ce fichier gamp;eacute;namp;eacute;ramp;eacute;, allez à :
- * Fenêtre&gt;Pramp;eacute;famp;eacute;rences&gt;Java&gt;Gamp;eacute;namp;eacute;ration de code&gt;Code et commentaires
+ * Pour changer le modele de ce fichier gamp;eacute;namp;eacute;ramp;eacute;, allez a :
+ * Fenetre&gt;Pramp;eacute;famp;eacute;rences&gt;Java&gt;Gamp;eacute;namp;eacute;ration de code&gt;Code et commentaires
  */
 package workspace.service.versioning;
 
@@ -22,7 +22,7 @@ import org.netbeans.lib.cvsclient.connection.PServerConnection;
 import workspace.bean.versioning.BeanCVS;
 
 /**
- * @author  rocada  Pour changer le modèle de ce commentaire de type gamp;eacute;namp;eacute;ramp;eacute;, allez à :  Fenêtre&gt;Pramp;eacute;famp;eacute;rences&gt;Java&gt;Gamp;eacute;namp;eacute;ration de code&gt;Code et commentaires
+ * @author  rocada  Pour changer le modele de ce commentaire de type gamp;eacute;namp;eacute;ramp;eacute;, allez a :  Fenetre&gt;Pramp;eacute;famp;eacute;rences&gt;Java&gt;Gamp;eacute;namp;eacute;ration de code&gt;Code et commentaires
  */
 public class SrvCVS extends SrvGenerique {
 
@@ -46,7 +46,7 @@ public class SrvCVS extends SrvGenerique {
   }
 
   /**
-   * Initialisation dans la requette de l'utilisateur la trace de l'exception, par le paramètre 'jcvsErrorMessage'.
+   * Initialisation dans la requette de l'utilisateur la trace de l'exception, par le parametre 'jcvsErrorMessage'.
    * @param request Requette de l'utilisateur
    * @param ex Exception qui contient la trace
    */
@@ -60,7 +60,7 @@ public class SrvCVS extends SrvGenerique {
   }
 
   /**
-   * Initialisation dans la requette de l'utilisateur la trace de l'exception, par le paramètre 'jcvsErrorMessage'.
+   * Initialisation dans la requette de l'utilisateur la trace de l'exception, par le parametre 'jcvsErrorMessage'.
    * @param request Requette de l'utilisateur
    * @param trace Trace de l'utilisateur
    * @param ex Exception qui contient la trace
@@ -75,7 +75,7 @@ public class SrvCVS extends SrvGenerique {
   }
 
   /**
-   * Initialisation dans la requette de l'utilisateur la trace de l'exception, par le paramètre 'jcvsErrorMessage'.
+   * Initialisation dans la requette de l'utilisateur la trace de l'exception, par le parametre 'jcvsErrorMessage'.
    * @param request Requette de l'utilisateur
    * @param ex Exception qui contient la trace
    */
@@ -88,7 +88,7 @@ public class SrvCVS extends SrvGenerique {
   }
 
   /**
-   * Initialisation dans l'attribut 'traceBuffer' la trace de l'exception, par le paramètre 'jcvsErrorMessage'.
+   * Initialisation dans l'attribut 'traceBuffer' la trace de l'exception, par le parametre 'jcvsErrorMessage'.
    * @param request Requette de l'utilisateur
    * @param ex Exception qui contient la trace
    */
@@ -103,7 +103,7 @@ public class SrvCVS extends SrvGenerique {
 
   /**
    * Log la trace de l'exception.
-   * @param file Fichier dans lequel la trace va être inscrite
+   * @param file Fichier dans lequel la trace va etre inscrite
    * @param ex Exception qui contient la trace
    */
   protected void traceException(File file, Exception ex) {

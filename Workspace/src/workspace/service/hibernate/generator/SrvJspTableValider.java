@@ -1,4 +1,4 @@
-﻿package workspace.service.hibernate.generator;
+package workspace.service.hibernate.generator;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -33,7 +33,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.hibernate.cfg.DefaultNamingStrategy;
+//import org.hibernate.cfg.DefaultNamingStrategy;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
