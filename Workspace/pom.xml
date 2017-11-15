@@ -275,11 +275,13 @@
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.gnu/jel -->
 		<!-- jel.jar -->
-		<!--dependency>
+		<dependency>
 			<groupId>org.gnu</groupId>
 			<artifactId>jel</artifactId>
 			<version>2.0.1</version>
-		</dependency-->
+			<scope>system</scope>
+			<systemPath>${basedir}/WebContent/WEB-INF/lib/jel.jar</systemPath>
+		</dependency>
 		<!-- ?? JevaESUI2001-03-03.jar ?? -->
 		<!-- https://mvnrepository.com/artifact/net.sf.json-lib/json-lib -->
 		<!-- json-lib-2.3-jdk15 ? -->
@@ -287,7 +289,10 @@
 			<groupId>net.sf.json-lib</groupId>
 			<artifactId>json-lib</artifactId>
 			<version>2.3</version>
-			<!-- systemPath>/DevJ2EE/.m2/repository/net/sf/json-lib/json-lib/2.3/json-lib-2.3-jdk15.jar</systemPath-->
+			<scope>system</scope>
+			<!-- systemPath>c:/DevJ2EE/.m2/repository/net/sf/json-lib/json-lib/2.3/json-lib-2.3-jdk15.jar</systemPath -->
+			<!-- systemPath>${settings.localRepository}/net/sf/json-lib/json-lib/2.3/json-lib-2.3-jdk15.jar</systemPath -->
+			<systemPath>${basedir}/WebContent/WEB-INF/lib/json-lib-2.3-jdk15.jar</systemPath>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 		<!-- mysql-connector-java-5.1.5-bin.jar ? -->
@@ -303,6 +308,8 @@
 			<groupId>apache-xalan</groupId>
 			<artifactId>serializer</artifactId>
 			<version>2.7.1.patch01-brew</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/WebContent/WEB-INF/lib/serializer.jar</systemPath>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.eclipse.birt.runtime.3_7_1/org.apache.xml.serializer -->
 		<!-- serializer.jar ? -->
@@ -311,6 +318,8 @@
 			<groupId>org.eclipse.birt.runtime.3_7_1</groupId>
 			<artifactId>org.apache.xml.serializer</artifactId>
 			<version>2.7.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/WebContent/WEB-INF/lib/serializer.jar</systemPath>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.wutka/dtdparser -->
 		<!-- ShowDTDTree.jar ? -->
@@ -325,12 +334,16 @@
 			<groupId>org.tmatesoft.svnkit</groupId>
 			<artifactId>svnkit</artifactId>
 			<version>1.4.0r5829.atlassian</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/WebContent/WEB-INF/lib/svnkit.jar</systemPath>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.sun/tools -->
 		<dependency>
 			<groupId>com.sun</groupId>
 			<artifactId>tools</artifactId>
 			<version>1.5.0</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/WebContent/WEB-INF/lib/tools.jar</systemPath>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/xalan/xalan -->
 		<dependency>
