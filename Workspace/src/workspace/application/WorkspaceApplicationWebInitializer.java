@@ -11,7 +11,8 @@ import workspace.action.ActionServlet;
 
 import javax.servlet.ServletException;
 
-//http://www.baeldung.com/spring-xml-vs-java-config
+// https://kielczewski.eu/2013/11/spring-mvc-without-web-xml-using-webapplicationinitializer/
+// http://www.baeldung.com/spring-xml-vs-java-config
 
 public class WorkspaceApplicationWebInitializer implements WebApplicationInitializer {
 	
@@ -22,15 +23,13 @@ public class WorkspaceApplicationWebInitializer implements WebApplicationInitial
 	public static class RestConfiguration extends WebMvcConfigurerAdapter {
 
     }
-	
+
 	@Override
 	public void onStartup(javax.servlet.ServletContext servletContext) throws ServletException {
 
 		AnnotationConfigWebApplicationContext appCtx = new AnnotationConfigWebApplicationContext();
 		appCtx.register(WorkspaceConfiguration.class);
 		servletContext.addListener(new org.springframework.web.context.ContextLoaderListener(appCtx));
-		
-
 
 		// Activation de la DispatcherSerlvet
         // déclaration du contexte web sur lequel doit s'appuyer la servlet Spring
@@ -46,10 +45,11 @@ public class WorkspaceApplicationWebInitializer implements WebApplicationInitial
         servletRegistration.setAsyncSupported(true);
         servletRegistration.setLoadOnStartup(0);
 
-		ActionServlet actionServlet = new ActionServlet();
-		javax.servlet.ServletRegistration.Dynamic actionServletRegistration = servletContext.addServlet("action", actionServlet);
-		actionServletRegistration.addMapping("/w/*");
-		actionServletRegistration.setAsyncSupported(true);
-		actionServletRegistration.setLoadOnStartup(0);
+		javax.servlet.ServletRegistration.Dynamic actionServletRegistration = servletContext.addServlet("action", new ActionServlet());
+		actionServletRegistration.addMapping("/*.servlet/*");
+		actionServletRegistration.setInitParameter("config_file", "/Xml/FrmWrk_Config.xml");
+		actionServletRegistration.setInitParameter("servlet_file", "/Xml/ExtJs/FrmWrk_Servlet.xml");
+//		actionServletRegistration.setAsyncSupported(true);
+//		actionServletRegistration.setLoadOnStartup(0);
 	}
 }

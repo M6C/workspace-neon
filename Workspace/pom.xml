@@ -29,6 +29,19 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>4.3.12.RELEASE</version>
+		</dependency>
+
 		<!-- org.cameleon FrameWork 1.0 -->
 		<dependency>
 			<groupId>org.cameleon</groupId>

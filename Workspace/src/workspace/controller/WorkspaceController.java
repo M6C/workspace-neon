@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 @EnableAutoConfiguration
 public class WorkspaceController {
 
-    @RequestMapping("/")
+    @RequestMapping("/hello")
     @ResponseBody
     String home() {
         return "Hello World!";
