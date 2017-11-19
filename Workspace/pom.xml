@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- https://maven.apache.org/pom.html -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -424,9 +425,29 @@
 
 	<build>
         <directory>target</directory>
-        <outputDirectory>WebContent/WEB-INF/classes</outputDirectory>
+        <!-- outputDirectory>WebContent/WEB-INF/classes</outputDirectory-->
+        <outputDirectory>target/build</outputDirectory>
         <finalName>${project.artifactId}-${project.version}</finalName>
         <sourceDirectory>src</sourceDirectory>
+        <resources>
+          <resource>
+
+            <directory>${project.basedir}/WebContent</directory>
+            <!--targetPath>META-INF/plexus</targetPath-->
+            <!--filtering>false</filtering-->
+            <!--includes-->
+              <!--include>configuration.xml</include-->
+            <!--/includes-->
+            <excludes>
+              <exclude>**/*.jar</exclude>
+              <!--exclude>**/WebContent/WEB-INF/lib/*.jar</exclude-->
+              <exclude>**/jsFramework/*</exclude>
+              <exclude>**/*.class</exclude>
+              <exclude>**/WEB-INF/classes</exclude>
+            </excludes>
+
+          </resource>
+        </resources>
 
 		<plugins>
 			<plugin>
