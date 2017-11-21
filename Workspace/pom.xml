@@ -424,35 +424,48 @@
 	</dependencies>
 
 	<build>
-        <directory>target</directory>
+<!--
+		<directory>target</directory>
+-->
         <!-- outputDirectory>WebContent/WEB-INF/classes</outputDirectory-->
-        <outputDirectory>target/build</outputDirectory>
+        <outputDirectory>package</outputDirectory>
         <finalName>${project.artifactId}-${project.version}</finalName>
         <sourceDirectory>src</sourceDirectory>
         <resources>
           <resource>
 
             <directory>${project.basedir}/WebContent</directory>
-            <!--targetPath>META-INF/plexus</targetPath-->
+            <targetPath>META-INF</targetPath>
             <!--filtering>false</filtering-->
             <!--includes-->
               <!--include>configuration.xml</include-->
             <!--/includes-->
+<!--
             <excludes>
               <exclude>**/*.jar</exclude>
+-->
               <!--exclude>**/WebContent/WEB-INF/lib/*.jar</exclude-->
+<!--
               <exclude>**/jsFramework/*</exclude>
               <exclude>**/*.class</exclude>
               <exclude>**/WEB-INF/classes</exclude>
             </excludes>
+-->
 
           </resource>
         </resources>
-
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

@@ -11,6 +11,8 @@ import workspace.action.ActionServlet;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import java.io.File;
+import java.util.Arrays;
 
 // https://kielczewski.eu/2013/11/spring-mvc-without-web-xml-using-webapplicationinitializer/
 // http://www.baeldung.com/spring-xml-vs-java-config
@@ -22,9 +24,9 @@ public class WorkspaceApplicationWebInitializer implements WebApplicationInitial
     }
 	
 
-	@Configuration
-	@EnableWebMvc
-	@ComponentScan
+//	@Configuration
+//	@EnableWebMvc
+//	@ComponentScan
 	public static class RestConfiguration extends WebMvcConfigurerAdapter {
     
         public RestConfiguration() {

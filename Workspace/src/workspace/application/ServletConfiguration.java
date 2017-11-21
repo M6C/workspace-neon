@@ -13,6 +13,8 @@ import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomi
 import workspace.action.ActionServlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import java.io.File;
+import java.util.Arrays;
 
 //https://stackoverflow.com/questions/20915528/how-can-i-register-a-secondary-servlet-with-spring-boot
 
@@ -29,11 +31,13 @@ public class ServletConfiguration implements ServletContextInitializer, Embedded
     }
 
     private void registerServlet(ServletContext servletContext) {
-        System.out.println("--------------------------> register Servlet");
+        String configFilePath = "/Xml/FrmWrk_Config.xml";
+        String servletFilePath = "/Xml/ExtJs/FrmWrk_Servlet.xml";
+
         javax.servlet.ServletRegistration.Dynamic actionServletRegistration = servletContext.addServlet("action", new ActionServlet());
         actionServletRegistration.addMapping("/action.servlet/*");
-        actionServletRegistration.setInitParameter("config_file", "/Xml/FrmWrk_Config.xml");
-        actionServletRegistration.setInitParameter("servlet_file", "/Xml/ExtJs/FrmWrk_Servlet.xml");
+        actionServletRegistration.setInitParameter("config_file", configFilePath);
+        actionServletRegistration.setInitParameter("servlet_file", servletFilePath);
         actionServletRegistration.setAsyncSupported(true);
         actionServletRegistration.setLoadOnStartup(0);
     }
