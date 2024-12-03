@@ -40,7 +40,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>5.2.20</version>
+			<version>6.1.13</version>
 		</dependency>
 
 		<!-- org.cameleon FrameWork 1.0 -->
@@ -364,7 +364,7 @@
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
-			<version>8.1.0</version>
+			<version>8.2.0</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/apache-xalan/serializer -->
 		<!-- serializer.jar ? -->
